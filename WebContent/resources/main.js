@@ -7,7 +7,7 @@ appMain.config(function($routeProvider) {
     .when("/eventlist", {
         templateUrl : "eventlist.html",
         controller: "eventsController"
-
+ 
     })
     .when("/phonebook", {
         templateUrl : "phonebook.html",
