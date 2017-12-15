@@ -1,0 +1,143 @@
+<!-- <?xml version = "1.0" encoding = "UTF-8"?>
+
+<beans xmlns = "http://www.springframework.org/schema/beans"
+   xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+   xmlns:context = "http://www.springframework.org/schema/context"
+    xmlns:aop = "http://www.springframework.org/schema/aop"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+   xsi:schemaLocation = "http://www.springframework.org/schema/beans
+   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+   http://www.springframework.org/schema/context
+   http://www.springframework.org/schema/context/spring-context-3.0.xsd
+   http://www.springframework.org/schema/aop 
+   http://www.springframework.org/schema/aop/spring-aop-3.0.xsd 
+   http://www.springframework.org/schema/tx
+    http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+
+
+   <aop:aspectj-autoproxy/>
+
+<context:annotation-config/> 
+
+
+<tx:annotation-driven proxy-target-class="true"
+		transaction-manager="transactionManager" />
+
+	Creating TransactionManager Bean, since JDBC we are creating of type 
+		DataSourceTransactionManager
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="isolationLevelName" value="ISOLATION_READ_UNCOMMITTED"/>
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+
+Hibernate
+
+
+
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://localhost:3306/TEST" />
+		<property name="username" value="root" />
+		<property name="password" value="" />
+		
+	</bean>
+
+	<bean id="hibernate3AnnotatedSessionFactory"
+		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="annotatedClasses">
+			<list>
+				<value>com.phonebook.model.Contact</value>
+				<value>com.phonebook.model.Salary</value>
+				<value>com.phonebook.model.Position</value>
+				<value>com.phonebook.model.Userrole</value>
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+				<prop key="hibernate.current_session_context_class">thread</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.format_sql">true</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<prop key="spring.jpa.generate-ddl">true</prop>
+				<prop key="hibernate.dialect.storage_engine">innodb</prop>
+			</props>
+		</property>
+	</bean>
+
+
+
+<bean id='paintService' class="com.phonebook.services.PaintServiceImpl"></bean>
+
+ <bean id='userDetailsService' class="com.phonebook.security.MyUserDetailsService">
+     <property name="contactService" ref="contactService" />
+ </bean>
+
+<bean id='contactService' class="com.phonebook.services.ContactServiceImpl">
+	<property name="sessionFactory" ref="hibernate3AnnotatedSessionFactory" />
+ 	<property name="generalService" ref="generalService" />
+ </bean>
+ 
+  <bean id='generalService' class="com.phonebook.services.GeneralServiceImpl">
+	  <property name = "greeklishMap">
+         <map>
+            <entry key = "α" value = "a"/>
+            <entry key = "β" value = "b"/>
+            <entry key = "γ" value = "g"/>
+            <entry key = "δ" value = "d"/>
+            <entry key = "ε" value = "e"/>
+            <entry key = "ζ" value = "z"/>
+            <entry key = "η" value = "i"/>
+            <entry key = "θ" value = "8"/>
+            <entry key = "ι" value = "i"/>
+            <entry key = "κ" value = "k"/>
+            <entry key = "λ" value = "l"/>
+            <entry key = "μ" value = "m"/>
+            <entry key = "ν" value = "n"/>
+            <entry key = "ξ" value = "3"/>
+            <entry key = "ο" value = "o"/>
+            <entry key = "π" value = "p"/>
+            <entry key = "ρ" value = "r"/>
+            <entry key = "σ" value = "s"/>
+            <entry key = "τ" value = "t"/>
+            <entry key = "ε" value = "e"/>
+            <entry key = "φ" value = "f"/>
+            <entry key = "χ" value = "x"/>
+            <entry key = "ψ" value = "p"/>
+            <entry key = "ω" value = "w"/>
+         </map>
+      </property>
+
+ </bean>
+ 
+ <bean id='salaryService' class="com.phonebook.services.SalaryServiceImpl">
+ 	<property name="sessionFactory" ref="hibernate3AnnotatedSessionFactory" />
+
+ 
+ </bean>
+ 
+  
+ <bean id='stringBuilder' class="java.lang.StringBuilder"> 
+ </bean>
+ 
+ <bean id='contact' class="com.phonebook.model.Contact">
+ </bean> 
+ 
+  <bean id='userrole' class="com.phonebook.model.Userrole">
+ </bean> 
+<bean id='salary' class="com.phonebook.model.Salary">
+
+ </bean> 
+ <bean id='position' class="com.phonebook.model.Position">
+ </bean>
+ 
+    Definition for logging aspect
+   <bean id = "loggingAspect" class = "com.phonebook.aspect.LoggingAspect"/> 
+ 
+
+<constructor-arg ref = "paintService"/>
+</beans> -->

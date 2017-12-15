@@ -1,0 +1,20 @@
+.own-score{
+	
+	font-size:140%;
+	 text-align: center;
+
+}
+.own-date{
+	
+	font-size:90%;
+	color:	#808080;
+	 text-align: center;
+}
+own-td-vs{
+	
+	 text-align: center;
+}
+
+.own-red-shadow{
+	color:#cc0000; text-shadow: 1px 1px #FFFFFF;
+}

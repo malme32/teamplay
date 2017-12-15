@@ -1,0 +1,384 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,500,700,300,100);
+
+/* body {
+  background-color: #3e94ec;
+  font-family: "Roboto", helvetica, arial, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  text-rendering: optimizeLegibility;
+  position:relative;
+} */
+
+/* div.table-title {
+   display: block;
+  margin: auto;
+  max-width: 600px;
+  padding:5px;
+  width: 100%;
+}
+
+.table-title h3 {
+   color: #fafafa;
+   font-size: 30px;
+   font-weight: 400;
+   font-style:normal;
+   font-family: "Roboto", helvetica, arial, sans-serif;
+   text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
+   text-transform:uppercase;
+}
+
+
+** Table Styles *
+
+.table-fill {
+  background: white;
+  border-radius:3px;
+  border-collapse: collapse;
+  height: 320px;
+  margin: auto;
+  max-width: 600px;
+  padding:5px;
+  width: 100%;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  animation: float 5s infinite;
+}
+ 
+
+th {
+  color:#D5DDE5;;
+  background:#1b1e24;
+  border-bottom:4px solid #9ea7af;
+  border-right: 1px solid #343a45;
+  font-size:23px;
+  font-weight: 100;
+  padding:24px;
+  text-align:left;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+  vertical-align:middle;
+}
+
+th:first-child {
+  border-top-left-radius:3px;
+}
+ 
+th:last-child {
+  border-top-right-radius:3px;
+  border-right:none;
+}
+  
+tr {
+  border-top: 1px solid #C1C3D1;
+  border-bottom-: 1px solid #C1C3D1;
+  color:#666B85;
+  font-size:16px;
+  font-weight:normal;
+  text-shadow: 0 1px 1px rgba(256, 256, 256, 0.1);
+  cursor:pointer;
+}
+ 
+tr:hover td {
+  background:#4E5066;
+  color:#FFFFFF;
+  border-top: 1px solid #22262e;
+}
+ 
+tr:first-child {
+  border-top:none;
+}
+
+tr:last-child {
+  border-bottom:none;
+}
+ 
+tr:nth-child(odd) td {
+  background:#EBEBEB;
+}
+ 
+tr:nth-child(odd):hover td {
+  background:#4E5066;
+}
+
+tr:last-child td:first-child {
+  border-bottom-left-radius:3px;
+}
+ 
+tr:last-child td:last-child {
+  border-bottom-right-radius:3px;
+}
+ 
+td {
+  background:#FFFFFF;
+  padding:20px;
+  text-align:left;
+  vertical-align:middle;
+  font-weight:300;
+  font-size:18px;
+  text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
+  border-right: 1px solid #C1C3D1;
+}
+
+td:last-child {
+  border-right: 0px;
+}
+
+th.text-left {
+  text-align: left;
+}
+
+th.text-center {
+  text-align: center;
+}
+
+th.text-right {
+  text-align: right;
+}
+
+td.text-left {
+  text-align: left;
+}
+
+td.text-center {
+  text-align: center;
+}
+
+td.text-right {
+  text-align: right;
+}
+ */
+  .div_standings{
+   margin:auto;	
+  color: 	#808080;
+  position:relative;
+  font-size: 120%;
+  width:100%;
+  max-width:80%;
+  }
+   .div_standings h3{
+  color: 	#26004d;
+  margin:80px 0 20px 0px;
+  }
+  
+  .div_standings table{
+ 
+  width:100%;  
+
+  }
+ .div_standings td{
+ padding: 10px;
+ }
+ .div_standings th{
+ 	padding: 10px 10px 0 10px;
+   font-size: 80%;
+ }
+  .div_standings tr{
+  
+  border-bottom:1px solid 	 #d9d9d9;
+  }
+ .td_team{
+  font-size: 160%;
+ }
+ .td_grade{
+ font-weight: bold;
+ color:#00001a;
+  font-size: 130%;
+ }
+ 
+/*  ////////////////
+ */ 
+ 
+ .div_matchday{
+ max-width:500px;
+ margin:auto;
+ 
+ 
+ }
+ 
+  .div_matchday h4{
+  
+   margin:40px 0 15px 0px;
+   color:#333333;
+  }
+  
+ .td_score{
+ background: #ED645C;
+ color:white;
+ font-weight: bold;
+ 
+ }
+ .td_date_small{
+ font-size:80%;
+ }
+ .td_matchday_team1{
+ 
+ text-align:right
+  }
+  .td_matchday_team2{
+ 
+ text-align:left;
+ }
+ 
+ .inputSmall{
+width:40px;
+ text-align:right;
+ color:black
+}
+ .inputMedium{
+width:120px;
+ text-align:right;
+ color:black
+}
+/*  /////////////////
+ */
+ 
+ .searchmain {
+	margin:auto;
+	width:60%;
+	position:relative;
+	
+	
+}
+.searchmain input{
+	
+	width:calc(100% - 100px);
+	/* float:left; */
+	height:40px;
+}
+
+.searchmain button{
+	
+	width:90px;
+/* 	float:right; */
+	height:40px;
+	
+}
+
+.spacemargin{
+	height:60px;
+	width:100%;
+	position:relative;
+	display:block
+}
+.bodycomponent{
+	width:100%;
+	position:relative;
+	margin:40px 0 40px 0;
+	
+}
+
+
+
+
+/* FORM
+ */
+ 
+ input[type=text], select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+input[type=submit] {
+    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+input[type=submit]:hover {
+    background-color: #45a049;
+}
+
+/* CHAMPIONS MENU 
+*/
+
+.champ ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+    cursor:pointer;
+}
+
+.champ li {
+    float: left;
+}
+
+ .champ a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+ 
+/* .active {
+    background-color: white;
+} */
+/* Change the link color to #111 (black) on hover */
+.champ a:hover {
+    background-color: #111;
+     color:#ED645C;
+}
+
+.css_li_champion{
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.css_li_champion_active{
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+     background-color: #111;
+     color:#ED645C;
+}
+/* //////
+ */
+ 
+ 
+/*  .teamgroup ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+    cursor:pointer;
+}
+
+.teamgroup li {
+    float: left;
+}
+
+.teamgroup a {
+    display: block;
+    color: #FFE4C4;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+} */
+
+/* Change the link color to #111 (black) on hover */
+.teamgroup a:hover {
+    background-color: #111;
+}
+
+/* div {
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
+}
+ */
