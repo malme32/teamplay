@@ -1,0 +1,169 @@
+/* TABLES */
+
+
+.table_stylish1 table {
+	border-collapse: collapse;
+	width: 100%;
+}
+
+.table_stylish1 th, td {
+	text-align: left;
+	padding: 3px;
+}
+
+.table_stylish1 tr:nth-child(even) {
+	background-color: #f2f2f2
+}
+
+.table_stylish1 th {
+	background-color: #4CAF50;
+	color: white;
+}
+
+/* BUTTONS */
+.button_flat {
+	/* background-color: #4CAF50;  */ /* Green */
+	border: none;
+	color: white;
+	padding: 6px 9px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+/* 	font-size: 16px;
+ */	margin: 2px 1px;
+	cursor: pointer;
+}
+
+
+	
+
+
+.button_flat:hover{
+	background-color: #A9A9A9;
+}
+
+/* INPUTS */
+
+input[type=text], select {
+    width: 100%;
+    padding: 5px 7px;
+    margin: 3px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+input[type=number] {
+    padding: 5px 7px;
+    margin: 3px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    width:50px;
+}
+
+
+/* COLORS */
+
+.color_gray{
+	color:gray;
+}
+
+.color_white{
+	color:white;
+}
+
+.background_green {
+	background-color: #4CAF50;
+} /* Blue */
+.background_blue {
+	background-color: #008CBA;
+} /* Blue */
+.background_red {
+	background-color: #f44336;
+} /* Red */
+.background_gray {
+	background-color: #808080;
+	
+} 
+.background_black {
+	background-color: #555555;
+} 
+
+.background_dark_yellow {
+	background-color: #CCCC00;
+} 
+
+
+
+
+/* FONTS */
+
+.font_size_small
+{
+	font-size:80%
+}
+
+/* WIDTH */
+
+.width_40{
+	
+	width:40%
+}
+
+.width_80{
+	
+	width:80%
+}
+
+.width_100{
+	
+	width:100%
+}
+
+.max_width_80{
+	
+	max-width:80%
+}
+
+/* MARGINS */
+
+.margin_bottom_medium{
+	
+	margin-bottom:30px
+}
+.margin_bottom_big{
+	
+	margin-bottom:50px
+}
+
+.margin_auto{
+	
+	margin:auto
+}
+
+/* LISTS */
+.ul_nobullet {
+  list-style-type: none;
+}
+
+.float_left{
+	float:left;
+}
+
+.float_right{
+	float:right;
+}
+
+.div_edit_team{
+	margin:auto;
+	max-width:600px;
+	width:100%
+	
+}
+.div_edit_team ul{
+padding:0;
+	
+}

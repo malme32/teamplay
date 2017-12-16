@@ -30,10 +30,12 @@ pageEncoding="UTF-8"%>
 <!--<link rel='stylesheet' href='https://material.angularjs.org/1.1.5/docs.css'> -->
 		<!-- <<<<< ANGULAR MATERIAL -->	
 	
+	<spring:url value="/resources/" var="resources" />
 	<spring:url value="/resources/admin.js" var="crunchifyJS" />
  	<spring:url value="/resources/main.css" var="maincss" />
  	<script src="${crunchifyJS}"></script>
- 	<link rel="stylesheet" type="text/css" href="${maincss}">   
+<%--  	<link rel="stylesheet" type="text/css" href="${maincss}">
+ --%> 	<link rel="stylesheet" type="text/css" href="${resources}admin.css">      
 <!-- <<<<<<<<<<<<< COMMON  -->
 
 
@@ -47,6 +49,8 @@ pageEncoding="UTF-8"%>
 		<li><a  ng-href='#!adminteams'>ΟΜΑΔΕΣ</a></li>
 	</ul> 
 </div>
+
+
 
 <div ng-view></div>
 </body>

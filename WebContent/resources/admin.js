@@ -131,6 +131,7 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 			 $scope.champion =row;
 			 $scope.matchday="";
 			 $scope.standings = "";
+			 $scope.teamgroup = "";
 			 $http({
 			        method : "GET",
 			        url : "champions/"+row.id+"/teamgroups"
@@ -145,9 +146,25 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 		 }
 		 $scope.getTeams = function (row){
 			 	$scope.result = "";
-
-		        $scope.standings =  row.standings;
+		        //$scope.standings =  row.standings;
 		        $scope.teamgroup = row; 
+		        
+		        
+				 $http({
+				        method : "GET",
+				        url : "teamgroups/"+row.id+"/standings"
+				    }).then(function mySuccess(response) {
+				    	 $scope.standings=response.data;
+				    	
+				    	//$scope.result = matchday;
+				    }, function myError(response) {
+				  
+				        $scope.result = "An Error Occurred";//;"/champions/"+row.id+"/teamgroups";
+				      
+				    });
+		        
+		        
+		        
 		 }
 
 		 $scope.getMatchdays = function (row){
@@ -259,8 +276,8 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 			        	        name : $scope.adminTeamgroupName
 			        	    }
 			    }).then(function mySuccess(response) {
-
-			    	$window.location.reload();
+			    	$scope.getTeamgroup($scope.champion);
+			    	//$window.location.reload();
 			    }, function myError(response) {
 			  
 			        alert( "An Error occured. Try again");
@@ -282,7 +299,7 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 			        	    }
 			    }).then(function mySuccess(response) {
 
-			    	alert("Done!");
+			    	alert("Εγινε!");
 			    }, function myError(response) {
 
 			        alert( "An Error occured. Try again");
@@ -300,7 +317,8 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 			        method : "DELETE",
 			        url : "teamgroups/"+row.id
 			    }).then(function mySuccess(response) {
-			    	$window.location.reload();
+			    	$scope.getTeamgroup($scope.champion);
+			    	//$window.location.reload();
 			    }, function myError(response) {
 			        alert( "An Error occured. Try again");
 			    });
@@ -314,16 +332,17 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 			    
 			    
 				 $scope.adminAddTeamToTeamgroup = function (teamgroup_,team_){
-					 $scope.result = "";
+					// $scope.result = "";
 					 	if( team_==null) 
 					 		return;
-				        $scope.modalResult = "";
+				       // $scope.modalResult = "";
 					 $http({
 					        method : "PUT",
 					        url : "teamgroups/"+teamgroup_.id+"/teams/"+team_.id
 					    }).then(function mySuccess(response) {
-
-					    	$window.location.reload();
+					    	$scope.getTeams($scope.teamgroup);
+					    	$scope.getMatchdays($scope.teamgroup); 
+					    	//$window.location.reload();
 					    }, function myError(response) {
 
 					        alert( "An Error occured. Team already exists?");
@@ -343,8 +362,8 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 					        url : "teamgroups/"+teamgroup_obj.id+"/teams",
 					        params: { name : team_name}
 					    }).then(function mySuccess(response) {
-
-					    	$window.location.reload();
+					    	$scope.getMatchdays($scope.teamgroup); $scope.getTeams($scope.teamgroup);
+					    	//$window.location.reload();
 					    }, function myError(response) {
 
 					        alert( "An Error occured. Team already exists?");
@@ -381,8 +400,8 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 				        method : "DELETE",
 				        url : "standings/"+row.id
 				    }).then(function mySuccess(response) {
-
-				    	$window.location.reload();
+				    	$scope.getMatchdays($scope.teamgroup); $scope.getTeams($scope.teamgroup);
+				    	//$window.location.reload();
 				    }, function myError(response) {
 				  
 				        $scope.result = "An Error occured. Try again.";
@@ -400,8 +419,9 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 					        method : "DELETE",
 					        url : "matchdays/"+row.id
 					    }).then(function mySuccess(response) {
-
-					    	$window.location.reload();
+					    	
+					    	$scope.getMatchdays($scope.teamgroup); 
+					    	//$window.location.reload();
 					    }, function myError(response) {
 					  
 					        $scope.result = "An Error occured. Try again.";
@@ -410,7 +430,7 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 				 }
 				 
 				 $scope.generateMatchdays = function (row,roundNumber){
-					 if(!confirm("Are you sure?"))
+					 if(!confirm("Είστε σίγουρος?"))
 						 return;
 					 $scope.result = "";
 					 $http({
@@ -418,11 +438,11 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 					        url : "teamgroups/"+row.id+"/actions/generatematchdays",
 					        params:{roundNumber:roundNumber}
 					    }).then(function mySuccess(response) {
-
-					    	$window.location.reload();
+					    	$scope.getMatchdays($scope.teamgroup); 
+					    	//$window.location.reload();
 					    }, function myError(response) {
 					  
-					        $scope.result = "An Error occured. Try again.";
+					        $scope.result = "Παρουσιάστηκε κάποιο σφάλμα. Προσπαθήστε ξανά.";
 					    });
 					 
 				 } 
@@ -439,8 +459,9 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 					        method : "DELETE",
 					        url : "teamgroups/"+row.id+"/matchdays"
 					    }).then(function mySuccess(response) {
+					    	$scope.getMatchdays($scope.teamgroup); $scope.getTeams($scope.teamgroup);
 
-					    	$window.location.reload();
+					    	$scope.getMatchdays($scope.teamgroup);
 					    }, function myError(response) {
 					  
 					        $scope.result = "An Error occured. Try again.";
@@ -511,7 +532,7 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 						        url : "games/"+row.id
 						    }).then(function mySuccess(response) {
 
-						    	$window.location.reload();
+						    	$scope.getMatchdays($scope.teamgroup);
 						    }, function myError(response) {
 						  
 						        $scope.result = "An Error occured. Try again.";
@@ -531,7 +552,8 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 					        url : "matchdays/"+matchdayrow.id+"/games/"+gamerow.id
 					    }).then(function mySuccess(response) {
 
-					    	$window.location.reload();
+
+					    	$scope.getMatchdays($scope.teamgroup);
 					    }, function myError(response) {
 					  
 					        $scope.result = "An Error occured. Try again.";
@@ -549,8 +571,7 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 						        url : "teamgroups/"+teamgrouprow.id+"/matchdays",
 						        params: {name:matchdayname}
 						    }).then(function mySuccess(response) {
-
-						    	$window.location.reload();
+						    	$scope.getMatchdays($scope.teamgroup);
 						    }, function myError(response) {
 						  
 						       alert("An Error occured. Try again.");
@@ -601,7 +622,7 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 						        params:{teamid1: team1.id, teamid2: team2.id}
 						    }).then(function mySuccess(response) {
 
-						    	$window.location.reload();
+						    	$scope.getMatchdays($scope.teamgroup);
 						    }, function myError(response) {
 						  
 						       alert("An Error occured. Try again.");
