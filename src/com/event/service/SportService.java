@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import com.sport.model.Scorer;
 import com.phonebook.model.Contact;
 import com.sport.model.Champion;
 import com.sport.model.Game;
@@ -70,5 +71,9 @@ public interface SportService {
 	public Contact uploadPlayerImage(String path, int id, CommonsMultipartFile file);
 
 	public void updateTeam(Team team);
+
+	public List<Scorer> findGameScorers(int id1);
+
+	public List<Scorer> findTeamgroupScorers(int id1);
 	
 }

@@ -71,6 +71,13 @@ public class Game {
 	@Column(name="score2")
 	private String score2;
 
+	
+	
+	@JsonIgnore
+	@OneToMany(fetch = FetchType.LAZY,mappedBy="game",cascade = CascadeType.ALL)
+	List<Scorer> scorers;
+	
+	
 	public Matchday getMatchday() {
 		return matchday;
 	}
@@ -148,6 +155,16 @@ public class Game {
 
 	public void setScore2(String score2) {
 		this.score2 = score2;
+	}
+
+
+	public List<Scorer> getScorers() {
+		return scorers;
+	}
+
+
+	public void setScorers(List<Scorer> scorers) {
+		this.scorers = scorers;
 	}
 
 

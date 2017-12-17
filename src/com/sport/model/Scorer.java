@@ -27,14 +27,24 @@ public class Scorer {
 	private int id;
 
 
-	@Column(name="name", length=250)
+/*	@Column(name="name", length=250)
 	private String name;
+	*/
+	@Column(name="number")
+	private int number;
 	
 	
 	@ManyToOne
 	@JoinColumn(name = "teamgroupid")
 	private Teamgroup teamgroup;
 	
+	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(name = "gameid")
+	private Game game;
+	
+
+
 	@ManyToOne
 	@JoinColumn(name = "contactid")
 	private Contact contact;
@@ -47,13 +57,13 @@ public class Scorer {
 		this.id = id;
 	}
 
-	public String getName() {
+/*	public String getName() {
 		return name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
-	}
+	}*/
 
 	public Teamgroup getTeamgroup() {
 		return teamgroup;
@@ -77,6 +87,20 @@ public class Scorer {
 	List<Game> team2games;
 	*/
 
-	
+	public Game getGame() {
+		return game;
+	}
+
+	public void setGame(Game game) {
+		this.game = game;
+	}
+
+	public int getNumber() {
+		return number;
+	}
+
+	public void setNumber(int number) {
+		this.number = number;
+	}
 
 }

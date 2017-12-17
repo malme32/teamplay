@@ -16,8 +16,10 @@
 }
 
 .table_stylish1 th {
-	background-color: #4CAF50;
-	color: white;
+/* 	background-color: #4CAF50;
+ */	color: white;
+ 	background-color: #9a9a9a;
+ 
 }
 
 /* BUTTONS */
@@ -44,7 +46,7 @@
 
 /* INPUTS */
 
-input[type=text], select {
+input[type=text], select , textarea{
     width: 100%;
     padding: 5px 7px;
     margin: 3px 0;
@@ -76,16 +78,16 @@ input[type=number] {
 }
 
 .background_green {
-	background-color: #4CAF50;
+	background-color: #458748;
 } /* Blue */
 .background_blue {
 	background-color: #008CBA;
 } /* Blue */
 .background_red {
-	background-color: #f44336;
+	background-color: #cf695a;
 } /* Red */
 .background_gray {
-	background-color: #808080;
+	background-color: #9a9a9a;
 	
 } 
 .background_black {
@@ -93,7 +95,7 @@ input[type=number] {
 } 
 
 .background_dark_yellow {
-	background-color: #CCCC00;
+	background-color: #9c9930;
 } 
 
 
@@ -128,6 +130,10 @@ input[type=number] {
 	max-width:80%
 }
 
+.width_very_small{
+	width:50px
+}
+
 /* MARGINS */
 
 .margin_bottom_medium{
@@ -143,7 +149,14 @@ input[type=number] {
 	
 	margin:auto
 }
-
+.margin_left_small{
+	
+	margin-left:10px;
+}
+.margin_left_medium{
+	
+	margin-left:20px;
+}
 /* LISTS */
 .ul_nobullet {
   list-style-type: none;
@@ -159,7 +172,7 @@ input[type=number] {
 
 .div_edit_team{
 	margin:auto;
-	max-width:600px;
+	max-width:1000px;
 	width:100%
 	
 }

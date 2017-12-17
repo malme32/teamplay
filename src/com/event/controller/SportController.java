@@ -34,6 +34,7 @@ import com.phonebook.service.ContactService;
 import com.sport.model.Champion;
 import com.sport.model.Game;
 import com.sport.model.Matchday;
+import com.sport.model.Scorer;
 import com.sport.model.Standing;
 import com.sport.model.Team;
 import com.sport.model.Teamgroup;
@@ -124,6 +125,20 @@ public class SportController {
 	{
 		return sportService.findTeamPlayers(id1);
 	}
+	
+	
+	@RequestMapping(value="/games/{id1}/scorers", method=RequestMethod.GET, produces = "application/json")
+	public @ResponseBody List<Scorer> getTeamScorers(@PathVariable int id1)
+	{
+		return sportService.findGameScorers(id1);
+	}
+	
+	@RequestMapping(value="/teamgroups/{id1}/scorers", method=RequestMethod.GET, produces = "application/json")
+	public @ResponseBody List<Scorer> getTeamgroupScorers(@PathVariable int id1)
+	{
+		return sportService.findTeamgroupScorers(id1);
+	}
+	
 	
 	/////////////////////POST/////////////////////////////////////
 	
@@ -278,6 +293,8 @@ public class SportController {
       return sportService.uploadPlayerImage(path, id, file);
         
     }  
+	
+	
 	
 	
 	//////////////////PUT///////////////////////////

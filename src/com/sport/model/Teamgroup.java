@@ -55,7 +55,7 @@ public class Teamgroup {
 	
 	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY,mappedBy="teamgroup",cascade = CascadeType.ALL)
-	List<Scorer> scrorers;
+	List<Scorer> scorers;
 	
 	public int getId() {
 		return id;
@@ -99,12 +99,12 @@ public class Teamgroup {
 		this.standings = standings;
 	}
 
-	public List<Scorer> getScrorers() {
-		return scrorers;
+	public List<Scorer> getScorers() {
+		return scorers;
 	}
 
-	public void setScrorers(List<Scorer> scrorers) {
-		this.scrorers = scrorers;
+	public void setScrorers(List<Scorer> scorers) {
+		this.scorers = scorers;
 	}
 	
 /*	@JsonIgnore

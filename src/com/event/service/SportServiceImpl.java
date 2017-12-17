@@ -20,6 +20,7 @@ import com.event.dao.ChampionDao;
 import com.event.dao.GameDao;
 import com.event.dao.GeneralDao;
 import com.event.dao.MatchdayDao;
+import com.event.dao.ScorerDao;
 import com.event.dao.StandingDao;
 import com.event.dao.TeamDao;
 import com.event.dao.TeamgroupDao;
@@ -28,6 +29,7 @@ import com.phonebook.service.ContactService;
 import com.sport.model.Champion;
 import com.sport.model.Game;
 import com.sport.model.Matchday;
+import com.sport.model.Scorer;
 import com.sport.model.Standing;
 import com.sport.model.Team;
 import com.sport.model.Teamgroup;
@@ -57,6 +59,9 @@ public class SportServiceImpl  implements SportService{
 
 	@Autowired
 	ContactService contactService;
+	
+	@Autowired
+	ScorerDao scorerDao;
 	
 	@Override
 	public Champion findChampionsById(int id) {
@@ -504,5 +509,28 @@ public class SportServiceImpl  implements SportService{
 	//	Hibernate.initialize(team.getPlayers());
 		//team.setPlayers(team1.getPlayers());
 		generalDaoService.update(team);
+	}
+
+	@Override
+	public List<Scorer> findGameScorers(int id1) {
+		// TODO Auto-generated method stub
+		Game game = gameDao.findById(id1);
+		
+		//Scorer scorer =scorerDao.findById(id1);
+		Hibernate.initialize(game.getScorers());
+		return game.getScorers() ;
+	}
+
+	@Override
+	public List<Scorer> findTeamgroupScorers(int id1) {
+		// TODO Auto-generated method stub
+		
+		// TODO Auto-generated method stub
+		Teamgroup teamgroup =teamgroupDao.findById(id1);
+				
+		//Scorer scorer =scorerDao.findById(id1);
+		Hibernate.initialize(teamgroup.getScorers());
+		return teamgroup.getScorers() ;
+
 	}
 }

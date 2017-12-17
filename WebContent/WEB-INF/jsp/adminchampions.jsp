@@ -54,13 +54,13 @@
 
 	</table>
 </div>
-<div ng-show='teamgrouplist'>
+<div ng-show='teamgrouplist' class="margin_left_small">
 
 
-	<h1>
+	<h2>
 		ΟΜΙΛΟΙ <span class="color_gray font_size_small">(σε
 			{{champion.name}})</span>
-	</h1>
+	</h2>
 	<div class='table_stylish1'>
 		<table>
 			<tr>
@@ -119,11 +119,11 @@
 </div>
 
 
-<div ng-show='teamgroup'>
-	<h1>
+<div ng-show='teamgroup' class="margin_left_medium">
+	<h3>
 		ΟΜΑΔΕΣ <span class="color_gray font_size_small">(σε
 			{{champion.name}}/{{teamgroup.name}})</span>
-	</h1>
+	</h3>
 	<div class='table_stylish1'>
 		<table>
 			<tr>
@@ -141,6 +141,7 @@
 			<tr>
 				<td><select ng-model="selectedTeam"
 					ng-options="row.name for row in totalTeamList | orderBy:'name'">
+					<option value="">---Επιλέξτε---</option>
 				</select>
 				<td>
 					<button class='button_flat background_green'
@@ -182,10 +183,10 @@
 			</li>
 		</ul>
 	</div> -->
-	<h1>
+	<h3>
 		ΑΓΩΝΙΣΤΗΚΕΣ <span class="color_gray font_size_small">(σε
 			{{champion.name}}/{{teamgroup.name}})</span>
-	</h1>
+	</h3>
 	
 	
 	<table class='table_stylish1 margin_bottom_medium' >
@@ -274,6 +275,7 @@
 							ng-click='adminDeleteGame(row1)'>Διαγραφή</button></td>
 					<td><span><select ng-model="selectedmatchday"
 							ng-options="row.name for row in matchday | orderBy:'name'">
+							<option value="">---Επιλέξτε---</option>
 						</select></span> 
 					</td>
 					<td><span><button class='button_flat  background_black'
@@ -285,11 +287,15 @@
 
 					<td>
 					<select ng-model="selectedteam1"
-							ng-options="row2.team.name for row2 in standings | orderBy:'name'" class='width_40'></select>
+							ng-options="row2.team.name for row2 in standings | orderBy:'name'" class='width_40'>
+							<option value="">---Επιλέξτε---</option>
+							</select>
 
 							-
 							<select  ng-model="selectedteam2"
-							ng-options="row2.team.name for row2 in standings | orderBy:'name'" class='width_40'></select>
+							ng-options="row2.team.name for row2 in standings | orderBy:'name'" class='width_40'>
+							<option value="">---Επιλέξτε---</option>
+							</select>
 					</span></td>
 					<td></td>
 					<td></td>
@@ -355,7 +361,7 @@
 						<button ng-click='addGameToMatchday(row1,selectedmatchday)'>Move</button>
 					</td>
 
-				</tr>
+				</tr>	
 			</tbody>
 		</table>
 		<table>
