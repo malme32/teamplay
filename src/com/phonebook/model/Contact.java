@@ -88,7 +88,7 @@ public class Contact  implements InitializingBean{
 	private List<Event> events;// = new ArrayList<Event>();
 	//, cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH,CascadeType.PERSIST}
 	@JsonIgnore
-	@ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL, mappedBy ="players")
 	private List<Team> teams = new ArrayList<Team>();
 	
 	

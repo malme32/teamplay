@@ -633,8 +633,209 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 			/*	
 					  this.myDate = new Date();
 					  this.isOpen = false;*/
-					
+				  
+				  $scope.openScorerModal = function (row){
 
+				
+					  var modal = document.getElementById('myModal');
+
+
+					  
+						 $http({
+						        method : "GET",
+						        url : "games/"+row.id+"/scorers"
+						    }).then(function mySuccess(response) {
+						 
+						    	$scope.scorers=response.data;
+						    	$scope.selectedgame=row;
+						    	modal.style.display = "block";
+						    	
+
+								 $http({
+								        method : "GET",
+								        url : "teams/"+row.team1.id+"/players"
+								    }).then(function mySuccess(response) {
+
+								    	$scope.team1players=response.data;
+		
+								    	
+								    }, function myError(response) {
+								  
+								       alert("Κάτι πήγε στραβά. Προσπαθήστε ξανά.");
+								    });
+								 
+						    	
+								 $http({
+								        method : "GET",
+								        url : "teams/"+row.team2.id+"/players"
+								    }).then(function mySuccess(response) {
+
+								    	$scope.team2players=response.data;
+		
+								    	
+								    }, function myError(response) {
+								  
+								       alert("Κάτι πήγε στραβά. Προσπαθήστε ξανά.");
+								    });
+								 
+						    	
+						    	
+						    }, function myError(response) {
+						  
+						       alert("Κάτι πήγε στραβά. Προσπαθήστε ξανά.");
+						    });
+						 
+					  
+					  
+				  }  
+				  $scope.closeScorerModal = function (){
+					  
+					  var modal = document.getElementById('myModal');
+					  modal.style.display = "none";
+					  
+				  }  
+				  
+				  
+				  $scope.editScorer = function (row){
+		
+					  var modal = document.getElementById('myModal');
+					  
+					  
+						 $http({
+						        method : "PUT",
+						        url : "games/"+$scope.selectedgame.id+"/scorers",
+						        data: row,
+						        headers: {'Content-Type': 'application/json; charset=utf-8'} 
+						        
+						    }).then(function mySuccess(response) {
+
+							    alert("Εγινε!");
+						    	//$scope.scorers=response.data;
+						    	//modal.style.display = "block";
+						    }, function myError(response) {
+						  
+						       alert("Κάτι πήγε στραβά. Προσπαθήστε ξανά.");
+						    });
+						 
+					  
+					  
+				  }  
+				  
+				  
+				  $scope.addScorer = function (row){
+					  if(!row)
+						  return;
+					  
+					  if(!row.contact)
+						  return;
+
+					  if(!row.number)
+						  return;
+					  
+						 $http({
+						        method : "POST",
+						        url : "games/"+$scope.selectedgame.id+"/scorers",
+						        data: row,
+						        headers: {'Content-Type': 'application/json; charset=utf-8'} 
+						        
+						    }).then(function mySuccess(response) {
+						  
+						    	$scope.openScorerModal($scope.selectedgame);
+							    //alert("Εγινε!");
+						    	//$scope.scorers=response.data;
+						    	//modal.style.display = "block";
+						    	
+						    	$scope.newplayer1.name="";
+						    	$scope.newplayer2.name="";
+
+			
+						    	
+						    	
+						    }, function myError(response) {
+						  
+						       alert("Κάτι πήγε στραβά. Προσπαθήστε ξανά.");
+						    });
+						 
+					  
+					  
+				  } 
+				  $scope.deleteScorer = function (row){
+					  if(!row)
+						  return;
+						 if(!confirm("Είστε σίγουρος;"))
+							 return;
+						 $http({
+						        method : "DELETE",
+						        url : "scorers/"+row.id
+						    }).then(function mySuccess(response) {
+
+						    	$scope.openScorerModal($scope.selectedgame);
+							    //alert("Εγινε!");
+						    	//$scope.scorers=response.data;
+						    	//modal.style.display = "block";
+						    }, function myError(response) {
+						  
+						       alert("Κάτι πήγε στραβά. Προσπαθήστε ξανά.");
+						    });
+						 
+					  
+					  
+				  } 
+				  
+				  
+				  
+					 $scope.addScorerAndPlayer= function (scorer,player,team){
+						 //addScorerAndPlayer(newscorer1,newplayer1,selectedgame.team1)
+							// $scope.result = $scope.newplayer;
+						 
+						  if(!scorer)
+							  return;
+						  
+						  if(!scorer.number)
+							  return;
+						  
+						 if(!player)
+							  return;
+						  
+						  if(!player.name)
+							  return;
+						  
+						 
+							 $http({
+						        method : "POST",
+						        	url : "teams/"+team.id+"/players",
+							        data: player,
+							        headers: {'Content-Type': 'application/json; charset=utf-8'}
+						    }).then(function mySuccess(response) {
+						    	
+						    	
+						    			scorer.contact = response.data;
+						    			$scope.addScorer(scorer);
+						    			
+						    			
+						    			//$scope.newplayer={};
+						    			//$scope.getTeam();
+								    		//$scope.newplayer = response.data;
+								    		//$scope.result=$scope.newplayer;
+						/*					 $http({
+										        method : "PUT",
+										        	url : "teams/"+$scope.team.id+"players/"+$scope.newplayer.id
+										    }).then(function mySuccess(response) {
+						
+										    	$window.location.reload();
+										    	
+										    }, function myError(response) {
+										  
+										        alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");
+										    });*/
+							
+						    	
+						    }, function myError(response) {
+						  
+						        alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");
+						    });
+						 }
+				  
 				  
 });
 

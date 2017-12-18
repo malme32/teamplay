@@ -13,13 +13,20 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonAppend;
 import com.phonebook.model.Contact;
 
 
 @Entity
 @Table(name="scorer")
+@JsonAppend(
+	    attrs = {
+	        @JsonAppend.Attr(value = "ApprovalState")
+	    }
+	)
 public class Scorer {
 	@Id
 	@Column(name="id")
@@ -33,7 +40,7 @@ public class Scorer {
 	@Column(name="number")
 	private int number;
 	
-	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "teamgroupid")
 	private Teamgroup teamgroup;
@@ -49,6 +56,9 @@ public class Scorer {
 	@JoinColumn(name = "contactid")
 	private Contact contact;
 
+	@Transient
+	private Team team;
+	
 	public int getId() {
 		return id;
 	}
@@ -101,6 +111,14 @@ public class Scorer {
 
 	public void setNumber(int number) {
 		this.number = number;
+	}
+
+	public Team getTeam() {
+		return team;
+	}
+
+	public void setTeam(Team team) {
+		this.team = team;
 	}
 
 }

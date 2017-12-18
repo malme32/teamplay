@@ -518,19 +518,43 @@ public class SportServiceImpl  implements SportService{
 		
 		//Scorer scorer =scorerDao.findById(id1);
 		Hibernate.initialize(game.getScorers());
+		
+		for(int i=0;i<game.getScorers().size();i++)
+		{
+			Scorer scorer = game.getScorers().get(i);
+			Hibernate.initialize(scorer.getContact().getTeams());
+			if(scorer.getContact().getTeams().size()>0)
+				scorer.setTeam(scorer.getContact().getTeams().get(0));
+
+		}	
+
 		return game.getScorers() ;
 	}
 
 	@Override
 	public List<Scorer> findTeamgroupScorers(int id1) {
 		// TODO Auto-generated method stub
-		
 		// TODO Auto-generated method stub
 		Teamgroup teamgroup =teamgroupDao.findById(id1);
 				
-		//Scorer scorer =scorerDao.findById(id1);
 		Hibernate.initialize(teamgroup.getScorers());
+		for(int i=0;i<teamgroup.getScorers().size();i++)
+		{
+			Scorer scorer = teamgroup.getScorers().get(i);
+			Hibernate.initialize(scorer.getContact().getTeams());
+			if(scorer.getContact().getTeams().size()>0)
+				scorer.setTeam(scorer.getContact().getTeams().get(0));
+
+		}
 		return teamgroup.getScorers() ;
 
+	}
+
+	@Override
+	public Scorer findScorerById(int id) {
+		// TODO Auto-generated method stub
+		
+		
+		return scorerDao.findById(id);
 	}
 }

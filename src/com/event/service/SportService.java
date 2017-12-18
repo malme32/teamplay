@@ -75,5 +75,7 @@ public interface SportService {
 	public List<Scorer> findGameScorers(int id1);
 
 	public List<Scorer> findTeamgroupScorers(int id1);
+
+	public Scorer findScorerById(int id);
 	
 }

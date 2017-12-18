@@ -322,7 +322,7 @@ appMain.controller("championsController",function($scope, $http, $location, $win
 			    }).then(function mySuccess(response) {
 
 			        $scope.teamgrouplist = response.data;
-
+			        
 			    }, function myError(response) {
 			  
 			        $scope.result = response;//;"/champions/"+row.id+"/teamgroups";
@@ -344,6 +344,45 @@ appMain.controller("championsController",function($scope, $http, $location, $win
 			    }, function myError(response) {
 			  
 			        $scope.result = response;//;"/champions/"+row.id+"/teamgroups";
+			        
+			        
+			      
+			    });
+			 
+			 
+			 $http({
+			        method : "GET",
+			        url : "teamgroups/"+row.id+"/scorers"
+			    }).then(function mySuccess(response) {
+
+			    	var scorer_tmp = response.data;
+			    	row.scorers=[] ;
+			  
+			    	for(i=0;i<scorer_tmp.length&&i<10;i++)
+		    		{
+			    		var found=false;
+			    		if(row.scorers)
+			    			for(k=0;k<row.scorers.length;k++)
+			    			{
+			    					if((row.scorers[k].contact.id==scorer_tmp[i].contact.id))
+			    						{
+					    						row.scorers[k].number= row.scorers[k].number+ scorer_tmp[i].number;
+					    						found=true;
+					    						break;
+			    						}
+			    			}
+			    		
+		    	
+		    			if(!found)
+		    				row.scorers.push(scorer_tmp[i]);
+		  
+		    		}
+			    	
+			    }, function myError(response) {
+			  
+			        $scope.result = response;//;"/champions/"+row.id+"/teamgroups";
+			        
+			        
 			      
 			    });
 			 

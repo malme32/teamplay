@@ -268,11 +268,17 @@
 					</td>
 					<td class="td_date_small"><input ng-model="row1.tmpdate"
 						type="time" /></td>
-					<td class=""><button
+					<td class="">
+					
+					<button
 							class='button_flat  background_dark_yellow'
 							ng-click='adminEditGame(row1,row)'>Αποθήκευση</button>
 						<button class='button_flat  background_red'
-							ng-click='adminDeleteGame(row1)'>Διαγραφή</button></td>
+							ng-click='adminDeleteGame(row1)'>Διαγραφή</button>
+							
+						<button class='button_flat  background_black'
+							ng-click='openScorerModal(row1)'>Σκορερς</button>
+							</td>
 					<td><span><select ng-model="selectedmatchday"
 							ng-options="row.name for row in matchday | orderBy:'name'">
 							<option value="">---Επιλέξτε---</option>
@@ -410,3 +416,136 @@
 <!-- {{result}} -->
 <!-- 	<button ng-click="setPath()">Register a new event</button>
  -->
+ 
+ 
+ 
+ 
+ 
+ </div>
+ 
+ </div>
+ 
+ 
+ 
+
+
+<!-- Trigger/Open The Modal -->
+<!-- <button ng-click='openScorerModal()' >Open Modal</button>
+ -->
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span  ng-click='closeScorerModal()' class="close">&times;</span>
+    
+ <div class='table_stylish1'>
+<h3>Σκορερς</h3>
+<table>
+<thead>
+			<tr>
+				<th>ΟΝΟΜΑ
+				</th>
+				<th>ΟΜΑΔΑ
+				</th>
+				<th>ΓΚΟΛ
+				</th>
+				<th>ΕΝΕΡΓΕΙΑ
+				</th>
+			</tr>
+</thead>
+<tbody>
+			<tr ng-repeat='row2 in scorers   | orderBy: "team.name"'>
+				
+				<td>{{row2.contact.name}}
+				</td>
+				<td>{{row2.team.name}}
+				</td>
+				<td><input type='number' ng-model="row2.number"/>
+				</td>
+				<td><button
+							class='button_flat  background_dark_yellow'
+							ng-click='editScorer(row2)'>Αποθήκευση</button>
+				<button class='button_flat background_red' 
+					ng-click='deleteScorer(row2)'>Διαγραφή</button>
+				</td>
+			</tr>
+			
+			
+			<tr>
+				
+				<td>
+					<select ng-model="newscorer1.contact"
+							ng-options="row.name for row in team1players | orderBy:'name'">
+							<option value="">---Επιλέξτε---</option>
+						</select>
+				
+				</td>
+				<td>{{selectedgame.team1.name}}
+				</td>
+				<td><input type='number' ng-model="newscorer1.number"/>
+				</td>
+				<td><button
+							class='button_flat  background_green'
+							ng-click='addScorer(newscorer1)'>Εισαγωγή</button>
+				</td>
+			</tr>
+			
+			<tr>
+				
+				<td>
+					<input type='text' ng-model="newplayer1.name"/>
+				</td>
+				<td>{{selectedgame.team1.name}}
+				</td>
+				<td><input type='number' ng-model="newscorer1_.number"/>
+				</td>
+				<td><button
+							class='button_flat  background_green'
+							ng-click='addScorerAndPlayer(newscorer1_,newplayer1,selectedgame.team1)'>Εισαγωγή</button>
+				</td>
+			</tr>
+			
+			<tr>
+				
+				<td>
+					<select ng-model="newscorer2.contact"
+							ng-options="row.name for row in team2players | orderBy:'name'">
+							<option value="">---Επιλέξτε---</option>
+						</select>
+				
+				</td>
+				<td>{{selectedgame.team2.name}}
+				</td>
+				<td><input type='number' ng-model="newscorer2.number"/>
+				</td>
+				<td><button
+							class='button_flat  background_green'
+							ng-click='addScorer(newscorer2)'>Εισαγωγή</button>
+				</td>
+			</tr>
+			
+			<tr>
+				
+				<td>
+					<input type='text' ng-model="newplayer2.name"/>
+				</td>
+				<td>{{selectedgame.team2.name}}
+				</td>
+				<td><input type='number' ng-model="newscorer2_.number"/>
+				</td>
+				<td><button
+							class='button_flat  background_green'
+							ng-click='addScorerAndPlayer(newscorer2_,newplayer2,selectedgame.team2)'>Εισαγωγή</button>
+				</td>
+			</tr>
+			
+
+</tbody>
+</table>
+</div>
+ 
+
+  </div>
+
+</div>

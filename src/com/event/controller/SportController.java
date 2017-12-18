@@ -149,6 +149,7 @@ public class SportController {
 		return ;
 	}
 	
+	
 
 	@RequestMapping(value="/champions/{id1}/teamgroups", method=RequestMethod.POST, produces = "application/json")
 	public @ResponseBody void addTeamGroup(@ModelAttribute Teamgroup teamgroup, @PathVariable int id1)
@@ -280,11 +281,11 @@ public class SportController {
 	}
 	
 	@RequestMapping(value="/teams/{teamid}/players", method=RequestMethod.POST, produces = "application/json")
-	public @ResponseBody void addPlayerToTeam(@PathVariable int teamid,@RequestBody Contact contact)
+	public @ResponseBody Contact addPlayerToTeam(@PathVariable int teamid,@RequestBody Contact contact)
 	{
 		generalDaoService.persist(contact);
 		sportService.addPlayerToTeam(teamid, contact.getId());
-		return;
+		return contact;
 	}
 	
 	@RequestMapping(value = "/players/{id}/images", method = RequestMethod.POST, produces = "application/json")
@@ -295,6 +296,17 @@ public class SportController {
     }  
 	
 	
+	@RequestMapping(value="/games/{gameid}/scorers", method=RequestMethod.POST, produces = "application/json")
+	public @ResponseBody void addScorer(@RequestBody Scorer scorer,@PathVariable int gameid)
+	{
+		Game game = sportService.findGameById(gameid);
+		scorer.setGame(game);
+		scorer.setTeamgroup(game.getMatchday().getTeamgroup());
+		generalDaoService.persist(scorer);
+		return ;
+	}
+	
+
 	
 	
 	//////////////////PUT///////////////////////////
@@ -398,8 +410,18 @@ public class SportController {
 		return ;
 	}
 	
+	@RequestMapping(value="/games/{gameid}/scorers", method=RequestMethod.PUT, produces = "application/json")
+	public @ResponseBody void editScorer(@RequestBody Scorer scorer,@PathVariable int gameid)
+	{
+		Game game = sportService.findGameById(gameid);
+		scorer.setGame(game);
+		scorer.setTeamgroup(game.getMatchday().getTeamgroup());
+		generalDaoService.update(scorer);
+		return ;
+	}
 	
-		//////////////////////DELETE///////////////////
+	
+		//////////////////////DELETE///////////////////////
 	/////////////////////////////////////////////////////////////////
 	
 	@RequestMapping(value="/champions/{id}", method=RequestMethod.DELETE, produces = "application/json")
@@ -482,6 +504,15 @@ public class SportController {
 	public @ResponseBody void deletePlayer(@PathVariable int id)
 	{
 		generalDaoService.delete(contactService.getContact(id));
+		return ;
+	}
+	
+	
+	@RequestMapping(value="/scorers/{id}", method=RequestMethod.DELETE, produces = "application/json")
+	public @ResponseBody void deleteScorer(@PathVariable int id)
+	{
+		Scorer scorer = sportService.findScorerById(id);
+		generalDaoService.delete(scorer);
 		return ;
 	}
 	

@@ -132,7 +132,7 @@ pageEncoding="UTF-8"%>
 			</tr>
 </thead>
 <tbody>
-			<tr ng-repeat='row1 in standings  | orderBy: "-grade"'>
+			<tr ng-repeat='row1 in standings | orderBy: "-grade"'>
 				<td><a href='team-detail?teamid={{row1.team.id}}'><img src="${resources}/images/small-flags/img-01.png" alt="">{{row1.team.name}}</a>
 				</td>
 				<td class="td_grade">{{row1.grade}}

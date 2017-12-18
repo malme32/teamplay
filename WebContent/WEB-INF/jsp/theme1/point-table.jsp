@@ -101,7 +101,7 @@ pageEncoding="UTF-8"%>
 <div class="col-lg-9 col-sm-8" >
 <div ng-repeat='row in teamgrouplist' style="margin-bottom:60px;">
 <div  class="macth-fixture" >
-<h5>{{row.name}}</h5>
+<h2>{{row.name}}</h2>
 <div class="last-matches styel-3">
 <div class="table-responsive">
 <table class="table table-bordered table-hover">
@@ -173,6 +173,39 @@ pageEncoding="UTF-8"%>
 
 </div>
 
+
+ <div class="palyer-career theme-padding-bottom" ng-show='row.scorers.length'>
+<h3>Σκορερς</h3>
+<div class="table-responsive">
+<table class="table table-bordered">
+<thead>
+			<tr>
+				<th>
+				</th>
+				<th>ΟΝΟΜΑ
+				</th>
+				<th>ΟΜΑΔΑ
+				</th>
+				<th>ΓΚΟΛ
+				</th>
+			</tr>
+</thead>
+<tbody>
+			<tr ng-repeat='row2 in row.scorers   | orderBy: "-number"'>
+				<td>{{$index + 1}}</td>
+				<td>{{row2.contact.name}}
+				</td>
+				<td>{{row2.team.name}}
+				</td>
+				<td>{{row2.number}}
+				</td>
+			</tr>
+
+</tbody>
+</table>
+</div>
+</div>
+ 
 
 
 </div>	 
