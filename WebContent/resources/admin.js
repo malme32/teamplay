@@ -48,6 +48,8 @@ appAdmin.service('fileUpload', ['$http', function ($http) {
     }
 }]);
 
+
+
 /*appAdmin.directive('fileModel', ['$parse', function ($parse) {
     return {
        restrict: 'A',

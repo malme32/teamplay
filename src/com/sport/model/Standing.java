@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -59,6 +60,10 @@ public class Standing {
 	@Column(name="draw", columnDefinition = "int default 0")
 	private int draw;
 
+	
+	@Transient
+	private Champion champion;
+	
 	public int getId() {
 		return id;
 	}
@@ -153,6 +158,14 @@ public class Standing {
 
 	public void setGame(int game) {
 		this.game = game;
+	}
+
+	public Champion getChampion() {
+		return champion;
+	}
+
+	public void setChampion(Champion champion) {
+		this.champion = champion;
 	}
 	
 

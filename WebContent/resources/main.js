@@ -63,6 +63,19 @@ appMain.config(function($routeProvider) {
     
 });
 
+
+appMain.filter('validDate', function() {
+    return function(items) {
+    	  var result = [];   
+    	  for (var i=0; i<items.length; i++){
+              if (items[i].date)  {
+                  result.push(items[i]);
+              }
+          }            
+          return result;
+    };
+});
+
 //var appMain = angular.module("appMain",[]);
 appMain.controller("eventsController",function($scope, $http, $location){
 	
@@ -431,10 +444,11 @@ appMain.controller("championsController",function($scope, $http, $location, $win
 });
 
 appMain.controller("teamdetailController",function($scope, $http, $location){
-	var teamid = location.search.split('teamid=')[1]
+	var teamid = location.search.split('teamid=')[1];
 	//var teamid = $location.search().teamid; 
 	 //$scope.games = teamid;
-	
+		$scope.currentpage=window.location.href; 
+
 	 $http({
 	        method : "GET",
 	        url : "teams/"+teamid
@@ -498,7 +512,7 @@ appMain.controller("teamdetailController",function($scope, $http, $location){
 
 });
 
-appMain.controller("headerController",function($scope, $http, $location){
+/*appMain.controller("headerController",function($scope, $http, $location){
 
 	    
 	 $http({
@@ -512,8 +526,8 @@ appMain.controller("headerController",function($scope, $http, $location){
 	    	
 	        //$scope.result = response.statusText;
 	      
-	    });
-	 
+	    });*/
+
 /*		 $scope.visitEvent = function (eventid){
 			 
 			 $location.path('event/'+eventid); 
@@ -524,7 +538,7 @@ appMain.controller("headerController",function($scope, $http, $location){
 			 $location.path('newevent'); 
 		 }*/
 
-});
+/*});*/
 
 appMain.controller("headerController",function($scope, $http, $location){
 
@@ -539,6 +553,23 @@ appMain.controller("headerController",function($scope, $http, $location){
 	    }, function myError(response) {
 	    		      
 	    });
+	 
+
+	 $http({
+	        method : "GET",
+	        url : "news",
+	    }).then(function mySuccess(response) {
+
+	        $scope.news = response.data;
+
+
+	    }, function myError(response) {
+
+	    	
+	        //$scope.result = response.statusText;
+	      
+	    });
+	 
 	 
 });
 

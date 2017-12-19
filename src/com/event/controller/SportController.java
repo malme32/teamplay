@@ -34,6 +34,7 @@ import com.phonebook.service.ContactService;
 import com.sport.model.Champion;
 import com.sport.model.Game;
 import com.sport.model.Matchday;
+import com.sport.model.Notice;
 import com.sport.model.Scorer;
 import com.sport.model.Standing;
 import com.sport.model.Team;
@@ -139,6 +140,11 @@ public class SportController {
 		return sportService.findTeamgroupScorers(id1);
 	}
 	
+	@RequestMapping(value="/news", method=RequestMethod.GET, produces = "application/json")
+	public @ResponseBody List<Notice> getNews()
+	{
+		return sportService.findAllNews();
+	}
 	
 	/////////////////////POST/////////////////////////////////////
 	

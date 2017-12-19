@@ -20,6 +20,7 @@ import com.event.dao.ChampionDao;
 import com.event.dao.GameDao;
 import com.event.dao.GeneralDao;
 import com.event.dao.MatchdayDao;
+import com.event.dao.NoticeDao;
 import com.event.dao.ScorerDao;
 import com.event.dao.StandingDao;
 import com.event.dao.TeamDao;
@@ -29,6 +30,7 @@ import com.phonebook.service.ContactService;
 import com.sport.model.Champion;
 import com.sport.model.Game;
 import com.sport.model.Matchday;
+import com.sport.model.Notice;
 import com.sport.model.Scorer;
 import com.sport.model.Standing;
 import com.sport.model.Team;
@@ -62,6 +64,9 @@ public class SportServiceImpl  implements SportService{
 	
 	@Autowired
 	ScorerDao scorerDao;
+
+	@Autowired
+	NoticeDao noticeDao;
 	
 	@Override
 	public Champion findChampionsById(int id) {
@@ -556,5 +561,11 @@ public class SportServiceImpl  implements SportService{
 		
 		
 		return scorerDao.findById(id);
+	}
+
+	@Override
+	public List<Notice> findAllNews() {
+		// TODO Auto-generated method stub
+		return noticeDao.findAll();
 	}
 }

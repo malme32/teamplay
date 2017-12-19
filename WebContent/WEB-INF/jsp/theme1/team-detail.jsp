@@ -29,7 +29,7 @@ pageEncoding="UTF-8"%>
 <h2>{{team.name}}</h2>
 
 <ul class="breadcrumbs">
-<li><a href="#">Home</a></li>
+<li><a href="soccer.html">ΑΡΧΙΚΗ</a></li>
 <li>{{team.name}}</li>
 </ul>
 </div>
@@ -76,6 +76,7 @@ pageEncoding="UTF-8"%>
 </ul>
 </li>
 </ul> -->
+{{team.name}}
 </div>
 </div>
 </div>
@@ -84,26 +85,28 @@ pageEncoding="UTF-8"%>
 
 <div class="col-lg-9 col-md-9 col-sm-7">
 
-<div class="team-detail-content theme-padding-bottom" ng-show='team.description'>
+<div class="team-detail-content theme-padding-bottom">
 <h2>ΠΕΡΙΓΡΑΦΗ ΟΜΑΔΑΣ</h2>
 <p>{{team.description}}</p>
 <div class="tags-holder">
-<ul class="tags-list pull-left">
+ <ul class="tags-list pull-left">
 <li><i class="fa fa-tags"></i>Tags</li>
-<li><a href="#">Scores</a></li>
-<li><a href="#">transfers</a></li>
-<li><a href="#">teams</a></li>
-<li><a href="#">cups</a></li>
-</ul>
+<li><a href="point-table.html">Champions</a></li>
+<!-- <li><a href="#">transfers</a></li>
+ --><li><a href="team-list.html">Teams</a></li>
+<!-- <li><a href="#">cups</a></li>
+ --></ul> 
 <ul class="social-icons pull-right">
-<li>Share this post</li>
-<li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
-<li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
-<li><a class="youtube" href="#"><i class="fa fa-youtube-play"></i></a></li>
-<li><a class="pinterest" href="#"><i class="fa fa-pinterest-p"></i></a></li>
+<li>Κοινοποιήστε αυτή τη σελίδα</li>
+<li><a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u={{currentpage}}"><i class="fa fa-facebook"></i></a></li>
+<li><a class="tweeter" href="https://twitter.com/home?status={{currentpage}}"><i class="fa fa-twitter"></i></a></li>
+<!-- <li><a class="youtube" href="#"><i class="fa fa-youtube-play"></i></a></li>
+<li><a class="pinterest" href="#"><i class="fa fa-pinterest-p"></i></a></li> -->
 </ul>
 </div>
 </div>
+
+
 
 <!-- <div class="" ng-repeat='row2 in row.standings.matchdays' style="margin-bottom:30px;"> -->
 <!-- 		<h3><span><i class="red-color">{{row2.name}} </i></span></h3>
@@ -115,25 +118,25 @@ pageEncoding="UTF-8"%>
 <table class="table table-bordered">
 <thead>
 			<tr>
-				<th>Team
+				<th>ΠΡΩΤΑΘΛΗΜΑ
 				</th>
-				<th>Grade
+				<th>ΒΑΘΜΟΙ
 				</th>
-				<th>Goal
+				<th>ΓΚΟΛ
 				</th>
-				<th>Mathes
+				<th>ΑΓΩΝΕΣ
 				</th>
-				<th>Wins
+				<th>ΝΙΚΕΣ
 				</th>
-				<th>Defeats
+				<th>ΗΤΤΕΣ
 				</th>
-				<th>Draws
+				<th>ΙΣΟΠΑΛΙΕΣ
 				</th>
 			</tr>
 </thead>
 <tbody>
 			<tr ng-repeat='row1 in standings | orderBy: "-grade"'>
-				<td><a href='team-detail?teamid={{row1.team.id}}'><img src="${resources}/images/small-flags/img-01.png" alt="">{{row1.team.name}}</a>
+				<td><a href='point-table.html'>{{row1.champion.name}}</a>
 				</td>
 				<td class="td_grade">{{row1.grade}}
 				</td>
@@ -162,8 +165,8 @@ pageEncoding="UTF-8"%>
 		<div class="table-responsive">
 		<table class="table table-bordered">
 		<tbody>
-		<tr ng-repeat='row1 in games | orderBy: "date"''>
-		<td>
+		<tr ng-repeat='row1 in games | validDate | orderBy: "-date" '  >
+		<td >
 		<div class="logo-width-name"><a href='team-detail?teamid={{row1.team1.id}}'><img src="${resources}/images/team-logos-small/img-01.png" alt="">{{row1.team1.name}}</a></div>
 		</td>
 		
@@ -185,9 +188,25 @@ pageEncoding="UTF-8"%>
 		</div>
 	<!-- 	</div> -->
 
+
+<div class="team-detail-content theme-padding-bottom" >
+<h2>ΣΧΟΛΙΑ</h2>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.11&appId=168415953609149';
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+<div class="fb-comments" data-href="{{currentpage}}" data-numposts="5"></div>
+
 </div>
 
 </div>
+
+</div>
+
 
 
 <div class="row" ng-show='players.length'>
@@ -197,30 +216,35 @@ pageEncoding="UTF-8"%>
 
 <div class="col-sm-4 col-xs-6 r-full-width" ng-repeat='row in players'>
 <div class="team-column">
-<img ng-src="${resources}{{row.imagepath}}" alt="">
-<span class="player-number">{{row.number}}</span>
+ <div style='background:url(${resources}{{row.imagepath}}) no-repeat center; width:250px; height:250px;background-size:cover; '>
+<%--  <img ng-src="${resources}{{row.imagepath}}" alt="">  --%>
+<span ng-show='row.number' class="player-number">{{row.number}}</span>
 <div class="team-detail">
 <h5><a href="#">{{row.name}}</a></h5>
-<span class="desination">Defender</span>
+<span class="desination">{{row.soccerposition}}</span>
 <div class="detail-inner">
 <ul>
-<li>Θέση</li>
+<li >Θέση</li>
 <li>Νούμερο</li>
 <li>Ομάδα</li>
+<li >&nbsp;</li>
 <!-- <li>Ακολουθήστε μας</li> -->
 </ul>
 <ul>
-<li>{{row.soccerposition}}</li>
-<li>{{row.number}}</li>
-<li>{{team.name}}</li>
-<!-- <li>
+<li>&nbsp;{{row.soccerposition}}</li>
+<li>&nbsp;{{row.number}}</li>
+<li>&nbsp;{{team.name}}</li>
+<li >&nbsp;</li>
+ <li>
 <ul class="social-icons">
-<li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
+<li><a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u={{currentpage}}"><i class="fa fa-facebook"></i></a></li>
+<li><a class="tweeter" href="https://twitter.com/home?status={{currentpage}}"><i class="fa fa-twitter"></i></a></li>
+<!-- <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
 <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
 <li><a class="youtube" href="#"><i class="fa fa-youtube-play"></i></a></li>
-<li><a class="pinterest" href="#"><i class="fa fa-pinterest-p"></i></a></li>
+<li><a class="pinterest" href="#"><i class="fa fa-pinterest-p"></i></a></li> -->
 </ul>
-</li> -->
+</li> 
 </ul>
 </div>
 </div>
@@ -234,7 +258,7 @@ pageEncoding="UTF-8"%>
 </div>
 
 </div>
-</div>
+
 
 </main>
 
@@ -257,11 +281,13 @@ pageEncoding="UTF-8"%>
 </ul>
 <span class="follow-us">follow us </span>
 <ul class="social-icons">
-<li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
-<li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
-<li><a class="youtube" href="#"><i class="fa fa-youtube-play"></i></a></li>
+
+<!-- <li><a class="youtube" href="#"><i class="fa fa-youtube-play"></i></a></li>
 <li><a class="pinterest" href="#"><i class="fa fa-pinterest-p"></i></a></li>
-<li><a class="tumblr" href="#"><i class="fa fa-tumblr"></i></a></li>
+<li><a class="tumblr" href="#"><i class="fa fa-tumblr"></i></a></li> -->
+
+<li><a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u={{currentpage}}"><i class="fa fa-facebook"></i></a></li>
+<li><a class="tweeter" href="https://twitter.com/home?status={{currentpage}}"><i class="fa fa-twitter"></i></a></li>
 </ul>
 </div>
 </div>

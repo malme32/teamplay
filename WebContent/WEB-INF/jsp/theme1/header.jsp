@@ -158,22 +158,23 @@ pageEncoding="UTF-8"%>
 <div class="col-lg-9 col-md-9 col-sm-9">
 <div id="mega-blog-slider" class="mega-blog-slider">
 
-<div class="item">
+
+
+ <div class="item" ng-repeat='row in news | orderBy:"-date"'>
 
 <div class="large-post-img">
-<img src="${resources}/images/blog-grid-view/img-2-1.jpg" alt="">
+<img ng-src="${resources}{{row.imageurl}}" alt="">
 </div>
 
 
 <div class="large-post-detail style-3 p-0">
-<span class="red-color">Englis FA Cup</span>
-<h2>Man United reunion for Ibrahimovic,</h2>
+<span class="red-color">{{row.date | date}}</span>
+<h2>{{row.title}}</h2>
 </div>
 
 </div>
 
-
-<div class="item">
+ <div class="item">
 
 <div class="large-post-img">
 <img src="${resources}/images/blog-grid-view/img-2-2.jpg" alt="">
@@ -185,7 +186,8 @@ pageEncoding="UTF-8"%>
 <h2>Man United reunion for Ibrahimovic,</h2>
 </div>
 
-</div>
+</div> 
+
 
 
 <div class="item">
@@ -202,7 +204,7 @@ pageEncoding="UTF-8"%>
 
 </div>
 
-
+<%-- 
 <div class="item">
 
 <div class="large-post-img">
@@ -245,7 +247,7 @@ pageEncoding="UTF-8"%>
 <h2>Man United reunion for Ibrahimovic,</h2>
 </div>
 
-</div>
+</div> --%>
 
 </div>
 </div>

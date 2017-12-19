@@ -56,6 +56,8 @@ public class TeamDaoImpl extends AbstractDao implements TeamDao{
 		// TODO Auto-generated method stub
 		Team team =this.findById(teamid);
 		Hibernate.initialize(team.getStandings());
+		for(Standing standing:team.getStandings())
+			standing.setChampion(standing.getTeamgroup().getChampion());
 		return team.getStandings();
 	}
 
