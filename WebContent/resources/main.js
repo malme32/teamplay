@@ -310,6 +310,24 @@ appMain.controller("championsController",function($scope, $http, $location, $win
 	 $scope.championlist ="";
 	 $scope.champion;
 	 
+	 
+	 $http({
+	        method : "GET",
+	        url : "news",
+	        params:{headersonly:1,count:6}
+	    }).then(function mySuccess(response) {
+
+	        $scope.news = response.data;
+
+
+	    }, function myError(response) {
+
+	    	
+	        //$scope.result = response.statusText;
+	      
+	    });
+	 
+	 
 	//$scope.getContacts = function (){
 		  
 		 $http({
@@ -540,6 +558,70 @@ appMain.controller("teamdetailController",function($scope, $http, $location){
 
 /*});*/
 
+appMain.controller("indexController",function($scope, $http, $location){
+
+
+
+/*	 $http({
+	        method : "GET",
+	        url : "news",
+	        params:{headersonly:1,count:1}
+	    }).then(function mySuccess(response) {
+
+	        $scope.news = response.data;
+
+
+	    }, function myError(response) {
+
+	    	
+	        //$scope.result = response.statusText;
+	      
+	    });
+	 */
+	 
+});
+
+appMain.controller("newsDetailController",function($scope, $http, $location){
+
+
+	var id = location.search.split('id=')[1];
+	 $http({
+	        method : "GET",
+	        url : "news/"+id
+	    }).then(function mySuccess(response) {
+
+	        $scope.notice = response.data;
+
+
+	    }, function myError(response) {
+
+	      
+	    });
+	 
+	 
+});
+
+appMain.controller("newsController",function($scope, $http, $location){
+
+
+
+	 $http({
+	        method : "GET",
+	        url : "news",
+	        params:{headersonly:1}
+	    }).then(function mySuccess(response) {
+
+	        $scope.news = response.data;
+
+
+	    }, function myError(response) {
+
+	      
+	    });
+	 
+	 
+});
+
 appMain.controller("headerController",function($scope, $http, $location){
 
     
@@ -558,6 +640,7 @@ appMain.controller("headerController",function($scope, $http, $location){
 	 $http({
 	        method : "GET",
 	        url : "news",
+	        params:{headersonly:1,count:4}
 	    }).then(function mySuccess(response) {
 
 	        $scope.news = response.data;

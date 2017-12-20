@@ -48,6 +48,9 @@ pageEncoding="UTF-8"%>
 	<ul>
 		<li><a  ng-href='#!adminteams'>ΟΜΑΔΕΣ</a></li>
 	</ul> 
+	<ul>
+		<li><a  ng-href='#!adminnews'>ΝΕΑ</a></li>
+	</ul> 
 </div>
 
 

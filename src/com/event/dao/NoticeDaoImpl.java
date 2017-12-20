@@ -24,7 +24,7 @@ public class NoticeDaoImpl extends AbstractDao implements NoticeDao{
 	public List<Notice> findAll() {
 		//Session session = sessionFactory1.openSession();
 		   @SuppressWarnings("unchecked")
-		   List<Notice> list = getSession().createQuery("FROM Notice").list(); 
+		   List<Notice> list = getSession().createQuery("FROM Notice order by Date DESC").list(); 
 		  // session.close();
 		// TODO Auto-generated method stub
 		return list;

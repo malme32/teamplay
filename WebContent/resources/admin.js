@@ -12,6 +12,11 @@ appAdmin.config(function($routeProvider) {
         templateUrl : "adminteams.html",
         controller: "teamController"
 
+    })
+    .when("/adminnews", {
+        templateUrl : "adminnews.html",
+        controller: "newsController"
+
     });
     
 });
@@ -1083,5 +1088,134 @@ appAdmin.controller("teamController",function($scope, $http, $location, $window)
 		 
 });
 
+appAdmin.controller("newsController",function($scope, $http, $location, $window){
+
+	 
+	/* $scope.getTeams = function (){ */ 
+		 $http({
+	        method : "GET",
+	        url : "news",
+	        params:{headersonly:1}
+	    }).then(function mySuccess(response) {
+
+	        $scope.news = response.data;
+	      
+	    }, function myError(response) {
+
+		      alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");
+	      
+	    });
+/*	 }*/
+	 
+
+		 
+		 $scope.getNotice = function (){ 
+		
+		        $scope.notice = "";
+			 $http({
+		        method : "GET",
+		        url : "news/"+$scope.selectedNotice.id
+		    }).then(function mySuccess(response) {
+
+			
+		        $scope.notice = response.data;
+		        
+/*				 $http({
+				        method : "GET",
+				        url : "teams/"+$scope.selectedTeam.id+"/players"
+				    }).then(function mySuccess(response) {
+				        $scope.players = response.data;
+				    }, function myError(response) {
+				  
+				        alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");
+				    });*/
+
+		    }, function myError(response) {
+		  
+		        alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");
+		    });
+		 }
+		 
+		 $scope.addNotice = function (){ 
+			 $scope.newnotice.date = new Date();
+			 $http({
+		        method : "POST",
+		        	url : "news",
+			        data: $scope.newnotice,
+			        headers: {'Content-Type': 'application/json; charset=utf-8'}
+		    }).then(function mySuccess(response) {
+
+		    	$window.location.reload();
+		        
+		    }, function myError(response) {
+		  
+		        alert("Κατι δεν πηγε καλα. Μήπως η ομάδα υπάρχει ήδη?");
+		    });
+		 }
+		 
+		 $scope.deleteNotice = function (){ 
+
+			 if(!confirm("Είστε σίγουρος;"))
+				 return;
+				 
+			 $http({
+		        method : "DELETE",
+		        url : "news/"+$scope.notice.id
+		    }).then(function mySuccess(response) {
+
+		    	$window.location.reload();
+		      
+		    }, function myError(response) {
+		  
+		        alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");
+		    });
+		 }
+		 
+		 $scope.editNotice = function (){ 
+			 $scope.notice.date = new Date();
+			 //$scope.team.players=$scope.players;
+			 //$scope.result=$scope.team;
+			 $http({
+		        method : "PUT",
+		        	url : "news",
+			        data: $scope.notice,
+			        headers: {'Content-Type': 'application/json; charset=utf-8'}
+		    }).then(function mySuccess(response) {
+		    	
+		    	$scope.getNotice();
+		    }, function myError(response) {
+
+		        alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");
+		    });
+		 }
+		 
+		 $scope.uploadImage = function(){
+		     var fd = new FormData();
+             fd.append('file', $scope.mylogo);
+         
+             
+			 $http({
+			        method : "POST",
+			        	url : "news/"+$scope.notice.id+"/images",
+				        data: fd,
+				       // params:{file: $scope.myfile},
+                        transformRequest: angular.identity,
+                        headers: {'Content-Type': undefined}     
+			    }).then(function mySuccess(response) {
+
+			    	$scope.getNotice();
+			    }, function myError(response) {
+
+			        alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");
+			    });
+             
+		 }
+ 
+		
+	
+		 
+	
+		 
+});
 
 

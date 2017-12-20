@@ -138,20 +138,16 @@ pageEncoding="UTF-8"%>
 <li><a href="team-list.html">ΟΜΑΔΕΣ</a>
 </li>
 <li class="mega-dropdown">
-<a href="#">ΝΕΑ</a>
+<a href="news-list.html">ΝΕΑ</a>
 <ul>
 <li class="row">
 <div class="col-lg-3 col-md-3 col-sm-3">
 <div class="blog-categories">
-<h2>Blog Categories</h2>
+<h2>ΝΕΑ</h2>
 <ul class="blog-categories-list">
-<li><a href="#">Blog 1 Column (Right Sidebar)</a></li>
-<li><a href="#">Blog Medium With Right Sidebar</a></li>
-<li><a href="#">Masonry (Right Sidebar)</a></li>
-<li><a href="#">Blog 4 Columns</a></li>
-<li><a href="#">Blog 1 Column (Right Sidebar)</a></li>
-<li><a href="#">Masonry (Right Sidebar)</a></li>
-<li><a href="#">Blog 1 Column (Right Sidebar)</a></li>
+<li><a href="news-list.html"><b>ΟΛΑ ΤΑ ΝΕΑ</b></a></li>
+<li ng-repeat='row in news | orderBy:"-date"'><a ng-href="news-detail?id={{row.id}}">{{row.title}}</a></li>
+
  </ul>
 </div>
 </div>
@@ -159,8 +155,30 @@ pageEncoding="UTF-8"%>
 <div id="mega-blog-slider" class="mega-blog-slider">
 
 
+<table>
+<tr>
+<td  ng-repeat='row in news | orderBy:"-date"'>
+ <div class="item" style='margin:10px; width:180px; top:0;'>
 
- <div class="item" ng-repeat='row in news | orderBy:"-date"'>
+<div class="large-post-img">
+<%-- <img ng-src="${resources}{{row.imageurl}}" alt="">
+ --%>
+  <div style='background:url(${resources}{{row.imageurl}}) no-repeat center; 
+  width:180px; height:130px;background-size:cover; '>
+
+</div>
+
+
+	<div class="large-post-detail style-3 p-0" style='height:110px; overflow:hidden'>
+	<span class="red-color">{{row.date | date}}</span>
+	<a ng-href="news-detail?id={{row.id}}"><h2>{{row.title}}</h2></a>
+	</div>
+
+</div>
+</td>
+</tr>
+</table>
+<%--  <div class="item"  ng-repeat='row in news | orderBy:"-date"'>
 
 <div class="large-post-img">
 <img ng-src="${resources}{{row.imageurl}}" alt="">
@@ -172,9 +190,9 @@ pageEncoding="UTF-8"%>
 <h2>{{row.title}}</h2>
 </div>
 
-</div>
+</div> --%>
 
- <div class="item">
+<%--  <div class="item">
 
 <div class="large-post-img">
 <img src="${resources}/images/blog-grid-view/img-2-2.jpg" alt="">
@@ -202,7 +220,7 @@ pageEncoding="UTF-8"%>
 <h2>Man United reunion for Ibrahimovic,</h2>
 </div>
 
-</div>
+</div> --%>
 
 <%-- 
 <div class="item">

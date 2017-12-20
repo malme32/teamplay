@@ -1,321 +1,39 @@
-<!doctype html>
-<html class="no-js" lang="en">
+ <%@ page language="java" contentType="text/html; charset=UTF-8"
+pageEncoding="UTF-8"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
-<!-- Mirrored from html.crunchpress.com/soccer/blog-detail.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 09 Dec 2017 09:43:44 GMT -->
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<!doctype html >
+<html class="no-js" lang="en" ng-app="appMain" ng-controller='newsDetailController'>
+
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <meta name="author" content="" />
 
-<title>Soccer HTML5 Template</title>
+<title>{{notice.title}}</title>
+<%@include  file="prereq.jsp" %>
 
-<link rel="stylesheet" href="css/bootstrap/bootstrap.min.css">
-<link rel="stylesheet" href="css/main.css">
-<link rel="stylesheet" href="css/icomoon.css">
-<link rel="stylesheet" href="css/animate.css">
-<link rel="stylesheet" href="css/transition.css">
-<link rel="stylesheet" href="css/font-awesome.min.css">
-<link rel="stylesheet" href="style.css">
-<link rel="stylesheet" href="css/color.css">
-<link rel="stylesheet" href="css/responsive.css">
 
-<link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i,800|Open+Sans:400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
-
-<script src="js/vendor/modernizr.js"></script>
 </head>
-<body>
+<body >
 
 <div class="wrap push">
+ <%@include  file="header.jsp" %> 
+ <!-- <div ng-include="'header1.html'"></div>   -->
 
-<header class="header style-3">
-
-<div class="topbar-and-logobar">
-<div class="container">
-
-<div class="responsive-btn pull-right">
-<a href="#menu" class="menu-link"><i class="fa fa-bars"></i></a>
-</div>
-
-
-<ul class="user-login-option pull-right">
-<li class="social-icon">
-<ul class="social-icons style-5">
-<li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
-<li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
-<li><a class="youtube" href="#"><i class="fa fa-youtube-play"></i></a></li>
-<li><a class="pinterest" href="#"><i class="fa fa-pinterest-p"></i></a></li>
-</ul>
-</li>
-<li class="login-modal">
-<a href="#" class="login" data-toggle="modal" data-target="#login-modal"><i class="fa fa-user"></i>member Login</a>
-<div class="modal fade" id="login-modal">
-<div class="login-form position-center-center">
-<h2>Login<button class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button></h2>
-<form>
-<div class="form-group">
-<input type="text" class="form-control" name="user" placeholder="domain@live.com">
-<i class=" fa fa-envelope"></i>
-</div>
-<div class="form-group">
-<input type="password" class="form-control" name="pass" placeholder="**********">
-<i class=" fa fa-lock"></i>
-</div>
-<div class="form-group custom-checkbox">
-<label>
-<input type="checkbox"> Stay login
-</label>
-<a class="pull-right forgot-password" href="#"></a>
-<a href="#" class="pull-right forgot-password" data-toggle="modal" data-target="#login-modal-2">Forgot password?</a>
-</div>
-<div class="form-group">
-<button class="btn full-width red-btn">Login</button>
-</div>
-</form>
-<span class="or-reprater"></span>
-<ul class="others-login-way">
-<li><a class="facebook-bg" href="#"><i class="fa fa-facebook"></i>Facebook</a></li>
-<li><a class="tweet-bg" href="#"><i class="fa fa-twitter"></i>Tweet</a></li>
-<li><a class="linkedin-bg" href="#"><i class="fa fa-linkedin"></i>Linkedin</a></li>
-<li><a class="google-plus-bg" href="#"><i class="fa fa-google-plus"></i>Google+</a></li>
-</ul>
-</div>
-</div>
-<div class="modal fade" id="login-modal-2">
-<div class="login-form position-center-center">
-<h2>Forgot password<button class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button></h2>
-<form>
-<div class="form-group">
-<input type="text" class="form-control" name="user" placeholder="domain@live.com">
-<i class=" fa fa-envelope"></i>
-</div>
-<div class="form-group">
-<input type="password" class="form-control" name="pass" placeholder="**********">
-<i class=" fa fa-lock"></i>
-</div>
-<div class="form-group">
-<button class="btn full-width red-btn">Login</button>
-</div>
-</form>
-</div>
-</div>
-</li>
-<li class="language-dropdown">
-<a id="choses-lang" href="#"><i class="fa fa-globe"></i>Eng<i class="fa fa-caret-down"></i></a>
-<ul id="language-dropdown">
-<li><a href="#"><img src="images/flags/img-02.jpg" alt="">ger</a></li>
-<li><a href="#"><img src="images/flags/img-03.jpg" alt="">fra</a></li>
-<li><a href="#"><img src="images/flags/img-04.jpg" alt="">bra</a></li>
-</ul>
-</li>
-</ul>
-
-</div>
-</div>
-
-
-<div class="nav-holder">
-<div class="container">
-<div class="maga-drop-wrap">
-
-<div class="logo">
-<a href="home-1.html"><img src="images/logo-4.png" alt=""></a>
-</div>
-
-
-<div class="search-bar-holder pull-right">
-<div class="search-bar">
-<input type="text" class="form-control" placeholder="search enter please...">
-<i class="fa fa-search"></i>
-</div>
-</div>
-
-
-<ul class="nav-list pull-right">
-<li>
-<a href="#">Home</a>
-<ul>
-<li><a href="home-1.html">Home 1</a></li>
-<li><a href="home-2.html">Home 2</a></li>
-</ul>
-</li>
-<li><a href="about.html">about</a></li>
-<li>
-<a href="team.html">team</a>
-<ul>
-<li><a href="team.html">team</a></li>
-<li><a href="team-detail.html">Team detail</a></li>
-<li><a href="team-width-sidebar.html">team-widthsidebar</a></li>
-</ul>
-</li>
-<li class="mega-dropdown">
-<a href="#">news</a>
-<ul>
-<li class="row">
-<div class="col-lg-3 col-md-3 col-sm-3">
-<div class="blog-categories">
-<h2>Blog Categories</h2>
-<ul class="blog-categories-list">
-<li><a href="#">Blog 1 Column (Right Sidebar)</a></li>
-<li><a href="#">Blog Medium With Right Sidebar</a></li>
-<li><a href="#">Masonry (Right Sidebar)</a></li>
-<li><a href="#">Blog 4 Columns</a></li>
-<li><a href="#">Blog 1 Column (Right Sidebar)</a></li>
-<li><a href="#">Masonry (Right Sidebar)</a></li>
-<li><a href="#">Blog 1 Column (Right Sidebar)</a></li>
-</ul>
-</div>
-</div>
-<div class="col-lg-9 col-md-9 col-sm-9">
-<div id="mega-blog-slider" class="mega-blog-slider">
-
-<div class="item">
-
-<div class="large-post-img">
-<img src="images/blog-grid-view/img-2-1.jpg" alt="">
-</div>
-
-
-<div class="large-post-detail style-3 p-0">
-<span class="red-color">Englis FA Cup</span>
-<h2>Man United reunion for Ibrahimovic,</h2>
-</div>
-
-</div>
-
-
-<div class="item">
-
-<div class="large-post-img">
-<img src="images/blog-grid-view/img-2-2.jpg" alt="">
-</div>
-
-
-<div class="large-post-detail style-3 p-0">
-<span class="red-color">Englis FA Cup</span>
-<h2>Man United reunion for Ibrahimovic,</h2>
-</div>
-
-</div>
-
-
-<div class="item">
-
-<div class="large-post-img">
-<img src="images/blog-grid-view/img-2-3.jpg" alt="">
-</div>
-
-
-<div class="large-post-detail style-3 p-0">
-<span class="red-color">Englis FA Cup</span>
-<h2>Man United reunion for Ibrahimovic,</h2>
-</div>
-
-</div>
-
-
-<div class="item">
-
-<div class="large-post-img">
-<img src="images/blog-grid-view/img-2-4.jpg" alt="">
-</div>
-
-
-<div class="large-post-detail style-3 p-0">
-<span class="red-color">Englis FA Cup</span>
-<h2>Man United reunion for Ibrahimovic,</h2>
-</div>
-
-</div>
-
-
-<div class="item">
-
-<div class="large-post-img">
-<img src="images/blog-grid-view/img-2-1.jpg" alt="">
-</div>
-
-
-<div class="large-post-detail style-3 p-0">
-<span class="red-color">Englis FA Cup</span>
-<h2>Man United reunion for Ibrahimovic,</h2>
-</div>
-
-</div>
-
-
-<div class="item">
-
-<div class="large-post-img">
-<img src="images/blog-grid-view/img-2-2.jpg" alt="">
-</div>
-
-
-<div class="large-post-detail style-3 p-0">
-<span class="red-color">Englis FA Cup</span>
-<h2>Man United reunion for Ibrahimovic,</h2>
-</div>
-
-</div>
-
-</div>
-</div>
-</li>
-</ul>
-</li>
-<li>
-<a href="#">Match</a>
-<ul>
-<li><a href="match.html">Match</a></li>
-<li><a href="match-detail.html">Match Detail</a></li>
-<li><a href="match-result.html">Match Result</a></li>
-</ul>
-</li>
-<li>
-<a href="#">shop</a>
-<ul>
-<li><a href="shop.html">shop</a></li>
-<li><a href="shop-detail.html">shop detail</a></li>
-<li><a href="cart.html">cart</a></li>
-</ul>
-</li>
-<li>
-<a href="#">pages</a>
-<ul>
-<li><a href="gallery.html">gallery</a></li>
-<li><a href="blog.html">blog</a></li>
-<li><a href="blog-detail.html">blog detail</a></li>
-<li><a href="blog-grid-view.html">blog grid view</a></li>
-<li><a href="blog-grid-view-2.html">blog grid view-2</a></li>
-<li><a href="blog-larg-view.html">blog larg view</a></li>
-<li><a href="blog-list-view.html">blog list view</a></li>
-<li><a href="point-table.html">point table</a></li>
-<li><a href="404.html">404</a></li>
-<li><a href="underconstraction.html">underconstraction</a></li>
-</ul>
-</li>
-<li><a href="contact.html">contact</a></li>
-</ul>
-
-</div>
-</div>
-</div>
-
-</header>
-
-
+ 
 <div class="page-heading-breadcrumbs">
 <div class="container">
-<h2>Blog Detail</h2>
+<h2>ΕΙΔΗΣΗ</h2>
 <ul class="breadcrumbs">
-<li><a href="#">Home</a></li>
-<li>Blog Detail</li>
+<li><a href="soccer.html">ΑΡΧΙΚΗ</a></li>
+<li>ΕΙΔΗΣΗ</li>
 </ul>
 </div>
 </div>
 
-
-<div class="overlay-dark theme-padding parallax-window" data-appear-top-offset="600" data-parallax="scroll" data-image-src="images/inner-banner/img-07.jpg">
-</div>
 
 
 <main class="main-content">
@@ -324,15 +42,15 @@
 <div class="container">
 <div class="row">
 
-<div class="col-lg-9 col-md-9 col-sm-7 col-xs-12">
+<div class="">
 
 <div class="blog-detail-holder">
 <div class="author-header">
-<h2>London's calling. It's telling you that the capital of England is the centre of Premier</h2>
+<h2>{{notice.title}}</h2>
 <div class="aurhor-img-name pull-left">
-<img src="images/aurthor-img.jpg" alt="">
-<strong>by <i class="red-color">George Kvasnikov</i></strong>
-<span>on Jun 27, 2014 </span>
+<%-- <img ng-src="${resources}{{notice.imageurl}}" alt=""> --%>
+<strong>by <i class="red-color">Admin</i></strong>
+<span>{{notice.date | date}} </span>
 </div>
 <div class="share-option pull-right">
 <span id="share-btn1"><i class="fa fa-share-alt"></i>Share</span>
@@ -347,16 +65,14 @@
 </div>
 </div>
 <article>
-<p>porttitor odio scelerisque platea feugiat nullam dictum eget sollicitudin justo curabitur morbi varius odio nisl. Vulputate lectus fringilla vulputate pharetra fermentum lectus potenti, lorem suscipit inceptos torquent dictum tincidunt.nec, consequat imperdiet elementum nunc neque porttitor. Neque pellentesque velit duis ultricies.</p>
+<p></p>
 </article>
 <div class="blog-detail">
 <figure>
-<img src="images/blog-detail/img-01.jpg" alt="">
+<img ng-src="${resources}{{notice.imageurl}}" alt="" style='max-height:400px'>
 </figure>
 <article>
-<p>Aptent donec imperdiet a est faucibus congue dolor pretium elementum sem, porttitor ultrices donec elementum cras pharetra iaculis venenatis at, mi vulputate vitae eu maecenas purus primis volutpat eleifend consequat nisi est viverra nec hac quam nostra, pharetra pretium magna urna blandit himenaeos pharetra, massa et luctus auctor mollis faucibus.</p>
-<p>Netus tempor curabitur enim est habitasse suspendisse semper sapien porttitor tellus facilisis malesuada aenean, volutpat semper ullamcorper libero nulla habitant pulvinar magna id quisque tincidunt etiam vitae blandit quam orci odio aenean nisl velit vivamus, proin elit arcu ullamcorper sociosqu tempor lorem consequat, dapibus habitasse eros suscipit neque libero nullam.Rhoncus aenean scelerisque suspendisse semper ac sed tincidunt vehicula accumsan rhoncus venenatis ultrices, at mollis tempor suscipit metus ligula luctus dictum risus senectus.
-in, himenaeos vehicula eget eu viverra dictum phasellus rutrum sollicitudin mi etiam aliquam morbi sem pretium purus ut aenean rutrum.</p>
+<p>{{notice.content}}</p>
  </article>
 </div>
 <div class="tags-holder">
@@ -375,7 +91,7 @@ in, himenaeos vehicula eget eu viverra dictum phasellus rutrum sollicitudin mi e
 <li><a class="pinterest" href="#"><i class="fa fa-pinterest-p"></i></a></li>
 </ul>
 </div>
-<div class="next-prev-option">
+<!-- <div class="next-prev-option">
 <a href="#" class="prev-blog pull-left">
 <img src="images/blog-detail/prev-img.jpg" alt="">
 <span><i class="fa fa-angle-left"></i>Previous Post</span>
@@ -396,11 +112,11 @@ in, himenaeos vehicula eget eu viverra dictum phasellus rutrum sollicitudin mi e
 <p>Id quisque cursus est volutpat lorem phasellus ut neque vivamus dolor, ornare sociosqu purus taciti erat egestas integer enim sem porta ligula semper suspendisse mi metus auctor faucibus lobortis senectus, at metus nisl ornare consectetur.</p>
 <span><a href="#"><i class="fa fa-twitter"></i>@marcobale #dominname</a></span>
 </div>
-</div>
+</div> -->
 </div>
 
 
-<div class="blog-grid-view theme-padding-bottom">
+<!-- <div class="blog-grid-view theme-padding-bottom">
 <h2>Related Match</h2>
 <div class="row">
 
@@ -578,12 +294,12 @@ in, himenaeos vehicula eget eu viverra dictum phasellus rutrum sollicitudin mi e
 </div>
 </div>
 </form>
-</div>
+</div> -->
 
 </div>
 
 
-<div class="col-lg-3 col-md-3 col-sm-5 col-xs-12">
+<!-- <div class="col-lg-3 col-md-3 col-sm-5 col-xs-12">
 
 <div class="aside-search-bar">
 <input class="form-control" type="text" placeholder="Search...">
@@ -727,7 +443,7 @@ in, himenaeos vehicula eget eu viverra dictum phasellus rutrum sollicitudin mi e
 </div>
 
 </div>
-
+ -->
 </div>
 </div>
 </div>
@@ -804,7 +520,7 @@ in, himenaeos vehicula eget eu viverra dictum phasellus rutrum sollicitudin mi e
 
 <div class="copy-rights">
 <div class="container">
-<p>© Copyright by <i class="red-color">FineLayers</i> All rights reserved.</p>
+<p>Â© Copyright by <i class="red-color">FineLayers</i> All rights reserved.</p>
 <a class="back-to-top scrollup" href="#"><i class="fa fa-angle-up"></i></a>
 </div>
 </div>
@@ -898,5 +614,4 @@ in, himenaeos vehicula eget eu viverra dictum phasellus rutrum sollicitudin mi e
 <script src="js/main.js"></script>
 </body>
 
-<!-- Mirrored from html.crunchpress.com/soccer/blog-detail.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 09 Dec 2017 09:43:45 GMT -->
 </html>

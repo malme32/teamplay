@@ -79,6 +79,10 @@ public interface SportService {
 
 	public Scorer findScorerById(int id);
 
-	public List<Notice> findAllNews();
+	public List<Notice> findAllNews(int count, boolean headersonly);
+
+	public Notice findNewsById(int id);
+
+	public Notice uploadNoticeImage(String path, int id, CommonsMultipartFile file);
 	
 }

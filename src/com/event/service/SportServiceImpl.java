@@ -563,9 +563,71 @@ public class SportServiceImpl  implements SportService{
 		return scorerDao.findById(id);
 	}
 
-	@Override
+/*	@Override
 	public List<Notice> findAllNews() {
 		// TODO Auto-generated method stub
 		return noticeDao.findAll();
+	}*/
+
+	@Override
+	public List<Notice> findAllNews(int count, boolean headersonly) {
+		// TODO Auto-generated method stub
+		if(count>0||headersonly)
+		{
+			List<Notice> tmpList = new ArrayList<Notice>();
+			List<Notice> list = noticeDao.findAll();
+			
+			if(count==0)
+				count=list.size();
+			
+			for(int i=0;i<list.size()&&i<count;i++)
+			{
+				Notice notice = list.get(i);
+				if(headersonly)
+				{
+					Notice newNotice = new Notice();
+					newNotice.setTitle(notice.getTitle());
+					newNotice.setDate(notice.getDate());
+					newNotice.setId(notice.getId());
+					newNotice.setImageurl(notice.getImageurl());
+					tmpList.add(newNotice);
+				}
+				else
+				tmpList.add(notice);
+			}
+				
+			return tmpList;
+		}
+		return  noticeDao.findAll();
+	}
+
+	@Override
+	public Notice findNewsById(int id) {
+		// TODO Auto-generated method stub
+		
+		return noticeDao.findById(id);
+	
+	}
+
+	@Override
+	public Notice uploadNoticeImage(String path, int id, CommonsMultipartFile file) {
+		// TODO Auto-generated method stub
+		Notice notice = this.findNewsById(id);
+		// TODO Auto-generated method stub
+        String extension = FilenameUtils.getExtension(file.getOriginalFilename()); 
+		String filename=String.valueOf(notice.getId())+"."+extension;
+        try{  
+        byte barr[]=file.getBytes();  
+          
+        BufferedOutputStream bout=new BufferedOutputStream(  
+                 new FileOutputStream(path+"/resources/theme1/customimages/noticeimage_"+filename));  
+        bout.write(barr);  
+        bout.flush();  
+        bout.close();  
+        notice.setImageurl("/customimages/noticeimage_"+filename);
+        generalDaoService.update(notice);
+        }catch(Exception e){System.out.println(e);}  
+        
+        return notice;
 	}
 }

@@ -17,14 +17,14 @@ pageEncoding="UTF-8"%>
 <%@include  file="prereq.jsp" %>
 
 </head>
-<body ng-app="appMain">
+<body ng-app="appMain" ng-controller='indexController'>
 
 
 
 <div class="wrap push">
 
-<!-- <div ng-include="'header1.html'"></div>  -->
-<%@include  file="header.jsp" %>
+<!--  <div ng-include="'header1.html'"></div>   -->
+<%@include  file="header.jsp" %> 
 
 <div class="slider-holder" >
 
@@ -296,15 +296,15 @@ pageEncoding="UTF-8"%>
 
 <div class="col-sm-9">
 <ul id="latest-news-slider" class="latest-news-slider">
-<li>
-<img src="${resources}/images/latest-news/img-01.jpg" alt="">
-<p>Chelsea captain John Terry is not ready to start against Stoke on Saturday and is struggling to prove his fitness for next week's crunch...<a href="#">Read more</a></p>
-</li>
-<li>
+<%-- <li ng-repeat='row in news | orderBy:"-date"'>
+<img src="${resources}{{row.imageurl}}" alt="">
+<p>{{row.title}}<a href="#">Read more</a></p>
+</li> --%>
+ <li>
 <img src="${resources}/images/latest-news/img-02.jpg" alt="">
 <p>Chelsea captain John Terry is not ready to start against Stoke on Saturday and is struggling to prove his fitness for next week's crunch...<a href="#">Read more</a></p>
 </li>
-<li>
+<%--<li>
 <img src="${resources}/images/latest-news/img-03.jpg" alt="">
 <p>Chelsea captain John Terry is not ready to start against Stoke on Saturday and is struggling to prove his fitness for next week's crunch...<a href="#">Read more</a></p>
 </li>
@@ -323,14 +323,22 @@ pageEncoding="UTF-8"%>
 <li>
 <img src="${resources}/images/latest-news/img-03.jpg" alt="">
 <p>Chelsea captain John Terry is not ready to start against Stoke on Saturday and is struggling to prove his fitness for next week's crunch...<a href="#">Read more</a></p>
-</li>
+</li> --%>
 </ul>
 </div>
 
 
 <div class="col-sm-3">
 <ul id="latest-news-thumb" class="latest-news-thumb">
+<!-- <li ng-repeat='row in news | orderBy:"-date"'>
+<p>{{row.title}}</p>
+<span>{{row.date | date}}</span>
+</li> -->
 <li>
+<p>Fancy footwork by Brito in build up to Atromitos</p>
+<span>February 11, 2016</span>
+</li>
+<!-- <li>
 <p>Fancy footwork by Brito in build up to Atromitos</p>
 <span>February 11, 2016</span>
 </li>
@@ -349,15 +357,7 @@ pageEncoding="UTF-8"%>
 <li>
 <p>Fancy footwork by Brito in build up to Atromitos</p>
 <span>February 11, 2016</span>
-</li>
-<li>
-<p>Fancy footwork by Brito in build up to Atromitos</p>
-<span>February 11, 2016</span>
-</li>
-<li>
-<p>Fancy footwork by Brito in build up to Atromitos</p>
-<span>February 11, 2016</span>
-</li>
+</li> -->
 </ul>
 <ul class="news-thumb-arrows">
 <li class="prev"><span class="fa fa-angle-up"></span></li>

@@ -35,6 +35,11 @@ public class SportGuiController {
 		return new ModelAndView("adminteams","","");
 	}
 	
+	@RequestMapping(value="/adminnews", method=RequestMethod.GET)
+	public ModelAndView adminNews(){
+		return new ModelAndView("adminnews","","");
+	}
+	
 /*	@RequestMapping(value="/event", method=RequestMethod.GET)
 	public ModelAndView event(){
 		return new ModelAndView("event","","");
@@ -89,6 +94,18 @@ public class SportGuiController {
 	public ModelAndView teamlist(){
 		return new ModelAndView("theme1/team-list","","");
 	}	
+	
+	
+	@RequestMapping(value="/news-list", method=RequestMethod.GET)
+	public ModelAndView newslist(){
+		return new ModelAndView("theme1/news-list","","");
+	}
+	
+	@RequestMapping(value="/news-detail", method=RequestMethod.GET)
+	public ModelAndView newsdetail(){
+		return new ModelAndView("theme1/news-detail","","");
+	}
+	
 /*	@RequestMapping(value="/point-table2", method=RequestMethod.GET)
 	public ModelAndView pointtable2(){
 		return new ModelAndView("theme1/point-table2","","");

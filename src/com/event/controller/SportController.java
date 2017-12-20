@@ -141,10 +141,27 @@ public class SportController {
 	}
 	
 	@RequestMapping(value="/news", method=RequestMethod.GET, produces = "application/json")
-	public @ResponseBody List<Notice> getNews()
+	public @ResponseBody List<Notice> getNews(@RequestParam(required = false)  Integer count, 
+			@RequestParam(required = false)  Boolean headersonly)
 	{
-		return sportService.findAllNews();
+		int count1=0;
+		boolean headersonly1=false;
+		if(count!=null)
+			count1=count;
+		if(headersonly!=null)
+			headersonly1=headersonly;
+			
+		return sportService.findAllNews(count1, headersonly1);
 	}
+	
+	
+	@RequestMapping(value="/news/{id}", method=RequestMethod.GET, produces = "application/json")
+	public @ResponseBody Notice getNewsDetail(@PathVariable int id)
+		
+	{
+		return sportService.findNewsById(id);
+	}
+	
 	
 	/////////////////////POST/////////////////////////////////////
 	
@@ -312,9 +329,20 @@ public class SportController {
 		return ;
 	}
 	
+	@RequestMapping(value="/news", method=RequestMethod.POST, produces = "application/json")
+	public @ResponseBody Notice addNotice(@RequestBody Notice notice)
+	{
+		generalDaoService.persist(notice);
+		return notice;
+	}
+	
+	@RequestMapping(value = "/news/{id}/images", method = RequestMethod.POST, produces = "application/json")
+	public @ResponseBody  Notice uploadNoticeImage(@PathVariable int id, @RequestParam CommonsMultipartFile file,HttpSession session){  
+      String path=session.getServletContext().getRealPath("/");  
+      return sportService.uploadNoticeImage(path, id, file);
+        
+    }  
 
-	
-	
 	//////////////////PUT///////////////////////////
 	
 	@RequestMapping(value="/champions", method=RequestMethod.PUT, produces = "application/json")
@@ -426,6 +454,13 @@ public class SportController {
 		return ;
 	}
 	
+	@RequestMapping(value="/news", method=RequestMethod.PUT, produces = "application/json")
+	public @ResponseBody void editNotice(@RequestBody Notice notice)
+	{
+		generalDaoService.update(notice);
+		return;
+	}
+	
 	
 		//////////////////////DELETE///////////////////////
 	/////////////////////////////////////////////////////////////////
@@ -521,5 +556,14 @@ public class SportController {
 		generalDaoService.delete(scorer);
 		return ;
 	}
+	
+	@RequestMapping(value="/news/{id}", method=RequestMethod.DELETE, produces = "application/json")
+	public @ResponseBody void deleteNotice(@PathVariable int id)
+	{
+		Notice notice = sportService.findNewsById(id);
+		generalDaoService.delete(notice);
+		return ;
+	}
+	
 	
 }

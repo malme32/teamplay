@@ -57,16 +57,16 @@ pageEncoding="UTF-8"%>
 			</tr>
 			<tr>
 				<td><img width=60 height=60 ng-show='team.logopath' ng-src='${resources}{{team.logopath}}'/> </td>
-				<td><input type = "file" file-model = "mylogo" class='button_flat background_dark_yellow'/>
+				<td><input type = "file" file-model = "mylogo" class='button_flat background_dark_yellow' accept="image/*"/>
 	         <button class='button_flat background_dark_yellow' ng-click = "uploadLogo()">Αλλαγή Logo</button></td>
 			</tr>
-			<tr>
+<%-- 			<tr>
 				<td><img width=60 height=60 ng-show='team.coverpath' ng-src='${resources}{{team.coverpath}}'/></td>
 	
-				<td>		 <input type = "file" file-model = "mycover" class='button_flat background_dark_yellow'/>
+				<td>		 <input type = "file" file-model = "mycover" class='button_flat background_dark_yellow' accept="image/*"/>
 	         <button class='button_flat background_dark_yellow' ng-click = "uploadCover()">Αλλαγή Cover</button>
 	         </td>
-			</tr>
+			</tr> --%>
 		</table>
 	</div>
 
@@ -118,7 +118,7 @@ pageEncoding="UTF-8"%>
         </td>
          
         <td><img width=50 height=50 ng-show='row.imagepath' ng-src='${resources}{{row.imagepath}}'/> </td>
-            <td> <input class='button_flat background_dark_yellow' type = "file" file-model = "row.playerimage"/>
+            <td> <input class='button_flat background_dark_yellow' type = "file" file-model = "row.playerimage" accept="image/*"/>
       
         </td>
               <td> 

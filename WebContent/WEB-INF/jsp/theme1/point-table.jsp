@@ -130,8 +130,18 @@ pageEncoding="UTF-8"%>
 <tbody>
 
 			<tr ng-repeat='row1 in row.standings  | orderBy: "-grade"'>
-				<td><a href='team-detail?teamid={{row1.team.id}}'><img src="${resources}/images/small-flags/img-01.png" alt="">{{row1.team.name}}</a>
-				</td>
+				<td style='text-align:left'>
+				
+				  <a ng-href='team-detail?teamid={{row1.team.id}}'><img style='height:30px; width:30px' ng-src="${resources}{{row1.team.logopath}}" alt="">
+				{{row1.team.name}} </a>
+<%-- 				 <div style='display:inline-block'>
+				  <div style='background:url(${resources}{{row1.team.logopath}}) no-repeat center; 
+ 						 width:30px; height:30px;background-size:cover; '></div></div>
+ 						  <div style='display:inline-block'>
+ 						 <a ng-href='team-detail?teamid={{row1.team.id}}'>{{row1.team.name}}</a></div>
+				
+				
+				</td> --%>
 				<td class="td_grade">{{row1.grade}}
 				</td>
 				<td>{{row1.goal}}
@@ -218,7 +228,21 @@ pageEncoding="UTF-8"%>
 		<tbody>
 		<tr ng-repeat='row1 in row2.games'>
 		<td>
-		<div class="logo-width-name"><a href='team-detail?teamid={{row1.team1.id}}'><img src="${resources}/images/team-logos-small/img-01.png" alt="">{{row1.team1.name}}</a></div>
+		<div class="logo-width-name">
+		
+		
+		
+<%-- 		<a href='team-detail?teamid={{row1.team1.id}}'><img src="${resources}/images/team-logos-small/img-01.png" alt="">{{row1.team1.name}}</a>
+ --%>		
+ 
+  		  <a ng-href='team-detail?teamid={{row1.team1.id}}'><img style='height:30px; width:30px' ng-src="${resources}{{row1.team1.logopath}}" alt="">
+				{{row1.team1.name}} </a>
+		<%-- 				 <div style='display:inline-block'>
+				  <div style='background:url(${resources}{{row1.team1.logopath}}) no-repeat center; 
+ 						 width:30px; height:30px;background-size:cover; '></div></div>
+ 						  <div style='display:inline-block'>
+ 						 <a ng-href='team-detail?teamid={{row1.team1.id}}'>{{row1.team1.name}}</a></div> --%>
+		</div>
 		</td>
 		
 
@@ -228,7 +252,21 @@ pageEncoding="UTF-8"%>
 		
 <!-- 		 w-icon
  -->		<td>
-		<div class="logo-width-name"><a href='team-detail?teamid={{row1.team2.id}}'><img src="${resources}/images/team-logos-small/img-02.png" alt="">{{row1.team2.name}}</a></div>
+		<div class="logo-width-name">
+		
+<%-- 		<a href='team-detail?teamid={{row1.team2.id}}'><img src="${resources}/images/team-logos-small/img-02.png" alt="">{{row1.team2.name}}</a>
+ --%>	
+ 
+ 		  <a ng-href='team-detail?teamid={{row1.team2.id}}'><img style='height:30px; width:30px' ng-src="${resources}{{row1.team2.logopath}}" alt="">
+				{{row1.team2.name}} </a>
+ 	
+		<%-- 	 <div style='display:inline-block'>
+				  <div style='background:url(${resources}{{row1.team2.logopath}}) no-repeat center; 
+ 						 width:30px; height:30px;background-size:cover; '></div></div>
+ 						  <div style='display:inline-block'>
+ 						 <a ng-href='team-detail?teamid={{row1.team2.id}}'>{{row1.team2.name}}</a></div> --%>
+ 						 
+		</div>
 		</td>
 		</tr>
 		
@@ -247,35 +285,26 @@ pageEncoding="UTF-8"%>
 
 <div class="col-lg-3 col-sm-4">
 
-<div class="aside-widget">
+<%-- <div class="aside-widget">
 <a href="#"><img src="${resources}/images/adds-02.jpg" alt=""></a>
 </div>
+ --%>
 
-
-<div class="aside-widget">
-<h3><span>Popular News</span></h3>
+<div class="aside-widget" ng-show='news.length'>
+<h3><span>ΤΕΛΕΥΤΑΙΑ ΝΕΑ</span></h3>
 <div class="Popular-news">
 <ul>
-<li>
-<img src="${resources}/images/popular-news/img-01.jpg" alt="">
-<h5><a href="#">Two touch penalties, imaginary cards</a></h5>
-<span class="red-color"><i class="fa fa-clock-o"></i>22 Feb, 2016</span>
+<li ng-repeat='row in news | orderBy:"-date"'>
+ <img style='max-height:40px'ng-src="${resources}{{row.imageurl}}" alt=""> 
+
+
+<h5><a href="news-detail?id={{row.id}}">{{row.title}}</a></h5>
+<span class="red-color"><i class="fa fa-clock-o"></i>{{row.date | date}}</span>
+
+
+
 </li>
-<li>
-<img src="${resources}/images/popular-news/img-02.jpg" alt="">
-<h5><a href="#">Two touch penalties, imaginary cards</a></h5>
-<span class="red-color"><i class="fa fa-clock-o"></i>22 Feb, 2016</span>
-</li>
-<li>
-<img src="${resources}/images/popular-news/img-03.jpg" alt="">
-<h5><a href="#">Two touch penalties, imaginary cards</a></h5>
-<span class="red-color"><i class="fa fa-clock-o"></i>22 Feb, 2016</span>
-</li>
-<li>
-<img src="${resources}/images/popular-news/img-04.jpg" alt="">
-<h5><a href="#">Two touch penalties, imaginary cards</a></h5>
-<span class="red-color"><i class="fa fa-clock-o"></i>22 Feb, 2016</span>
-</li>
+
 </ul>
 </div>
 </div>
