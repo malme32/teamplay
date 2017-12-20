@@ -5,10 +5,10 @@ pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!doctype html>
-<html class="no-js" lang="en" ng-app="appMain" ng-controller="teamdetailController">
+<html class="no-js" lang="en" >
 
 <!-- Mirrored from html.crunchpress.com/soccer/team-detail.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 09 Dec 2017 09:42:15 GMT -->
-<head>
+<head >
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <meta name="author" content="" />
@@ -17,7 +17,7 @@ pageEncoding="UTF-8"%>
 <title>{{team.name}}</title>
 
 </head>
-<body >
+<body ng-app="appMain" ng-controller="teamdetailController" ng-cloak class="ng-cloak">
 
 <div class="wrap push">
 

@@ -565,7 +565,7 @@ appMain.controller("indexController",function($scope, $http, $location){
 /*	 $http({
 	        method : "GET",
 	        url : "news",
-	        params:{headersonly:1,count:1}
+	        params:{headersonly:1,count:4}
 	    }).then(function mySuccess(response) {
 
 	        $scope.news = response.data;
@@ -576,8 +576,8 @@ appMain.controller("indexController",function($scope, $http, $location){
 	    	
 	        //$scope.result = response.statusText;
 	      
-	    });
-	 */
+	    });*/
+
 	 
 });
 
