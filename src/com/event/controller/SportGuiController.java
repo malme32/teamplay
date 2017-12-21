@@ -106,6 +106,12 @@ public class SportGuiController {
 		return new ModelAndView("theme1/news-detail","","");
 	}
 	
+
+	@RequestMapping(value="/match", method=RequestMethod.GET)
+	public ModelAndView match(){
+		return new ModelAndView("theme1/match","","");
+	}
+	
 /*	@RequestMapping(value="/point-table2", method=RequestMethod.GET)
 	public ModelAndView pointtable2(){
 		return new ModelAndView("theme1/point-table2","","");

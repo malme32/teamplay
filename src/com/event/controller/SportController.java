@@ -163,6 +163,13 @@ public class SportController {
 	}
 	
 	
+	@RequestMapping(value="/games/{id}", method=RequestMethod.GET, produces = "application/json")
+	public @ResponseBody Game getGame(@PathVariable int id)
+		
+	{
+		return sportService.findGameById(id);
+	}
+	
 	/////////////////////POST/////////////////////////////////////
 	
 	@RequestMapping(value="/champions", method=RequestMethod.POST, produces = "application/json")

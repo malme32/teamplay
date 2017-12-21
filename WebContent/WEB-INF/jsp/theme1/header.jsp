@@ -128,25 +128,25 @@ pageEncoding="UTF-8"%>
 <li><a href="${resources}/team-detail.html">Team detail</a></li>
 <li><a href="${resources}/team-width-sidebar.html">team-widthsidebar</a></li>
 </ul>
-<li><a href="point-table.html">ΠΡΩΤΑΘΛΗΜΑΤΑ</a>
+<li><a href="#!point-table.html">ΠΡΩΤΑΘΛΗΜΑΤΑ</a>
 <ul>
-<li ng-repeat='row in headerChampions'><a href="point-table.html">{{row.name}}</a></li>
+<li ng-repeat='row in headerChampions'><a href="#!point-table.html">{{row.name}}</a></li>
 
 </ul>
 
 </li>
-<li><a href="team-list.html">ΟΜΑΔΕΣ</a>
+<li><a href="#!team-list.html">ΟΜΑΔΕΣ</a>
 </li>
 <li class="mega-dropdown">
-<a href="news-list.html">ΝΕΑ</a>
+<a href="#!news-list.html">ΝΕΑ</a>
 <ul>
 <li class="row">
 <div class="col-lg-3 col-md-3 col-sm-3">
 <div class="blog-categories">
 <h2>ΝΕΑ</h2>
 <ul class="blog-categories-list">
-<li><a href="news-list.html"><b>ΟΛΑ ΤΑ ΝΕΑ</b></a></li>
-<li ng-repeat='row in news | orderBy:"-date"'><a ng-href="news-detail?id={{row.id}}">{{row.title}}</a></li>
+<li><a href="#!news-list.html"><b>ΟΛΑ ΤΑ ΝΕΑ</b></a></li>
+<li ng-repeat='row in news | orderBy:"-date"'><a ng-href="#!news-detail.html/{{row.id}}">{{row.title}}</a></li>
 
  </ul>
 </div>
@@ -171,7 +171,7 @@ pageEncoding="UTF-8"%>
 
 	<div class="large-post-detail style-3 p-0" style='height:110px; overflow:hidden'>
 	<span class="red-color">{{row.date | date}}</span>
-	<a ng-href="news-detail?id={{row.id}}"><h2>{{row.title}}</h2></a>
+	<a ng-href="#!news-detail.html/{{row.id}}"><h2>{{row.title}}</h2></a>
 	</div>
 
 </div>

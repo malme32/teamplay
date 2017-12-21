@@ -2,6 +2,7 @@
 var appMain = angular.module("appMain", ["ngRoute",'ngMaterial', 'ngMessages', 'material.svgAssetsCache']);
 
 appMain.config(function($routeProvider) {
+	
     $routeProvider
 
     .when("/eventlist", {
@@ -43,6 +44,7 @@ appMain.config(function($routeProvider) {
         controller: "adminController"
 
     })
+
    /*.when("/info/:name", {
         templateUrl : "info.htm",
         controller : "infoController"
@@ -59,10 +61,80 @@ appMain.config(function($routeProvider) {
         controller: "championsController"
 
     })
+
+    .when("/point-table.html", {
+        templateUrl : "point-table.html",
+        controller: "championsController"
+
+    })
+    .when("/news-list.html", {
+        templateUrl : "news-list.html",
+        controller: "newsController"
+
+    })
+    .when("/team-list.html", {
+        templateUrl : "team-list.html",
+        controller: "teamlistController"
+
+    })
+    .when("/news-detail.html/:id", {
+        templateUrl : "news-detail.html",
+        controller: "newsDetailController"
+
+    })
+    .when("/team-detail.html/:id", {
+        templateUrl : "team-detail.html",
+        controller: "teamdetailController"
+
+    })
+    .when("/match.html/:id", {
+        templateUrl : "match.html",
+        controller: "matchController"
+
+    });/*.
+     $routeProvider.otherwise({redirectTo: '/index'});*/
+ /* $locationProvider.html5Mode(true); */
     //<<theme1<<
     
 });
+//appMain.directive('fbComments', function() {
+appMain.
+directive('fbComments', function() {
+    return {
+        restrict: 'C',
+        link: function(scope, element, attributes) { 
+            element[0].dataset.href = document.location.href;
+            return typeof FB !== "undefined" && FB !== null ? FB.XFBML.parse(element.parent()[0]) : void 0;
+        }
+    };
+});
 
+/*appMain.directive('fbCommentBox', function() {
+	  function createHTML(href, numposts, colorscheme, width) {
+			
+	    return '<div class="fb-comments" ' +
+	      'data-href="' + href + '" ' +
+	      'data-numposts="' + numposts + '" ' +
+	      'data-colorsheme="' + colorscheme + '" ' +
+	      'data-width="' + width + '">' +
+	      '</div>';
+	  }
+
+	  return {
+	    restrict: 'A',
+	    scope: {},
+	    link: function postLink(scope, elem, attrs) {
+	      attrs.$observe('pageHref', function(newValue) {
+	        var href = newValue;
+	        var numposts = attrs.numposts || 5;
+	        var colorscheme = attrs.colorscheme || 'light';
+	        var width = attrs.width || '100%';
+	        elem.html(createHTML(href, numposts, colorscheme, width));
+	        FB.XFBML.parse(elem[0]);
+	      });
+	    }
+	  };
+	});*/
 
 appMain.filter('validDate', function() {
     return function(items) {
@@ -107,6 +179,60 @@ appMain.controller("eventsController",function($scope, $http, $location){
 		 }
 
 });
+
+
+appMain.controller("matchController",function($scope, $http, $routeParams, $location){
+
+	$scope.currentpage=window.location.href; 
+	 $http({
+	        method : "GET",
+	        url : "games/"+$routeParams.id
+	    }).then(function mySuccess(response) {
+
+	        $scope.game = response.data;
+	      
+	    }, function myError(response) {
+	  
+	        //$scope.result = response.statusText;
+	      
+	    });
+	 
+	 
+	 $http({
+	        method : "GET",
+	        url : "news",
+	        params:{headersonly:1,count:6}
+	    }).then(function mySuccess(response) {
+
+	        $scope.news = response.data;
+
+
+	    }, function myError(response) {
+
+	    	
+	        //$scope.result = response.statusText;
+	      
+	    });
+	 
+	
+	 
+	 
+	 $http({
+	        method : "GET",
+	        url : "games/"+$routeParams.id+"/scorers"
+	    }).then(function mySuccess(response) {
+	    	$scope.scorers = response.data;
+	    	
+	    }, function myError(response) {
+	  
+	        $scope.result = response;//;"/champions/"+row.id+"/teamgroups";
+	        
+	        
+	      
+	    });
+	 
+});
+
 
 appMain.controller("eventController",function($scope, $http, $routeParams, $location){
 	
@@ -411,7 +537,7 @@ appMain.controller("championsController",function($scope, $http, $location, $win
 			    	
 			    }, function myError(response) {
 			  
-			        $scope.result = response;//;"/champions/"+row.id+"/teamgroups";
+			        //$scope.result = response;//;"/champions/"+row.id+"/teamgroups";
 			        
 			        
 			      
@@ -461,15 +587,20 @@ appMain.controller("championsController",function($scope, $http, $location, $win
 
 });
 
-appMain.controller("teamdetailController",function($scope, $http, $location){
-	var teamid = location.search.split('teamid=')[1];
+appMain.controller("teamdetailController",function($scope, $http, $location, $routeParams){
+	//var teamid = location.search.split('teamid=')[1];
 	//var teamid = $location.search().teamid; 
 	 //$scope.games = teamid;
 		$scope.currentpage=window.location.href; 
 
+		
+	    $scope.getLocation = function(){
+	        return document.location.href; 
+	   } 
+		
 	 $http({
 	        method : "GET",
-	        url : "teams/"+teamid
+	        url : "teams/"+$routeParams.id
 	    }).then(function mySuccess(response) {
 
 	        $scope.team = response.data;
@@ -482,7 +613,7 @@ appMain.controller("teamdetailController",function($scope, $http, $location){
 	
 		 $http({
 	        method : "GET",
-	        url : "teams/"+teamid+"/games"
+	        url : "teams/"+$routeParams.id+"/games"
 	    }).then(function mySuccess(response) {
 
 	        $scope.games = response.data;
@@ -494,7 +625,7 @@ appMain.controller("teamdetailController",function($scope, $http, $location){
 	    });
 	 $http({
 	        method : "GET",
-	        url : "teams/"+teamid+"/standings"
+	        url : "teams/"+$routeParams.id+"/standings"
 	    }).then(function mySuccess(response) {
 
 	        $scope.standings = response.data;
@@ -507,7 +638,7 @@ appMain.controller("teamdetailController",function($scope, $http, $location){
 	    
 	 $http({
 	        method : "GET",
-	        url : "teams/"+teamid+"/players",
+	        url : "teams/"+$routeParams.id+"/players",
 	    }).then(function mySuccess(response) {
 
 	        $scope.players = response.data;
@@ -581,13 +712,13 @@ appMain.controller("indexController",function($scope, $http, $location){
 	 
 });
 
-appMain.controller("newsDetailController",function($scope, $http, $location){
+appMain.controller("newsDetailController",function($scope, $http, $location,$routeParams){
 
 
-	var id = location.search.split('id=')[1];
+	//var id = location.search.split('id=')[1];
 	 $http({
 	        method : "GET",
-	        url : "news/"+id
+	        url : "news/"+$routeParams.id
 	    }).then(function mySuccess(response) {
 
 	        $scope.notice = response.data;

@@ -738,7 +738,14 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 
 					  if(!row.number)
 						  return;
-					  
+					  for(i=0;i<$scope.scorers.length;i++)
+						  {
+						  	if($scope.scorers[i].contact.name==row.contact.name)
+						  		{
+						  			alert("Αυτό το όναμα υπάρχει ήδη. Κανετε αλλαγή των τερμάτων και αποθήκευση.");
+						  			return;
+						  		}
+						  }
 						 $http({
 						        method : "POST",
 						        url : "games/"+$scope.selectedgame.id+"/scorers",
