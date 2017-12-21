@@ -33,7 +33,7 @@ pageEncoding="UTF-8"%>
 <!-- </div>
  --><!-- </div>
  -->
-<div class=" theme-margin-bottom" ng-repeat="row in teams  | filter:mysearch" style="padding:10px; border-bottom: 1px solid lightgray;border-top: 1px solid lightgray; height:70px;">
+<div class=" theme-margin-bottom" ng-repeat="row in teams  |orderBy: 'name'| filter:mysearch" style="padding:10px; border-bottom: 1px solid lightgray;border-top: 1px solid lightgray; height:70px;">
 <div style='display:inline-block'><img style='height:50px;' ng-src="${resources}{{row.logopath}}" alt=""></div>
 <div style='display:inline-block'>
 <h5><a ng-href='#!team-detail.html/{{row.id}}'>
