@@ -29,7 +29,7 @@ pageEncoding="UTF-8"%>
 
 <div class="row">
 
-<div class="col-lg-3 col-md-3 col-sm-5">
+<div class="col-lg-3 col-md-3 col-sm-5" style='margin-bottom:30px'>
 <div class="team-column ">
 <img ng-src="${resources}{{team.logopath}}" alt="">
 <!-- <span class="player-number">12</span>
@@ -37,27 +37,7 @@ pageEncoding="UTF-8"%>
 <!-- <h5>Lionel AndrÃ©s Messi</h5> -->
 <!-- <span class="desination">Defender</span>
  --><div ><!-- class="detail-inner" -->
-<!-- <ul> -->
-<!-- <li>Born</li>
-<li>Position</li>
-<li>Squad number</li>
-<li>Previous Club</li>
-<li>Fallow us on</li>
-</ul>
-<ul>
-<li>August 31, 1988</li>
-<li>Goalkeeper</li>
-<li>13</li>
-<li>Atletico Nacional</li> -->
-<!-- <li>
-<ul class="social-icons">
-<li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
-<li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
-<li><a class="youtube" href="#"><i class="fa fa-youtube-play"></i></a></li>
-<li><a class="pinterest" href="#"><i class="fa fa-pinterest-p"></i></a></li>
-</ul>
-</li>
-</ul> -->
+
 {{team.name}}
 </div>
 </div>
@@ -67,7 +47,7 @@ pageEncoding="UTF-8"%>
 
 <div class="col-lg-9 col-md-9 col-sm-7">
 
-<div class="team-detail-content theme-padding-bottom">
+<div class="team-detail-content theme-padding-bottom" >
 <h2>ΠΕΡΙΓΡΑΦΗ ΟΜΑΔΑΣ</h2>
 <p>{{team.description}}</p>
 <div class="tags-holder">
@@ -93,13 +73,60 @@ pageEncoding="UTF-8"%>
 <!-- <div class="" ng-repeat='row2 in row.standings.matchdays' style="margin-bottom:30px;"> -->
 <!-- 		<h3><span><i class="red-color">{{row2.name}} </i></span></h3>
  -->		
- 
- <div class="palyer-career theme-padding-bottom" ng-show='standings.length'>
+
+
+
+ <div class="  palyer-career  theme-padding-bottom" ng-show='standings.length' style=''><!---->
 <h2>Βαθμολογια</h2>
-<div class="table-responsive">
-<table class="table table-bordered">
+<div class="" style=''><!-- table-responsive -->
+<table class="table table-bordered" style=''>
 <thead>
-			<tr>
+			<tr >
+				<th>ΠΡΩΤΑΘΛΗΜΑ
+				</th>
+				<th>ΒΑΘΜΟΙ
+				</th>
+				<th ng-show='desktop'>ΓΚΟΛ
+				</th>
+				<th ng-show='desktop'>ΑΓΩΝΕΣ
+				</th>
+				<th ng-show='desktop'>ΝΙΚΕΣ
+				</th>
+				<th ng-show='desktop'>ΗΤΤΕΣ
+				</th>
+				<th ng-show='desktop'>ΙΣΟΠΑΛΙΕΣ
+				</th>
+			</tr>
+</thead>
+<tbody>
+			<tr ng-repeat='row1 in standings | orderBy: "-grade"' >
+				<td><a href='#!point-table.html'>{{row1.champion.name}}</a>
+				</td>
+				<td class="td_grade">{{row1.grade}}
+				</td>
+				<td ng-show='desktop'>{{row1.goal}}
+				</td>
+				<td ng-show='desktop'>{{row1.game}}
+				</td>
+				<td ng-show='desktop'>{{row1.win}}
+				</td>
+				<td ng-show='desktop'>{{row1.defeat}}
+				</td>
+				<td ng-show='desktop'>{{row1.draw}}
+				</td>
+			</tr>
+
+</tbody>
+</table>
+</div>
+</div>
+
+  <!-- <div class="" ng-show='standings.length' style=''>
+<h2>Βαθμολογια</h2>
+<div class="" style=''>table-responsive
+<table class="" style=''>
+
+			<tr >
 				<th>ΠΡΩΤΑΘΛΗΜΑ
 				</th>
 				<th>ΒΑΘΜΟΙ
@@ -115,9 +142,8 @@ pageEncoding="UTF-8"%>
 				<th>ΙΣΟΠΑΛΙΕΣ
 				</th>
 			</tr>
-</thead>
-<tbody>
-			<tr ng-repeat='row1 in standings | orderBy: "-grade"'>
+
+			<tr ng-repeat='row1 in standings | orderBy: "-grade"' >
 				<td><a href='#!point-table.html'>{{row1.champion.name}}</a>
 				</td>
 				<td class="td_grade">{{row1.grade}}
@@ -134,16 +160,14 @@ pageEncoding="UTF-8"%>
 				</td>
 			</tr>
 
-</tbody>
 </table>
 </div>
-</div>
- 
+</div> -->
  
  
  		<div ng-show='games.length' class='theme-padding-bottom'>
  		<h2>ΑΓΩΝΕΣ</h2>
- 		<div class="upcoming-fixture" >
+<%--  		<div class="upcoming-fixture" >
 		<div class="table-responsive">
 		<table class="table table-bordered">
 		<tbody>
@@ -167,7 +191,32 @@ pageEncoding="UTF-8"%>
 		</table>
 		</div>
 		</div>
+		 --%>
+		
+		<div class="matches-shedule-holder">
+
+
+			<div class="matches-dates-shedule" style='padding:0'>
+			<ul>
+			<li ng-repeat='row1 in games | validDate | orderBy: "-date" ' style='padding:5px; '>
+			<span class="pull-left"><img style='height:40px; width:40px' ng-src="${resources}{{row1.team1.logopath}}" alt=""></span>
+			<span class="pull-right"><img style='height:40px; width:40px' ng-src="${resources}{{row1.team2.logopath}}" alt=""></span>
+			<div class="detail">
+			<a href="#!match.html/{{row1.id}}">Match Detail<i class="fa fa-angle-double-right"></i></a>
+			<strong><a style='display:inline; padding:0; margin:0' href='#!team-detail.html/{{row1.team1.id}}'>{{row1.team1.name}}</a><i class="red-color"  style=''> {{row1.score1}} - {{row1.score2}}</i> <a style='display:inline; padding:0; margin:0'  href='#!team-detail.html/{{row1.team2.id}}'>{{row1.team2.name}}</a></strong>
+			<span class="location-marker" style=''><i class="fa "></i>{{row1.date |  date : "dd/MM HH:mm"}}</span>
+			</div>
+			</li>
+			
+			</ul>
+			</div>
+			
+			</div>
+		
+
+
 		</div>
+		
 	<!-- 	</div> -->
 
 
@@ -190,14 +239,11 @@ pageEncoding="UTF-8"%>
   </div> -->
 </div>
 
-</div>
-
-</div>
 
 
 
 <div class="row" ng-show='players.length'>
-<div class="col-lg-9 col-sm-12 pull-right to	p-palyer">
+<div class="col-lg-9 col-sm-12 pull-left to	p-palyer">
 <h2>ΠΑΙΧΤΕΣ</h2>
 <div class="row">
 
@@ -237,9 +283,13 @@ pageEncoding="UTF-8"%>
 </div>
 </div>
 </div>
+</div>
+</div>
 
 
+</div>
 
+</div>
 </div>
 </div>
 </div>

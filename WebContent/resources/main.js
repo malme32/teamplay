@@ -97,6 +97,9 @@ appMain.config(function($routeProvider) {
     //<<theme1<<
     
 });
+
+
+
 //appMain.directive('fbComments', function() {
 appMain.
 directive('fbComments', function() {
@@ -587,13 +590,50 @@ appMain.controller("championsController",function($scope, $http, $location, $win
 
 });
 
-appMain.controller("teamdetailController",function($scope, $http, $location, $routeParams){
+appMain.controller("teamdetailController",function($scope, $http, $location, $routeParams, $window){
 	//var teamid = location.search.split('teamid=')[1];
 	//var teamid = $location.search().teamid; 
 	 //$scope.games = teamid;
 		$scope.currentpage=window.location.href; 
 
 		
+	  if(window.innerWidth<500)
+	    	$scope.desktop=false;
+	    else
+	    	$scope.desktop=true;
+		
+		$(window).resize(function() {
+	
+		    $scope.$apply(function(){
+			    if(window.innerWidth<500)
+		    	{
+		    	
+		    		$scope.desktop=false;
+		    	}
+		    else
+		    	{
+	    		
+		    		$scope.desktop=true;
+		    	}
+		        //do something to update current scope based on the new innerWidth and let angular update the view.
+		    });
+		});
+		
+/*		$(window).resize(function() {
+		 
+		    if(window.innerWidth<500)
+		    	{
+		    		alert(false);
+		    		$scope.desktop=false;
+		    	}
+		    else
+		    	{
+	    			alert(true);
+		    		$scope.desktop=true;
+		    	}
+		    	
+		});
+		*/
 	    $scope.getLocation = function(){
 	        return document.location.href; 
 	   } 
