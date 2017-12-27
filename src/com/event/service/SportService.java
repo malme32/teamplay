@@ -84,5 +84,7 @@ public interface SportService {
 	public Notice findNewsById(int id);
 
 	public Notice uploadNoticeImage(String path, int id, CommonsMultipartFile file);
+
+	public void getPlayoffs(int championid, int phase);
 	
 }

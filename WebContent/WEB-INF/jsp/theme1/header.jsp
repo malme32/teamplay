@@ -112,7 +112,7 @@ pageEncoding="UTF-8"%>
 
 <ul class="nav-list pull-right">
 <li>
-<a href="soccer.html">ΑΡΧΙΚΗ</a>
+<a href="#!home">ΑΡΧΙΚΗ</a>
 <%-- <ul>
 <li><a >Home</a></li>
 <li><a href="${resources}/home-2.html">Home 2</a></li>

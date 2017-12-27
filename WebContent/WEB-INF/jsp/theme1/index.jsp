@@ -46,7 +46,7 @@ pageEncoding="UTF-8"%>
 
 
 
-<%@include  file="home.jsp" %> 
+<%@include  file="homefake.jsp" %> 
 
 
 

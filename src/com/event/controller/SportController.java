@@ -170,6 +170,15 @@ public class SportController {
 		return sportService.findGameById(id);
 	}
 	
+/*	@RequestMapping(value="/champions/{championid}/playoffs", method=RequestMethod.GET, produces = "application/json")
+	public @ResponseBody void getPlayoffs(@PathVariable int championid)
+	{
+		sportService.getPlayoffs(championid,32);
+		return ;
+	}*/
+	
+	
+	
 	/////////////////////POST/////////////////////////////////////
 	
 	@RequestMapping(value="/champions", method=RequestMethod.POST, produces = "application/json")
@@ -350,6 +359,14 @@ public class SportController {
         
     }  
 
+	@RequestMapping(value="/champions/{championid}/actions/{action}", method=RequestMethod.POST, produces = "application/json")
+	public @ResponseBody void getPlayoffs(@PathVariable int championid, @PathVariable String action,  @RequestParam int phase)
+	{
+		if(action.equals("generateplayoffs"))
+			sportService.getPlayoffs(championid,phase);
+		return ;
+	}
+	
 	//////////////////PUT///////////////////////////
 	
 	@RequestMapping(value="/champions", method=RequestMethod.PUT, produces = "application/json")

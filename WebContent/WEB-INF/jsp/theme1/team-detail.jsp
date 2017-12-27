@@ -51,19 +51,16 @@ pageEncoding="UTF-8"%>
 <h2>ΠΕΡΙΓΡΑΦΗ ΟΜΑΔΑΣ</h2>
 <p>{{team.description}}</p>
 <div class="tags-holder">
- <ul class="tags-list pull-left">
+<!--  <ul class="tags-list pull-left">
 <li><i class="fa fa-tags"></i>Tags</li>
 <li><a href="#!point-table.html">Champions</a></li>
-<!-- <li><a href="#">transfers</a></li>
- --><li><a href="team-list.html">Teams</a></li>
-<!-- <li><a href="#">cups</a></li>
- --></ul> 
+<li><a href="team-list.html">Teams</a></li>
+</ul> --> 
 <ul class="social-icons pull-right">
 <li>Κοινοποιήστε αυτή τη σελίδα</li>
 <li><a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u={{currentpage}}"><i class="fa fa-facebook"></i></a></li>
 <li><a class="tweeter" href="https://twitter.com/home?status={{currentpage}}"><i class="fa fa-twitter"></i></a></li>
-<!-- <li><a class="youtube" href="#"><i class="fa fa-youtube-play"></i></a></li>
-<li><a class="pinterest" href="#"><i class="fa fa-pinterest-p"></i></a></li> -->
+
 </ul>
 </div>
 </div>

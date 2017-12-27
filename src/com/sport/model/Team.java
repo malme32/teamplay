@@ -40,10 +40,10 @@ public class Team {
 	
 
 	
-	@Column(name="logopath", length=200,nullable=false, unique=true)
+	@Column(name="logopath", length=200)
 	private String logopath;
 	
-	@Column(name="coverpath", length=200,nullable=false, unique=true)
+	@Column(name="coverpath", length=200)
 	private String coverpath;
 	
 	@Column(name="description", length=1000)

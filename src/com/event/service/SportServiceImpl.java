@@ -68,6 +68,10 @@ public class SportServiceImpl  implements SportService{
 	@Autowired
 	NoticeDao noticeDao;
 	
+	@Autowired
+	PlayoffService playoffService;
+	
+	
 	@Override
 	public Champion findChampionsById(int id) {
 		// TODO Auto-generated method stub
@@ -629,5 +633,13 @@ public class SportServiceImpl  implements SportService{
         }catch(Exception e){System.out.println(e);}  
         
         return notice;
+	}
+
+	@Override
+	public void getPlayoffs(int championid, int phase) {
+		// TODO Auto-generated method stub
+		
+		playoffService.generatePlayoff(this.findChampionsById(championid), phase);
+		return ;
 	}
 }

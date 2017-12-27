@@ -5,9 +5,9 @@ package com.event.service;
 import com.sport.model.Champion;
 
 
-public interface PlayOffService {
+public interface PlayoffService {
 
-		public void generatePlayoff(Champion champion);
+		public void generatePlayoff(Champion champion, int phase);
 
 
 

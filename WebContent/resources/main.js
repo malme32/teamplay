@@ -91,7 +91,13 @@ appMain.config(function($routeProvider) {
         templateUrl : "match.html",
         controller: "matchController"
 
-    });/*.
+    })/*
+    .when("/home", {
+        templateUrl : "home1"
+
+    });*/
+    
+    /*.
      $routeProvider.otherwise({redirectTo: '/index'});*/
  /* $locationProvider.html5Mode(true); */
     //<<theme1<<
@@ -120,10 +126,10 @@ appMain.run(function($rootScope, $window) {
     		        //do something to update current scope based on the new innerWidth and let angular update the view.
     		    });
     		});
-    	if(next.indexOf("#!") === -1)//;=="http://localhost:60000/phonebook/soccer.html")
-    		$rootScope.isIndex=true;
-    	else
+    	if(next.indexOf("#!/home") === -1)//;=="http://localhost:60000/phonebook/soccer.html")
     		$rootScope.isIndex=false;
+    	else
+    		$rootScope.isIndex=true;
     });
 });
 //appMain.directive('fbComments', function() {
@@ -169,7 +175,7 @@ appMain.filter('validDate', function() {
     return function(items) {
     	  var result = [];   
     	  for (var i=0; i<items.length; i++){
-              if (items[i].date)  {
+              if (items[i].date||(items[i].score1&&items[i].score2))  {
                   result.push(items[i]);
               }
           }            
