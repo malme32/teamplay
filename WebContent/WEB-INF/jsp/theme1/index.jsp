@@ -7,11 +7,11 @@ pageEncoding="UTF-8"%>
 <!doctype html>
 <html class="no-js" lang="en">
 
-<!-- Mirrored from html.crunchpress.com/soccer/home-1.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 09 Dec 2017 09:37:07 GMT -->
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <meta name="author" content="" />
+<meta http-equiv="Cache-control" content="public">
 
 <title>Soccer HTML5 Template</title>
 <%@include  file="prereq.jsp" %>
@@ -46,8 +46,14 @@ pageEncoding="UTF-8"%>
 
 
 
+<%@include  file="home.jsp" %> 
+
+
 
 <div ng-view class="main"></div>
+
+
+
 
 <footer class="main-footer style-2">
 
@@ -134,5 +140,4 @@ pageEncoding="UTF-8"%>
 
 </body>
 
-<!-- Mirrored from html.crunchpress.com/soccer/home-1.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 09 Dec 2017 09:39:35 GMT -->
 </html>

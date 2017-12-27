@@ -41,23 +41,23 @@ pageEncoding="UTF-8"%>
 <table class="table table-bordered table-hover">
 <thead>
 			<tr>
-				<th>Team
+				<th>ΟΜΑΔΑ
 				</th>
-				<th>Grade
+				<th>ΒΑΘΜΟΙ
 				</th>
-				<th>Goal
+				<th ng-show='desktop'>ΓΚΟΛ
 				</th>
-				<th>G+
+				<th ng-show='desktop'>G+
 				</th>
-				<th>G-
+				<th ng-show='desktop'>G-
 				</th>
-				<th>Mathes
+				<th ng-show='desktop'>Mathes
 				</th>
-				<th>Wins
+				<th ng-show='desktop'>Wins
 				</th>
-				<th>Defeats
+				<th ng-show='desktop'>Defeats
 				</th>
-				<th>Draws
+				<th ng-show='desktop'>Draws
 				</th>
 			</tr>
 </thead>
@@ -78,19 +78,19 @@ pageEncoding="UTF-8"%>
 				</td> --%>
 				<td class="td_grade">{{row1.grade}}
 				</td>
-				<td>{{row1.goal}}
+				<td ng-show='desktop'>{{row1.goal}}
 				</td>
-				<td>{{row1.goalplus}}
+				<td ng-show='desktop'>{{row1.goalplus}}
 				</td>
-				<td>{{row1.goalminus}}
+				<td ng-show='desktop'>{{row1.goalminus}}
 				</td>
-				<td>{{row1.game}}
+				<td ng-show='desktop'>{{row1.game}}
 				</td>
-				<td>{{row1.win}}
+				<td ng-show='desktop'>{{row1.win}}
 				</td>
-				<td>{{row1.defeat}}
+				<td ng-show='desktop'>{{row1.defeat}}
 				</td>
-				<td>{{row1.draw}}
+				<td ng-show='desktop'>{{row1.draw}}
 				</td>
 			</tr>
 
@@ -124,24 +124,24 @@ pageEncoding="UTF-8"%>
 <table class="table table-bordered">
 <thead>
 			<tr>
+		<!-- 		<th ng-show='desktop'>
+				</th> -->
 				<th>
 				</th>
 				<th>ΟΝΟΜΑ
 				</th>
 				<th>ΟΜΑΔΑ
 				</th>
-				<th>ΓΚΟΛ
-				</th>
 			</tr>
 </thead>
 <tbody>
 			<tr ng-repeat='row2 in row.scorers   | orderBy: "-number"'>
-				<td>{{$index + 1}}</td>
+			<!-- 	<td>{{$index + 1}}</td> -->
+				<td>{{row2.number}}
+				</td>
 				<td>{{row2.contact.name}}
 				</td>
 				<td>{{row2.team.name}}
-				</td>
-				<td>{{row2.number}}
 				</td>
 			</tr>
 
@@ -156,6 +156,32 @@ pageEncoding="UTF-8"%>
 <button style="position:relative; "  ng-hide='row.standings.matchdays.length' class="btn red-btn pull-right" ng-click="getMatchdays(row)">Show Program</button>
 		 <div class="" ng-repeat='row2 in row.standings.matchdays' style="margin-bottom:30px;">
 		<h3><span><i class="red-color">{{row2.name}} </i></span></h3>
+		
+		
+	<div class="matches-shedule-holder">
+
+
+			<div class="matches-dates-shedule" style='padding:0'>
+			<ul>
+			<li ng-repeat='row1 in row2.games  | orderBy: "-date" ' style='padding:5px; '>
+			<span class="pull-left"><img style='height:40px; width:40px' ng-src="${resources}{{row1.team1.logopath}}" alt=""></span>
+			<span class="pull-right"><img style='height:40px; width:40px' ng-src="${resources}{{row1.team2.logopath}}" alt=""></span>
+			<div class="detail">
+			<a href="#!match.html/{{row1.id}}">Match Detail<i class="fa fa-angle-double-right"></i></a>
+			<strong><a style='display:inline; padding:0; margin:0' href='#!team-detail.html/{{row1.team1.id}}'>{{row1.team1.name}}</a><i class="red-color"  style=''> {{row1.score1}} - {{row1.score2}}</i> <a style='display:inline; padding:0; margin:0'  href='#!team-detail.html/{{row1.team2.id}}'>{{row1.team2.name}}</a></strong>
+			<span class="location-marker" style=''><i class="fa "></i>{{row1.date |  date : "dd/MM HH:mm"}}</span>
+			</div>
+			</li>
+			
+			</ul>
+			</div>
+			
+			</div>
+		
+
+		
+		
+<%-- 		
 		<div class="upcoming-fixture">
 		<div class="table-responsive">
 		<table class="table table-bordered">
@@ -166,16 +192,10 @@ pageEncoding="UTF-8"%>
 		
 		
 		
-<%-- 		<a href='team-detail?teamid={{row1.team1.id}}'><img src="${resources}/images/team-logos-small/img-01.png" alt="">{{row1.team1.name}}</a>
- --%>		
- 
+
   		  <a ng-href='#!team-detail.html/{{row1.team1.id}}'><img style='height:30px; width:30px' ng-src="${resources}{{row1.team1.logopath}}" alt="">
 				{{row1.team1.name}} </a>
-		<%-- 				 <div style='display:inline-block'>
-				  <div style='background:url(${resources}{{row1.team1.logopath}}) no-repeat center; 
- 						 width:30px; height:30px;background-size:cover; '></div></div>
- 						  <div style='display:inline-block'>
- 						 <a ng-href='team-detail?teamid={{row1.team1.id}}'>{{row1.team1.name}}</a></div> --%>
+
 		</div>
 		</td>
 		
@@ -184,21 +204,15 @@ pageEncoding="UTF-8"%>
 			<span class="own-score own-red-shadow" ng-show="row1.score1">{{row1.score1}} - {{row1.score2}} </span><span class="own-date">{{row1.date |  date : "dd/MM HH:mm"}}</span>
 			</a></td>
 		
-<!-- 		 w-icon
- -->		<td>
+
+		<td>
 		<div class="logo-width-name">
 		
-<%-- 		<a href='team-detail?teamid={{row1.team2.id}}'><img src="${resources}/images/team-logos-small/img-02.png" alt="">{{row1.team2.name}}</a>
- --%>	
+
  
  		  <a ng-href='#!team-detail.html/{{row1.team2.id}}'><img style='height:30px; width:30px' ng-src="${resources}{{row1.team2.logopath}}" alt="">
 				{{row1.team2.name}} </a>
  	
-		<%-- 	 <div style='display:inline-block'>
-				  <div style='background:url(${resources}{{row1.team2.logopath}}) no-repeat center; 
- 						 width:30px; height:30px;background-size:cover; '></div></div>
- 						  <div style='display:inline-block'>
- 						 <a ng-href='team-detail?teamid={{row1.team2.id}}'>{{row1.team2.name}}</a></div> --%>
  						 
 		</div>
 		</td>
@@ -207,7 +221,7 @@ pageEncoding="UTF-8"%>
 		</tbody>
 		</table>
 		</div>
-		</div>
+		</div>   --%>
 		</div>
 </div>
 

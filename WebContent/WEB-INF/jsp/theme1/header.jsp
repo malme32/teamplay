@@ -128,7 +128,7 @@ pageEncoding="UTF-8"%>
 <li><a href="${resources}/team-detail.html">Team detail</a></li>
 <li><a href="${resources}/team-width-sidebar.html">team-widthsidebar</a></li>
 </ul>
-<li><a href="#!point-table.html">ΠΡΩΤΑΘΛΗΜΑΤΑ</a>
+<li><a ng-href="#!point-table.html">ΠΡΩΤΑΘΛΗΜΑΤΑ</a>
 <ul>
 <li ng-repeat='row in headerChampions'><a href="#!point-table.html">{{row.name}}</a></li>
 

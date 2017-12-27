@@ -1,5 +1,10 @@
 package com.event.controller;
 
+import java.util.concurrent.TimeUnit;
+
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.http.CacheControl;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -62,7 +67,13 @@ public class SportGuiController {
 ////////////ROSSONERI- THEME1///////////////////////
 	
 	@RequestMapping(value="/soccer", method=RequestMethod.GET)
-	public ModelAndView index(){
+	public ModelAndView index(HttpServletResponse response){ 
+		
+		
+	      String headerValue = CacheControl.maxAge(10, TimeUnit.SECONDS)
+                  .getHeaderValue();
+
+response.addHeader("Cache-Control", headerValue);
 		return new ModelAndView("theme1/index","","");
 	}
 	
@@ -82,7 +93,12 @@ public class SportGuiController {
 	}	
 	
 	@RequestMapping(value="/point-table", method=RequestMethod.GET)
-	public ModelAndView pointtable(){
+	public ModelAndView pointtable(HttpServletResponse response){
+		
+	      String headerValue = CacheControl.maxAge(10, TimeUnit.SECONDS)
+                  .getHeaderValue();
+
+response.addHeader("Cache-Control", headerValue);
 		return new ModelAndView("theme1/point-table","","");
 	}	
 	@RequestMapping(value="/team-detail", method=RequestMethod.GET)

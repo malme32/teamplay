@@ -99,7 +99,33 @@ appMain.config(function($routeProvider) {
 });
 
 
-
+appMain.run(function($rootScope, $window) {
+    $rootScope.$on("$locationChangeStart", function(event, next, current) { 
+        // handle route changes    
+    	window.scrollTo(0, 0);
+    	$rootScope.currentpage=window.location.href; 
+    	
+    	  if(window.innerWidth<500)
+    		  $rootScope.desktop=false;
+    	    else
+    	    	$rootScope.desktop=true;
+    		
+    		$(window).resize(function() {
+    	
+    			$rootScope.$apply(function(){
+    			    if(window.innerWidth<500)
+    			    	$rootScope.desktop=false;
+    		    else
+    		    	$rootScope.desktop=true;
+    		        //do something to update current scope based on the new innerWidth and let angular update the view.
+    		    });
+    		});
+    	if(next.indexOf("#!") === -1)//;=="http://localhost:60000/phonebook/soccer.html")
+    		$rootScope.isIndex=true;
+    	else
+    		$rootScope.isIndex=false;
+    });
+});
 //appMain.directive('fbComments', function() {
 appMain.
 directive('fbComments', function() {
@@ -186,7 +212,8 @@ appMain.controller("eventsController",function($scope, $http, $location){
 
 appMain.controller("matchController",function($scope, $http, $routeParams, $location){
 
-	$scope.currentpage=window.location.href; 
+
+	
 	 $http({
 	        method : "GET",
 	        url : "games/"+$routeParams.id
@@ -439,7 +466,23 @@ appMain.controller("championsController",function($scope, $http, $location, $win
 	 $scope.championlist ="";
 	 $scope.champion;
 	 
-	 
+/*	 window.scrollTo(0, 0);
+	  if(window.innerWidth<500)
+	    	$scope.desktop=false;
+	    else
+	    	$scope.desktop=true;
+		
+		$(window).resize(function() {
+	
+		    $scope.$apply(function(){
+			    if(window.innerWidth<500)
+		    		$scope.desktop=false;
+		    else
+		    		$scope.desktop=true;
+		        //do something to update current scope based on the new innerWidth and let angular update the view.
+		    });
+		});
+	 */
 	 $http({
 	        method : "GET",
 	        url : "news",
@@ -594,8 +637,8 @@ appMain.controller("teamdetailController",function($scope, $http, $location, $ro
 	//var teamid = location.search.split('teamid=')[1];
 	//var teamid = $location.search().teamid; 
 	 //$scope.games = teamid;
-		$scope.currentpage=window.location.href; 
-
+		/*$scope.currentpage=window.location.href; 
+		window.scrollTo(0, 0);
 		
 	  if(window.innerWidth<500)
 	    	$scope.desktop=false;
@@ -606,19 +649,13 @@ appMain.controller("teamdetailController",function($scope, $http, $location, $ro
 	
 		    $scope.$apply(function(){
 			    if(window.innerWidth<500)
-		    	{
-		    	
 		    		$scope.desktop=false;
-		    	}
 		    else
-		    	{
-	    		
 		    		$scope.desktop=true;
-		    	}
 		        //do something to update current scope based on the new innerWidth and let angular update the view.
 		    });
 		});
-		
+		*/
 /*		$(window).resize(function() {
 		 
 		    if(window.innerWidth<500)
@@ -731,8 +768,8 @@ appMain.controller("teamdetailController",function($scope, $http, $location, $ro
 
 appMain.controller("indexController",function($scope, $http, $location){
 
-
-
+	window.scrollTo(0, 0);
+	/*$scope.isIndex=true;*/
 /*	 $http({
 	        method : "GET",
 	        url : "news",
@@ -753,7 +790,7 @@ appMain.controller("indexController",function($scope, $http, $location){
 });
 
 appMain.controller("newsDetailController",function($scope, $http, $location,$routeParams){
-
+	window.scrollTo(0, 0);
 
 	//var id = location.search.split('id=')[1];
 	 $http({
@@ -775,7 +812,7 @@ appMain.controller("newsDetailController",function($scope, $http, $location,$rou
 appMain.controller("newsController",function($scope, $http, $location){
 
 
-
+	window.scrollTo(0, 0);
 	 $http({
 	        method : "GET",
 	        url : "news",
@@ -829,7 +866,7 @@ appMain.controller("headerController",function($scope, $http, $location){
 
 appMain.controller("teamlistController",function($scope, $http, $location){
 
-    
+	window.scrollTo(0, 0);
 	 $http({
 	        method : "GET",
 	        url : "teams",

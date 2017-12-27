@@ -59,25 +59,25 @@ pageEncoding="UTF-8"%>
 <div class="table-responsive">
 <table class="table table-bordered">
 <thead>
-			<tr>
+			<tr><!-- 
+				<th ng-show='desktop'>
+				</th> -->
 				<th>
 				</th>
 				<th>ΟΝΟΜΑ
 				</th>
 				<th>ΟΜΑΔΑ
 				</th>
-				<th>ΓΚΟΛ
-				</th>
 			</tr>
 </thead>
 <tbody>
 			<tr ng-repeat='row2 in scorers   | orderBy: "-number"'>
-				<td>{{$index + 1}}</td>
+			<!-- 	<td ng-show='desktop'>{{$index + 1}}</td> -->
+				<td>{{row2.number}}
+				</td>
 				<td>{{row2.contact.name}}
 				</td>
 				<td>{{row2.team.name}}
-				</td>
-				<td>{{row2.number}}
 				</td>
 			</tr>
 
@@ -101,9 +101,10 @@ pageEncoding="UTF-8"%>
 <div class="fb-comments" data-href="{{currentpage}}" data-numposts="5"></div>
 
 </div> -->
+ <div class="fb-comments" data-href="{{getLocation()}}" data-numposts="10" data-colorscheme="light" data-width="580" id="commentbox"></div>
+
 </div>
 
- <div class="fb-comments" data-href="{{getLocation()}}" data-numposts="10" data-colorscheme="light" data-width="580" id="commentbox"></div>
 
 
 </div>
