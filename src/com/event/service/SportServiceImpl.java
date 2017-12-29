@@ -234,7 +234,8 @@ public class SportServiceImpl  implements SportService{
 	    {
 	    	System.out.println( (day + 1));
 	    	Matchday matchday = new Matchday();
-	    	matchday.setName("ΑΓΩΝΙΣΤΙΚΗ "+ (day + 1));
+	    	String startName=day<9?"ΑΓΩΝΙΣΤΙΚΗ 0":"ΑΓΩΝΙΣΤΙΚΗ ";
+	    	matchday.setName(startName+ (day + 1));
 	    	matchday.setTeamgroup(teamgroup);
 	    	generalDaoService.persist(matchday);
 	    	
@@ -242,7 +243,8 @@ public class SportServiceImpl  implements SportService{
 	    	
 	    	if(roundNumber==2) {
 	    		matchday2 = new Matchday();
-		    	matchday2.setName("ΑΓΩΝΙΣΤΙΚΗ " + (day + numDays+ 1));
+		    	startName=(day + numDays)<9?"ΑΓΩΝΙΣΤΙΚΗ 0":"ΑΓΩΝΙΣΤΙΚΗ ";
+		    	matchday2.setName(startName+ (day + numDays+ 1));
 		    	matchday2.setTeamgroup(teamgroup);
 		    	generalDaoService.persist(matchday2);
 	    	}

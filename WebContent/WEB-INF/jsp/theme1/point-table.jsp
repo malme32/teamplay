@@ -190,7 +190,7 @@ pageEncoding="UTF-8"%>
 
 </div>	 
 <button style="position:relative; "  ng-hide='row.standings.matchdays.length' class="btn red-btn pull-right" ng-click="getMatchdays(row)">Show Program</button>
-		 <div class="" ng-repeat='row2 in row.standings.matchdays' style="margin:0;padding:0">
+		 <div class="" ng-repeat='row2 in row.standings.matchdays|  orderBy:"name"' style="margin:0;padding:0">
 		<h3 style="margin:0 0 5px 0; padding:0"><span><i class="red-color">{{row2.name}} </i></span></h3>
 		
 		

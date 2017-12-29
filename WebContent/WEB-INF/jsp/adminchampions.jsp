@@ -311,8 +311,8 @@
 				</td>
 			</tr>
 			<tr>
-				<td><select ng-model="selectedTeam"
-					ng-options="row.name for row in totalTeamList | orderBy:'name'">
+				<td><select ng-model="selectedTeam "
+					ng-options="row.name for row in totalTeamList |filter : adminNewTeamName| orderBy:'name'">
 					<option value="">---Επιλέξτε---</option>
 				</select>
 				<td>
@@ -373,7 +373,7 @@
 	</table>
 
 
-	<div ng-repeat='row in matchday'>
+	<div ng-repeat='row in matchday | orderBy:"name"'>
 		<div class='table_stylish1'>
 			<table>
 	<!-- 			<tr>
