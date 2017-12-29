@@ -67,16 +67,21 @@
 	<tr>
 	<td>
 						 	<select ng-model="selectedPhase" >
-							<option value="">---Επιλέξτε---</option>
+							<option value="">---Επιλέξτε Φάση---</option>
 							<option value="32">Φαση των 32</option>
 							<option value="16">Φαση των 16</option>
 							<option value="8">Προημιτελικα</option>
 							<option value="4">Ημιτελικα</option>
 							<option value="2">Τελικος</option>
 							</select>
+							<select ng-model="selectedRound" >
+							<option value="">---Επιλέξτε γύρους---</option>
+							<option value="1">1 γύρος</option>
+							<option value="2">2 γύροι</option>
+							</select>
 	</td>
 	<td>		<button class='button_flat  background_black'
-						 ng-click='generatePlayoffs(champion,selectedPhase)'>Δημιουργία Playoff</button>	</td>
+						 ng-click='generatePlayoffs(champion,selectedPhase,selectedRound)'>Δημιουργία Playoff</button>	</td>
 	</tr>
 	<tr>
 	<td>

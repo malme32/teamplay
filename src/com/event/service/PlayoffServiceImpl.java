@@ -15,6 +15,7 @@ import com.sport.model.Champion;
 import com.sport.model.Game;
 import com.sport.model.Playoff;
 import com.sport.model.Standing;
+import com.sport.model.Team;
 import com.sport.model.Teamgroup;
 
 import javassist.bytecode.stackmap.TypeData.ClassName;
@@ -25,6 +26,8 @@ public class PlayoffServiceImpl implements PlayoffService {
 	
 	@Autowired
 	GeneralDaoService generalDaoService;
+	@Autowired
+	SportService sportService;
 /*
 	
 private  void genPlayoffs() {
@@ -130,35 +133,80 @@ private  void genPlayoffs() {
 		
 	}
 
-	private void generateGames(List<List<Standing>> standings, Champion champion, int phase){
+	private void generateGames(List<List<Standing>> standings, Champion champion, int phase,int round){
 
 		Playoff playoff= new Playoff();
 		playoff.setChampion(champion);
 		playoff.setPhase(phase);
-		
-		switch(phase) {
-		case 32:
-			playoff.setName("ΦΑΣΗ ΤΩΝ 32");
-			break;
-		case 16:
-			playoff.setName("ΦΑΣΗ ΤΩΝ 16");
-			break;
-		case 8:
-			playoff.setName("ΠΡΟΗΜΙΤΕΛΙΚΑ");
-			break;
-		case 4:
-			playoff.setName("ΗΜΙΤΕΛΙΚΑ");
-			break;
-		case 2:
-			playoff.setName("ΤΕΛΙΚΟΣ");
-			break;
-		
-		default:
-			playoff.setName(Integer.toString(phase));
-			break;
-		
+		Playoff playoff2=null;
+		if(round==2)
+		{
+			playoff2= new Playoff();
+			playoff2.setChampion(champion);
+			playoff2.setPhase(phase);
 		}
-		this.generalDaoService.persist(playoff);
+		if(round==1) {
+			switch(phase) {
+			case 32:
+				playoff.setName("ΦΑΣΗ ΤΩΝ 32");
+				break;
+			case 16:
+				playoff.setName("ΦΑΣΗ ΤΩΝ 16");
+				break;
+			case 8:
+				playoff.setName("ΠΡΟΗΜΙΤΕΛΙΚΑ");
+				break;
+			case 4:
+				playoff.setName("ΗΜΙΤΕΛΙΚΑ");
+				break;
+			case 2:
+				playoff.setName("ΤΕΛΙΚΟΣ");
+				break;
+			
+			default:
+				playoff.setName(Integer.toString(phase));
+				break;
+			
+			}
+			this.generalDaoService.persist(playoff);
+			
+		}
+		else {
+			
+			switch(phase) {
+			case 32:
+				playoff.setName("ΦΑΣΗ ΤΩΝ 32 - ΓΥΡΟΣ Α");
+				playoff2.setName("ΦΑΣΗ ΤΩΝ 32 - ΓΥΡΟΣ Β");
+				break;
+			case 16:
+				playoff.setName("ΦΑΣΗ ΤΩΝ 16 - ΓΥΡΟΣ Α");
+				playoff2.setName("ΦΑΣΗ ΤΩΝ 16 - ΓΥΡΟΣ Β");
+				break;
+			case 8:
+				playoff.setName("ΠΡΟΗΜΙΤΕΛΙΚΑ - ΓΥΡΟΣ Α");
+				playoff2.setName("ΠΡΟΗΜΙΤΕΛΙΚΑ - ΓΥΡΟΣ Β");
+				break;
+			case 4:
+				playoff.setName("ΗΜΙΤΕΛΙΚΑ - ΓΥΡΟΣ Α");
+				playoff2.setName("ΗΜΙΤΕΛΙΚΑ - ΓΥΡΟΣ Β");
+				break;
+			case 2:
+				playoff.setName("ΤΕΛΙΚΟΣ - ΓΥΡΟΣ Α");
+				playoff2.setName("ΤΕΛΙΚΟΣ - ΓΥΡΟΣ Β");
+				break;
+			
+			default:
+				playoff.setName(Integer.toString(phase)+" ΓΥΡΟΣ Α");
+				playoff2.setName(Integer.toString(phase)+ "ΓΥΡΟΣ Β");
+				break;
+			
+			}
+			this.generalDaoService.persist(playoff);
+			this.generalDaoService.persist(playoff2);
+			
+		}
+		
+		
 		
 		int i=0;
 		while(true)
@@ -192,8 +240,16 @@ private  void genPlayoffs() {
 			game.setPlayoff(playoff);
 			game.setTeam1(standtmp1.get(0).getTeam());
 			game.setTeam2(standtmp2.get(standtmp2.size()-1).getTeam());
-			
 			this.generalDaoService.persist(game);
+			
+			if(round==2) {
+				Game game2 = new Game();
+				game2.setPlayoff(playoff2);
+				game2.setTeam1(standtmp2.get(standtmp2.size()-1).getTeam());
+				game2.setTeam2(standtmp1.get(0).getTeam());
+				this.generalDaoService.persist(game2);
+			}
+			
 			standtmp1.remove(0);
 			standtmp2.remove(standtmp2.size()-1);
 			i=i==standings.size()-1?0:i+1;
@@ -266,8 +322,16 @@ private  void genPlayoffs() {
 
 	
 	@Override
-	public void generatePlayoff(Champion champion, int phase) {
+	public void generatePlayoff(Champion champion, int phase, int round) {
 		// TODO Auto-generated method stub
+		List<Playoff> playoffs = sportService.getPlayoffGames(champion.getId(), null);
+		if(!playoffs.isEmpty())
+		{
+			System.out.println("Getting next playoffs");
+			List<Playoff> prevPlayoffs = sportService.getPlayoffGames(champion.getId(), phase*2);
+			generetaNextPlayoffs(prevPlayoffs,champion, phase, round);
+			return;
+		}
 		switch(phase) {
 		case 32:
 		case 16:
@@ -296,7 +360,170 @@ private  void genPlayoffs() {
 		filterOutGames(totalStandings,champion.getTeamgroups().size()*numberPerStand - phase);
 
 		System.out.println("Filtered out..");
-		generateGames(totalStandings,champion, phase);
+		generateGames(totalStandings,champion, phase, round);
 		return;
+	}
+
+	private List<Team> getWinners(List<Playoff> prevPlayoffs){
+
+		List<Team> winTeams= new ArrayList<Team>();
+
+		System.out.println("YOU "+prevPlayoffs.size());
+		//1 round
+		if(prevPlayoffs.size()==1)
+		{
+
+			for(Game game:prevPlayoffs.get(0).getGames())
+			{
+				if(Integer.parseInt(game.getScore1())>Integer.parseInt(game.getScore2()))
+					winTeams.add(game.getTeam1());
+				else
+					winTeams.add(game.getTeam2());
+			}
+			return winTeams;
+		}
+		//2 rounds
+		if(prevPlayoffs.size()==2)
+		{
+			Playoff playoff1 = prevPlayoffs.get(0);
+			Playoff playoff2 = prevPlayoffs.get(1);
+			for(Game game1:playoff1.getGames())
+			{			
+				for(Game game2:playoff2.getGames())
+				{
+					if(game1.getTeam1().getId()==game2.getTeam2().getId()&& game1.getTeam2().getId()==game2.getTeam1().getId())
+					{
+						int game1Score1 = Integer.parseInt(game1.getScore1());
+						int game1Score2 = Integer.parseInt(game1.getScore2());
+						int game2Score1 = Integer.parseInt(game2.getScore1());
+						int game2Score2 = Integer.parseInt(game2.getScore2());
+						
+						if(game1Score1>game1Score2&&game2Score1<game2Score2)
+							winTeams.add(game1.getTeam1());
+						else if(game1Score1>game1Score2&&game2Score1==game2Score2)
+							winTeams.add(game1.getTeam1());
+						else if(game1Score1==game1Score2&&game2Score1<game2Score2)
+							winTeams.add(game1.getTeam1());
+						else if(game1Score1<game1Score2&&game2Score1>game2Score2)
+							winTeams.add(game1.getTeam2());
+						else if(game1Score1<game1Score2&&game2Score1==game2Score2)
+							winTeams.add(game1.getTeam2());
+						else if(game1Score1==game1Score2&&game2Score1>game2Score2)
+							winTeams.add(game1.getTeam2());
+						
+						else if(game1Score1+game2Score2>game1Score2+game2Score1)
+							winTeams.add(game1.getTeam1());
+						else //if(game1Score1+game2Score2<game1Score2+game2Score1)
+							winTeams.add(game1.getTeam2());
+					
+					}
+						
+				}
+			}
+		}
+		for(Team team:winTeams)
+			System.out.println("YOU "+team.getName());
+		return winTeams;
+	}
+	
+	private void generetaNextPlayoffs(List<Playoff> prevPlayoffs,Champion champion, int phase, int round) {
+		// TODO Auto-generated method stub
+
+		System.out.println("starting next playoffs");
+		List<Team> winTeams= getWinners(prevPlayoffs);
+
+		System.out.println("continuing next playoffs");
+		
+		Playoff playoff= new Playoff();
+		playoff.setChampion(champion);
+		playoff.setPhase(phase);
+		Playoff playoff2=null;
+		if(round==2)
+		{
+			playoff2= new Playoff();
+			playoff2.setChampion(champion);
+			playoff2.setPhase(phase);
+		}
+		if(round==1) {
+			switch(phase) {
+			case 32:
+				playoff.setName("ΦΑΣΗ ΤΩΝ 32");
+				break;
+			case 16:
+				playoff.setName("ΦΑΣΗ ΤΩΝ 16");
+				break;
+			case 8:
+				playoff.setName("ΠΡΟΗΜΙΤΕΛΙΚΑ");
+				break;
+			case 4:
+				playoff.setName("ΗΜΙΤΕΛΙΚΑ");
+				break;
+			case 2:
+				playoff.setName("ΤΕΛΙΚΟΣ");
+				break;
+			
+			default:
+				playoff.setName(Integer.toString(phase));
+				break;
+			
+			}
+			this.generalDaoService.persist(playoff);
+			
+		}
+		else {
+			
+			switch(phase) {
+			case 32:
+				playoff.setName("ΦΑΣΗ ΤΩΝ 32 - ΓΥΡΟΣ Α");
+				playoff2.setName("ΦΑΣΗ ΤΩΝ 32 - ΓΥΡΟΣ Β");
+				break;
+			case 16:
+				playoff.setName("ΦΑΣΗ ΤΩΝ 16 - ΓΥΡΟΣ Α");
+				playoff2.setName("ΦΑΣΗ ΤΩΝ 16 - ΓΥΡΟΣ Β");
+				break;
+			case 8:
+				playoff.setName("ΠΡΟΗΜΙΤΕΛΙΚΑ - ΓΥΡΟΣ Α");
+				playoff2.setName("ΠΡΟΗΜΙΤΕΛΙΚΑ - ΓΥΡΟΣ Β");
+				break;
+			case 4:
+				playoff.setName("ΗΜΙΤΕΛΙΚΑ - ΓΥΡΟΣ Α");
+				playoff2.setName("ΗΜΙΤΕΛΙΚΑ - ΓΥΡΟΣ Β");
+				break;
+			case 2:
+				playoff.setName("ΤΕΛΙΚΟΣ - ΓΥΡΟΣ Α");
+				playoff2.setName("ΤΕΛΙΚΟΣ - ΓΥΡΟΣ Β");
+				break;
+			
+			default:
+				playoff.setName(Integer.toString(phase)+" ΓΥΡΟΣ Α");
+				playoff2.setName(Integer.toString(phase)+ "ΓΥΡΟΣ Β");
+				break;
+			
+			}
+			this.generalDaoService.persist(playoff);
+			this.generalDaoService.persist(playoff2);
+			
+		}
+		
+		
+		
+		for(int i=0;i<winTeams.size()-1;i++)
+		{
+			
+			System.out.println("NEXTPLAYOFF "+winTeams.get(i).getName()+" vs "+winTeams.get(i+1).getName());
+			Game game = new Game();
+			game.setPlayoff(playoff);
+			game.setTeam1(winTeams.get(i));
+			game.setTeam2(winTeams.get(i+1));
+			this.generalDaoService.persist(game);
+			if(round==2) {
+				Game game2 = new Game();
+				game2.setPlayoff(playoff2);
+				game2.setTeam1(winTeams.get(i+1));
+				game2.setTeam2(winTeams.get(i));
+				this.generalDaoService.persist(game2);
+			}
+			i++;
+		}
 	}
 }

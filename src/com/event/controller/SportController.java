@@ -390,10 +390,10 @@ public class SportController {
     }  
 
 	@RequestMapping(value="/champions/{championid}/actions/{action}", method=RequestMethod.POST, produces = "application/json")
-	public @ResponseBody void getPlayoffs(@PathVariable int championid, @PathVariable String action,  @RequestParam int phase)
+	public @ResponseBody void genPlayoffs(@PathVariable int championid, @PathVariable String action,  @RequestParam int phase,  @RequestParam int round)
 	{
 		if(action.equals("generateplayoffs"))
-			sportService.getPlayoffs(championid,phase);
+			sportService.genPlayoffs(championid,phase,round);
 		return ;
 	}
 	

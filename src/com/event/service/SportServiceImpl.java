@@ -234,7 +234,7 @@ public class SportServiceImpl  implements SportService{
 	    {
 	    	System.out.println( (day + 1));
 	    	Matchday matchday = new Matchday();
-	    	matchday.setName("Matchday"+ (day + 1));
+	    	matchday.setName("ΑΓΩΝΙΣΤΙΚΗ "+ (day + 1));
 	    	matchday.setTeamgroup(teamgroup);
 	    	generalDaoService.persist(matchday);
 	    	
@@ -242,11 +242,11 @@ public class SportServiceImpl  implements SportService{
 	    	
 	    	if(roundNumber==2) {
 	    		matchday2 = new Matchday();
-		    	matchday2.setName("Matchday"+ (day + numDays+ 1));
+		    	matchday2.setName("ΑΓΩΝΙΣΤΙΚΗ " + (day + numDays+ 1));
 		    	matchday2.setTeamgroup(teamgroup);
 		    	generalDaoService.persist(matchday2);
 	    	}
-	    	
+
 	        int teamIdx = day % teamsSize;
 	    	if(teams.get(teamIdx)!=null&&ListTeam.get(0)!=null)
 	    	{
@@ -642,23 +642,39 @@ public class SportServiceImpl  implements SportService{
 	}
 
 	@Override
-	public void getPlayoffs(int championid, int phase) {
+	public void genPlayoffs(int championid, int phase, int round) {
 		// TODO Auto-generated method stub
 		
-		playoffService.generatePlayoff(this.findChampionsById(championid), phase);
+		playoffService.generatePlayoff(this.findChampionsById(championid), phase, round);
 		return ;
 	}
 
 	@Override
 	public List<Playoff> getPlayoffGames(int championid, Integer phase) {
 		// TODO Auto-generated method stub
-	Champion champion = this.findChampionsById(championid);
-			Hibernate.initialize(champion.getPlayoffs());
-		// TODO Auto-generated method stub;
-		for(Playoff playoff : champion.getPlayoffs())
-			Hibernate.initialize(playoff.getGames());
-		return champion.getPlayoffs();
+		Champion champion = this.findChampionsById(championid);
+		Hibernate.initialize(champion.getPlayoffs());
+	// TODO Auto-generated method stub;
+		if(phase==null) {
+			for(Playoff playoff : champion.getPlayoffs())
+				Hibernate.initialize(playoff.getGames());
+			return champion.getPlayoffs();
 		
+		}
+		else {
+
+			List<Playoff> list= new ArrayList<Playoff>();
+			for(Playoff playoff : champion.getPlayoffs())
+				if(playoff.getPhase().equals(phase))
+				{
+					Hibernate.initialize(playoff.getGames());
+					list.add(playoff);
+
+				}
+			return list;
+		}
+		
+
 	}
 
 	@Override

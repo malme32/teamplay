@@ -86,7 +86,7 @@ public interface SportService {
 
 	public Notice uploadNoticeImage(String path, int id, CommonsMultipartFile file);
 
-	public void getPlayoffs(int championid, int phase);
+	public void genPlayoffs(int championid, int phase,int round);
 
 	public List<Playoff> getPlayoffGames(int championid, Integer phase);
 

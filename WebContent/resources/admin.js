@@ -779,7 +779,7 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 						    });
 						 
 					 }
-				  $scope.generatePlayoffs = function (championrow,selectedPhase){
+				  $scope.generatePlayoffs = function (championrow,selectedPhase,selectedRound){
 						// $scope.result = gamerow.team1.name+" "+matchdayrow.name;
 			
 						 if(!confirm("Are you sure?"))
@@ -788,13 +788,13 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 						 $http({
 						        method : "POST",
 						        url : "champions/"+championrow.id+"/actions/generateplayoffs",
-						        params:{phase:selectedPhase}
+						        params:{phase:selectedPhase,round:selectedRound}
 						    }).then(function mySuccess(response) {
 
 						    	$scope.getPlayoffs($scope.champion);
 						    }, function myError(response) {
 						  
-						       alert("An Error occured. Try again.");
+						       alert("Προέυκυψε σφάλμα. Σιγουρευτήτε οτι αυτή η φάση δεν υπάρχει ήδη ή οτι έχετε συμπληρώσει ολα τα αποτελεσματα αγώνων της προηγούμενης φάσης.");
 						    });
 						 
 					 }
