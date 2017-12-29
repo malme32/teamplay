@@ -183,6 +183,20 @@ appMain.filter('validDate', function() {
     };
 });
 
+
+appMain.filter('playoffPhase', function() {
+    return function(items, phase) {
+    	  var result = [];   
+    	  for (var i=0; i<items.length; i++){
+              if (items[i].phase==phase)  {
+                  result.push(items[i]);
+              }
+          }            
+          return result;
+    };
+});
+
+
 //var appMain = angular.module("appMain",[]);
 appMain.controller("eventsController",function($scope, $http, $location){
 	
@@ -471,7 +485,12 @@ appMain.controller("championsController",function($scope, $http, $location, $win
 	
 	 $scope.championlist ="";
 	 $scope.champion;
-	 
+	 $scope.phases=[];
+	 $scope.phases.push(32);
+	 $scope.phases.push(16);
+	 $scope.phases.push(8);
+	 $scope.phases.push(4);
+	 $scope.phases.push(2);
 /*	 window.scrollTo(0, 0);
 	  if(window.innerWidth<500)
 	    	$scope.desktop=false;
@@ -489,6 +508,10 @@ appMain.controller("championsController",function($scope, $http, $location, $win
 		    });
 		});
 	 */
+	 
+
+	 
+	 
 	 $http({
 	        method : "GET",
 	        url : "news",
@@ -537,6 +560,20 @@ appMain.controller("championsController",function($scope, $http, $location, $win
 			        $scope.result = response;//;"/champions/"+row.id+"/teamgroups";
 			      
 			    });
+			 
+			 $http({
+			        method : "GET",
+			        url : "champions/"+row.id+"/playoffs"
+			    }).then(function mySuccess(response) {
+
+			        $scope.champion.playoffgames = response.data;
+			
+			    }, function myError(response) {
+			  
+			        $scope.result = response;//;"/champions/"+row.id+"/teamgroups";
+			      
+			    });
+			 
 		 }
 		 
 		 $scope.getMatchdays = function (row){
@@ -596,6 +633,27 @@ appMain.controller("championsController",function($scope, $http, $location, $win
 			    });
 			 
 		 }
+		 
+
+		 $scope.getPlayoffTitle = function (phase){
+				switch(phase) {
+				case 32:
+					return "ΦΑΣΗ ΤΩΝ 32"
+				case 16:
+					return "ΦΑΣΗ ΤΩΝ 16"
+				case 8:
+					return "ΠΡΟΗΜΙΤΕΛΙΚΑ"
+				case 4:
+					return "ΗΜΙΤΕΛΙΚΑ"
+				case 2:
+					return "ΤΕΛΙΚΟΣ"
+					break;
+				default:
+				
+				return;
+				}
+		 }
+		 
 		 $scope.adminAddChampion = function (){
 			 	if( $scope.adminChampionName=="") 
 			 		return;

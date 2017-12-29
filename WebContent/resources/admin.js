@@ -132,6 +132,26 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 	    });
 	 }
 	 
+	 $scope.getPlayoffs = function (row){
+/*		 $scope.result = "";
+		 $scope.champion =row;
+		 $scope.matchday="";
+		 $scope.standings = "";
+		 $scope.teamgroup = "";*/
+		 $scope.playoffs = "";
+		 $http({
+		        method : "GET",
+		        url : "champions/"+row.id+"/playoffs"
+		    }).then(function mySuccess(response) {
+		    	
+		    	$scope.playoffs = response.data;
+		    }, function myError(response) {
+		  
+		        $scope.result = response;//;"/champions/"+row.id+"/teamgroups";
+		      
+		    });
+	 }
+	  
 	 
 		 $scope.getTeamgroup = function (row){
 			 $scope.result = "";
@@ -139,6 +159,7 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 			 $scope.matchday="";
 			 $scope.standings = "";
 			 $scope.teamgroup = "";
+			 $scope.playoffs = "";
 			 $http({
 			        method : "GET",
 			        url : "champions/"+row.id+"/teamgroups"
@@ -258,6 +279,8 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 		 
 		 $scope.adminDeleteChampion = function (id){
 
+			 if(!confirm("Είστε σίγουρος;"))
+				 return;
 			 $scope.result = "";
 		      //$scope.modalResult = "";
 			 $http({
@@ -291,6 +314,8 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 			    });
 			 
 		 }
+		 
+		 
 		 
 		 $scope.adminEditTeamgroup = function (row){
 			 $scope.result = "";
@@ -436,6 +461,27 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 					 
 				 }
 				 
+				 $scope.adminDeletePlayoff = function (row){
+					 $scope.result = "";
+		
+					 if(!confirm("Are you sure?"))
+						 return;
+						 
+					 $http({
+					        method : "DELETE",
+					        url : "playoffs/"+row.id
+					    }).then(function mySuccess(response) {
+					    	
+					    	$scope.getPlayoffs($scope.champion); 
+					    	//$window.location.reload();
+					    }, function myError(response) {
+					  
+					        $scope.result = "An Error occured. Try again.";
+					    });
+					 
+				 }
+				 
+				 
 				 $scope.generateMatchdays = function (row,roundNumber){
 					 if(!confirm("Είστε σίγουρος?"))
 						 return;
@@ -527,7 +573,57 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 				    });
 				 
 
+			 }
+			 
+			 
+			 $scope.adminEditPlayoffGame= function (row,playoffrow){
+					if(row.tmpdate)
+					{	row.date = row.tmpdate;
+			/*			var mydate = new Date(row.date);
+						row.date = $scope.getFormattedDate(mydate,row.gametime);*/
+					}
+	
+				 $scope.result=row.tmpdate;
+				 $http({
+				        method : "PUT",
+				        url : "playoffs/"+playoffrow.id+"/games",
+				        data: row,
+				        headers: {'Content-Type': 'application/json; charset=utf-8'} 
+					      // params: {id:row.id,teamid1:row.team1.id,teamid2:row.team2.id,
+					    	//   score1:row.score1,score2:row.score2, date:row.date, matchdayid:tmpmatchday.id}
+
+				    }).then(function mySuccess(response) {
+
+				    	alert("Done!");
+				    }, function myError(response) {
+				  
+				    	alert("An Error occured. Try again.");
+				      
+				    });
+				 
+
 			 } 
+			 
+			 
+			 $scope.adminDeletePlayoffGame = function (row){
+					// $scope.result = "";
+		
+					 if(!confirm("Are you sure?"))
+						 return;
+						 
+					 $http({
+					        method : "DELETE",
+					        url : "games/"+row.id
+					    }).then(function mySuccess(response) {
+
+					    	$scope.getPlayoffs($scope.champion); 
+					    }, function myError(response) {
+					  
+					        $scope.result = "An Error occured. Try again.";
+					    });
+					 
+				 }
+			 
 				 $scope.adminDeleteGame = function (row){
 						// $scope.result = "";
 			
@@ -567,6 +663,27 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 					    });
 					 
 				 }
+				  
+				  $scope.adminAddPlayoff= function (playoffname,championrow){
+						// $scope.result = gamerow.team1.name+" "+matchdayrow.name;
+			
+				/*		 if(!confirm("Are you sure?"))
+							 return;*/
+							 
+						 $http({
+						        method : "POST",
+						        url : "champions/"+championrow.id+"/playoffs",
+						        params: {name:playoffname}
+						    }).then(function mySuccess(response) {
+						    	$scope.getPlayoffs($scope.champion); 
+						    }, function myError(response) {
+						  
+						       alert("An Error occured. Try again.");
+						    });
+						 
+					 }
+				  
+				  
 				  $scope.adminAddMatchday = function (matchdayname,teamgrouprow){
 						// $scope.result = gamerow.team1.name+" "+matchdayrow.name;
 			
@@ -585,6 +702,32 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 						    });
 						 
 					 }
+				  
+				  
+				  $scope.adminUpdatePlayoff = function (row,championrow){
+						// $scope.result = gamerow.team1.name+" "+matchdayrow.name;
+			
+				/*		 if(!confirm("Are you sure?"))
+							 return;*/
+					  
+	
+					  
+					  //$scope.result=row; 
+						 $http({
+						        method : "PUT",
+						        url : "champions/"+championrow.id+"/playoffs",
+						        data: row,
+						        headers: {'Content-Type': 'application/json; charset=utf-8'} 
+						    }).then(function mySuccess(response) {
+
+						    		alert("Done!");
+						    }, function myError(response) {
+						  
+						       alert("An Error occured. Try again.");
+						    });
+						 
+					 }
+				  
 				  $scope.adminUpdateMatchday = function (row,teamgrouprow){
 						// $scope.result = gamerow.team1.name+" "+matchdayrow.name;
 			
@@ -630,6 +773,45 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 						    }).then(function mySuccess(response) {
 
 						    	$scope.getMatchdays($scope.teamgroup);
+						    }, function myError(response) {
+						  
+						       alert("An Error occured. Try again.");
+						    });
+						 
+					 }
+				  $scope.generatePlayoffs = function (championrow,selectedPhase){
+						// $scope.result = gamerow.team1.name+" "+matchdayrow.name;
+			
+						 if(!confirm("Are you sure?"))
+							 return;
+					  //$scope.result=matchdayrow; 
+						 $http({
+						        method : "POST",
+						        url : "champions/"+championrow.id+"/actions/generateplayoffs",
+						        params:{phase:selectedPhase}
+						    }).then(function mySuccess(response) {
+
+						    	$scope.getPlayoffs($scope.champion);
+						    }, function myError(response) {
+						  
+						       alert("An Error occured. Try again.");
+						    });
+						 
+					 }
+				  
+				  $scope.adminAddPlayoffGame = function (team1,team2,playoffrow){
+						// $scope.result = gamerow.team1.name+" "+matchdayrow.name;
+			
+				/*		 if(!confirm("Are you sure?"))
+							 return;*/
+					  //$scope.result=matchdayrow; 
+						 $http({
+						        method : "POST",
+						        url : "playoffs/"+playoffrow.id+"/games",
+						        params:{teamid1: team1.id, teamid2: team2.id}
+						    }).then(function mySuccess(response) {
+
+						    	$scope.getPlayoffs($scope.champion);
 						    }, function myError(response) {
 						  
 						       alert("An Error occured. Try again.");

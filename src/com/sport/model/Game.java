@@ -59,7 +59,14 @@ public class Game {
 	@JoinColumn(name = "matchdayid")
 	private Matchday matchday;
 
-
+	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(name = "playoffid")
+	private Playoff playoff;
+	
+/*	@Column(name="phase")
+	private Integer phase*/;
+	
 	@Column(name="date")
 	//@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM-dd-yyyy HH:mm:ss", timezone = "Europe/Athens")
 	private Date date;
@@ -76,6 +83,7 @@ public class Game {
 	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY,mappedBy="game",cascade = CascadeType.ALL)
 	List<Scorer> scorers;
+	
 	
 	
 	public Matchday getMatchday() {
@@ -166,6 +174,29 @@ public class Game {
 	public void setScorers(List<Scorer> scorers) {
 		this.scorers = scorers;
 	}
+
+/*
+
+	public Integer getPhase() {
+		return phase;
+	}
+
+
+	public void setPhase(Integer phase) {
+		this.phase = phase;
+	}
+*/
+
+	public Playoff getPlayoff() {
+		return playoff;
+	}
+
+
+	public void setPlayoff(Playoff playoff) {
+		this.playoff = playoff;
+	}
+
+
 
 
 

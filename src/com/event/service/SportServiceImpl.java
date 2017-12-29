@@ -21,6 +21,7 @@ import com.event.dao.GameDao;
 import com.event.dao.GeneralDao;
 import com.event.dao.MatchdayDao;
 import com.event.dao.NoticeDao;
+import com.event.dao.PlayoffDao;
 import com.event.dao.ScorerDao;
 import com.event.dao.StandingDao;
 import com.event.dao.TeamDao;
@@ -31,6 +32,7 @@ import com.sport.model.Champion;
 import com.sport.model.Game;
 import com.sport.model.Matchday;
 import com.sport.model.Notice;
+import com.sport.model.Playoff;
 import com.sport.model.Scorer;
 import com.sport.model.Standing;
 import com.sport.model.Team;
@@ -70,6 +72,9 @@ public class SportServiceImpl  implements SportService{
 	
 	@Autowired
 	PlayoffService playoffService;
+
+	@Autowired
+	PlayoffDao playoffDao;
 	
 	
 	@Override
@@ -81,6 +86,7 @@ public class SportServiceImpl  implements SportService{
 	@Override
 	public List<Champion> findAllChampions() {
 		// TODO Auto-generated method stub
+		System.out.println("xaxaxa");
 		return championDao.findAllChampions();
 	}
 
@@ -641,5 +647,33 @@ public class SportServiceImpl  implements SportService{
 		
 		playoffService.generatePlayoff(this.findChampionsById(championid), phase);
 		return ;
+	}
+
+	@Override
+	public List<Playoff> getPlayoffGames(int championid, Integer phase) {
+		// TODO Auto-generated method stub
+	Champion champion = this.findChampionsById(championid);
+			Hibernate.initialize(champion.getPlayoffs());
+		// TODO Auto-generated method stub;
+		for(Playoff playoff : champion.getPlayoffs())
+			Hibernate.initialize(playoff.getGames());
+		return champion.getPlayoffs();
+		
+	}
+
+	@Override
+	public Playoff findPlayoffById(int id) {
+		// TODO Auto-generated method stub
+		return playoffDao.findById(id);
+	}
+
+	@Override
+	public void updatePlayoff(Playoff playoff, Champion champion) {
+		// TODO Auto-generated method stub
+	    Playoff playoff1 = this.findPlayoffById(playoff.getId());
+	
+		playoff1.setName(playoff.getName());
+		playoff1.setPhase(playoff.getPhase());
+		generalDaoService.update(playoff1);
 	}
 }

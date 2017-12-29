@@ -8,9 +8,12 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.hibernate.Hibernate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sport.model.Champion;
+import com.sport.model.Game;
+import com.sport.model.Playoff;
 import com.sport.model.Standing;
 import com.sport.model.Teamgroup;
 
@@ -18,7 +21,11 @@ import javassist.bytecode.stackmap.TypeData.ClassName;
 @Service("playoffService")
 @Transactional
 public class PlayoffServiceImpl implements PlayoffService {
-
+	
+	
+	@Autowired
+	GeneralDaoService generalDaoService;
+/*
 	
 private  void genPlayoffs() {
 		
@@ -104,7 +111,7 @@ private  void genPlayoffs() {
 			i=i==total.size()-1?0:i+1;
 		}
 		
-	}
+	}*/
 	
 	private List<Standing> getGreaterStandings(List<Standing> standings, int num){
 		
@@ -123,7 +130,35 @@ private  void genPlayoffs() {
 		
 	}
 
-	private void generateGames(List<List<Standing>> standings){
+	private void generateGames(List<List<Standing>> standings, Champion champion, int phase){
+
+		Playoff playoff= new Playoff();
+		playoff.setChampion(champion);
+		playoff.setPhase(phase);
+		
+		switch(phase) {
+		case 32:
+			playoff.setName("ΦΑΣΗ ΤΩΝ 32");
+			break;
+		case 16:
+			playoff.setName("ΦΑΣΗ ΤΩΝ 16");
+			break;
+		case 8:
+			playoff.setName("ΠΡΟΗΜΙΤΕΛΙΚΑ");
+			break;
+		case 4:
+			playoff.setName("ΗΜΙΤΕΛΙΚΑ");
+			break;
+		case 2:
+			playoff.setName("ΤΕΛΙΚΟΣ");
+			break;
+		
+		default:
+			playoff.setName(Integer.toString(phase));
+			break;
+		
+		}
+		this.generalDaoService.persist(playoff);
 		
 		int i=0;
 		while(true)
@@ -153,6 +188,12 @@ private  void genPlayoffs() {
 			}
 			
 			System.out.println(standtmp1.get(0).getTeam().getName()+" vs "+standtmp2.get(standtmp2.size()-1).getTeam().getName());
+			Game game = new Game();
+			game.setPlayoff(playoff);
+			game.setTeam1(standtmp1.get(0).getTeam());
+			game.setTeam2(standtmp2.get(standtmp2.size()-1).getTeam());
+			
+			this.generalDaoService.persist(game);
 			standtmp1.remove(0);
 			standtmp2.remove(standtmp2.size()-1);
 			i=i==standings.size()-1?0:i+1;
@@ -232,6 +273,7 @@ private  void genPlayoffs() {
 		case 16:
 		case 8:
 		case 4:
+		case 2:
 			break;
 		default:
 			System.out.println("FAILED");
@@ -254,7 +296,7 @@ private  void genPlayoffs() {
 		filterOutGames(totalStandings,champion.getTeamgroups().size()*numberPerStand - phase);
 
 		System.out.println("Filtered out..");
-		generateGames(totalStandings);
+		generateGames(totalStandings,champion, phase);
 		return;
 	}
 }

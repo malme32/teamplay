@@ -10,6 +10,7 @@ import com.sport.model.Champion;
 import com.sport.model.Game;
 import com.sport.model.Matchday;
 import com.sport.model.Notice;
+import com.sport.model.Playoff;
 import com.sport.model.Standing;
 import com.sport.model.Team;
 import com.sport.model.Teamgroup;
@@ -86,5 +87,11 @@ public interface SportService {
 	public Notice uploadNoticeImage(String path, int id, CommonsMultipartFile file);
 
 	public void getPlayoffs(int championid, int phase);
+
+	public List<Playoff> getPlayoffGames(int championid, Integer phase);
+
+	public Playoff findPlayoffById(int id);
+
+	public void updatePlayoff(Playoff playoff, Champion champion);
 	
 }

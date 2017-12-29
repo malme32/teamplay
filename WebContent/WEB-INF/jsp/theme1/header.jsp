@@ -7,9 +7,9 @@ pageEncoding="UTF-8"%>
 <spring:url value="/resources/theme1" var="resources" />
 
 
-<header class="header style-3" ng-app="appMain" ng-controller='headerController'>
+<header class="header style-3" ng-app="appMain" ng-controller='headerController' >
 
-<div class="topbar-and-logobar">
+<div class="topbar-and-logobar" >
 <div class="container">
 
 <div class="responsive-btn pull-right">

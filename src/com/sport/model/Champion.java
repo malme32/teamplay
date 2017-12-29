@@ -40,6 +40,11 @@ public class Champion {
 	@OneToMany(fetch = FetchType.LAZY,mappedBy="champion",cascade = CascadeType.ALL)
 	List<Teamgroup> teamgroups;
 	
+	@JsonIgnore
+	@OneToMany(fetch = FetchType.LAZY,mappedBy="champion",cascade = CascadeType.ALL)
+	List<Playoff> playoffs;
+	
+
 	public int getId() {
 		return id;
 	}
@@ -79,6 +84,15 @@ public class Champion {
 	public void setEnddate(Date enddate) {
 		this.enddate = enddate;
 	}
+
+	public List<Playoff> getPlayoffs() {
+		return playoffs;
+	}
+
+	public void setPlayoffs(List<Playoff> playoffs) {
+		this.playoffs = playoffs;
+	}
+
 
 
 

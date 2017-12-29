@@ -35,6 +35,7 @@ import com.sport.model.Champion;
 import com.sport.model.Game;
 import com.sport.model.Matchday;
 import com.sport.model.Notice;
+import com.sport.model.Playoff;
 import com.sport.model.Scorer;
 import com.sport.model.Standing;
 import com.sport.model.Team;
@@ -177,6 +178,12 @@ public class SportController {
 		return ;
 	}*/
 	
+	@RequestMapping(value="/champions/{championid}/playoffs", method=RequestMethod.GET, produces = "application/json")
+	public @ResponseBody List<Playoff> getPlayoffGames(@PathVariable int championid, @RequestParam(required = false)  Integer phase)
+	{
+
+		return sportService.getPlayoffGames(championid,phase);
+	}
 	
 	
 	/////////////////////POST/////////////////////////////////////
@@ -229,6 +236,8 @@ public class SportController {
 		 return ;
 	}
 	
+	
+	
 	@RequestMapping(value="/teams", method=RequestMethod.POST, produces = "application/json")
 	public @ResponseBody void addTeam(@RequestBody Team team)
 	{
@@ -279,12 +288,32 @@ public class SportController {
 	
 	
 	@RequestMapping(value="/matchdays/{id1}/games", method=RequestMethod.POST, produces = "application/json")
-	public @ResponseBody void addMatchday(@ModelAttribute Game game,@PathVariable int id1, @RequestParam int teamid1, @RequestParam int teamid2)
+	public @ResponseBody void addGameToMatchday(@ModelAttribute Game game,@PathVariable int id1, @RequestParam int teamid1, @RequestParam int teamid2)
 	{
 		game.setMatchday(sportService.findMatchdayById(id1));
 		game.setTeam1(sportService.findTeamById(teamid1));
 		game.setTeam2(sportService.findTeamById(teamid2));
 		generalDaoService.persist(game);
+		return;
+	}
+
+	
+	@RequestMapping(value="/playoffs/{id1}/games", method=RequestMethod.POST, produces = "application/json")
+	public @ResponseBody void addGameToPlayoff(@ModelAttribute Game game,@PathVariable int id1, @RequestParam int teamid1, @RequestParam int teamid2)
+	{
+		game.setPlayoff(sportService.findPlayoffById(id1));
+		game.setTeam1(sportService.findTeamById(teamid1));
+		game.setTeam2(sportService.findTeamById(teamid2));
+		generalDaoService.persist(game);
+		return;
+	}
+	
+	@RequestMapping(value="/champions/{id1}/playoffs", method=RequestMethod.POST, produces = "application/json")
+	public @ResponseBody void addPlayoff(@ModelAttribute Playoff playoff,@PathVariable int id1)
+	{
+		Champion champion = sportService.findChampionsById(id1);
+		playoff.setChampion(champion);
+		generalDaoService.persist(playoff);
 		return;
 	}
 
@@ -340,7 +369,8 @@ public class SportController {
 	{
 		Game game = sportService.findGameById(gameid);
 		scorer.setGame(game);
-		scorer.setTeamgroup(game.getMatchday().getTeamgroup());
+		try {scorer.setTeamgroup(game.getMatchday().getTeamgroup());}
+		catch(Exception e) {}
 		generalDaoService.persist(scorer);
 		return ;
 	}
@@ -440,6 +470,9 @@ public class SportController {
 		    matchday.setTeamgroup(teamgroup);
 		    matchday.setGames(sportService.findMatchdayById(matchday.getId()).getGames());
 			generalDaoService.update(matchday);
+			
+			
+			
 			return;
 	}
 	
@@ -472,8 +505,10 @@ public class SportController {
 	public @ResponseBody void editScorer(@RequestBody Scorer scorer,@PathVariable int gameid)
 	{
 		Game game = sportService.findGameById(gameid);
-		scorer.setGame(game);
-		scorer.setTeamgroup(game.getMatchday().getTeamgroup());
+		scorer.setGame(game);		
+		try {scorer.setTeamgroup(game.getMatchday().getTeamgroup());}
+		catch(Exception e) {}
+	
 		generalDaoService.update(scorer);
 		return ;
 	}
@@ -483,6 +518,26 @@ public class SportController {
 	{
 		generalDaoService.update(notice);
 		return;
+	}
+	@RequestMapping(value="champions/{championid}/playoffs", method=RequestMethod.PUT, produces = "application/json")
+	public @ResponseBody void editPlayoff(@RequestBody Playoff playoff,@PathVariable int championid)
+	//public @ResponseBody void editGame(@ModelAttribute Game game,@RequestParam int teamid1,@RequestParam int teamid2,@RequestParam int matchdayid)
+	{	
+		    Champion champion = sportService.findChampionsById(championid);
+			sportService.updatePlayoff(playoff,champion);
+			return;
+	}
+	
+	
+	@RequestMapping(value="playoffs/{playoffid}/games", method=RequestMethod.PUT, produces = "application/json")
+	public @ResponseBody void editPlayoffGame(@RequestBody Game game,@PathVariable int playoffid)
+	//public @ResponseBody void editGame(@PathVariable int matchdayid,@RequestParam int id,@RequestParam int teamid1,@RequestParam int teamid2, @RequestParam String date)
+	{	
+
+			Playoff playoff = sportService.findPlayoffById(playoffid);
+			game.setPlayoff(playoff);
+			generalDaoService.update(game);
+			return ;
 	}
 	
 	
@@ -551,8 +606,10 @@ public class SportController {
 	public @ResponseBody void deleteGame(@PathVariable int id)
 	{
 		Game game = sportService.findGameById(id);
+		Matchday matchday = game.getMatchday();
 		generalDaoService.delete(game);
-		sportService.updateStandings(game.getMatchday().getTeamgroup());
+		if(matchday!=null)
+			sportService.updateStandings(game.getMatchday().getTeamgroup());
 		return; 
 	}
 	
@@ -589,5 +646,13 @@ public class SportController {
 		return ;
 	}
 	
+	
+	@RequestMapping(value="/playoffs/{id}", method=RequestMethod.DELETE, produces = "application/json")
+	public @ResponseBody void deletePlayoff(@PathVariable int id)
+	{
+		Playoff playoff = sportService.findPlayoffById(id);
+		generalDaoService.delete(playoff);
+		return ;
+	}
 	
 }

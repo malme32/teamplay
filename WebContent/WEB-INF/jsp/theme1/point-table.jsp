@@ -19,7 +19,7 @@ pageEncoding="UTF-8"%>
 
 
 
-<main class="main-content">
+<main class="main-content" style='font-size:90%'>
 <div class='champ'>
 	<ul>
 		<li  ng-repeat='row in championlist'><a ng-click='getChampion(row)' ng-class="cssLiChampionClass(row)">{{row.name}}</a></li>
@@ -33,6 +33,42 @@ pageEncoding="UTF-8"%>
 
 
 <div class="col-lg-9 col-sm-8" >
+
+<!-- 		 <div class="" ng-repeat='row2 in row.standings.matchdays' style="margin:0;padding:0">
+		<h3 style="margin:0 0 5px 0; padding:0"><span><i class="red-color">{{row2.name}} </i></span></h3> -->
+		
+		<div ng-show='champion.playoffgames.length'>
+		<h2>Play Offs</h2>
+
+			<div ng-repeat='row3 in champion.playoffgames | orderBy: "phase"'>
+			<div ng-show="row3.games.length">
+			
+			<h3 style="margin:15px 0 5px 0; padding:0">{{row3.name}}</h3><!-- {{getPlayoffTitle(row3)}} -->
+			<div class="matches-shedule-holder" style="margin:0;padding:0">
+
+
+			<div class="matches-dates-shedule" style='padding:0;margin:0;'>
+			<ul style='margin:0 0 10px 0;'>
+			<li ng-repeat='row1 in row3.games  | orderBy: "-date" ' style='padding:2px; '>
+			<span class="pull-left"><img style='height:40px; width:40px' ng-src="${resources}{{row1.team1.logopath}}" alt=""></span>
+			<span class="pull-right"><img style='height:40px; width:40px' ng-src="${resources}{{row1.team2.logopath}}" alt=""></span>
+			<div class="detail" style='padding:0; margin:0'>
+			<a style='padding:0; margin:0' href="#!match.html/{{row1.id}}"> Match Detail<i class="fa fa-angle-double-right"></i></a>
+			<strong style='padding:0; margin:0'><a style='display:inline; padding:0; margin:0' href='#!team-detail.html/{{row1.team1.id}}'>{{row1.team1.name}}</a><i class="red-color"  style=''> {{row1.score1}} - {{row1.score2}}</i> <a style='display:inline; padding:0; margin:0'  href='#!team-detail.html/{{row1.team2.id}}'>{{row1.team2.name}}</a></strong>
+			 <span class="location-marker" style='padding:0; margin:0'><i class="fa "></i><b class="own-red-shadow">{{row1.date |  date : "dd/MM HH:mm"}}</b></span> 
+			</div>
+			</li>
+			
+			</ul>
+			</div>
+			
+			</div>
+			</div>
+			</div>
+			</div>
+
+
+
 <div ng-repeat='row in teamgrouplist' style="margin-bottom:60px;">
 <div  class="macth-fixture" >
 <h2>{{row.name}}</h2>
@@ -63,8 +99,8 @@ pageEncoding="UTF-8"%>
 </thead>
 <tbody>
 
-			<tr ng-repeat='row1 in row.standings  | orderBy: "-grade"'>
-				<td style='text-align:left'>
+			<tr  ng-repeat='row1 in row.standings  | orderBy: "-grade"'>
+				<td style='text-align:left; padding:2px' >
 				
 				  <a ng-href='#!team-detail.html/{{row1.team.id}}'><img style='height:30px; width:30px' ng-src="${resources}{{row1.team.logopath}}" alt="">
 				{{row1.team.name}} </a>
@@ -76,21 +112,21 @@ pageEncoding="UTF-8"%>
 				
 				
 				</td> --%>
-				<td class="td_grade">{{row1.grade}}
+				<td style='padding:2px; text-align:center'  >{{row1.grade}}
 				</td>
-				<td ng-show='desktop'>{{row1.goal}}
+				<td style='padding:2px'  ng-show='desktop'>{{row1.goal}}
 				</td>
-				<td ng-show='desktop'>{{row1.goalplus}}
+				<td style='padding:2px' ng-show='desktop'>{{row1.goalplus}}
 				</td>
-				<td ng-show='desktop'>{{row1.goalminus}}
+				<td style='padding:2px' ng-show='desktop'>{{row1.goalminus}}
 				</td>
-				<td ng-show='desktop'>{{row1.game}}
+				<td style='padding:2px'  ng-show='desktop'>{{row1.game}}
 				</td>
-				<td ng-show='desktop'>{{row1.win}}
+				<td style='padding:2px' ng-show='desktop'>{{row1.win}}
 				</td>
-				<td ng-show='desktop'>{{row1.defeat}}
+				<td style='padding:2px' ng-show='desktop'>{{row1.defeat}}
 				</td>
-				<td ng-show='desktop'>{{row1.draw}}
+				<td style='padding:2px' ng-show='desktop'>{{row1.draw}}
 				</td>
 			</tr>
 
@@ -118,22 +154,22 @@ pageEncoding="UTF-8"%>
 </div>
 
 
- <div class="palyer-career theme-padding-bottom" ng-show='row.scorers.length'>
-<h3>Σκορερς</h3>
+ <div class="palyer-career " ng-show='row.scorers.length' style="margin:0 0 15px 0;">
+<h3 style="margin:0 0 5px 0; padding:0"><span><i class="red-color">Σκορερς </i></span></h3>
 <div class="table-responsive">
 <table class="table table-bordered">
-<thead>
+
 			<tr>
-		<!-- 		<th ng-show='desktop'>
-				</th> -->
-				<th>
+	<!--  		<th ng-show='desktop'>
+				</th>  -->
+				<th >
 				</th>
-				<th>ΟΝΟΜΑ
+				<th  style='text-align:center'>ΟΝΟΜΑ
 				</th>
-				<th>ΟΜΑΔΑ
+				<th  style='text-align:center'>ΟΜΑΔΑ
 				</th>
 			</tr>
-</thead>
+
 <tbody>
 			<tr ng-repeat='row2 in row.scorers   | orderBy: "-number"'>
 			<!-- 	<td>{{$index + 1}}</td> -->
@@ -154,22 +190,22 @@ pageEncoding="UTF-8"%>
 
 </div>	 
 <button style="position:relative; "  ng-hide='row.standings.matchdays.length' class="btn red-btn pull-right" ng-click="getMatchdays(row)">Show Program</button>
-		 <div class="" ng-repeat='row2 in row.standings.matchdays' style="margin-bottom:30px;">
-		<h3><span><i class="red-color">{{row2.name}} </i></span></h3>
+		 <div class="" ng-repeat='row2 in row.standings.matchdays' style="margin:0;padding:0">
+		<h3 style="margin:0 0 5px 0; padding:0"><span><i class="red-color">{{row2.name}} </i></span></h3>
 		
 		
-	<div class="matches-shedule-holder">
+	<div class="matches-shedule-holder" style="margin:0;padding:0">
 
 
-			<div class="matches-dates-shedule" style='padding:0'>
-			<ul>
-			<li ng-repeat='row1 in row2.games  | orderBy: "-date" ' style='padding:5px; '>
+			<div class="matches-dates-shedule" style='padding:0;margin:0;'>
+			<ul style='margin:0 0 10px 0;'>
+			<li ng-repeat='row1 in row2.games  | orderBy: "-date" ' style='padding:2px; '>
 			<span class="pull-left"><img style='height:40px; width:40px' ng-src="${resources}{{row1.team1.logopath}}" alt=""></span>
 			<span class="pull-right"><img style='height:40px; width:40px' ng-src="${resources}{{row1.team2.logopath}}" alt=""></span>
-			<div class="detail">
-			<a href="#!match.html/{{row1.id}}">Match Detail<i class="fa fa-angle-double-right"></i></a>
-			<strong><a style='display:inline; padding:0; margin:0' href='#!team-detail.html/{{row1.team1.id}}'>{{row1.team1.name}}</a><i class="red-color"  style=''> {{row1.score1}} - {{row1.score2}}</i> <a style='display:inline; padding:0; margin:0'  href='#!team-detail.html/{{row1.team2.id}}'>{{row1.team2.name}}</a></strong>
-			<span class="location-marker" style=''><i class="fa "></i>{{row1.date |  date : "dd/MM HH:mm"}}</span>
+			<div class="detail" style='padding:0; margin:0'>
+			<a style='padding:0; margin:0' href="#!match.html/{{row1.id}}"> Match Detail<i class="fa fa-angle-double-right"></i></a>
+			<strong style='padding:0; margin:0'><a style='display:inline; padding:0; margin:0' href='#!team-detail.html/{{row1.team1.id}}'>{{row1.team1.name}}</a><i class="red-color"  style=''> {{row1.score1}} - {{row1.score2}}</i> <a style='display:inline; padding:0; margin:0'  href='#!team-detail.html/{{row1.team2.id}}'>{{row1.team2.name}}</a></strong>
+			 <span class="location-marker" style='padding:0; margin:0'><i class="fa "></i><b class="own-red-shadow">{{row1.date |  date : "dd/MM HH:mm"}}</b></span> 
 			</div>
 			</li>
 			
