@@ -18,17 +18,23 @@ pageEncoding="UTF-8"%>
 
 
 <ul class="user-login-option pull-right">
-<li class="social-icon">
+<!-- <li class="social-icon">
 <ul class="social-icons style-5">
 <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
 <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
 <li><a class="youtube" href="#"><i class="fa fa-youtube-play"></i></a></li>
 <li><a class="pinterest" href="#"><i class="fa fa-pinterest-p"></i></a></li>
 </ul>
-</li>
+
+</li> -->
+
+<%if(pageContext.getAttribute("username", PageContext.REQUEST_SCOPE).equals("")){ %>
 <li class="login-modal">
-<a href="#" class="login" data-toggle="modal" data-target="#login-modal"><i class="fa fa-user"></i>ΣΥΝΔΕΣΗ</a>
-<div class="modal fade" id="login-modal">
+<a href="loginPage" class="login" ><i class="fa fa-user"></i> ΣΥΝΔΕΣΗ</a>
+
+<!--<a href="#" class="login" data-toggle="modal" data-target="#login-modal"><i class="fa fa-user"></i> ΣΥΝΔΕΣΗ</a>
+
+ <div class="modal fade" id="login-modal">
 <div class="login-form position-center-center">
 <h2>Login<button class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button></h2>
 <form>
@@ -59,7 +65,7 @@ pageEncoding="UTF-8"%>
 <li><a class="google-plus-bg" href="#"><i class="fa fa-google-plus"></i>Google+</a></li>
 </ul>
 </div>
-</div>
+</div> 
 <div class="modal fade" id="login-modal-2">
 <div class="login-form position-center-center">
 <h2>Forgot password<button class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button></h2>
@@ -77,16 +83,28 @@ pageEncoding="UTF-8"%>
 </div>
 </form>
 </div>
-</div>
+</div>-->
 </li>
-<li class="language-dropdown">
+<%}else{%>
+<li style='color:white'><%= pageContext.getAttribute("name", PageContext.REQUEST_SCOPE) %></li>
+						<li>
+					
+					<c:url value="/logout" var="logoutUrl" /> <form id="logout" action="${logoutUrl}" method="post" >
+					  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+					</form>
+					<c:if test="${pageContext.request.userPrincipal.name != null}">
+						<a style='color:white' href="javascript:document.getElementById('logout').submit()">Logout</a>
+					</c:if>
+					</li>
+<%}%>
+<%--<li class="language-dropdown">
 <a id="choses-lang" href="#"><i class="fa fa-globe"></i>ΕΛ<i class="fa fa-caret-down"></i></a>
-<%-- <ul id="language-dropdown">
+ <ul id="language-dropdown">
 <li><a href="#"><img src="${resources}/images/flags/img-02.jpg" alt="">ger</a></li>
 <li><a href="#"><img src="${resources}/images/flags/img-03.jpg" alt="">fra</a></li>
 <li><a href="#"><img src="${resources}/images/flags/img-04.jpg" alt="">bra</a></li>
-</ul> --%>
-</li>
+</ul> 
+</li>--%>
 </ul>
 
 </div>
@@ -112,7 +130,8 @@ pageEncoding="UTF-8"%>
 
 <ul class="nav-list pull-right">
 <li>
-<a href="#!home">ΑΡΧΙΚΗ</a>
+
+<a href="soccer">ΑΡΧΙΚΗ</a>
 <%-- <ul>
 <li><a >Home</a></li>
 <li><a href="${resources}/home-2.html">Home 2</a></li>
@@ -120,6 +139,7 @@ pageEncoding="UTF-8"%>
 
 </ul> --%>
 </li>
+
 <%-- <li><a href="${resources}/about.html">ΕΓΚΑΤΑΣΤΑΣΕΙΣ</a></li>
  --%><li>
 <a href="${resources}/team.html">ΑΚΑΔΗΜΙΕΣ</a>
@@ -136,6 +156,13 @@ pageEncoding="UTF-8"%>
 
 </li>
 <li><a href="#!team-list.html">ΟΜΑΔΕΣ</a>
+<ul>
+<%if(pageContext.getAttribute("teamid", PageContext.REQUEST_SCOPE)!=null){ %>
+<li ><a href="#!team-detail.html/${teamid}">Η ΟΜΑΔΑ ΜΟΥ</a></li>
+<li ><a href="#!editteam">ΕΠΕΞΕΡΓΑΣΙΑ ΟΜΑΔΑΣ</a></li>
+<%} %>
+<li ><a href="#!team-list.html">ΟΛΕΣ ΟΙ ΟΜΑΔΕΣ</a></li>
+</ul>
 </li>
 <li class="mega-dropdown">
 <a href="#!news-list.html">ΝΕΑ</a>

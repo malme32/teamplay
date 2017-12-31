@@ -40,13 +40,16 @@ pageEncoding="UTF-8"%>
 
 
 </head>
-<body ng-app="appAdmin">
+<body ng-app="appAdmin" >
 <div class='champ'>
 	<ul>
 		<li><a ng-href='#!adminchampions'>ΠΡΩΤΑΘΛΗΜΑΤΑ</a></li>
 	</ul> 
 	<ul>
 		<li><a  ng-href='#!adminteams'>ΟΜΑΔΕΣ</a></li>
+	</ul> 
+		<ul>
+		<li><a  ng-href='#!adminusers'>ΧΡΗΣΤΕΣ</a></li>
 	</ul> 
 	<ul>
 		<li><a  ng-href='#!adminnews'>ΝΕΑ</a></li>
@@ -55,6 +58,6 @@ pageEncoding="UTF-8"%>
 
 
 
-<div ng-view></div>
+<div ng-view ></div>
 </body>
 </html>

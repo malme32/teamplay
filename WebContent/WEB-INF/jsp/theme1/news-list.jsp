@@ -42,7 +42,7 @@ pageEncoding="UTF-8"%>
 
 <div class="large-post-detail style-3" style='height:100px; overflow:hidden'>
 <span class="red-color">{{row.date | date}}</span>
-<h2><a ng-href="news-detail.html/{{row.id}}">{{row.title}}</a></h2>
+<h2><a ng-href="#!news-detail.html/{{row.id}}">{{row.title}}</a></h2>
 <!-- <p>Enim volutpat ac lectus in blandit vehicula faucibus non lectus vivamus cras etiam curabitur, vulputate ultricies curabitur accumsan varius vel volutpat aptent...
 interdum gravida morbi non justo sociosqu aliquam justo ultrices duis laoreet mattis, consequat litora pellentesque</p>
  -->

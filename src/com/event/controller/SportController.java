@@ -30,6 +30,7 @@ import com.event.model.Event;
 import com.event.service.GeneralDaoService;
 import com.event.service.SportService;
 import com.phonebook.model.Contact;
+import com.phonebook.model.Userrole;
 import com.phonebook.service.ContactService;
 import com.sport.model.Champion;
 import com.sport.model.Game;
@@ -187,6 +188,14 @@ public class SportController {
 	
 	
 	/////////////////////POST/////////////////////////////////////
+	
+	@RequestMapping(value="/teams/{id1}/adminusers", method=RequestMethod.POST, produces = "application/json")
+	public @ResponseBody void addNewAdminUserToTeam(@ModelAttribute Contact contact, @PathVariable int id1)
+	{	
+		sportService.addNewAdminUserToTeam(contact, id1);
+		return;
+	}
+	
 	
 	@RequestMapping(value="/champions", method=RequestMethod.POST, produces = "application/json")
 	public @ResponseBody void addChampion(@ModelAttribute Champion champion)

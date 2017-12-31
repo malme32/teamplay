@@ -91,6 +91,11 @@ appMain.config(function($routeProvider) {
         templateUrl : "match.html",
         controller: "matchController"
 
+    })
+    .when("/editteam", {
+        templateUrl : "editteam",
+        controller: "teamController"
+
     })/*
     .when("/home", {
         templateUrl : "home1"
@@ -126,10 +131,10 @@ appMain.run(function($rootScope, $window) {
     		        //do something to update current scope based on the new innerWidth and let angular update the view.
     		    });
     		});
-    	if(next.indexOf("#!/home") === -1)//;=="http://localhost:60000/phonebook/soccer.html")
-    		$rootScope.isIndex=false;
-    	else
+    	if(next.indexOf("#!") === -1)//;=="http://localhost:60000/phonebook/soccer.html")
     		$rootScope.isIndex=true;
+    	else
+    		$rootScope.isIndex=false;
     });
 });
 //appMain.directive('fbComments', function() {
@@ -944,3 +949,245 @@ appMain.controller("teamlistController",function($scope, $http, $location){
 	 
 });
 
+appMain.controller("teamController",function($scope, $http, $location, $window){
+
+	 
+	/* $scope.getTeams = function (){ */ 
+/*		 $http({
+	        method : "GET",
+	        url : "teams"
+	    }).then(function mySuccess(response) {
+
+	        $scope.teams = response.data;
+	      
+	    }, function myError(response) {
+
+		      alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");
+	      
+	    });*/
+/*	 }*/
+	 
+
+			$scope.$on('$viewContentLoaded', function() {
+			    //call it here
+				$scope.getTeam();
+			});
+		 $scope.getTeam = function (){ 
+    	 $scope.result = "teams/"+$scope.teamid+"/players";
+		        $scope.team = "";
+			 $http({
+		        method : "GET",
+		        url : "teams/"+$scope.teamid
+		    }).then(function mySuccess(response) {
+		        $scope.team = response.data;
+				 $http({
+				        method : "GET",
+				        url : "teams/"+$scope.teamid+"/players"
+				    }).then(function mySuccess(response) {
+				        $scope.players = response.data;
+				    }, function myError(response) {
+				  
+				        //alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");
+				    });
+
+		    }, function myError(response) {
+		  
+		        //alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");
+		    });
+		}
+		 
+		 $scope.addTeam = function (){ 
+
+			 $http({
+		        method : "POST",
+		        	url : "teams",
+			        data: $scope.newteam,
+			        headers: {'Content-Type': 'application/json; charset=utf-8'}
+		    }).then(function mySuccess(response) {
+
+		    	$window.location.reload();
+		        
+		    }, function myError(response) {
+		  
+		        alert("Κατι δεν πηγε καλα. Μήπως η ομάδα υπάρχει ήδη?");
+		    });
+		 }
+		 
+		 $scope.deleteTeam = function (){ 
+
+			 if(!confirm("Είστε σίγουρος;"))
+				 return;
+				 
+			 $http({
+		        method : "DELETE",
+		        url : "teams/"+$scope.team.id
+		    }).then(function mySuccess(response) {
+
+		    	$window.location.reload();
+		      
+		    }, function myError(response) {
+		  
+		        alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");
+		    });
+		 }
+		 
+		 $scope.editTeam = function (){ 
+			 //$scope.team.players=$scope.players;
+			 //$scope.result=$scope.team;
+			 $http({
+		        method : "PUT",
+		        	url : "teams",
+			        data: $scope.team,
+			        headers: {'Content-Type': 'application/json; charset=utf-8'}
+		    }).then(function mySuccess(response) {
+		    	
+		    	$scope.getTeam();
+		    }, function myError(response) {
+
+		        alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");
+		    });
+		 }
+		 
+		 $scope.uploadLogo = function(){
+		     var fd = new FormData();
+             fd.append('file', $scope.mylogo);
+          
+
+/*             $http.post("teams/"+$scope.team.id+"/images",fd,
+                     {
+                         transformRequest: angular.identity,
+                         headers: {'Content-Type': undefined}                     
+                      }).success(function(d)
+                          {
+                    	  	$window.location.reload();
+                          })        
+                 }*/
+           
+             
+			 $http({
+			        method : "POST",
+			        	url : "teams/"+$scope.team.id+"/logos",
+				        data: fd,
+				       // params:{file: $scope.myfile},
+                        transformRequest: angular.identity,
+                        headers: {'Content-Type': undefined}     
+			    }).then(function mySuccess(response) {
+
+			    	$scope.getTeam();
+			    }, function myError(response) {
+
+			        alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");
+			    });
+             
+		 }
+ 
+		 $scope.uploadCover = function(){
+		     var fd = new FormData();
+             fd.append('file', $scope.mycover);
+                     
+			 $http({
+			        method : "POST",
+			        	url : "teams/"+$scope.team.id+"/covers",
+				        data: fd,
+				       // params:{file: $scope.myfile},
+                        transformRequest: angular.identity,
+                        headers: {'Content-Type': undefined}     
+			    }).then(function mySuccess(response) {
+
+			    	$scope.getTeam();
+			    }, function myError(response) {
+
+			        alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");
+			    });
+             
+		 }
+		 
+		 $scope.editPlayer = function (row){ 
+
+			 $http({
+		        method : "PUT",
+		        	url : "players",
+			        data: row,
+			        headers: {'Content-Type': 'application/json; charset=utf-8'}
+		    }).then(function mySuccess(response) {
+
+
+		        alert("Οι αλλαγές αποθηκεύτηκαν με επιτυχία!");
+		        
+		    }, function myError(response) {
+
+		        alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");
+		    });
+		 }
+		 
+		 $scope.addPlayer= function (){ 
+			// $scope.result = $scope.newplayer;
+			 $http({
+		        method : "POST",
+		        	url : "teams/"+$scope.team.id+"/players",
+			        data: $scope.newplayer,
+			        headers: {'Content-Type': 'application/json; charset=utf-8'}
+		    }).then(function mySuccess(response) {
+		    			$scope.newplayer={};
+		    			$scope.getTeam();
+				    		//$scope.newplayer = response.data;
+				    		//$scope.result=$scope.newplayer;
+		/*					 $http({
+						        method : "PUT",
+						        	url : "teams/"+$scope.team.id+"players/"+$scope.newplayer.id
+						    }).then(function mySuccess(response) {
+		
+						    	$window.location.reload();
+						    	
+						    }, function myError(response) {
+						  
+						        alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");
+						    });*/
+			
+		    	
+		    }, function myError(response) {
+		  
+		        alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");
+		    });
+		 }
+		 
+		 $scope.uploadPlayerImage = function(row){
+		     var fd = new FormData();
+             fd.append('file', row.playerimage);
+                     
+			 $http({
+			        method : "POST",
+			        	url : "players/"+row.id+"/images",
+				        data: fd,
+				       // params:{file: $scope.myfile},
+                        transformRequest: angular.identity,
+                        headers: {'Content-Type': undefined}     
+			    }).then(function mySuccess(response) {
+			    	//w= response.data;
+			    	//$scope.result= row;
+			    	$scope.getTeam();
+			    	//$window.location.reload();
+			    }, function myError(response) {
+
+			        alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");
+			    });
+             
+		 }
+		 
+		 
+		 $scope.deletePlayer = function (row){ 
+			 if(!confirm("Είστε σίγουρος;"))
+				 return;
+			 $http({
+		        method : "DELETE",
+		        	url : "players/"+row.id
+		    }).then(function mySuccess(response) {
+		    	$scope.getTeam();
+		        
+		    }, function myError(response) {
+
+		        alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");
+		    });
+		 }
+		 
+});

@@ -240,7 +240,7 @@ pageEncoding="UTF-8"%>
 
 
 <div class="row" ng-show='players.length'>
-<div class=" pull-left to	p-palyer">
+<div class=" "><!-- pull-left to	p-palyer -->
 <h2>ΠΑΙΧΤΕΣ</h2>
 <div class="row">
 

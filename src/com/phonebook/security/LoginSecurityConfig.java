@@ -58,6 +58,10 @@ public class LoginSecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers("/positions/**").access("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
 			.antMatchers("/events/**").access("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
 //			.antMatchers("/contacts/*").access("hasRole('ROLE_USER')")
+		
+			//rossoneri
+			.antMatchers("/admin**").access("hasRole('ROLE_ADMIN')")
+			.antMatchers("/editteam**").access("hasRole('ROLE_TEAM')")
 			
 			
 /*			
@@ -66,11 +70,11 @@ public class LoginSecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers("/db/**").access("hasRole('ADMIN') and hasRole('DBA')")      */      
 			.and()
 				.formLogin().loginPage("/loginPage")
-				.defaultSuccessUrl("/main")
+				.defaultSuccessUrl("/soccer")
 				.failureUrl("/loginPage?error")
 				.usernameParameter("username").passwordParameter("password")				
 			.and()
-				.logout().logoutSuccessUrl("/loginPage?logout"); 
+				.logout().logoutSuccessUrl("/soccer"); 
 		
 		http.csrf().disable(); /// this should normally be removed  to allow post to have csrf tokens
 		

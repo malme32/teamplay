@@ -17,6 +17,11 @@ appAdmin.config(function($routeProvider) {
         templateUrl : "adminnews.html",
         controller: "newsController"
 
+    })
+    .when("/adminusers", {
+        templateUrl : "adminusers",
+        controller: "usersController"
+
     });
     
 });
@@ -1406,5 +1411,54 @@ appAdmin.controller("newsController",function($scope, $http, $location, $window)
 	
 		 
 });
+
+
+appAdmin.controller("usersController",function($scope, $http, $location, $window){
+	
+	 $http({
+	        method : "GET",
+	        url : "teams",
+	    }).then(function mySuccess(response) {
+
+	        $scope.teams = response.data;
+	      
+	    }, function myError(response) {
+	    		      
+	    });
+	  $http({
+	        method : "GET",
+	        	url : "contacts"
+	    }).then(function mySuccess(response) {
+
+	    	$scope.users=response.data
+	    }, function myError(response) {
+
+	        //alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");
+	    });
+	  
+	  $scope.addUser = function(row,teamrow){
+		  
+		  $scope.result= "teams/"+teamrow.id+"/adminusers";
+		  $http({
+		        method : "POST",
+		        url : "teams/"+teamrow.id+"/adminusers",
+		        params:{password:row.password, name: row.name, username:row.username}
+		       // headers: {'Content-Type': 'application/json; charset=utf-8'} 
+			      // params: {id:row.id,teamid1:row.team1.id,teamid2:row.team2.id,
+			    	//   score1:row.score1,score2:row.score2, date:row.date, matchdayid:tmpmatchday.id}
+
+		    }).then(function mySuccess(response) {
+
+		      	$window.location.reload();
+		    }, function myError(response) {
+		  
+		    	alert("An Error occured. Try again.");
+		      
+		    });
+		 
+	  }
+	  
+});
+	
 
 

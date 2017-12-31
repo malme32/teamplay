@@ -12,6 +12,7 @@ import org.apache.commons.io.FilenameUtils;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -27,6 +28,7 @@ import com.event.dao.StandingDao;
 import com.event.dao.TeamDao;
 import com.event.dao.TeamgroupDao;
 import com.phonebook.model.Contact;
+import com.phonebook.model.Userrole;
 import com.phonebook.service.ContactService;
 import com.sport.model.Champion;
 import com.sport.model.Game;
@@ -76,6 +78,8 @@ public class SportServiceImpl  implements SportService{
 	@Autowired
 	PlayoffDao playoffDao;
 	
+	@Autowired
+	PasswordEncoder passwordEncoder;
 	
 	@Override
 	public Champion findChampionsById(int id) {
@@ -693,5 +697,19 @@ public class SportServiceImpl  implements SportService{
 		playoff1.setName(playoff.getName());
 		playoff1.setPhase(playoff.getPhase());
 		generalDaoService.update(playoff1);
+	}
+
+	@Override
+	public void addNewAdminUserToTeam(Contact contact, int id1) {
+		// TODO Auto-generated method stub
+		contact.setAdminteam(this.findTeamById(id1));
+		contact.setEnabled(true);
+		contact.setPassword(passwordEncoder.encode(contact.getPassword()));
+		Userrole userrole =new Userrole();
+		userrole.setContact(contact);
+		userrole.setRole("ROLE_TEAM");
+		
+		generalDaoService.persist(contact);
+		generalDaoService.persist(userrole);
 	}
 }

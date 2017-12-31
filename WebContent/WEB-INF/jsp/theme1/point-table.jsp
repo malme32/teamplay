@@ -19,7 +19,7 @@ pageEncoding="UTF-8"%>
 
 
 
-<main class="main-content" style='font-size:90%'>
+<main class="main-content" style='font-size:90%; '>
 <div class='champ'>
 	<ul>
 		<li  ng-repeat='row in championlist'><a ng-click='getChampion(row)' ng-class="cssLiChampionClass(row)">{{row.name}}</a></li>
@@ -27,8 +27,8 @@ pageEncoding="UTF-8"%>
 </div>
 
 <div class="theme-padding white-bg">
-<div class="container">
-<div class="row">
+<div class="container" >
+<div class="row" >
 
 
 
@@ -282,7 +282,7 @@ pageEncoding="UTF-8"%>
  <img style='max-height:40px'ng-src="${resources}{{row.imageurl}}" alt=""> 
 
 
-<h5><a href="news-detail?id={{row.id}}">{{row.title}}</a></h5>
+<h5><a href="#!news-detail.html/{{row.id}}">{{row.title}}</a></h5>
 <span class="red-color"><i class="fa fa-clock-o"></i>{{row.date | date}}</span>
 
 

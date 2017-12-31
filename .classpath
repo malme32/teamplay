@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry excluding="com/event/service/LoginApplicationConfig.java|com/event/service/LoginSecurityConfig.java|com/event/service/MyUserDetailsService.java|com/event/service/SpringMVCWebAppInitializer.java|com/event/service/SpringSecurityInitializer.java|com/event/model/Player.java|com/event/dao/PlayerDao.java|com/event/dao/PlayerDaoImpl.java" kind="src" output="target/classes" path="src">
+	<classpathentry excluding="com/event/service/LoginApplicationConfig.java|com/event/service/LoginSecurityConfig.java|com/event/service/MyUserDetailsService.java|com/event/service/SpringMVCWebAppInitializer.java|com/event/service/SpringSecurityInitializer.java|com/event/model/Player.java|com/event/dao/PlayerDao.java|com/event/dao/PlayerDaoImpl.java|com/sport/model/Userrole.java" kind="src" output="target/classes" path="src">
 		<attributes>
 			<attribute name="optional" value="true"/>
 			<attribute name="maven.pomderived" value="true"/>

@@ -93,5 +93,7 @@ public interface SportService {
 	public Playoff findPlayoffById(int id);
 
 	public void updatePlayoff(Playoff playoff, Champion champion);
+
+	public void addNewAdminUserToTeam(Contact contact, int id1);
 	
 }
