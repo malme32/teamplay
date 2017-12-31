@@ -11,7 +11,7 @@ pageEncoding="UTF-8"%>
 <h2>{{team.name}}</h2>
 
 <ul class="breadcrumbs">
-<li><a href="soccer.html">ΑΡΧΙΚΗ</a></li>
+<li><a href="">ΑΡΧΙΚΗ</a></li>
 <li>{{team.name}}</li>
 </ul>
 </div>

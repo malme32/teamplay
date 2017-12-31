@@ -95,5 +95,7 @@ public interface SportService {
 	public void updatePlayoff(Playoff playoff, Champion champion);
 
 	public void addNewAdminUserToTeam(Contact contact, int id1);
+
+	public List<Game> getUpcomingGames();
 	
 }

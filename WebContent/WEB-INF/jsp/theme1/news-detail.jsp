@@ -10,7 +10,7 @@ pageEncoding="UTF-8"%>
 <div class="container">
 <h2>ΕΙΔΗΣΗ</h2>
 <ul class="breadcrumbs">
-<li><a href="soccer.html">ΑΡΧΙΚΗ</a></li>
+<li><a href="">ΑΡΧΙΚΗ</a></li>
 <li>ΕΙΔΗΣΗ</li>
 </ul>
 </div>

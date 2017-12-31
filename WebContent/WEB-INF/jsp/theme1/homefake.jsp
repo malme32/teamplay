@@ -5,7 +5,7 @@ pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <spring:url value="/resources/theme1" var="resources" />
 
-<div class="slider-holder" ng-show='isIndex'>
+<div class="slider-holder" ng-class='indexClass'><!-- ng-show='isIndex' -->
 
 <ul id="main-slides" class="main-slides" >
 
@@ -19,7 +19,7 @@ pageEncoding="UTF-8"%>
 <div class="position-center-x full-width">
 <div class="container">
  <div class="banner-caption style-1 p-white h-white pull-right">
-<h1 class="animated fadeInUp delay-1s" style="color:#cc0000; text-shadow: 1px 1px #FFFFFF;">Το δημοφιλέστερο άθλημα στην Ευρώπη, το ποδόσφαιρο, βρίσκει το "δικό" του γήπεδο</h1>
+<h1 class="animated fadeInUp delay-1s " style="color:#cc0000; text-shadow: 1px 1px #FFFFFF;">Το δημοφιλέστερο άθλημα στην Ευρώπη, το ποδόσφαιρο, βρίσκει το "δικό" του γήπεδο</h1>
 <p class="animated fadeInUp delay-2s red-btn" style="color:#cc0000; text-shadow: 1px 1px #FFFFFF;">Εγκαταστάσεις τελευταίας τεχνολογίας, μέσα από το Rossoneri Mini Football CLub! </p>
 <a class="btn lg red-btn animated fadeInRight delay-3s" href="#"><i>+</i>Περισσοτερα</a>
 </div>

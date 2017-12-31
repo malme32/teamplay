@@ -17,7 +17,7 @@ pageEncoding="UTF-8"%>
 <%@include  file="prereq.jsp" %>
 
 </head>
-<body ng-app="appMain" ng-controller='indexController'  ng-cloak class="ng-cloak">
+<body ng-app="appMain" ng-controller='indexController'  >
 
 <!--   <div id="fb-root"></div>
     <script>(function(d, s, id) {
@@ -50,6 +50,7 @@ pageEncoding="UTF-8"%>
 
 
 
+<%-- <img style='position:fixed; left:0; top:200px; opacity:0.1; z-index:-1; ' 	ng-src='${resources}/newimages/soccer_ball.png'/> --%>
 <div ng-view class="main"></div>
 
 

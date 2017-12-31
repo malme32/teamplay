@@ -11,7 +11,7 @@ pageEncoding="UTF-8"%>
 <div class="container">
 <h2>ΠΡΩΤΑΘΛΗΜΑΤΑ</h2>
 <ul class="breadcrumbs">
-<li><a href="#">ΑΡΧΙΚΗ</a></li>
+<li><a href="">ΑΡΧΙΚΗ</a></li>
 <li>ΠΡΩΤΑΘΛΗΜΑΤΑ</li>
 </ul>
 </div>
@@ -71,7 +71,7 @@ pageEncoding="UTF-8"%>
 
 <div ng-repeat='row in teamgrouplist' style="margin-bottom:60px;">
 <div  class="macth-fixture" >
-<h2>{{row.name}}</h2>
+<h2>{{row.name}} </h2>
 <div class="last-matches styel-3">
 <div class="table-responsive">
 <table class="table table-bordered table-hover">

@@ -70,11 +70,11 @@ public class LoginSecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers("/db/**").access("hasRole('ADMIN') and hasRole('DBA')")      */      
 			.and()
 				.formLogin().loginPage("/loginPage")
-				.defaultSuccessUrl("/soccer")
+				.defaultSuccessUrl("/soccer#!/home")
 				.failureUrl("/loginPage?error")
 				.usernameParameter("username").passwordParameter("password")				
 			.and()
-				.logout().logoutSuccessUrl("/soccer"); 
+				.logout().logoutSuccessUrl("/soccer#!/home"); 
 		
 		http.csrf().disable(); /// this should normally be removed  to allow post to have csrf tokens
 		

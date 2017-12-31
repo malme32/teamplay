@@ -17,6 +17,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -84,7 +85,8 @@ public class Game {
 	@OneToMany(fetch = FetchType.LAZY,mappedBy="game",cascade = CascadeType.ALL)
 	List<Scorer> scorers;
 	
-	
+	@Transient
+	private Champion champion;
 	
 	public Matchday getMatchday() {
 		return matchday;
@@ -194,6 +196,16 @@ public class Game {
 
 	public void setPlayoff(Playoff playoff) {
 		this.playoff = playoff;
+	}
+
+
+	public Champion getChampion() {
+		return champion;
+	}
+
+
+	public void setChampion(Champion champion) {
+		this.champion = champion;
 	}
 
 

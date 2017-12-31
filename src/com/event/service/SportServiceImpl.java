@@ -3,6 +3,7 @@ package com.event.service;
 import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -711,5 +712,38 @@ public class SportServiceImpl  implements SportService{
 		
 		generalDaoService.persist(contact);
 		generalDaoService.persist(userrole);
+	}
+
+	@Override
+	public List<Game> getUpcomingGames() {
+		// TODO Auto-generated method stub
+		
+		List<Game> games = gameDao.findAll();
+		List<Game> upcomingGames= new ArrayList<Game>();
+		 Date datenow = new Date();
+		for(Game game:games)
+			if(game.getDate()!=null&&game.getScore1()==null&&game.getDate().after(datenow))
+			{
+				if(game.getPlayoff()!=null)
+				{
+					if(game.getPlayoff().getChampion().isEnabled())
+					{
+						game.setChampion(game.getPlayoff().getChampion());
+						upcomingGames.add(game);
+						
+					}
+				}
+				else if(game.getMatchday()!=null) 
+				{
+					if(game.getMatchday().getTeamgroup().getChampion().isEnabled())
+					{
+						game.setChampion(game.getMatchday().getTeamgroup().getChampion());
+						upcomingGames.add(game);
+					}
+				}
+				
+				
+			}
+		return upcomingGames;
 	}
 }

@@ -14,7 +14,7 @@ pageEncoding="UTF-8"%>
 <div class="container">
 <h2>Match</h2>
 <ul class="breadcrumbs">
-<li><a href="#">Home</a></li>
+<li><a href="">Home</a></li>
 <li>Match</li>
 </ul>
 </div>
@@ -34,7 +34,7 @@ pageEncoding="UTF-8"%>
 <div class="detail">
 <a href="">Match Detail<i class="fa fa-angle-double-right"></i></a>
 <strong style='font-size:140%;'>{{game.team1.name}}<i class="red-color"> {{game.score1}} - {{game.score2}}  </i> {{game.team2.name}}</strong>
-<span class=""><i class="fa fa-map-marker"></i>{{game.date | date}}</span>
+<span class=""><i class=""></i>{{game.date | date}}</span><!-- fa fa-map-marker -->
 </div>
 </li>
 </ul>

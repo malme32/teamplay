@@ -12,7 +12,7 @@ pageEncoding="UTF-8"%>
 <div class="container">
 <h2>ΟΛΑ ΤΑ ΝΕΑ</h2>
 <ul class="breadcrumbs">
-<li><a href="soccer.html">ΑΡΧΙΚΗ</a></li>
+<li><a href="">ΑΡΧΙΚΗ</a></li>
 <li>ΝΕΑ</li>
 </ul>
 </div>

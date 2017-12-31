@@ -141,7 +141,9 @@ public class Team {
 
 
 	public String getLogopath() {
-		return (this.logopath==null||this.logopath.equals("")) ? (String) "/defaultimages/teamdefaultlogo.png" : logopath;
+		//return (this.logopath==null||this.logopath.equals("")) ? (String) "/defaultimages/teamdefaultlogo.png" : logopath;
+		return (this.logopath==null||this.logopath.equals("")) ? (String) "/newimages/480px-Soccer_ball.svg.png" : logopath;
+		
 	}
 
 

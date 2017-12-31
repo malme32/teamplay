@@ -15,7 +15,7 @@ pageEncoding="UTF-8"%>
 <h2>ΟΜΑΔΕΣ</h2>
 
 <ul class="breadcrumbs">
-<li><a href="#">ΑΡΧΙΚΗ</a></li>
+<li><a href="">ΑΡΧΙΚΗ</a></li>
 <li>ΟΜΑΔΕΣ</li>
 </ul>
 </div>

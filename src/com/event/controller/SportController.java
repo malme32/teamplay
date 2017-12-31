@@ -186,6 +186,14 @@ public class SportController {
 		return sportService.getPlayoffGames(championid,phase);
 	}
 	
+	@RequestMapping(value="/games", method=RequestMethod.GET, produces = "application/json")
+	public @ResponseBody List<Game> getAllGames(@RequestParam(required = false)  String upcoming)
+	{
+		if(upcoming!=null)
+			return sportService.getUpcomingGames();
+		else return null;
+	}
+	
 	
 	/////////////////////POST/////////////////////////////////////
 	

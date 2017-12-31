@@ -18,72 +18,12 @@ pageEncoding="UTF-8"%>
 
 
 <ul class="user-login-option pull-right">
-<!-- <li class="social-icon">
-<ul class="social-icons style-5">
-<li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
-<li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
-<li><a class="youtube" href="#"><i class="fa fa-youtube-play"></i></a></li>
-<li><a class="pinterest" href="#"><i class="fa fa-pinterest-p"></i></a></li>
-</ul>
 
-</li> -->
 
 <%if(pageContext.getAttribute("username", PageContext.REQUEST_SCOPE).equals("")){ %>
 <li class="login-modal">
 <a href="loginPage" class="login" ><i class="fa fa-user"></i> ΣΥΝΔΕΣΗ</a>
 
-<!--<a href="#" class="login" data-toggle="modal" data-target="#login-modal"><i class="fa fa-user"></i> ΣΥΝΔΕΣΗ</a>
-
- <div class="modal fade" id="login-modal">
-<div class="login-form position-center-center">
-<h2>Login<button class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button></h2>
-<form>
-<div class="form-group">
-<input type="text" class="form-control" name="user" placeholder="domain@live.com">
-<i class=" fa fa-envelope"></i>
-</div>
-<div class="form-group">
-<input type="password" class="form-control" name="pass" placeholder="**********">
-<i class=" fa fa-lock"></i>
-</div>
-<div class="form-group custom-checkbox">
-<label>
-<input type="checkbox"> Stay login
-</label>
-<a class="pull-right forgot-password" href="#"></a>
-<a href="#" class="pull-right forgot-password" data-toggle="modal" data-target="#login-modal-2">Forgot password?</a>
-</div>
-<div class="form-group">
-<button class="btn full-width red-btn">Login</button>
-</div>
-</form>
-<span class="or-reprater"></span>
-<ul class="others-login-way">
-<li><a class="facebook-bg" href="#"><i class="fa fa-facebook"></i>Facebook</a></li>
-<li><a class="tweet-bg" href="#"><i class="fa fa-twitter"></i>Tweet</a></li>
-<li><a class="linkedin-bg" href="#"><i class="fa fa-linkedin"></i>Linkedin</a></li>
-<li><a class="google-plus-bg" href="#"><i class="fa fa-google-plus"></i>Google+</a></li>
-</ul>
-</div>
-</div> 
-<div class="modal fade" id="login-modal-2">
-<div class="login-form position-center-center">
-<h2>Forgot password<button class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button></h2>
-<form>
-<div class="form-group">
-<input type="text" class="form-control" name="user" placeholder="domain@live.com">
-<i class=" fa fa-envelope"></i>
-</div>
-<div class="form-group">
-<input type="password" class="form-control" name="pass" placeholder="**********">
-<i class=" fa fa-lock"></i>
-</div>
-<div class="form-group">
-<button class="btn full-width red-btn">Login</button>
-</div>
-</form>
-</div>
-</div>-->
 </li>
 <%}else{%>
 <li style='color:white'><%= pageContext.getAttribute("name", PageContext.REQUEST_SCOPE) %></li>
@@ -129,9 +69,12 @@ pageEncoding="UTF-8"%>
 
 
 <ul class="nav-list pull-right">
+
+
+
 <li>
 
-<a href="soccer">ΑΡΧΙΚΗ</a>
+<a href="#!home">ΑΡΧΙΚΗ</a>
 <%-- <ul>
 <li><a >Home</a></li>
 <li><a href="${resources}/home-2.html">Home 2</a></li>
@@ -141,13 +84,7 @@ pageEncoding="UTF-8"%>
 </li>
 
 <%-- <li><a href="${resources}/about.html">ΕΓΚΑΤΑΣΤΑΣΕΙΣ</a></li>
- --%><li>
-<a href="${resources}/team.html">ΑΚΑΔΗΜΙΕΣ</a>
-<ul>
-<li><a href="${resources}/team.html">team</a></li>
-<li><a href="${resources}/team-detail.html">Team detail</a></li>
-<li><a href="${resources}/team-width-sidebar.html">team-widthsidebar</a></li>
-</ul>
+ --%>
 <li><a ng-href="#!point-table.html">ΠΡΩΤΑΘΛΗΜΑΤΑ</a>
 <ul>
 <li ng-repeat='row in headerChampions'><a href="#!point-table.html">{{row.name}}</a></li>
@@ -205,94 +142,7 @@ pageEncoding="UTF-8"%>
 </td>
 </tr>
 </table>
-<%--  <div class="item"  ng-repeat='row in news | orderBy:"-date"'>
 
-<div class="large-post-img">
-<img ng-src="${resources}{{row.imageurl}}" alt="">
-</div>
-
-
-<div class="large-post-detail style-3 p-0">
-<span class="red-color">{{row.date | date}}</span>
-<h2>{{row.title}}</h2>
-</div>
-
-</div> --%>
-
-<%--  <div class="item">
-
-<div class="large-post-img">
-<img src="${resources}/images/blog-grid-view/img-2-2.jpg" alt="">
-</div>
-
-
-<div class="large-post-detail style-3 p-0">
-<span class="red-color">Englis FA Cup</span>
-<h2>Man United reunion for Ibrahimovic,</h2>
-</div>
-
-</div> 
-
-
-
-<div class="item">
-
-<div class="large-post-img">
-<img src="${resources}/images/blog-grid-view/img-2-3.jpg" alt="">
-</div>
-
-
-<div class="large-post-detail style-3 p-0">
-<span class="red-color">Englis FA Cup</span>
-<h2>Man United reunion for Ibrahimovic,</h2>
-</div>
-
-</div> --%>
-
-<%-- 
-<div class="item">
-
-<div class="large-post-img">
-<img src="${resources}/images/blog-grid-view/img-2-4.jpg" alt="">
-</div>
-
-
-<div class="large-post-detail style-3 p-0">
-<span class="red-color">Englis FA Cup</span>
-<h2>Man United reunion for Ibrahimovic,</h2>
-</div>
-
-</div>
-
-
-<div class="item">
-
-<div class="large-post-img">
-<img src="${resources}/images/blog-grid-view/img-2-1.jpg" alt="">
-</div>
-
-
-<div class="large-post-detail style-3 p-0">
-<span class="red-color">Englis FA Cup</span>
-<h2>Man United reunion for Ibrahimovic,</h2>
-</div>
-
-</div>
-
-
-<div class="item">
-
-<div class="large-post-img">
-<img src="${resources}/images/blog-grid-view/img-2-2.jpg" alt="">
-</div>
-
-
-<div class="large-post-detail style-3 p-0">
-<span class="red-color">Englis FA Cup</span>
-<h2>Man United reunion for Ibrahimovic,</h2>
-</div>
-
-</div> --%>
 
 </div>
 </div>
@@ -300,20 +150,15 @@ pageEncoding="UTF-8"%>
 </ul>
 </li>
 <li>
-<a href="#">photo</a>
-<ul>
-<li><a href="match.html">Match</a></li>
-<li><a href="match-detail.html">Match Detail</a></li>
-<li><a href="match-result.html">Match Result</a></li>
-</ul>
+<a href="">ΑΚΑΔΗΜΙΕΣ</a>
 </li>
 <li>
-<a href="#">ΕΠΙΚΟΙΝΩΝΙΑ</a>
-<ul>
-<li><a href="shop.html">shop</a></li>
-<li><a href="shop-detail.html">shop detail</a></li>
-<li><a href="cart.html">cart</a></li>
-</ul>
+<a href="">photo</a>
+
+</li>
+<li>
+<a href="">ΕΠΙΚΟΙΝΩΝΙΑ</a>
+
 </li>
 <!-- <li>
 <a href="#">pages</a>
@@ -343,18 +188,28 @@ pageEncoding="UTF-8"%>
 <nav id="menu" class="responive-nav">
 <a class="r-nav-logo" href="home-1.html"><img src="${resources}/images/logo-1.png" alt=""></a>
 <ul class="respoinve-nav-list">
-<li>
-<a data-toggle="collapse" href="#list-1"><i class="pull-right fa fa-angle-down"></i>Home</a>
+
+
+
+
+<%if(pageContext.getAttribute("username", PageContext.REQUEST_SCOPE).equals("")){ %>
+<li class="">
+<a href="loginPage" class= >ΣΥΝΔΕΣΗ</a>
+
+</li>
+<%}%>
+
+
+<li><a href="#!home">ΑΡΧΙΚΗ</a></li>
+<!-- <a data-toggle="collapse" href="#list-1"><i class="pull-right fa fa-angle-down"></i>ΑΡΧΙΚΗ</a>
 <ul class="collapse" id="list-1">
-<li><a href="home-1.html">Home 1</a></li>
+<li><a href="#!home">ΑΡΧΙΚΗ</a></li>
 <li><a href="index-2.html">Home 2</a></li>
 <li><a href="index-3.html">Home 3</a></li>
-</ul>
-</li>
-<li>
-<a href="about.html">About</a>
-</li>
-<li>
+</ul> 
+</li>-->
+
+<!-- <li>
 <a data-toggle="collapse" href="#list-2"><i class="pull-right fa fa-angle-down"></i>Team</a>
 <ul class="collapse" id="list-2">
 <li><a href="#!team-list.html">ΟΜΑΔΕΣ</a></li>
@@ -362,13 +217,45 @@ pageEncoding="UTF-8"%>
 <li><a href="team-widthsidebar.html">team widthsidebar</a></li>
 </ul>
 </li>
+ -->
+
+
+<li><a data-toggle="collapse" href="#list-2"><i class="pull-right fa fa-angle-down"></i>ΟΜΑΔΕΣ</a>
+<ul  class="collapse" id="list-2">
+<%if(pageContext.getAttribute("teamid", PageContext.REQUEST_SCOPE)!=null){ %>
+<li ><a href="#!team-detail.html/${teamid}">Η ΟΜΑΔΑ ΜΟΥ</a></li>
+<li ><a href="#!editteam">ΕΠΕΞΕΡΓΑΣΙΑ ΟΜΑΔΑΣ</a></li>
+<%} %>
+<li ><a href="#!team-list.html">ΟΛΕΣ ΟΙ ΟΜΑΔΕΣ</a></li>
+</ul>
+</li>
+
+
 <li>
 <li><a href="#!point-table.html">ΠΡΩΤΑΘΛΗΜΑΤΑ</a></li>
+
+<li>
+<a href="#!news-list.html">ΝΕΑ</a>
 </li>
 <li>
-<a href="#">News</a>
+<a href="">ΑΚΑΔΗΜΙΕΣ</a>
 </li>
-<li>
+<li><a href=""> GALLERY</a></li>
+<li><a href="">ΕΠΙΚΟΙΝΩΝΙΑ</a></li>
+<%if(!pageContext.getAttribute("username", PageContext.REQUEST_SCOPE).equals("")){ %>
+
+<%-- <li style=''><a href='' ><%= pageContext.getAttribute("name", PageContext.REQUEST_SCOPE) %></a></li> --%>
+						<li>
+					
+					<c:url value="/logout" var="logoutUrl" /> <form id="logout" action="${logoutUrl}" method="post" >
+					  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+					</form>
+					<c:if test="${pageContext.request.userPrincipal.name != null}">
+						<a style='' href="javascript:document.getElementById('logout').submit()"><%= pageContext.getAttribute("name", PageContext.REQUEST_SCOPE) %> Logout</a>
+					</c:if>
+					</li>
+<%}%>
+<!-- <li>
 <a data-toggle="collapse" href="#list-3"><i class="pull-right fa fa-angle-down"></i>Match</a>
 <ul class="collapse" id="list-3">
 <li><a href="match.html">match</a></li>
@@ -398,6 +285,6 @@ pageEncoding="UTF-8"%>
 <li><a href="blog-detail.html">blog detail</a></li>
 </ul>
 </li>
-<li><a href="contact.html">Contact</a></li>
-</ul>
+<li><a href="contact.html">Contact</a></li>-->
+</ul> 
 </nav>

@@ -35,6 +35,8 @@ public class Champion {
 	@Column(name="enddate")
 	private Date enddate;
 	
+	@Column(name="enabled")
+	Boolean enabled;
 	
 	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY,mappedBy="champion",cascade = CascadeType.ALL)
@@ -91,6 +93,14 @@ public class Champion {
 
 	public void setPlayoffs(List<Playoff> playoffs) {
 		this.playoffs = playoffs;
+	}
+
+	public Boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(Boolean enabled) {
+		this.enabled = enabled;
 	}
 
 

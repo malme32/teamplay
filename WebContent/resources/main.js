@@ -96,11 +96,12 @@ appMain.config(function($routeProvider) {
         templateUrl : "editteam",
         controller: "teamController"
 
-    })/*
+    })
     .when("/home", {
-        templateUrl : "home1"
+            templateUrl : "home1",
+            controller: "homeController"
 
-    });*/
+    });
     
     /*.
      $routeProvider.otherwise({redirectTo: '/index'});*/
@@ -114,9 +115,10 @@ appMain.run(function($rootScope, $window) {
     $rootScope.$on("$locationChangeStart", function(event, next, current) { 
         // handle route changes    
     	window.scrollTo(0, 0);
-    	$rootScope.currentpage=window.location.href; 
     	
-    	  if(window.innerWidth<500)
+    	$rootScope.currentpage=window.location.href; 
+    	//$rootScope.length = window.innerWidth;
+    	  if(window.innerWidth<650)
     		  $rootScope.desktop=false;
     	    else
     	    	$rootScope.desktop=true;
@@ -124,18 +126,29 @@ appMain.run(function($rootScope, $window) {
     		$(window).resize(function() {
     	
     			$rootScope.$apply(function(){
-    			    if(window.innerWidth<500)
+    		    	//$rootScope.length = window.innerWidth;
+    			    if(window.innerWidth<650)
     			    	$rootScope.desktop=false;
     		    else
     		    	$rootScope.desktop=true;
     		        //do something to update current scope based on the new innerWidth and let angular update the view.
     		    });
     		});
-    	if(next.indexOf("#!") === -1)//;=="http://localhost:60000/phonebook/soccer.html")
-    		$rootScope.isIndex=true;
-    	else
-    		$rootScope.isIndex=false;
+    	    
+    	  //  $rootScope.$on('$viewContentLoaded', function() {
+    	    	if(next.indexOf("#!/home") !== -1)//;=="http://localhost:60000/phonebook/soccer.html")
+    	    	//	$rootScope.isIndex=true;
+    	    		$rootScope.indexClass="own-visible";
+    	    	else
+    	    		$rootScope.indexClass="own-hidden";
+    	    	//	$rootScope.isIndex=false;
+    		//});
+    		
+
     });
+    
+    
+
 });
 //appMain.directive('fbComments', function() {
 appMain.
@@ -233,7 +246,47 @@ appMain.controller("eventsController",function($scope, $http, $location){
 		 }
 
 });
+appMain.controller("homeController",function($scope, $http, $routeParams, $location){
 
+
+	
+
+	 
+	 $http({
+	        method : "GET",
+	        url : "news",
+	        params:{headersonly:1,count:5}
+	    }).then(function mySuccess(response) {
+
+	        $scope.news = response.data;
+
+
+	    }, function myError(response) {
+
+	    	
+	        //$scope.result = response.statusText;
+	      
+	    });
+	 
+	
+	 
+	 
+	 $http({
+	        method : "GET",
+	        url : "games?upcoming"
+	    }).then(function mySuccess(response) {
+
+	        $scope.upcominggames = response.data;
+
+
+	    }, function myError(response) {
+
+	    	
+	        //$scope.result = response.statusText;
+	      
+	    });
+	 
+});
 
 appMain.controller("matchController",function($scope, $http, $routeParams, $location){
 
@@ -496,8 +549,8 @@ appMain.controller("championsController",function($scope, $http, $location, $win
 	 $scope.phases.push(8);
 	 $scope.phases.push(4);
 	 $scope.phases.push(2);
-/*	 window.scrollTo(0, 0);
-	  if(window.innerWidth<500)
+	// window.scrollTo(0, 0);
+/*	  if(window.innerWidth<500)
 	    	$scope.desktop=false;
 	    else
 	    	$scope.desktop=true;
@@ -511,8 +564,8 @@ appMain.controller("championsController",function($scope, $http, $location, $win
 		    		$scope.desktop=true;
 		        //do something to update current scope based on the new innerWidth and let angular update the view.
 		    });
-		});
-	 */
+		});*/
+	 
 	 
 
 	 
@@ -535,7 +588,7 @@ appMain.controller("championsController",function($scope, $http, $location, $win
 	 
 	 
 	//$scope.getContacts = function (){
-		  
+	
 		 $http({
 	        method : "GET",
 	        url : "champions"
