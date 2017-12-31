@@ -96,7 +96,7 @@ pageEncoding="UTF-8"%>
 			</tr>
 </thead>
 <tbody>
-			<tr ng-repeat='row1 in standings | orderBy: "-grade"' >
+			<tr ng-repeat='row1 in standings | orderBy: "-grade"' ng-show='row1.champion.enabled'>
 				<td><a href='#!point-table.html'>{{row1.champion.name}}</a>
 				</td>
 				<td class="td_grade">{{row1.grade}}
@@ -195,13 +195,13 @@ pageEncoding="UTF-8"%>
 
 			<div class="matches-dates-shedule" style='padding:0'>
 			<ul>
-			<li ng-repeat='row1 in games | validDate | orderBy: "-date" ' style='padding:5px; '>
+			<li ng-repeat='row1 in games | validDate | orderBy: "-date" ' style='padding:5px; ' ng-show='row1.champion.enabled'>
 			<span class="pull-left"><img style='height:40px; width:40px' ng-src="${resources}{{row1.team1.logopath}}" alt=""></span>
 			<span class="pull-right"><img style='height:40px; width:40px' ng-src="${resources}{{row1.team2.logopath}}" alt=""></span>
 			<div class="detail">
-			<a href="#!match.html/{{row1.id}}">Match Detail<i class="fa fa-angle-double-right"></i></a>
+			<a href="#!match.html/{{row1.id}}">Λεπτομέρειες<i class="fa fa-angle-double-right"></i></a>
 			<strong><a style='display:inline; padding:0; margin:0' href='#!team-detail.html/{{row1.team1.id}}'>{{row1.team1.name}}</a><i class="red-color"  style=''> {{row1.score1}} - {{row1.score2}}</i> <a style='display:inline; padding:0; margin:0'  href='#!team-detail.html/{{row1.team2.id}}'>{{row1.team2.name}}</a></strong>
-			<span class="location-marker" style=''><i class="fa "></i>{{row1.date |  date : "dd/MM HH:mm"}}</span>
+			<span class="location-marker" style=''><i class="fa "></i><b class="own-red-shadow">{{row1.date |  date : "EEE dd MMM HH:mm"}}</b> ({{row1.champion.name}})</span>
 			</div>
 			</li>
 			

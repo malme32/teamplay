@@ -240,7 +240,8 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 			        method : "POST",
 			        url : "champions",
 			        	   params: {
-			        	        name : $scope.adminChampionName
+			        	        name : $scope.adminChampionName,
+			        	        enabled:$scope.adminChampionEnabled
 			        	    }
 			    }).then(function mySuccess(response) {
 
@@ -269,7 +270,8 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 			        url : "champions",
 			        	   params: {
 			        	        id : row.id,
-			        	        name : row.name
+			        	        name : row.name,
+			        	        enabled : row.enabled
 			        	    }
 			    }).then(function mySuccess(response) {
 

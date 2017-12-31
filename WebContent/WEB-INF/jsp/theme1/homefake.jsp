@@ -112,16 +112,16 @@ pageEncoding="UTF-8"%>
 <div class="container">
 <ul id="slides-thmnail" class="slides-thmnail">
 <li>
-<span><i class="fa fa-sliders"></i>Slides</span>
+<span><i class="fa fa-sliders"></i>ΔΙΑΦΑΝΕΙΕΣ</span>
 </li>
 <li>
-<span><i class="fa fa-play-circle"></i>Video</span>
+<span><i class="fa fa-play-circle"></i>VIDEO</span>
 </li>
 <li>
-<span><i class="fa fa-soccer-ball-o"></i>scores</span>
+<span><i class="fa fa-soccer-ball-o"></i>ΑΓΩΝΕΣ</span>
 </li>
 <li>
-<span><i class="fa fa-bar-chart"></i>Resutls</span>
+<span><i class="fa fa-bar-chart"></i>ΓΙΑ ΕΜΑΣ</span>
 </li>
 </ul>
 <ul class="thmnail-arrows">

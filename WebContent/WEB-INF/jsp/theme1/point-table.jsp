@@ -22,7 +22,7 @@ pageEncoding="UTF-8"%>
 <main class="main-content" style='font-size:90%; '>
 <div class='champ'>
 	<ul>
-		<li  ng-repeat='row in championlist'><a ng-click='getChampion(row)' ng-class="cssLiChampionClass(row)">{{row.name}}</a></li>
+		<li  ng-repeat='row in championlist' ng-show='row.enabled'><a ng-click='getChampion(row)' ng-class="cssLiChampionClass(row)">{{row.name}}</a></li>
 	</ul> 
 </div>
 
@@ -53,9 +53,9 @@ pageEncoding="UTF-8"%>
 			<span class="pull-left"><img style='height:40px; width:40px' ng-src="${resources}{{row1.team1.logopath}}" alt=""></span>
 			<span class="pull-right"><img style='height:40px; width:40px' ng-src="${resources}{{row1.team2.logopath}}" alt=""></span>
 			<div class="detail" style='padding:0; margin:0'>
-			<a style='padding:0; margin:0' href="#!match.html/{{row1.id}}"> Match Detail<i class="fa fa-angle-double-right"></i></a>
+			<a style='padding:0; margin:0' href="#!match.html/{{row1.id}}">Λεπτομέρειες<i class="fa fa-angle-double-right"></i></a>
 			<strong style='padding:0; margin:0'><a style='display:inline; padding:0; margin:0' href='#!team-detail.html/{{row1.team1.id}}'>{{row1.team1.name}}</a><i class="red-color"  style=''> {{row1.score1}} - {{row1.score2}}</i> <a style='display:inline; padding:0; margin:0'  href='#!team-detail.html/{{row1.team2.id}}'>{{row1.team2.name}}</a></strong>
-			 <span class="location-marker" style='padding:0; margin:0'><i class="fa "></i><b class="own-red-shadow">{{row1.date |  date : "dd/MM HH:mm"}}</b></span> 
+			 <span class="location-marker" style='padding:0; margin:0'><i class="fa "></i><b class="own-red-shadow">{{row1.date |  date : "EEE dd MMM HH:mm"}}</b></span> 
 			</div>
 			</li>
 			
@@ -83,17 +83,17 @@ pageEncoding="UTF-8"%>
 				</th>
 				<th ng-show='desktop'>ΓΚΟΛ
 				</th>
-				<th ng-show='desktop'>G+
+				<th ng-show='desktop'>ΓΚΟΛ+
 				</th>
-				<th ng-show='desktop'>G-
+				<th ng-show='desktop'>ΓΚΟΛ-
 				</th>
-				<th ng-show='desktop'>Mathes
+				<th ng-show='desktop'>ΑΓΩΝΕΣ
 				</th>
-				<th ng-show='desktop'>Wins
+				<th ng-show='desktop'>ΝΙΚΕΣ
 				</th>
-				<th ng-show='desktop'>Defeats
+				<th ng-show='desktop'>ΗΤΤΕΣ
 				</th>
-				<th ng-show='desktop'>Draws
+				<th ng-show='desktop'>ΙΣΟΠΑΛΙΕΣ
 				</th>
 			</tr>
 </thead>
@@ -189,7 +189,7 @@ pageEncoding="UTF-8"%>
 
 
 </div>	 
-<button style="position:relative; "  ng-hide='row.standings.matchdays.length' class="btn red-btn pull-right" ng-click="getMatchdays(row)">Show Program</button>
+<button style="position:relative; "  ng-hide='row.standings.matchdays.length' class="btn red-btn pull-right" ng-click="getMatchdays(row)">ΠΡΟΓΡΑΜΜΑ</button>
 		 <div class="" ng-repeat='row2 in row.standings.matchdays|  orderBy:"name"' style="margin:0;padding:0">
 		<h3 style="margin:0 0 5px 0; padding:0"><span><i class="red-color">{{row2.name}} </i></span></h3>
 		
@@ -203,9 +203,9 @@ pageEncoding="UTF-8"%>
 			<span class="pull-left"><img style='height:40px; width:40px' ng-src="${resources}{{row1.team1.logopath}}" alt=""></span>
 			<span class="pull-right"><img style='height:40px; width:40px' ng-src="${resources}{{row1.team2.logopath}}" alt=""></span>
 			<div class="detail" style='padding:0; margin:0'>
-			<a style='padding:0; margin:0' href="#!match.html/{{row1.id}}"> Match Detail<i class="fa fa-angle-double-right"></i></a>
+			<a style='padding:0; margin:0' href="#!match.html/{{row1.id}}">Λεπτομέρειες<i class="fa fa-angle-double-right"></i></a>
 			<strong style='padding:0; margin:0'><a style='display:inline; padding:0; margin:0' href='#!team-detail.html/{{row1.team1.id}}'>{{row1.team1.name}}</a><i class="red-color"  style=''> {{row1.score1}} - {{row1.score2}}</i> <a style='display:inline; padding:0; margin:0'  href='#!team-detail.html/{{row1.team2.id}}'>{{row1.team2.name}}</a></strong>
-			 <span class="location-marker" style='padding:0; margin:0'><i class="fa "></i><b class="own-red-shadow">{{row1.date |  date : "dd/MM HH:mm"}}</b></span> 
+			 <span class="location-marker" style='padding:0; margin:0'><i class="fa "></i><b class="own-red-shadow">{{row1.date |  date : "EEE dd MMM HH:mm"}}</b></span> 
 			</div>
 			</li>
 			

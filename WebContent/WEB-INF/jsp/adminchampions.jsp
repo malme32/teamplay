@@ -30,11 +30,13 @@
 	<table>
 		<tr>
 			<th>ΟΝΟΜΑ</th>
+			<th>ΟΡΑΤΟ</th>
 			<th>ΕΝΕΡΓΕΙΑ</th>
 		</tr>
 		<tr ng-repeat='row in championlist'>
 			<td><input type='text' ng-model='row.name'
 				ng-click='getTeamgroup(row); getPlayoffs(row)' /></td>
+			<td><input type=checkbox ng-model='row.enabled' ng-click='getTeamgroup(row); getPlayoffs(row)' /></td>
 			<td>
 				<button class='button_flat  background_dark_yellow'
 					ng-show='champion==row' ng-click='adminEditChampion(row)'>Αποθήκευση</button>
@@ -45,8 +47,9 @@
 		<tr>
 			<td><input type='text' ng-model="adminChampionName"
 				placeholder="Το νέο όνομα εδω.." /></td>
-			<td>
-				<button class='button_flat background_green'
+			
+			<td><input type=checkbox ng-model='adminChampionEnabled'/></td>
+				<td><button class='button_flat background_green'
 					ng-click='adminAddChampion()'>Εισαγωγή</button>
 
 			</td>
