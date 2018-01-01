@@ -34,7 +34,7 @@ pageEncoding="UTF-8"%>
 <div class="detail">
 <a href="">Match Detail<i class="fa fa-angle-double-right"></i></a>
 <strong style='font-size:140%;'>{{game.team1.name}}<i class="red-color"> {{game.score1}} - {{game.score2}}  </i> {{game.team2.name}}</strong>
-<span class=""><i class=""></i>{{game.date | date}}</span><!-- fa fa-map-marker -->
+<span class=""><i class=""></i>{{game.date | date:"EEE dd MMM HH:mm"}}</span><!-- fa fa-map-marker -->
 </div>
 </li>
 </ul>
@@ -119,7 +119,7 @@ pageEncoding="UTF-8"%>
  <img style='max-height:40px'ng-src="${resources}{{row.imageurl}}" alt=""> 
 
 
-<h5><a href="news-detail?id={{row.id}}">{{row.title}}</a></h5>
+<h5><a href="#!news-detail.html/{{row.id}}">{{row.title}}</a></h5>
 <span class="red-color"><i class="fa fa-clock-o"></i>{{row.date | date}}</span>
 
 

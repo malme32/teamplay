@@ -73,11 +73,12 @@ pageEncoding="UTF-8"%>
 			<tr>
 				<th>EIKONA</th>
 				<th>ΕΝΕΡΓΕΙΑ</th>
+				<th></th>
 			</tr>
 			<tr>
 				<td><img width=60 height=60 ng-show='team.logopath' ng-src='${resources}{{team.logopath}}'/> </td>
-				<td><input type = "file" file-model = "mylogo" class='button_flat background_dark_yellow' accept="image/*"/>
-	         <button class='button_flat background_dark_yellow' ng-click = "uploadLogo()">Αλλαγή Logo</button></td>
+				<td><input type = "file" file-model = "mylogo" accept="image/*"/></td>
+	        <td> <button class='button_flat background_dark_yellow' ng-click = "uploadLogo()">Upload</button></td>
 			</tr>
 <%-- 			<tr>
 				<td><img width=60 height=60 ng-show='team.coverpath' ng-src='${resources}{{team.coverpath}}'/></td>
@@ -135,13 +136,13 @@ pageEncoding="UTF-8"%>
                 <td> <button class='button_flat background_dark_yellow' ng-click = "editPlayer(row)">Αποθήκευση</button>
          <button class='button_flat background_red' ng-click = "deletePlayer(row)">Διαγραφή</button>
         </td>
-         
+         	
         <td><img width=50 height=50 ng-show='row.imagepath' ng-src='${resources}{{row.imagepath}}'/> </td>
-            <td> <input class='button_flat background_dark_yellow' type = "file" file-model = "row.playerimage" accept="image/*"/>
+            <td> <input type = "file" file-model = "row.playerimage" accept="image/*"/>
       
         </td>
               <td> 
-         <button class='button_flat background_dark_yellow' ng-click = "uploadPlayerImage(row)">Αλλαγή εικόνας</button>
+         <button class='button_flat background_dark_yellow' ng-click = "uploadPlayerImage(row)">Upload</button>
         </td>
         
 
