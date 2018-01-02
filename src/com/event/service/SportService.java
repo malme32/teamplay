@@ -6,8 +6,10 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.sport.model.Scorer;
 import com.phonebook.model.Contact;
+import com.sport.model.Album;
 import com.sport.model.Champion;
 import com.sport.model.Game;
+import com.sport.model.Image;
 import com.sport.model.Matchday;
 import com.sport.model.Notice;
 import com.sport.model.Playoff;
@@ -97,5 +99,17 @@ public interface SportService {
 	public void addNewAdminUserToTeam(Contact contact, int id1);
 
 	public List<Game> getUpcomingGames();
+
+	public List<Album> getAlbums();
+
+	public void uploadAlbumImages(String path, int id, CommonsMultipartFile[] files);
+
+	public Image findImageById(int id);
+
+	public void deleteImage(String path, int id);
+
+	public void deleteAlbum(String path, int id);
+
+	public void editAlbum(Album album);
 	
 }

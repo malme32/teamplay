@@ -153,7 +153,7 @@ pageEncoding="UTF-8"%>
 <a href="">ΑΚΑΔΗΜΙΕΣ</a>
 </li>
 <li>
-<a href="">photo</a>
+<a href="#!gallery">photo</a>
 
 </li>
 <li>
@@ -240,7 +240,7 @@ pageEncoding="UTF-8"%>
 <li>
 <a href="">ΑΚΑΔΗΜΙΕΣ</a>
 </li>
-<li><a href=""> GALLERY</a></li>
+<li><a href="#!gallery">GALLERY</a></li>
 <li><a href="">ΕΠΙΚΟΙΝΩΝΙΑ</a></li>
 <%if(!pageContext.getAttribute("username", PageContext.REQUEST_SCOPE).equals("")){ %>
 

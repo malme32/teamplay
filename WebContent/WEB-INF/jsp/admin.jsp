@@ -51,6 +51,8 @@ pageEncoding="UTF-8"%>
 		<li><a  ng-href='#!adminusers'>ΧΡΗΣΤΕΣ</a></li>
 
 		<li><a  ng-href='#!adminnews'>ΝΕΑ</a></li>
+		
+		<li><a  ng-href='#!adminimages'>ΕΙΚΟΝΕΣ</a></li>
 
 						<li>
 					

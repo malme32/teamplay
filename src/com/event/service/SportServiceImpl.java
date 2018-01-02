@@ -1,16 +1,22 @@
 package com.event.service;
 
+import java.awt.Dimension;
+import java.awt.image.BufferedImage;
 import java.io.BufferedOutputStream;
+import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-
+import javax.imageio.ImageIO;
 import javax.transaction.Transactional;
 
 import org.apache.commons.io.FilenameUtils;
 import org.hibernate.Hibernate;
+import org.imgscalr.Scalr;
+import org.imgscalr.Scalr.Method;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,9 +24,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.event.dao.AlbumDao;
 import com.event.dao.ChampionDao;
 import com.event.dao.GameDao;
 import com.event.dao.GeneralDao;
+import com.event.dao.ImageDao;
 import com.event.dao.MatchdayDao;
 import com.event.dao.NoticeDao;
 import com.event.dao.PlayoffDao;
@@ -31,8 +39,10 @@ import com.event.dao.TeamgroupDao;
 import com.phonebook.model.Contact;
 import com.phonebook.model.Userrole;
 import com.phonebook.service.ContactService;
+import com.sport.model.Album;
 import com.sport.model.Champion;
 import com.sport.model.Game;
+import com.sport.model.Image;
 import com.sport.model.Matchday;
 import com.sport.model.Notice;
 import com.sport.model.Playoff;
@@ -80,7 +90,14 @@ public class SportServiceImpl  implements SportService{
 	PlayoffDao playoffDao;
 	
 	@Autowired
-	PasswordEncoder passwordEncoder;
+	PasswordEncoder passwordEncoder;	
+	
+	@Autowired
+	AlbumDao albumDao;
+	
+	@Autowired
+	ImageDao imageDao;
+	
 	
 	@Override
 	public Champion findChampionsById(int id) {
@@ -746,4 +763,120 @@ public class SportServiceImpl  implements SportService{
 			}
 		return upcomingGames;
 	}
+
+	@Override
+	public List<Album> getAlbums() {
+		
+		// TODO Auto-generated method stub
+		//Hibernate.initialize(albumDao.findAll());
+		List<Album> albums = albumDao.findAll();
+		for(Album album:albums)
+			Hibernate.initialize(album.getImages());
+		
+		return albums;
+	}
+
+	@Override
+	public void uploadAlbumImages(String path, int id, CommonsMultipartFile[] files) {
+		// TODO Auto-generated method stub
+		
+		Album album = albumDao.findById(id);
+		for(CommonsMultipartFile file:files)
+		{
+			
+	        try{  
+			Image image = new Image();
+			generalDaoService.persist(image);
+	        String extension = FilenameUtils.getExtension(file.getOriginalFilename()); 
+			String filename=String.valueOf("album"+album.getId()+"_image"+ image.getId())+"."+extension;
+	        byte barr[]=file.getBytes();  
+	        
+        
+	        BufferedOutputStream bout=new BufferedOutputStream(  
+	                 new FileOutputStream(path+"/resources/theme1/customimages/albumimage_"+filename));  
+	        bout.write(barr);  
+	        bout.flush();  
+	        bout.close();  
+	        
+	        
+	        ByteArrayInputStream bais = new ByteArrayInputStream(barr);
+	        BufferedImage resizeMe = ImageIO.read(bais);
+	        Dimension newMaxSize = new Dimension(255, 255);
+	        BufferedImage resizedImg = Scalr.resize(resizeMe, Method.QUALITY, newMaxSize.width, newMaxSize.height);
+	        
+	        BufferedOutputStream bout1=new BufferedOutputStream(  
+	                 new FileOutputStream(path+"/resources/theme1/customimages/albumimage_thumb_"+filename));  
+	        
+	        ImageIO.write(resizedImg, extension, bout1);
+	    
+	        bout1.flush();  
+	        bout1.close();  
+
+	        image.setThumburl("/customimages/albumimage_thumb_"+filename);
+	        image.setUrl("/customimages/albumimage_"+filename);
+	        image.setAlbum(album);
+	        generalDaoService.update(image);
+	       
+	        }catch(Exception e){System.out.println(e);
+            }  
+	        
+	        //return ;
+		
+		}
+	}
+
+	@Override
+	public Image findImageById(int id) {
+		// TODO Auto-generated method stub
+		
+		return imageDao.findById(id);
+	}
+
+	@Override
+	public void deleteImage(String path, int id) {
+		// TODO Auto-generated method stub
+		Image image = this.findImageById(id);
+		File file = new File(path+"/resources/theme1/"+image.getUrl());
+
+		if(file.delete()){
+			System.out.println(file.getName() + " is deleted!");
+		}else{
+			System.out.println("Delete operation is failed.");
+		}
+		file = new File(path+"/resources/theme1/"+image.getThumburl());
+
+		if(file.delete()){
+			System.out.println(file.getName() + " is deleted!");
+		}else{
+			System.out.println("Delete operation is failed.");
+		}
+		generalDaoService.delete(image);
+	}
+
+	@Override
+	public void deleteAlbum(String path, int id) {
+		// TODO Auto-generated method stub
+		Album album = albumDao.findById(id);
+		Hibernate.initialize(album.getImages());
+		for(Image image:album.getImages())
+		{
+			File file = new File(path+"/resources/theme1/"+image.getUrl());
+			file.delete();
+
+			file = new File(path+"/resources/theme1/"+image.getThumburl());
+			file.delete();
+		}
+		generalDaoService.delete(album);
+	}
+
+	@Override
+	public void editAlbum(Album album) {
+		// TODO Auto-generated method stub
+		Album persistedAlbum = albumDao.findById(album.getId());
+		persistedAlbum.setName(album.getName());
+		album=null;
+		generalDaoService.update(persistedAlbum);
+	}
+	
+	
 }

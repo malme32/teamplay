@@ -2,6 +2,7 @@ package com.event.controller;
 
 import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
+import java.nio.file.Files;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -32,8 +33,10 @@ import com.event.service.SportService;
 import com.phonebook.model.Contact;
 import com.phonebook.model.Userrole;
 import com.phonebook.service.ContactService;
+import com.sport.model.Album;
 import com.sport.model.Champion;
 import com.sport.model.Game;
+import com.sport.model.Image;
 import com.sport.model.Matchday;
 import com.sport.model.Notice;
 import com.sport.model.Playoff;
@@ -194,6 +197,13 @@ public class SportController {
 		else return null;
 	}
 	
+	
+	@RequestMapping(value="/albums", method=RequestMethod.GET, produces = "application/json")
+	public @ResponseBody List<Album> getAlbums()
+	{
+		return sportService.getAlbums();
+		
+	}
 	
 	/////////////////////POST/////////////////////////////////////
 	
@@ -414,6 +424,25 @@ public class SportController {
 		return ;
 	}
 	
+	
+	
+	@RequestMapping(value = "/albums/{id}/images", method = RequestMethod.POST, produces = "application/json")
+	public @ResponseBody  void uploadAlbumImages(@PathVariable int id, @RequestParam(value = "files") CommonsMultipartFile[] files,HttpSession session){  
+      String path=session.getServletContext().getRealPath("/");  
+       
+        sportService.uploadAlbumImages(path, id, files);
+        return;
+    }  
+	
+	@RequestMapping(value="/albums", method=RequestMethod.POST, produces = "application/json")
+	public @ResponseBody void addAlbum(@ModelAttribute Album album)
+	{	
+		Date date = new Date();
+		album.setDate(date);
+		generalDaoService.persist(album);
+		return;
+	}
+	
 	//////////////////PUT///////////////////////////
 	
 	@RequestMapping(value="/champions", method=RequestMethod.PUT, produces = "application/json")
@@ -557,6 +586,14 @@ public class SportController {
 			return ;
 	}
 	
+	@RequestMapping(value="albums", method=RequestMethod.PUT, produces = "application/json")
+	public @ResponseBody void editAlbum(@RequestBody Album album)
+	//public @ResponseBody void editGame(@PathVariable int matchdayid,@RequestParam int id,@RequestParam int teamid1,@RequestParam int teamid2, @RequestParam String date)
+	{	
+			sportService.editAlbum(album);
+			return ;
+	}
+	
 	
 		//////////////////////DELETE///////////////////////
 	/////////////////////////////////////////////////////////////////
@@ -669,6 +706,26 @@ public class SportController {
 	{
 		Playoff playoff = sportService.findPlayoffById(id);
 		generalDaoService.delete(playoff);
+		return ;
+	}
+	
+	@RequestMapping(value="/images/{id}", method=RequestMethod.DELETE, produces = "application/json")
+	public @ResponseBody void deleteImage(@PathVariable int id,HttpSession session)
+	{
+		String path=session.getServletContext().getRealPath("/");  
+		
+		sportService.deleteImage(path,id);
+		
+		return ;
+	}
+	
+	@RequestMapping(value="/albums/{id}", method=RequestMethod.DELETE, produces = "application/json")
+	public @ResponseBody void deleteAlbum(@PathVariable int id,HttpSession session)
+	{
+		String path=session.getServletContext().getRealPath("/");  
+		
+		sportService.deleteAlbum(path,id);
+		
 		return ;
 	}
 	

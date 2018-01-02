@@ -101,8 +101,13 @@ appMain.config(function($routeProvider) {
             templateUrl : "home1",
             controller: "homeController"
 
+    })
+
+    .when("/gallery", {
+            templateUrl : "gallery",
+            controller: "galleryController"
+
     });
-    
     /*.
      $routeProvider.otherwise({redirectTo: '/index'});*/
  /* $locationProvider.html5Mode(true); */
@@ -150,6 +155,14 @@ appMain.run(function($rootScope, $window) {
     
 
 });
+
+
+appMain.directive('prettyp', function(){
+	return function(scope, element, attrs){
+		$("[rel^='prettyPhoto']").prettyPhoto({deeplinking: false});
+		}
+		})
+
 //appMain.directive('fbComments', function() {
 appMain.
 directive('fbComments', function() {
@@ -215,6 +228,24 @@ appMain.filter('playoffPhase', function() {
 });
 
 
+//var appMain = angular.module("appMain",[]);
+appMain.controller("galleryController",function($scope, $http, $location){ 
+	
+	  
+	 $http({
+       method : "GET",
+       url : "albums"
+   }).then(function mySuccess(response) {
+
+       $scope.albums = response.data;
+     
+   }, function myError(response) {
+ 
+       $scope.result = response.statusText;
+     
+   });
+
+});
 //var appMain = angular.module("appMain",[]);
 appMain.controller("eventsController",function($scope, $http, $location){
 	

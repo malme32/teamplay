@@ -22,6 +22,11 @@ appAdmin.config(function($routeProvider) {
         templateUrl : "adminusers",
         controller: "usersController"
 
+    })
+    .when("/adminimages", {
+        templateUrl : "adminimages",
+        controller: "imagesController"
+
     });
     
 });
@@ -42,6 +47,68 @@ appAdmin.directive('fileModel', ['$parse', function ($parse) {
         }
     };
 }]);
+
+/*appAdmin.directive("ngFileModel", function() {
+	  return {
+	    require: "ngModel",
+	    link: function postLink(scope,elem,attrs,ngModel) {
+	      elem.on("change", function(e) {
+	        var files = elem[0].files;
+	        ngModel.$setViewValue(files);
+	      })
+	    }
+	  }
+	});*/
+appAdmin.directive('ngFiles', ['$parse', function ($parse) {
+
+    function fn_link(scope, element, attrs) {
+        var onChange = $parse(attrs.ngFiles);
+        element.on('change', function (event) {
+            onChange(scope, { $files: event.target.files });
+        });
+    };
+
+    return {
+        link: fn_link
+    }
+}]);
+
+
+/*appAdmin.directive('ngFileModel', ['$parse', function ($parse) {
+    return {
+        restrict: 'A',
+        link: function (scope, element, attrs) {
+            var model = $parse(attrs.ngFileModel);
+            var isMultiple = attrs.multiple;
+            var modelSetter = model.assign;
+            element.bind('change', function () {
+                var values = [];
+                angular.forEach(element[0].files, function (item) {
+                    var value = {
+                       // File Name 
+                        name: item.name,
+                        //File Size 
+                        size: item.size,
+                        //File URL to view 
+                        url: URL.createObjectURL(item),
+                        // File Input Value 
+                        _file: item
+                    };
+                    values.push(value);
+                });
+                scope.$apply(function () {
+                    if (isMultiple) {
+                        modelSetter(scope, values);
+                    } else {
+                        modelSetter(scope, values[0]);
+                    }
+                });
+            });
+        }
+    };
+}]);
+
+*/
 
 appAdmin.service('fileUpload', ['$http', function ($http) {
     this.uploadFileToUrl = function(file, uploadUrl){
@@ -98,6 +165,188 @@ myApp.service('fileUpload', ['$http', function ($http) {
 */
 
 
+appAdmin.controller("imagesController",function($scope, $http, $location, $window){
+	
+	 $http({
+	       method : "GET",
+	       url : "albums"
+	   }).then(function mySuccess(response) {
+
+	       $scope.albums = response.data;
+	     
+	   }, function myError(response) {
+	 
+	       $scope.result = response.statusText;
+	     
+	   });
+	 
+	 
+	 
+	 
+	 
+     var formdata = new FormData();
+     $scope.getTheFiles = function ($files) {
+         angular.forEach($files, function (value, key) {
+             formdata.append("files", value);
+         });
+     };
+	 
+     
+     $scope.deleteImage = function (image) {
+		   
+
+			 if(!confirm("Είστε σίγουρος οτι θέλετε να διαγράψετε αυτή την εικόνα;"))
+				 return;
+		   
+			 $http({
+		    method : "DELETE",
+      	url : "images/"+image.id  
+  }).then(function mySuccess(response) {
+ 
+  	$window.location.reload();
+  	//$scope.getTeam();
+  }, function myError(response) {
+
+  	
+      alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");
+  });
+		   
+	   }
+     
+     $scope.deleteAlbum = function (album) {
+		   
+		
+				 if(!confirm("Είστε σίγουρος οτι θέλετε να διαγράψετε αυτό το album;"))
+					 return;
+			   
+				 $http({
+			    method : "DELETE",
+		  	url : "albums/"+album.id  
+		}).then(function mySuccess(response) {
+		
+			$window.location.reload();
+			//$scope.getTeam();
+		}, function myError(response) {
+		
+			
+  alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");
+});
+	   
+   }
+     
+     $scope.addAlbum = function (newalbum) {
+		
+					 $http({
+				    method : "POST",
+			  	url : "albums",
+			  	params:{name:newalbum.name}
+			}).then(function mySuccess(response) {
+			
+				$window.location.reload();
+				//$scope.getTeam();
+			}, function myError(response) {
+			
+				
+			alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");
+			});
+			
+			}
+
+     $scope.editAlbum = function (album) {
+			 $http({
+			        method : "PUT",
+			        url : "albums",
+			        data: album,
+			        headers: {'Content-Type': 'application/json; charset=utf-8'} 
+		
+			    }).then(function mySuccess(response) {
+		
+			    	alert("Εγινε!");
+			    }, function myError(response) {
+			  
+			    	alert("An Error occured. Try again.");
+			      
+			    });
+     }
+     // NOW UPLOAD THE FILES.
+     $scope.uploadFiles = function (album) {
+
+    	 $scope.waiting= "Οι εικόνες ανεβαίνουν. Παρακαλώ περιμένετε..";
+    	 $http({
+		        method : "POST",
+		        	url : "albums/"+album.id+"/images",
+			        data: formdata,
+			        //params:{files: upl},
+                 transformRequest: angular.identity,
+                 headers: {'Content-Type': undefined}     
+		    }).then(function mySuccess(response) {
+		    	 $scope.waiting= "";
+		    	$window.location.reload();
+		    	//$scope.getTeam();
+		    }, function myError(response) {
+
+		    	
+		        alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");
+		    });
+    	 
+
+    	 
+    	 
+/*         var request = {
+             method: 'POST',
+             url: '/api/fileupload/',
+             data: formdata,
+             headers: {
+                 'Content-Type': undefined
+             }
+         };
+
+         // SEND THE FILES.
+         $http(request)
+             .success(function (d) {
+                 alert(d);
+             })
+             .error(function () {
+             });*/
+     }
+	 
+	 
+/*	 $scope.uploadImages = function(album, newimages){
+		 var fd = new FormData();
+
+	     $scope.result = newimages;
+         for (var i = 0 ; i < newimages.length ; i++){
+        	
+        	 //alert(newimages[i].name);
+        	 fd.append('files', newimages[i]);	
+        	// upl.push(fd);
+        	}
+	     $scope.result = fd;
+
+	    // alert("xixi");
+		 $http({
+		        method : "POST",
+		        	url : "albums/"+album.id+"/images",
+			        data: fd,
+			        //params:{files: upl},
+                    transformRequest: angular.identity,
+                    headers: {'Content-Type': undefined}     
+		    }).then(function mySuccess(response) {
+
+			     alert("xexe");
+		    	//$scope.getTeam();
+		    }, function myError(response) {
+
+			 
+		        alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");
+		    });
+         
+	 }*/
+       
+	 
+	 
+	
+});
 
 appAdmin.controller("adminController",function($scope, $http, $location, $window){
 

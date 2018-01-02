@@ -57,6 +57,10 @@ public class SportGuiController {
 	public ModelAndView adminUsers(){
 		return new ModelAndView("adminusers","","");
 	}
+	@RequestMapping(value="/adminimages", method=RequestMethod.GET)
+	public ModelAndView adminimages(){
+		return new ModelAndView("adminimages","","");
+	}
 /*	@RequestMapping(value="/event", method=RequestMethod.GET)
 	public ModelAndView event(){
 		return new ModelAndView("event","","");
@@ -178,4 +182,10 @@ response.addHeader("Cache-Control", headerValue);*/
 	public ModelAndView pointtable2(){
 		return new ModelAndView("theme1/point-table2","","");
 	}*/
+	
+
+	@RequestMapping(value="/gallery", method=RequestMethod.GET)
+	public ModelAndView gallery(){
+		return new ModelAndView("theme1/gallery","","");
+	}
 }
