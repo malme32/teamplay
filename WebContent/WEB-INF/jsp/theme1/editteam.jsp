@@ -76,7 +76,7 @@ pageEncoding="UTF-8"%>
 				<th></th>
 			</tr>
 			<tr>
-				<td><img width=60 height=60 ng-show='team.logopath' ng-src='${resources}{{team.logopath}}'/> </td>
+				<td><img width=60 height=60 ng-show='team.logopath' ng-src='${resources}{{team.logothumbpath}}'/> </td>
 				<td><input type = "file" file-model = "mylogo" accept="image/*"/></td>
 	        <td> <button class='button_flat background_dark_yellow' ng-click = "uploadLogo()">Upload</button></td>
 			</tr>

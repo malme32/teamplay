@@ -79,8 +79,4 @@ public class TeamDaoImpl extends AbstractDao implements TeamDao{
 		return team.getPlayers();
 	}
 
-
-
-
-
 }

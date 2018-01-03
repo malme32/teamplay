@@ -64,6 +64,9 @@ public class Contact  implements InitializingBean{
 	
 	@Column(name="imagepath", length=150)
 	String imagepath;
+
+	@Column(name="thumbpath", length=150)
+	String thumbpath;
 	
 /*	private List<Userrole> userrole = new HashSet<Userrole>(0);
 	@ManyToOne
@@ -96,11 +99,14 @@ public class Contact  implements InitializingBean{
 	private List<Event> adminevents;
 	
 	@JsonIgnore
-	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "players",cascade = CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "players")
 	private List<Event> events;// = new ArrayList<Event>();
 	//, cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH,CascadeType.PERSIST}
 	@JsonIgnore
-	@ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL, mappedBy ="players")
+	@ManyToMany(fetch = FetchType.LAZY,mappedBy ="players",cascade= {CascadeType.DETACH,
+            CascadeType.MERGE,
+            CascadeType.REFRESH,
+            CascadeType.PERSIST})
 	private List<Team> teams = new ArrayList<Team>();
 	
 	
@@ -271,5 +277,14 @@ public Team getAdminteam() {
 public void setAdminteam(Team adminteam) {
 	this.adminteam = adminteam;
 }
+public String getThumbpath() {
+
+	return (this.thumbpath==null||this.thumbpath.equals("")) ? (String) "/defaultimages/playerdefaultthumb.png" : thumbpath;
+
+}
+public void setThumbpath(String thumbpath) {
+	this.thumbpath = thumbpath;
+}
+
 
 }

@@ -111,5 +111,13 @@ public interface SportService {
 	public void deleteAlbum(String path, int id);
 
 	public void editAlbum(Album album);
+
+	public void deleteTeam(String path, int id);
+
+	public void deletePlayer(String path, int id);
+
+	public void editTeamAdmin(Contact contact);
+
+	public void deleteNotice(int id,String path);
 	
 }

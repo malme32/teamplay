@@ -196,8 +196,8 @@ pageEncoding="UTF-8"%>
 			<div class="matches-dates-shedule" style='padding:0'>
 			<ul>
 			<li ng-repeat='row1 in games | validDate | orderBy: "-date" ' style='padding:5px; ' ng-show='row1.champion.enabled'>
-			<span class="pull-left"><img style='height:40px; width:40px' ng-src="${resources}{{row1.team1.logopath}}" alt=""></span>
-			<span class="pull-right"><img style='height:40px; width:40px' ng-src="${resources}{{row1.team2.logopath}}" alt=""></span>
+			<span class="pull-left"><img style='height:40px; width:40px' ng-src="${resources}{{row1.team1.logothumbpath}}" alt=""></span>
+			<span class="pull-right"><img style='height:40px; width:40px' ng-src="${resources}{{row1.team2.logothumbpath}}" alt=""></span>
 			<div class="detail">
 			<a href="#!match.html/{{row1.id}}">Λεπτομέρειες<i class="fa fa-angle-double-right"></i></a>
 			<strong><a style='display:inline; padding:0; margin:0' href='#!team-detail.html/{{row1.team1.id}}'>{{row1.team1.name}}</a><i class="red-color"  style=''> {{row1.score1}} - {{row1.score2}}</i> <a style='display:inline; padding:0; margin:0'  href='#!team-detail.html/{{row1.team2.id}}'>{{row1.team2.name}}</a></strong>

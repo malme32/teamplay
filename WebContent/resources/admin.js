@@ -1689,7 +1689,7 @@ appAdmin.controller("usersController",function($scope, $http, $location, $window
 	  
 	  $scope.addUser = function(row,teamrow){
 		  
-		  $scope.result= "teams/"+teamrow.id+"/adminusers";
+		//  $scope.result= "teams/"+teamrow.id+"/adminusers";
 		  $http({
 		        method : "POST",
 		        url : "teams/"+teamrow.id+"/adminusers",
@@ -1708,7 +1708,40 @@ appAdmin.controller("usersController",function($scope, $http, $location, $window
 		    });
 		 
 	  }
-	  
+		 $scope.deleteUser = function (row){ 
+			 if(!confirm("Είστε σίγουρος;"))
+				 return;
+			 $http({
+		        method : "DELETE",
+		        	url : "players/"+row.id
+		    }).then(function mySuccess(response) {
+		    	$window.location.reload();
+		        
+		    }, function myError(response) {
+
+		        alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");
+		    });
+		 }
+		 $scope.editUser = function (row){ 
+			// $scope.result = row;
+			 $http({
+		        method : "PUT",
+		        	url : "teamadmins",
+		        	params:{name:row.name, username:row.username, id:row.id, password:row.password}
+/*				        data: row,
+				        headers: {'Content-Type': 'application/json; charset=utf-8'}*/
+		    }).then(function mySuccess(response) {
+		    	$window.location.reload();
+		        
+		    }, function myError(response) {
+
+		        alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");
+		    });
+		 }
+		 
+		 
+		 
+		 
 });
 	
 

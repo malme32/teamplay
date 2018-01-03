@@ -50,8 +50,8 @@ pageEncoding="UTF-8"%>
 			<div class="matches-dates-shedule" style='padding:0;margin:0;'>
 			<ul style='margin:0 0 10px 0;'>
 			<li ng-repeat='row1 in row3.games  | orderBy: "-date" ' style='padding:2px; '>
-			<span class="pull-left"><img style='height:40px; width:40px' ng-src="${resources}{{row1.team1.logopath}}" alt=""></span>
-			<span class="pull-right"><img style='height:40px; width:40px' ng-src="${resources}{{row1.team2.logopath}}" alt=""></span>
+			<span class="pull-left"><img style='height:40px; width:40px' ng-src="${resources}{{row1.team1.logothumbpath}}" alt=""></span>
+			<span class="pull-right"><img style='height:40px; width:40px' ng-src="${resources}{{row1.team2.logothumbpath}}" alt=""></span>
 			<div class="detail" style='padding:0; margin:0'>
 			<a style='padding:0; margin:0' href="#!match.html/{{row1.id}}">Λεπτομέρειες<i class="fa fa-angle-double-right"></i></a>
 			<strong style='padding:0; margin:0'><a style='display:inline; padding:0; margin:0' href='#!team-detail.html/{{row1.team1.id}}'>{{row1.team1.name}}</a><i class="red-color"  style=''> {{row1.score1}} - {{row1.score2}}</i> <a style='display:inline; padding:0; margin:0'  href='#!team-detail.html/{{row1.team2.id}}'>{{row1.team2.name}}</a></strong>
@@ -102,7 +102,7 @@ pageEncoding="UTF-8"%>
 			<tr  ng-repeat='row1 in row.standings  | orderBy: "-grade"'>
 				<td style='text-align:left; padding:2px' >
 				
-				  <a ng-href='#!team-detail.html/{{row1.team.id}}'><img style='height:30px; width:30px' ng-src="${resources}{{row1.team.logopath}}" alt="">
+				  <a ng-href='#!team-detail.html/{{row1.team.id}}'><img style='height:30px; width:30px' ng-src="${resources}{{row1.team.logothumbpath}}" alt="">
 				{{row1.team.name}} </a>
 <%-- 				 <div style='display:inline-block'>
 				  <div style='background:url(${resources}{{row1.team.logopath}}) no-repeat center; 
@@ -200,8 +200,8 @@ pageEncoding="UTF-8"%>
 			<div class="matches-dates-shedule" style='padding:0;margin:0;'>
 			<ul style='margin:0 0 10px 0;'>
 			<li ng-repeat='row1 in row2.games  | orderBy: "-date" ' style='padding:2px; '>
-			<span class="pull-left"><img style='height:40px; width:40px' ng-src="${resources}{{row1.team1.logopath}}" alt=""></span>
-			<span class="pull-right"><img style='height:40px; width:40px' ng-src="${resources}{{row1.team2.logopath}}" alt=""></span>
+			<span class="pull-left"><img style='height:40px; width:40px' ng-src="${resources}{{row1.team1.logothumbpath}}" alt=""></span>
+			<span class="pull-right"><img style='height:40px; width:40px' ng-src="${resources}{{row1.team2.logothumbpath}}" alt=""></span>
 			<div class="detail" style='padding:0; margin:0'>
 			<a style='padding:0; margin:0' href="#!match.html/{{row1.id}}">Λεπτομέρειες<i class="fa fa-angle-double-right"></i></a>
 			<strong style='padding:0; margin:0'><a style='display:inline; padding:0; margin:0' href='#!team-detail.html/{{row1.team1.id}}'>{{row1.team1.name}}</a><i class="red-color"  style=''> {{row1.score1}} - {{row1.score2}}</i> <a style='display:inline; padding:0; margin:0'  href='#!team-detail.html/{{row1.team2.id}}'>{{row1.team2.name}}</a></strong>
@@ -279,7 +279,7 @@ pageEncoding="UTF-8"%>
 <div class="Popular-news">
 <ul>
 <li ng-repeat='row in news | orderBy:"-date"'>
- <img style='max-height:40px'ng-src="${resources}{{row.imageurl}}" alt=""> 
+ <img style='max-height:40px'ng-src="${resources}{{row.thumburl}}" alt=""> 
 
 
 <h5><a href="#!news-detail.html/{{row.id}}">{{row.title}}</a></h5>

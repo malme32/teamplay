@@ -43,6 +43,11 @@ public class Team {
 	@Column(name="logopath", length=200)
 	private String logopath;
 	
+	
+	
+	@Column(name="logothumbpath", length=200)
+	private String logothumbpath;
+	
 	@Column(name="coverpath", length=200)
 	private String coverpath;
 	
@@ -59,7 +64,7 @@ public class Team {
 	List<Game> team2games;
 	
 	@JsonIgnore
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.LAZY,cascade = {CascadeType.ALL})
 	@JoinTable(
 	        name = "teamplayerxref",
 	        joinColumns = @JoinColumn(name = "teamid"),
@@ -142,7 +147,7 @@ public class Team {
 
 	public String getLogopath() {
 		//return (this.logopath==null||this.logopath.equals("")) ? (String) "/defaultimages/teamdefaultlogo.png" : logopath;
-		return (this.logopath==null||this.logopath.equals("")) ? (String) "/newimages/480px-Soccer_ball.svg.png" : logopath;
+		return (this.logopath==null||this.logopath.equals("")) ? (String) "/defaultimages/teamdefaultlogo.png" : logopath;
 		
 	}
 
@@ -159,6 +164,16 @@ public class Team {
 
 	public void setCoverpath(String coverpath) {
 		this.coverpath = coverpath;
+	}
+
+
+	public String getLogothumbpath() {
+		return (this.logothumbpath==null||this.logothumbpath.equals("")) ? (String) "/defaultimages/teamdefaultlogothumb.png" : logothumbpath;
+	}
+
+
+	public void setLogothumbpath(String logothumbpath) {
+		this.logothumbpath = logothumbpath;
 	}
 
 }

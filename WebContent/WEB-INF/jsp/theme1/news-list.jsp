@@ -32,7 +32,7 @@ pageEncoding="UTF-8"%>
 
 <div class="large-post-img">
 
-<div style='background:url(${resources}{{row.imageurl}}) no-repeat center; 
+<div style='background:url(${resources}{{row.thumburl}}) no-repeat center; 
   width:100%; height:250px;background-size:cover; '>
 </div>
 

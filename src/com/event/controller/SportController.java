@@ -595,6 +595,13 @@ public class SportController {
 	}
 	
 	
+	@RequestMapping(value="teamadmins", method=RequestMethod.PUT, produces = "application/json")
+	public @ResponseBody void editTeamAdmin(@ModelAttribute Contact contact)
+	//public @ResponseBody void editGame(@PathVariable int matchdayid,@RequestParam int id,@RequestParam int teamid1,@RequestParam int teamid2, @RequestParam String date)
+	{	
+			sportService.editTeamAdmin(contact);
+			return ;
+	}
 		//////////////////////DELETE///////////////////////
 	/////////////////////////////////////////////////////////////////
 	
@@ -668,18 +675,19 @@ public class SportController {
 	}
 	
 	@RequestMapping(value="/teams/{id}", method=RequestMethod.DELETE, produces = "application/json")
-	public @ResponseBody void deleteTeam(@PathVariable int id)
+	public @ResponseBody void deleteTeam(@PathVariable int id,HttpSession session)
 	{
-	
-		Team team = sportService.findTeamById(id);
-		generalDaoService.delete(team);
+		String path=session.getServletContext().getRealPath("/"); 
+
+		sportService.deleteTeam(path,id);
 		return; 
 	}	
 	
 	@RequestMapping(value="/players/{id}", method=RequestMethod.DELETE, produces = "application/json")
-	public @ResponseBody void deletePlayer(@PathVariable int id)
+	public @ResponseBody void deletePlayer(@PathVariable int id,HttpSession session)
 	{
-		generalDaoService.delete(contactService.getContact(id));
+		String path=session.getServletContext().getRealPath("/"); 
+		sportService.deletePlayer(path,id);
 		return ;
 	}
 	
@@ -693,10 +701,10 @@ public class SportController {
 	}
 	
 	@RequestMapping(value="/news/{id}", method=RequestMethod.DELETE, produces = "application/json")
-	public @ResponseBody void deleteNotice(@PathVariable int id)
+	public @ResponseBody void deleteNotice(@PathVariable int id,HttpSession session)
 	{
-		Notice notice = sportService.findNewsById(id);
-		generalDaoService.delete(notice);
+		String path=session.getServletContext().getRealPath("/");  
+		sportService.deleteNotice(id,path);
 		return ;
 	}
 	

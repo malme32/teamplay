@@ -122,12 +122,13 @@ pageEncoding="UTF-8"%>
 <table>
 <tr>
 <td  ng-repeat='row in news | orderBy:"-date"'>
+
  <div class="item" style='margin:10px; width:180px; top:0;'>
 
 <div class="large-post-img">
 <%-- <img ng-src="${resources}{{row.imageurl}}" alt="">
  --%>
-  <div style='background:url(${resources}{{row.imageurl}}) no-repeat center; 
+  <div style='background:url(${resources}{{row.thumburl}}) no-repeat center; 
   width:180px; height:130px;background-size:cover; '>
 
 </div>

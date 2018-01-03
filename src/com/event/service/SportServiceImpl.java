@@ -9,6 +9,7 @@ import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import javax.imageio.ImageIO;
 import javax.transaction.Transactional;
@@ -36,6 +37,7 @@ import com.event.dao.ScorerDao;
 import com.event.dao.StandingDao;
 import com.event.dao.TeamDao;
 import com.event.dao.TeamgroupDao;
+
 import com.phonebook.model.Contact;
 import com.phonebook.model.Userrole;
 import com.phonebook.service.ContactService;
@@ -471,7 +473,12 @@ public class SportServiceImpl  implements SportService{
         //String path=session.getServletContext().getRealPath("/");  
         //String filename=file.getOriginalFilename(); 
         String extension = FilenameUtils.getExtension(file.getOriginalFilename()); 
-		String filename=String.valueOf(team.getId())+"."+extension;
+        
+        Random rand=new Random();
+
+        int randomNum = rand.nextInt((10000) + 1) + 0;
+        
+		String filename=String.valueOf(randomNum+"_"+team.getId())+"."+extension;
         try{  
         byte barr[]=file.getBytes();  
           
@@ -480,6 +487,32 @@ public class SportServiceImpl  implements SportService{
         bout.write(barr);  
         bout.flush();  
         bout.close();  
+        
+        ByteArrayInputStream bais = new ByteArrayInputStream(barr);
+        BufferedImage resizeMe = ImageIO.read(bais);
+        Dimension newMaxSize = new Dimension(60, 60);
+        BufferedImage resizedImg = Scalr.resize(resizeMe, Method.QUALITY, newMaxSize.width, newMaxSize.height);
+        
+        BufferedOutputStream bout1=new BufferedOutputStream(  
+                 new FileOutputStream(path+"/resources/theme1/customimages/logo_thumb_"+filename));  
+        
+        ImageIO.write(resizedImg, extension, bout1);
+    
+        bout1.flush();  
+        bout1.close();  
+
+        if(!team.getLogopath().contains("default"))
+        {
+			File file1 = new File(path+"/resources/theme1/"+team.getLogopath());
+			file1.delete();
+			
+			file1 = new File(path+"/resources/theme1/"+team.getLogothumbpath());
+			file1.delete();
+        }
+        
+        
+        team.setLogothumbpath("/customimages/logo_thumb_"+filename);
+        
         team.setLogopath("/customimages/logo_"+filename);
         generalDaoService.update(team);
         }catch(Exception e){System.out.println(e);}  
@@ -487,6 +520,64 @@ public class SportServiceImpl  implements SportService{
         return;
 	}
 
+	
+	@Override
+	public Notice uploadNoticeImage(String path, int id, CommonsMultipartFile file) {
+		// TODO Auto-generated method stub
+		Notice notice = this.findNewsById(id);
+		// TODO Auto-generated method stub
+        String extension = FilenameUtils.getExtension(file.getOriginalFilename()); 
+        
+        Random rand=new Random();
+
+        int randomNum = rand.nextInt((10000) + 1) + 0;
+        
+		String filename=String.valueOf(randomNum+"_"+notice.getId())+"."+extension;
+		
+        try{  
+        byte barr[]=file.getBytes();  
+          
+        BufferedOutputStream bout=new BufferedOutputStream(  
+                 new FileOutputStream(path+"/resources/theme1/customimages/noticeimage_"+filename));  
+        bout.write(barr);  
+        bout.flush();  
+        bout.close();  
+        
+        ByteArrayInputStream bais = new ByteArrayInputStream(barr);
+        BufferedImage resizeMe = ImageIO.read(bais);
+        Dimension newMaxSize = new Dimension(350, 350);
+        BufferedImage resizedImg = Scalr.resize(resizeMe, Method.QUALITY, newMaxSize.width, newMaxSize.height);
+        
+        BufferedOutputStream bout1=new BufferedOutputStream(  
+                 new FileOutputStream(path+"/resources/theme1/customimages/noticethumb_"+filename));  
+        
+        ImageIO.write(resizedImg, extension, bout1);
+    
+        bout1.flush();  
+        bout1.close();  
+        
+        
+        
+        if(!notice.getImageurl().contains("default"))
+        {
+			File file1 = new File(path+"/resources/theme1/"+notice.getImageurl());
+			file1.delete();
+			
+			file1 = new File(path+"/resources/theme1/"+notice.getThumburl());
+			file1.delete();
+        }
+        
+        notice.setThumburl("/customimages/noticethumb_"+filename);
+        
+        notice.setImageurl("/customimages/noticeimage_"+filename);
+        generalDaoService.update(notice);
+        }catch(Exception e){System.out.println(e);}  
+        
+        return notice;
+	}
+
+	
+	
 	@Override
 	public void uploadTeamCover(String path, int id, CommonsMultipartFile file) {
 		// TODO Auto-generated method stub
@@ -525,15 +616,60 @@ public class SportServiceImpl  implements SportService{
 		Contact contact = contactService.getContact(id);
 		// TODO Auto-generated method stub
         String extension = FilenameUtils.getExtension(file.getOriginalFilename()); 
-		String filename=String.valueOf(contact.getId())+"."+extension;
+        
+        
+        Random rand=new Random();
+
+        int randomNum = rand.nextInt((10000) + 1) + 0;
+		String filename=randomNum+"_"+String.valueOf(contact.getId())+"."+extension;
         try{  
         byte barr[]=file.getBytes();  
           
-        BufferedOutputStream bout=new BufferedOutputStream(  
+      /*  BufferedOutputStream bout=new BufferedOutputStream(  
                  new FileOutputStream(path+"/resources/theme1/customimages/playerimage_"+filename));  
         bout.write(barr);  
         bout.flush();  
-        bout.close();  
+        bout.close();  */
+
+        
+        ByteArrayInputStream bais = new ByteArrayInputStream(barr);
+        BufferedImage resizeMe = ImageIO.read(bais);
+        Dimension newMaxSize = new Dimension(300, 300);
+        BufferedImage resizedImg = Scalr.resize(resizeMe, Method.QUALITY, newMaxSize.width, newMaxSize.height);
+        
+        BufferedOutputStream bout1=new BufferedOutputStream(  
+                 new FileOutputStream(path+"/resources/theme1/customimages/playerimage_"+filename));  
+        
+        ImageIO.write(resizedImg, extension, bout1);
+    
+        bout1.flush();  
+        bout1.close();  
+        if(!contact.getImagepath().contains("default"))
+        {
+			File file1 = new File(path+"/resources/theme1/"+contact.getThumbpath());
+			file1.delete();
+			file1 = new File(path+"/resources/theme1/"+contact.getImagepath());
+			file1.delete();
+        }
+        
+        
+        bais = new ByteArrayInputStream(barr);
+        resizeMe = ImageIO.read(bais);
+        newMaxSize = new Dimension(60, 60);
+        resizedImg = Scalr.resize(resizeMe, Method.QUALITY, newMaxSize.width, newMaxSize.height);
+        
+        bout1=new BufferedOutputStream(  
+                 new FileOutputStream(path+"/resources/theme1/customimages/playerthumb_"+filename));  
+        
+        ImageIO.write(resizedImg, extension, bout1);
+    
+        bout1.flush();  
+        bout1.close();  
+
+        contact.setThumbpath("/customimages/playerthumb_"+filename);
+        
+        
+        
         contact.setImagepath("/customimages/playerimage_"+filename);
         generalDaoService.update(contact);
         }catch(Exception e){System.out.println(e);}  
@@ -544,10 +680,13 @@ public class SportServiceImpl  implements SportService{
 	@Override
 	public void updateTeam(Team team) {
 		// TODO Auto-generated method stub
-		//Team team1 = findTeamById(team.getId());
+		Team team1 = findTeamById(team.getId());
+		team1.setName(team.getName());
+		team1.setDescription(team.getDescription());
 	//	Hibernate.initialize(team.getPlayers());
 		//team.setPlayers(team1.getPlayers());
-		generalDaoService.update(team);
+		
+		generalDaoService.update(team1);
 	}
 
 	@Override
@@ -624,6 +763,7 @@ public class SportServiceImpl  implements SportService{
 					newNotice.setDate(notice.getDate());
 					newNotice.setId(notice.getId());
 					newNotice.setImageurl(notice.getImageurl());
+					newNotice.setThumburl(notice.getThumburl());
 					tmpList.add(newNotice);
 				}
 				else
@@ -643,27 +783,6 @@ public class SportServiceImpl  implements SportService{
 	
 	}
 
-	@Override
-	public Notice uploadNoticeImage(String path, int id, CommonsMultipartFile file) {
-		// TODO Auto-generated method stub
-		Notice notice = this.findNewsById(id);
-		// TODO Auto-generated method stub
-        String extension = FilenameUtils.getExtension(file.getOriginalFilename()); 
-		String filename=String.valueOf(notice.getId())+"."+extension;
-        try{  
-        byte barr[]=file.getBytes();  
-          
-        BufferedOutputStream bout=new BufferedOutputStream(  
-                 new FileOutputStream(path+"/resources/theme1/customimages/noticeimage_"+filename));  
-        bout.write(barr);  
-        bout.flush();  
-        bout.close();  
-        notice.setImageurl("/customimages/noticeimage_"+filename);
-        generalDaoService.update(notice);
-        }catch(Exception e){System.out.println(e);}  
-        
-        return notice;
-	}
 
 	@Override
 	public void genPlayoffs(int championid, int phase, int round) {
@@ -876,6 +995,83 @@ public class SportServiceImpl  implements SportService{
 		persistedAlbum.setName(album.getName());
 		album=null;
 		generalDaoService.update(persistedAlbum);
+	}
+
+	@Override
+	public void deleteTeam(String path, int id) {
+		// TODO Auto-generated method stub
+		Team team = this.findTeamById(id);
+		if(!team.getLogopath().contains("default"))
+		{
+			File file = new File(path+"/resources/theme1/"+team.getLogopath());
+			file.delete();
+			file = new File(path+"/resources/theme1/"+team.getLogothumbpath());
+			file.delete();
+		}
+		Hibernate.initialize(team.getPlayers());
+		for(Contact contact:team.getPlayers())
+		{	
+			if(!contact.getImagepath().contains("default"))
+				{
+				File file = new File(path+"/resources/theme1/"+contact.getImagepath());
+				file.delete();
+				file = new File(path+"/resources/theme1/"+contact.getThumbpath());
+				file.delete();
+			}
+		}
+		generalDaoService.delete(team);
+	}
+
+	@Override
+	public void deletePlayer(String path, int id) {
+		// TODO Auto-generated method stub
+		if(!contactService.getContact(id).getImagepath().contains("default"))
+		{
+			File file = new File(path+"/resources/theme1/"+contactService.getContact(id).getImagepath());
+			file.delete();
+			file = new File(path+"/resources/theme1/"+contactService.getContact(id).getThumbpath());
+			file.delete();
+		}
+		generalDaoService.delete(contactService.getContact(id));
+	}
+
+	@Override
+	public void editTeamAdmin(Contact contact) {
+		// TODO Auto-generated method stub
+		
+		if(contact==null)
+			return;
+		Contact contactp = contactService.getContact(contact.getId());
+	
+		if(contactp==null)
+			return;
+		contactp.setName(contact.getName());
+	
+		contactp.setUsername(contact.getUsername());
+	
+		if(contact.getPassword()!=null)
+			if(!contact.getPassword().equals(""))
+			{
+				contactp.setPassword(passwordEncoder.encode(contact.getPassword()));
+			}
+		generalDaoService.update(contactp);
+	}
+
+	@Override
+	public void deleteNotice(int id, String path) {
+		Notice notice = this.findNewsById(id);
+		generalDaoService.delete(notice);
+		
+        if(!notice.getImageurl().contains("default"))
+        {
+			File file1 = new File(path+"/resources/theme1/"+notice.getImageurl());
+			file1.delete();
+			
+			file1 = new File(path+"/resources/theme1/"+notice.getThumburl());
+			file1.delete();
+        }
+        
+		
 	}
 	
 	

@@ -10,7 +10,7 @@ pageEncoding="UTF-8"%>
  <input ng-model='mysearch' type="text" class="form-control" placeholder="Αναζητηστε χρήστη εδώ...">
 <i class="fa fa-search"></i></div>
 <div class='div_edit_team'>
-{{result}}
+
 	<div class='table_stylish1'>
 		<table>
 			<tr>
@@ -32,7 +32,7 @@ pageEncoding="UTF-8"%>
 				<td><button class='button_flat background_green float_right' ng-click="addUser(newrow,selectedTeam)">Προσθήκη</button> 
 			</td>
 			</tr>
-			<tr ng-repeat="row in users | filter:mysearch">
+			<tr ng-repeat="row in users | filter:mysearch" ng-show=row.adminteam>
 				<td><input type="text" ng-model="row.name"></td>
 				<td><input type="text" ng-model="row.username"></td>
 				<td><input type="text" ng-model="row.password"></td>
