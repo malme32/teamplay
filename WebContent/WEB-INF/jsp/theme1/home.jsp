@@ -35,7 +35,7 @@ pageEncoding="UTF-8"%>
 
 			<div class="matches-dates-shedule" style='padding:0;margin:0;'>
 			<ul style='margin:0 0 10px 0;'>
-			<li ng-repeat='row1 in upcominggames  | orderBy: "-date" ' style='padding:2px; '>
+			<li ng-repeat='row1 in upcominggames  | orderBy: "date" | limitTo:10' style='padding:2px; '>
 			<span class="pull-left"><img style='height:40px; width:40px' ng-src="${resources}{{row1.team1.logothumbpath}}" alt=""></span>
 			<span class="pull-right"><img style='height:40px; width:40px' ng-src="${resources}{{row1.team2.logothumbpath}}" alt=""></span>
 			<div class="detail" style='padding:0; margin:0'>

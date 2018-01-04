@@ -7,7 +7,7 @@ pageEncoding="UTF-8"%>
 <spring:url value="/resources/theme1" var="resources" />
 
 <spring:url value="/resources/" var="resources0" />
-	<link rel="stylesheet" type="text/css" href="${resources0}admin.css">   
+	<%-- <link rel="stylesheet" type="text/css" href="${resources0}admin.css">    --%>
 
 
 <div class="page-heading-breadcrumbs">
@@ -22,172 +22,122 @@ pageEncoding="UTF-8"%>
 </div>
 
 <main class="main-content" ng-init="teamid = '${teamid}'">
-
-
-<div class='font_size_small'>
-
-<!-- <div class='div_edit_team'>
-
-<h1>ΝΕΑ ΟΜΑΔΑ</h1>
-	<ul class='ul_nobullet'>
-		<li> <input type='text' ng-model='newteam.name' placeholder='Το ονομα της ομαδας εδω'/>	</li>
-		<li> <textarea rows="4" cols="50" ng-model='newteam.description' maxlength="1000" class="width_100" placeholder='Η περιγραφή της ομάδας εδω..'>	</textarea> </li>
-		<li> <button class='button_flat background_green float_right' ng-click="addTeam()">Προσθηκη</button> </li>
-	</ul>
-
-</div> -->
-<div class='div_edit_team'>
-
-<!-- 
-
-<h1>ΟΜΑΔΕΣ</h1>
-<select ng-model="selectedTeam" ng-change="getTeam()" ng-options="row.name for row in teams | orderBy:'name'">
-<option value="">---Επιλέξτε---</option>
-</select> -->
-<div ng-show="team" class='margin_left_small'>
-
-       <h2>ΕΠΕΞΕΡΓΑΣΙΑ</h2>
-	<ul class='ul_nobullet'>
-		<li> <input type='text' ng-model='team.name' placeholder='Το ονομα της ομαδας εδω'/>	</li>
-		<li><textarea rows="4" cols="50" ng-model='team.description' maxlength="1000" class="width_100" placeholder='Η περιγραφή της ομάδας εδω..'></textarea>  </li>
-		
-		<li> <button class='button_flat background_dark_yellow float_right' ng-click="editTeam()">Αποθήκευση</button> 
-		<button class='button_flat background_red float_right'  ng-click="deleteTeam()">Διαγραφή</button></li>
-		
-
-		
-		
-
-<!-- 
-		
-		 			<input ng-model='team.name'/>
-		
-		
-		<button ng-click="editTeam()">Αποθήκευση αλλαγών</button>
-		<button ng-click="deleteTeam()">Διαγραφή Ομάδας</button>
-		 -->
-			</ul>
-       <h3>ΕΙΚΟΝΕΣ (Logo/Cover)</h3>
-	<div class='table_stylish1'>
-		<table>
-			<tr>
-				<th>EIKONA</th>
-				<th>ΕΝΕΡΓΕΙΑ</th>
-				<th></th>
-			</tr>
-			<tr>
-				<td><img width=60 height=60 ng-show='team.logopath' ng-src='${resources}{{team.logothumbpath}}'/> </td>
-				<td><input type = "file" file-model = "mylogo" accept="image/*"/></td>
-	        <td> <button class='button_flat background_dark_yellow' ng-click = "uploadLogo()">Upload</button></td>
-			</tr>
-<%-- 			<tr>
-				<td><img width=60 height=60 ng-show='team.coverpath' ng-src='${resources}{{team.coverpath}}'/></td>
+<div style="margin:auto; max-width:800px; width:100%; position:relative" class='theme-padding'>
+<button style='' class="btn black-btn" ng-hide='showNewTeamForm' ng-click="showNewTeamForm=true">ΕΠΕΞΕΡΓΑΣΙΑ ΟΜΑΔΑΣ</button> 
+	<div ng-show='showNewTeamForm'>
+	<h2>ΕΠΕΞΕΡΓΑΣΙΑ ΟΜΑΔΑΣ</h2>
 	
-				<td>		 <input type = "file" file-model = "mycover" class='button_flat background_dark_yellow' accept="image/*"/>
-	         <button class='button_flat background_dark_yellow' ng-click = "uploadCover()">Αλλαγή Cover</button>
-	         </td>
-			</tr> --%>
-		</table>
+	
+		<div style='margin-bottom:20px' class="">
+		<img width=200 height=200 ng-show='team.logopath' ng-src='${resources}{{team.logopath}}'/>
+		
+		<input type = "file" file-model = "mylogo" accept="image/*"/>
+	    <button class="btn black-btn " ng-click = "uploadLogo()">Upload</button>
+	    </div>
+	<div class="">
+	
+	<form id="contact-form" class="contact-form ">
+	<div class="form-group">
+	<input style='color:black; border:1px solid #D0D0D0; ' type="text" class="form-control" ng-model='team.name' required="required" placeholder="Το όνομα της ομάδας εδω..">
+	<i class="fa fa-user"></i>
 	</div>
+	<div class="form-group">
+	<textarea style='color:black; border:1px solid #D0D0D0' ng-model='team.description' maxlength="1000"  class="form-control style-d" rows="6" id="comment" placeholder="Η περιγραφη της ομαδας εδω.."></textarea>
+	<i class="fa fa-pencil-square-o"></i>
+	</div>
+	<div >
+	<button style='' class="btn black-btn" ng-click="editTeam()">ΑΠΟΘΗΚΕΥΣΗ</button> 
+			<button style='' class="btn red-btn"  ng-click="deleteTeam()">Διαγραφή</button>
+			</div>
+	</form>
+	</div>
+</div>
 
-<%-- 	<div class="div_team_edit_images">
+</div>
+
+<div style="margin:auto; max-width:800px; width:100%; position:relative">
+		<button style='' class="btn black-btn" ng-hide='showNewForm' ng-click="showNewForm=true">ΕΙΣΑΓΩΓΗ ΝΕΟΥ ΠΑΙΧΤΗ</button> 
+		<div ng-show='showNewForm'>
+			<h2>ΕΙΣΑΓΩΓΗ ΝΕΟΥ ΠΑΙΧΤΗ</h2>
 	
-			<img width=100 height=100 ng-show='team.logopath' ng-src='${resources}{{team.logopath}}'/> 
-			<input type = "file" file-model = "mylogo"/>
-	         <button ng-click = "uploadLogo()">Αλλαγή Logo</button>
+						
+			<div class="">
 			
-			<img width=200 height=200 ng-show='team.coverpath' ng-src='${resources}{{team.coverpath}}'/>
-			 <input type = "file" file-model = "mycover"/>
-	         <button ng-click = "uploadCover()">Αλλαγή Cover</button>
+			<form id="contact-form" class="contact-form ">
+			<div class="form-group">
+			<input style='color:black; border:1px solid #D0D0D0; ' type="text" class="form-control" ng-model='newplayer.name' required="required" placeholder='Το όνομα παίχτη εδω..'>
+			<i class="fa fa-user"></i>
+			</div>
+			<div class="form-group">
+			<input style='color:black; border:1px solid #D0D0D0; ' type="text" class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57' ng-model='newplayer.number'  placeholder="Ο αριθμός παιχτη εδω.. (1-100)">
+			<i class="fa fa-user"></i>
+			</div>
+			<div class="form-group">
+				<select  ng-model="newplayer.soccerposition">
+		      <option value="">---Επιλέξτε θέση παίχτη---</option> <!-- not selected / blank option -->
+		      <option value="Αμυντικος">Αμυντικός</option> <!-- interpolation -->
+		      <option value="Μεσος">Μέσος</option>
+		      <option value="Επιθετικος">Επιθετικός</option>
+		      <option value="Τερματοφυλακας">Τερματοφύλακας</option>
+		    </select>		
+			</div>
+			
+			<button style='' class="btn black-btn" ng-click="addPlayer()">ΕΙΣΑΓΩΓΗ</button> 
+			</form>
+			</div>
+		</div>
+</div>
+
+
+
+
+<div style="margin:auto; max-width:800px; width:100%; position:relative" class='theme-padding'>
+
+	<h2>ΕΠΕΞΕΡΓΑΣΙΑ ΠΑΙΧΤΩΝ</h2>
 	
-	</div> --%>
+	  <select style='margin-bottom:20px'ng-model="selectedPlayer" ng-change="" ng-options="row.name for row in players | orderBy:'name'">
+		<option value="">---Επιλέξτε---</option>
+		</select>
+		
+		<div class="" ng-show='selectedPlayer' style='margin-bottom:20px'>
+			<img width=150 height=150  ng-src='${resources}{{selectedPlayer.imagepath}}'/>
+			
+			<input type = "file" file-model = "selectedPlayer.playerimage" accept="image/*"/>
+		    <button class="btn black-btn " ng-click = "uploadPlayerImage(selectedPlayer)">Upload</button>
+	    </div>
+			
+	 
+						
+			<div class="" ng-show='selectedPlayer'>
+			
+			<form id="contact-form" class="contact-form ">
+			<div class="form-group">
+			<input style='color:black; border:1px solid #D0D0D0; ' type="text" class="form-control" ng-model='selectedPlayer.name' required="required" placeholder='Το νέο όνομα παίχτη εδω..'>
+			<i class="fa fa-user"></i>
+			</div>
+			<div class="form-group">
+			<input style='color:black; border:1px solid #D0D0D0; ' type="text" class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57' ng-model='selectedPlayer.number'  placeholder="Ο αριθμός παιχτη εδω.. (1-100)">
+			<i class="fa fa-user"></i>
+			</div>
+			<div class="form-group">
+				<select  ng-model="selectedPlayer.soccerposition">
+		      <option value="">---Επιλέξτε θέση παίχτη---</option> <!-- not selected / blank option -->
+		      <option value="Αμυντικος">Αμυντικός</option> <!-- interpolation -->
+		      <option value="Μεσος">Μέσος</option>
+		      <option value="Επιθετικος">Επιθετικός</option>
+		      <option value="Τερματοφυλακας">Τερματοφύλακας</option>
+		    </select>		
+			</div>
+			
+			<button style='' class="btn black-btn" ng-click="editPlayer(selectedPlayer)">ΑΠΟΘΗΚΕΥΣΗ</button> 
+					<button style='' class="btn red-btn"  ng-click="deletePlayer(selectedPlayer)">Διαγραφή</button>
+			</form>
+			</div>
+
+</div>
 
 
-<!-- 
-           <input type = "file" file-model = "mylogo"/>
-         <button ng-click = "uploadLogo()">Αλλαγή Logo</button>
-         <br>
-        <input type = "file" file-model = "mycover"/>
-         <button ng-click = "uploadCover()">Αλλαγή Cover</button> -->
-
-       <h3>ΠΑΙΧΤΕΣ</h3>
-       <div class='table_stylish1 width_100'>
-        <table > 
-			<tr>
-				<th>ΟΝΟΜΑ</th>
-				<th>ΑΡΙΘΜΟΣ</th>
-				<th>ΘΕΣΗ</th>
-				<th>ΕΝΕΡΓΕΙΑ</th>
-				<th>ΕΙΚΟΝΑ</th>
-				<th>ΑΛΛΑΓΗ ΕΙΚΟΝΑΣ</th>
-				<th></th>
-			</tr>
-        <tr ng-repeat = 'row in players'>
-        <td> <input type='text' ng-model='row.name' placeholder='Το όνομα παίχτη εδω..'/>	</td>
-        <td class='width_very_small'> <input  type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57' ng-model='row.number'/>	</td>
-        
-
-          <td><select  ng-model="row.soccerposition">
-		      <option value="">---Επιλέξτε---</option> <!-- not selected / blank option -->
-		      <option value="Defender">Αμυντικός</option> <!-- interpolation -->
-		      <option value="Goalkeeper">Τερματοφύλακας</option>
-		    </select>
-   		 </td>
-                <td> <button class='button_flat background_dark_yellow' ng-click = "editPlayer(row)">Αποθήκευση</button>
-         <button class='button_flat background_red' ng-click = "deletePlayer(row)">Διαγραφή</button>
-        </td>
-         	
-        <td><img width=50 height=50 ng-show='row.imagepath' ng-src='${resources}{{row.imagepath}}'/> </td>
-            <td> <input type = "file" file-model = "row.playerimage" accept="image/*"/>
-      
-        </td>
-              <td> 
-         <button class='button_flat background_dark_yellow' ng-click = "uploadPlayerImage(row)">Upload</button>
-        </td>
-        
-
-        </tr>
-        
-        <tr>
-        
-        <td> <input type="text" ng-model='newplayer.name' placeholder='Το νέο όνομα παίχτη εδω..'/>	</td>
-        <td class='width_very_small'> <input  type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57' ng-model='newplayer.number'/>	</td>
-        
-            <td><select  ng-model="newplayer.soccerposition">
-		      <option value="">---Επιλέξτε---</option> <!-- not selected / blank option -->
-		      <option value="Defender">Αμυντικός</option> <!-- interpolation -->
-		      <option value="Goalkeeper">Τερματοφύλακας</option>
-		    </select>
-   		 </td>
-        
-        <td> <button class='button_flat background_green' ng-click = "addPlayer()">Εισαγωγή</button>
-        
-        </td>
-         <td></td>
-         <td></td>
-   
-        </tr>
-        
-        </table>
-        </div>
-         </div>
-         </div>
-        </div>
-<!--    <form method="POST" ng-submit="teams/{{team.id}}/images" enctype="multipart/form-data">
-    <table>
-        <tr>
-            <td><label path="file">Select a file to upload</label></td>
-            <td><input type="file" name="file" /></td>
-        </tr>
-        <tr>
-            <td><input type="submit" value="Submit" /></td>
-        </tr>
-    </table>
-</form> -->
-
-<!-- {{result}} -->
 
 
 
 </main>
-
