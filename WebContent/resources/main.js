@@ -97,11 +97,16 @@ appMain.config(function($routeProvider) {
         controller: "teamController"
 
     })
-    .when("/home", {
+    .when("/", {
             templateUrl : "home1",
             controller: "homeController"
 
     })
+    .when("/home", {
+        templateUrl : "home1",
+        controller: "homeController"
+
+})
 
     .when("/gallery", {
             templateUrl : "gallery",
@@ -157,7 +162,8 @@ appMain.run(function($rootScope, $window) {
     		});
     	    
     	  //  $rootScope.$on('$viewContentLoaded', function() {
-    	    	if(next.indexOf("#!/home") !== -1)//;=="http://localhost:60000/phonebook/soccer.html")
+    	    	//if(next.indexOf("#!/home") !== -1)//;=="http://localhost:60000/phonebook/soccer.html")
+        	    	if(next.indexOf("#!/home") !== -1 || next.length<50)//;=="http://localhost:60000/phonebook/soccer.html")
     	    	//	$rootScope.isIndex=true;
     	    		$rootScope.indexClass="own-visible";
     	    	else
@@ -844,6 +850,52 @@ appMain.controller("teamdetailController",function($scope, $http, $location, $ro
 	        return document.location.href; 
 	   } 
 		
+	    
+	    
+	    $scope.followTeam = function (row){ 
+
+			 $http({
+			        method : "POST",
+			        url : "teams/"+row.id+"/followers"
+			    }).then(function mySuccess(response) {
+
+			        ///$scope.teams = response.data;
+			        //alert("'Εγινε!");
+			        $scope.getFollowingTeams();
+			    }, function myError(response) {
+			    	alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");     
+			    });
+			 
+		 }
+		 
+		 $scope.getFollowingTeams = function (){ 
+
+			 $http({
+			        method : "GET",
+			        url : "followers"
+			    }).then(function mySuccess(response) {
+			    	if(response.data.length>0)
+			    		$scope.followingteam = response.data[0];
+			    	else 
+			    		$scope.followingteam =null;
+			        //alert(response.data[0].id);
+			    }, function myError(response) {
+			    	//alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");     
+			    });
+			 
+		 }
+		 $scope.getFollowingTeams();
+		 $scope.isFollowed = function (row){
+			 
+			 if($scope.followingteam!=null&&row.id==$scope.followingteam.id)
+				 return "btn red-btn";
+			 else
+				 return "btn black-btn";
+
+		 }
+	    
+	    
+	    
 	 $http({
 	        method : "GET",
 	        url : "teams/"+$routeParams.id
@@ -1030,12 +1082,26 @@ appMain.controller("headerController",function($scope, $http, $location){
 	      
 	    });
 	 
-	 
+	 $scope.getMyTeamLink = function (){ 
+
+		 $http({
+		        method : "GET",
+		        url : "followers"
+		    }).then(function mySuccess(response) {
+
+		        //$scope.followingteam = response.data[0];
+		    	$location.path( "team-detail.html/"+response.data[0].id );
+		        //return "#!team-detail.html/"+response.data[0].id;
+		    }, function myError(response) {
+		    	alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");     
+		    });
+		 
+	 }
 });
 
 appMain.controller("teamlistController",function($scope, $http, $location){
 
-	window.scrollTo(0, 0);
+	
 	 $http({
 	        method : "GET",
 	        url : "teams",
@@ -1047,6 +1113,47 @@ appMain.controller("teamlistController",function($scope, $http, $location){
 	    		      
 	    });
 	 
+	 $scope.followTeam = function (row){ 
+
+		 $http({
+		        method : "POST",
+		        url : "teams/"+row.id+"/followers"
+		    }).then(function mySuccess(response) {
+
+		        ///$scope.teams = response.data;
+		        //alert("'Εγινε!");
+		        $scope.getFollowingTeams();
+		    }, function myError(response) {
+		    	alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");     
+		    });
+		 
+	 }
+	 
+	 $scope.getFollowingTeams = function (){ 
+
+		 $http({
+		        method : "GET",
+		        url : "followers"
+		    }).then(function mySuccess(response) {
+		    	if(response.data.length>0)
+		    		$scope.followingteam = response.data[0];
+		    	else 
+		    		$scope.followingteam =null;
+		        //alert(response.data[0].id);
+		    }, function myError(response) {
+		    	//alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");     
+		    });
+		 
+	 }
+	 $scope.getFollowingTeams();
+	 $scope.isFollowed = function (row){
+		 
+		 if($scope.followingteam!=null&&row.id==$scope.followingteam.id)
+			 return "btn red-btn";
+		 else
+			 return "btn black-btn";
+
+	 }
 });
 
 appMain.controller("teamController",function($scope, $http, $location, $window){

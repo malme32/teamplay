@@ -508,6 +508,7 @@ public class SportServiceImpl  implements SportService{
 			
 			file1 = new File(path+"/resources/theme1/"+team.getLogothumbpath());
 			file1.delete();
+			System.out.println("DEFAULT_TEAM_THUMB_DELETED");
         }
         
         
@@ -634,7 +635,7 @@ public class SportServiceImpl  implements SportService{
         
         ByteArrayInputStream bais = new ByteArrayInputStream(barr);
         BufferedImage resizeMe = ImageIO.read(bais);
-        Dimension newMaxSize = new Dimension(300, 300);
+        Dimension newMaxSize = new Dimension(400, 400);
         BufferedImage resizedImg = Scalr.resize(resizeMe, Method.QUALITY, newMaxSize.width, newMaxSize.height);
         
         BufferedOutputStream bout1=new BufferedOutputStream(  
@@ -1072,6 +1073,17 @@ public class SportServiceImpl  implements SportService{
         }
         
 		
+	}
+
+	@Override
+	public List<Team> getFollowingTeams(String teamid) {
+
+		int id = Integer.parseInt(teamid);
+		Team team = teamDao.findById(id);
+		List<Team> list  = new ArrayList<Team>();
+		list.add(team);
+		// TODO Auto-generated method stub
+		return list;
 	}
 	
 	

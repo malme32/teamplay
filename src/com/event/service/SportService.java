@@ -119,5 +119,7 @@ public interface SportService {
 	public void editTeamAdmin(Contact contact);
 
 	public void deleteNotice(int id,String path);
+
+	public List<Team> getFollowingTeams(String teamid);
 	
 }

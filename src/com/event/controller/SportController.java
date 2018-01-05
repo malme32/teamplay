@@ -6,16 +6,23 @@ import java.nio.file.Files;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -205,6 +212,30 @@ public class SportController {
 		
 	}
 	
+	@RequestMapping(value="/followers", method=RequestMethod.GET, produces = "application/json")
+	public @ResponseBody List<Team> getFollowers(@CookieValue(value = "teamfollowing", defaultValue="noteam") String cookie)
+	{
+		
+		
+	 User user =null; 
+	 try{user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();}
+	 catch(Exception e){}
+	 if(user!=null)
+	 {
+		 String username = user.getUsername();
+		 Contact contact = contactService.findByUserName(username);
+		 if(contact.getAdminteam()!=null)
+		 {
+			 return sportService.getFollowingTeams(String.valueOf(contact.getAdminteam().getId()));
+		 }
+	 }
+		
+	if(cookie.equals("noteam"))
+		return new ArrayList<Team>();
+		
+		return sportService.getFollowingTeams(cookie);
+		
+	}
 	/////////////////////POST/////////////////////////////////////
 	
 	@RequestMapping(value="/teams/{id1}/adminusers", method=RequestMethod.POST, produces = "application/json")
@@ -442,6 +473,36 @@ public class SportController {
 		generalDaoService.persist(album);
 		return;
 	}
+	
+	@RequestMapping(value="/teams/{id}/followers", method=RequestMethod.POST, produces = "application/json")
+	public @ResponseBody void addTeamFollower(@CookieValue(value = "teamfollowing", defaultValue="noteam") String cookie,HttpServletResponse response,HttpServletRequest request,@PathVariable String id)
+	{	
+		
+		Cookie[] cookies = request.getCookies();
+		if (cookies != null)
+			for(Cookie cookie1:cookies) {
+				if(cookie1.getName().equals("teamfollowing"))
+				{
+					System.out.println("Cookie found: "+cookie1+" "+id);
+					if(cookie1.getValue().equals(id))
+						cookie1.setMaxAge(0); //set expire time 
+					else
+						cookie1.setMaxAge(100000000); //set expire time 
+					cookie1.setValue(id);
+					cookie1.setPath("/");
+					response.addCookie(cookie1);
+					return;
+				}
+			}
+		
+
+		Cookie cookie1 = new Cookie("teamfollowing", id); //bake cookie
+		cookie1.setMaxAge(100000000); //set expire time 
+		cookie1.setPath("/");
+		response.addCookie(cookie1);
+		return;
+	}
+	
 	
 	//////////////////PUT///////////////////////////
 	

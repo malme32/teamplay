@@ -94,8 +94,8 @@ pageEncoding="UTF-8"%>
 </li>
 <li><a href="#!team-list.html">ΟΜΑΔΕΣ</a>
 <ul>
-<%if(pageContext.getAttribute("teamid", PageContext.REQUEST_SCOPE)!=null){ %>
-<li ><a href="#!team-detail.html/${teamid}">Η ΟΜΑΔΑ ΜΟΥ</a></li>
+<li ><a ng-click='getMyTeamLink()' href=''>Η ΟΜΑΔΑ ΜΟΥ</a></li><!-- ng-href="{{getMyTeamLink()}} -->
+<%if(!pageContext.getAttribute("username", PageContext.REQUEST_SCOPE).equals("")){ %>
 <li ><a href="#!editteam">ΕΠΕΞΕΡΓΑΣΙΑ ΟΜΑΔΑΣ</a></li>
 <%} %>
 <li ><a href="#!team-list.html">ΟΛΕΣ ΟΙ ΟΜΑΔΕΣ</a></li>
@@ -186,7 +186,7 @@ pageEncoding="UTF-8"%>
 </header>
 
 
-<nav id="menu" class="responive-nav">
+<nav id="menu" class="responive-nav" ng-app="appMain" ng-controller='headerController'>
 <a class="r-nav-logo" href="home-1.html"><img src="${resources}/images/logo-1.png" alt=""></a>
 <ul class="respoinve-nav-list">
 
@@ -223,8 +223,8 @@ pageEncoding="UTF-8"%>
 
 <li><a data-toggle="collapse" href="#list-2"><i class="pull-right fa fa-angle-down"></i>ΟΜΑΔΕΣ</a>
 <ul  class="collapse" id="list-2">
-<%if(pageContext.getAttribute("teamid", PageContext.REQUEST_SCOPE)!=null){ %>
-<li ><a href="#!team-detail.html/${teamid}">Η ΟΜΑΔΑ ΜΟΥ</a></li>
+<li  ng-click='getMyTeamLink()'><a href=''>Η ΟΜΑΔΑ ΜΟΥ</a></li>
+<%if(!pageContext.getAttribute("username", PageContext.REQUEST_SCOPE).equals("")){ %>
 <li ><a href="#!editteam">ΕΠΕΞΕΡΓΑΣΙΑ ΟΜΑΔΑΣ</a></li>
 <%} %>
 <li ><a href="#!team-list.html">ΟΛΕΣ ΟΙ ΟΜΑΔΕΣ</a></li>

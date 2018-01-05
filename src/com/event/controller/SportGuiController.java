@@ -9,10 +9,12 @@ import org.springframework.http.CacheControl;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.event.service.SportService;
 import com.phonebook.model.Contact;
 import com.phonebook.service.ContactService;
 
@@ -21,6 +23,8 @@ public class SportGuiController {
 
 	@Autowired
 	private ContactService contactService;
+	@Autowired
+	private SportService sportService;
 	
 	@RequestMapping(value="/championlist", method=RequestMethod.GET)
 	public ModelAndView championList(){
@@ -83,7 +87,7 @@ public class SportGuiController {
 ////////////ROSSONERI- THEME1///////////////////////
 	
 	@RequestMapping(value="/soccer", method=RequestMethod.GET)
-	public ModelAndView index(HttpServletResponse response){ 
+	public ModelAndView index(HttpServletResponse response,@CookieValue(value = "teamfollowing", defaultValue="noteam") String cookie){ 
 		
 /*		
 	      String headerValue = CacheControl.maxAge(10, TimeUnit.SECONDS)
@@ -108,11 +112,17 @@ response.addHeader("Cache-Control", headerValue);*/
 		 }
 		 else
 		 {
-	
+			 try {	
+				 if(!cookie.equals("noteam"))
+					 model.getModelMap().addAttribute("teamid", sportService.getFollowingTeams(cookie).get(0).getId());
 
+			 	}
+			 catch(Exception e){
+			
+			 }	 
 			 model.getModelMap().addAttribute("username","");
-		 }	 
-		 
+		 }
+			 
 		return model;// new ModelAndView("theme1/index","username",username);
 	}
 	

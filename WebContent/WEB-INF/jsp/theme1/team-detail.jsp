@@ -50,6 +50,7 @@ pageEncoding="UTF-8"%>
 <div class="team-detail-content theme-padding-bottom" >
 <h2>ΠΕΡΙΓΡΑΦΗ ΟΜΑΔΑΣ</h2>
 <p>{{team.description}}</p>
+<button style='' ng-class="isFollowed(team)"  ng-click="followTeam(team)">ΑΚΟΛΟΥΘΗΣΕ</button> 
 <div class="tags-holder">
 <!--  <ul class="tags-list pull-left">
 <li><i class="fa fa-tags"></i>Tags</li>

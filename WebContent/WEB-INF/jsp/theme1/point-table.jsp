@@ -38,7 +38,7 @@ pageEncoding="UTF-8"%>
 		<h3 style="margin:0 0 5px 0; padding:0"><span><i class="red-color">{{row2.name}} </i></span></h3> -->
 		
 		<div ng-show='champion.playoffgames.length'>
-		<h2>Play Offs</h2>
+		<!-- <h2>Play Offs</h2> -->
 
 			<div ng-repeat='row3 in champion.playoffgames | orderBy: "phase"'>
 			<div ng-show="row3.games.length">

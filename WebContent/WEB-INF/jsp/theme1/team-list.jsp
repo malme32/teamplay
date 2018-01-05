@@ -27,6 +27,7 @@ pageEncoding="UTF-8"%>
  --><!-- <div class="search-bar-holder "> -->
 <!-- <div class="search-bar">
  -->
+<!--  {{followingteam}} -->
  <div class='search-field'>
  <input ng-model='mysearch' type="text" class="form-control" placeholder="Αναζητηστε ομάδα εδώ...">
 <i class="fa fa-search"></i></div>
@@ -42,6 +43,8 @@ pageEncoding="UTF-8"%>
  --><!-- <span><a href="#"><i class="fa fa-twitter"></i>@marcobale #dominname</a></span> -->
 </a></h5>
 
+</div>
+<div style='display:inline-block; float:right'>		<button style='' ng-class="isFollowed(row)"  ng-click="followTeam(row)">ΑΚΟΛΟΥΘΗΣΕ</button> 
 </div>
 
 </div>
