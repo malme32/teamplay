@@ -875,9 +875,25 @@ appMain.controller("teamdetailController",function($scope, $http, $location, $ro
 			        url : "followers"
 			    }).then(function mySuccess(response) {
 			    	if(response.data.length>0)
+		    		{
+
 			    		$scope.followingteam = response.data[0];
-			    	else 
+			    		
+			    	  	try{
+					    	Android.getFollowers(response.data[0].id); }
+					    	catch(err){}
+				    	
+		    		}
+		    	else {
+		    		
+
 			    		$scope.followingteam =null;
+			    		
+			    	  	try{
+					    	Android.getFollowers(""); }
+					    	catch(err){}
+				    	
+		    	}
 			        //alert(response.data[0].id);
 			    }, function myError(response) {
 			    	//alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");     
@@ -1091,12 +1107,51 @@ appMain.controller("headerController",function($scope, $http, $location){
 
 		        //$scope.followingteam = response.data[0];
 		    	$location.path( "team-detail.html/"+response.data[0].id );
+		    	
+
 		        //return "#!team-detail.html/"+response.data[0].id;
 		    }, function myError(response) {
 		    	alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");     
 		    });
 		 
 	 }
+	 
+	 
+	 //$scope.getFollowingTeams = function (){ 
+
+		 $http({
+		        method : "GET",
+		        url : "followers"
+		    }).then(function mySuccess(response) {
+		    	if(response.data.length>0)
+		    		{
+		    		//alert("xa");
+			    		//$scope.followingteam = response.data[0];
+			    		
+			    	  	try{
+					    	Android.getFollowers(response.data[0].id); }
+					    	catch(err){}
+				    	
+		    		}
+		    	else {
+		    		
+
+			    		//$scope.followingteam =null;
+			    		
+			    	  	try{
+					    	Android.getFollowers(""); }
+					    	catch(err){}
+				    	
+		    	}
+		    	
+		  
+		        //alert(response.data[0].id);
+		    }, function myError(response) {
+		    	//alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");     
+		    });
+		 
+	 //}
+	 
 });
 
 appMain.controller("teamlistController",function($scope, $http, $location){
@@ -1136,9 +1191,27 @@ appMain.controller("teamlistController",function($scope, $http, $location){
 		        url : "followers"
 		    }).then(function mySuccess(response) {
 		    	if(response.data.length>0)
-		    		$scope.followingteam = response.data[0];
-		    	else 
-		    		$scope.followingteam =null;
+		    		{
+
+			    		$scope.followingteam = response.data[0];
+			    		
+			    	  	try{
+					    	Android.getFollowers(response.data[0].id); }
+					    	catch(err){}
+				    	
+		    		}
+		    	else {
+		    		
+
+			    		$scope.followingteam =null;
+			    		
+			    	  	try{
+					    	Android.getFollowers(""); }
+					    	catch(err){}
+				    	
+		    	}
+		    	
+		  
 		        //alert(response.data[0].id);
 		    }, function myError(response) {
 		    	//alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");     

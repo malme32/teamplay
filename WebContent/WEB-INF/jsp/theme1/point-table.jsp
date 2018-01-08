@@ -162,7 +162,7 @@ pageEncoding="UTF-8"%>
 			<tr>
 	<!--  		<th ng-show='desktop'>
 				</th>  -->
-				<th >
+				<th style='text-align:center'>ΓΚΟΛ
 				</th>
 				<th  style='text-align:center'>ΟΝΟΜΑ
 				</th>
@@ -175,9 +175,12 @@ pageEncoding="UTF-8"%>
 			<!-- 	<td>{{$index + 1}}</td> -->
 				<td>{{row2.number}}
 				</td>
-				<td>{{row2.contact.name}}
+				<td> <table>  <tr><td><div style='  background:url(${resources}{{row2.contact.thumbpath}}) no-repeat center; height:40px;width:40px; background-size:cover; '></div></td>
+				<td><div style=''><span>{{row2.contact.name}}</span></div></td>
+				</tr></table>
+				
 				</td>
-				<td>{{row2.team.name}}
+				<td><a ng-href='#!team-detail.html/{{row2.team.id}}'>{{row2.team.name}}</a>
 				</td>
 			</tr>
 

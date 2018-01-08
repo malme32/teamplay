@@ -5,9 +5,9 @@ pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <spring:url value="/resources/theme1" var="resources" />
+<div ng-app="appMain" ng-controller='headerController' >
 
-
-<header class="header style-3" ng-app="appMain" ng-controller='headerController' >
+<header class="header style-3" >
 
 <div class="topbar-and-logobar" >
 <div class="container">
@@ -186,19 +186,14 @@ pageEncoding="UTF-8"%>
 </header>
 
 
-<nav id="menu" class="responive-nav" ng-app="appMain" ng-controller='headerController'>
+<nav id="menu" class="responive-nav">
 <a class="r-nav-logo" href="home-1.html"><img src="${resources}/images/logo-1.png" alt=""></a>
 <ul class="respoinve-nav-list">
 
 
 
 
-<%if(pageContext.getAttribute("username", PageContext.REQUEST_SCOPE).equals("")){ %>
-<li class="">
-<a href="loginPage" class= >ΣΥΝΔΕΣΗ</a>
 
-</li>
-<%}%>
 
 
 <li><a href="#!home">ΑΡΧΙΚΗ</a></li>
@@ -256,6 +251,13 @@ pageEncoding="UTF-8"%>
 					</c:if>
 					</li>
 <%}%>
+<%if(pageContext.getAttribute("username", PageContext.REQUEST_SCOPE).equals("")){ %>
+
+<li class="">
+<a href="loginPage" class= >ΣΥΝΔΕΣΗ</a>
+
+</li>
+<%}%>
 <!-- <li>
 <a data-toggle="collapse" href="#list-3"><i class="pull-right fa fa-angle-down"></i>Match</a>
 <ul class="collapse" id="list-3">
@@ -289,3 +291,4 @@ pageEncoding="UTF-8"%>
 <li><a href="contact.html">Contact</a></li>-->
 </ul> 
 </nav>
+</div>

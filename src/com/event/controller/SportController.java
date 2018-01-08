@@ -116,7 +116,12 @@ public class SportController {
 	@RequestMapping(value="/teams/{teamid}/games", method=RequestMethod.GET, produces = "application/json")
 	public @ResponseBody List<Game> getTeamGames(@PathVariable int teamid)
 	{
-		return sportService.findTeamGames(teamid);
+		List<Game> games =null;
+		try {
+
+			 games = sportService.findTeamGames(teamid);
+		}catch(Exception e) {}
+		return games;
 	}
 	
 	@RequestMapping(value="/teams/{teamid}/standings", method=RequestMethod.GET, produces = "application/json")
