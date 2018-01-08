@@ -17,6 +17,16 @@ appAdmin.config(function($routeProvider) {
         templateUrl : "adminnews.html",
         controller: "newsController"
 
+    })
+    .when("/adminusers", {
+        templateUrl : "adminusers",
+        controller: "usersController"
+
+    })
+    .when("/adminimages", {
+        templateUrl : "adminimages",
+        controller: "imagesController"
+
     });
     
 });
@@ -37,6 +47,68 @@ appAdmin.directive('fileModel', ['$parse', function ($parse) {
         }
     };
 }]);
+
+/*appAdmin.directive("ngFileModel", function() {
+	  return {
+	    require: "ngModel",
+	    link: function postLink(scope,elem,attrs,ngModel) {
+	      elem.on("change", function(e) {
+	        var files = elem[0].files;
+	        ngModel.$setViewValue(files);
+	      })
+	    }
+	  }
+	});*/
+appAdmin.directive('ngFiles', ['$parse', function ($parse) {
+
+    function fn_link(scope, element, attrs) {
+        var onChange = $parse(attrs.ngFiles);
+        element.on('change', function (event) {
+            onChange(scope, { $files: event.target.files });
+        });
+    };
+
+    return {
+        link: fn_link
+    }
+}]);
+
+
+/*appAdmin.directive('ngFileModel', ['$parse', function ($parse) {
+    return {
+        restrict: 'A',
+        link: function (scope, element, attrs) {
+            var model = $parse(attrs.ngFileModel);
+            var isMultiple = attrs.multiple;
+            var modelSetter = model.assign;
+            element.bind('change', function () {
+                var values = [];
+                angular.forEach(element[0].files, function (item) {
+                    var value = {
+                       // File Name 
+                        name: item.name,
+                        //File Size 
+                        size: item.size,
+                        //File URL to view 
+                        url: URL.createObjectURL(item),
+                        // File Input Value 
+                        _file: item
+                    };
+                    values.push(value);
+                });
+                scope.$apply(function () {
+                    if (isMultiple) {
+                        modelSetter(scope, values);
+                    } else {
+                        modelSetter(scope, values[0]);
+                    }
+                });
+            });
+        }
+    };
+}]);
+
+*/
 
 appAdmin.service('fileUpload', ['$http', function ($http) {
     this.uploadFileToUrl = function(file, uploadUrl){
@@ -93,6 +165,188 @@ myApp.service('fileUpload', ['$http', function ($http) {
 */
 
 
+appAdmin.controller("imagesController",function($scope, $http, $location, $window){
+	
+	 $http({
+	       method : "GET",
+	       url : "albums"
+	   }).then(function mySuccess(response) {
+
+	       $scope.albums = response.data;
+	     
+	   }, function myError(response) {
+	 
+	       $scope.result = response.statusText;
+	     
+	   });
+	 
+	 
+	 
+	 
+	 
+     var formdata = new FormData();
+     $scope.getTheFiles = function ($files) {
+         angular.forEach($files, function (value, key) {
+             formdata.append("files", value);
+         });
+     };
+	 
+     
+     $scope.deleteImage = function (image) {
+		   
+
+			 if(!confirm("Είστε σίγουρος οτι θέλετε να διαγράψετε αυτή την εικόνα;"))
+				 return;
+		   
+			 $http({
+		    method : "DELETE",
+      	url : "images/"+image.id  
+  }).then(function mySuccess(response) {
+ 
+  	$window.location.reload();
+  	//$scope.getTeam();
+  }, function myError(response) {
+
+  	
+      alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");
+  });
+		   
+	   }
+     
+     $scope.deleteAlbum = function (album) {
+		   
+		
+				 if(!confirm("Είστε σίγουρος οτι θέλετε να διαγράψετε αυτό το album;"))
+					 return;
+			   
+				 $http({
+			    method : "DELETE",
+		  	url : "albums/"+album.id  
+		}).then(function mySuccess(response) {
+		
+			$window.location.reload();
+			//$scope.getTeam();
+		}, function myError(response) {
+		
+			
+  alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");
+});
+	   
+   }
+     
+     $scope.addAlbum = function (newalbum) {
+		
+					 $http({
+				    method : "POST",
+			  	url : "albums",
+			  	params:{name:newalbum.name}
+			}).then(function mySuccess(response) {
+			
+				$window.location.reload();
+				//$scope.getTeam();
+			}, function myError(response) {
+			
+				
+			alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");
+			});
+			
+			}
+
+     $scope.editAlbum = function (album) {
+			 $http({
+			        method : "PUT",
+			        url : "albums",
+			        data: album,
+			        headers: {'Content-Type': 'application/json; charset=utf-8'} 
+		
+			    }).then(function mySuccess(response) {
+		
+			    	alert("Εγινε!");
+			    }, function myError(response) {
+			  
+			    	alert("An Error occured. Try again.");
+			      
+			    });
+     }
+     // NOW UPLOAD THE FILES.
+     $scope.uploadFiles = function (album) {
+
+    	 $scope.waiting= "Οι εικόνες ανεβαίνουν. Παρακαλώ περιμένετε..";
+    	 $http({
+		        method : "POST",
+		        	url : "albums/"+album.id+"/images",
+			        data: formdata,
+			        //params:{files: upl},
+                 transformRequest: angular.identity,
+                 headers: {'Content-Type': undefined}     
+		    }).then(function mySuccess(response) {
+		    	 $scope.waiting= "";
+		    	$window.location.reload();
+		    	//$scope.getTeam();
+		    }, function myError(response) {
+
+		    	
+		        alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");
+		    });
+    	 
+
+    	 
+    	 
+/*         var request = {
+             method: 'POST',
+             url: '/api/fileupload/',
+             data: formdata,
+             headers: {
+                 'Content-Type': undefined
+             }
+         };
+
+         // SEND THE FILES.
+         $http(request)
+             .success(function (d) {
+                 alert(d);
+             })
+             .error(function () {
+             });*/
+     }
+	 
+	 
+/*	 $scope.uploadImages = function(album, newimages){
+		 var fd = new FormData();
+
+	     $scope.result = newimages;
+         for (var i = 0 ; i < newimages.length ; i++){
+        	
+        	 //alert(newimages[i].name);
+        	 fd.append('files', newimages[i]);	
+        	// upl.push(fd);
+        	}
+	     $scope.result = fd;
+
+	    // alert("xixi");
+		 $http({
+		        method : "POST",
+		        	url : "albums/"+album.id+"/images",
+			        data: fd,
+			        //params:{files: upl},
+                    transformRequest: angular.identity,
+                    headers: {'Content-Type': undefined}     
+		    }).then(function mySuccess(response) {
+
+			     alert("xexe");
+		    	//$scope.getTeam();
+		    }, function myError(response) {
+
+			 
+		        alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");
+		    });
+         
+	 }*/
+       
+	 
+	 
+	
+});
 
 appAdmin.controller("adminController",function($scope, $http, $location, $window){
 
@@ -132,6 +386,26 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 	    });
 	 }
 	 
+	 $scope.getPlayoffs = function (row){
+/*		 $scope.result = "";
+		 $scope.champion =row;
+		 $scope.matchday="";
+		 $scope.standings = "";
+		 $scope.teamgroup = "";*/
+		 $scope.playoffs = "";
+		 $http({
+		        method : "GET",
+		        url : "champions/"+row.id+"/playoffs"
+		    }).then(function mySuccess(response) {
+		    	
+		    	$scope.playoffs = response.data;
+		    }, function myError(response) {
+		  
+		        $scope.result = response;//;"/champions/"+row.id+"/teamgroups";
+		      
+		    });
+	 }
+	  
 	 
 		 $scope.getTeamgroup = function (row){
 			 $scope.result = "";
@@ -139,6 +413,7 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 			 $scope.matchday="";
 			 $scope.standings = "";
 			 $scope.teamgroup = "";
+			 $scope.playoffs = "";
 			 $http({
 			        method : "GET",
 			        url : "champions/"+row.id+"/teamgroups"
@@ -214,7 +489,8 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 			        method : "POST",
 			        url : "champions",
 			        	   params: {
-			        	        name : $scope.adminChampionName
+			        	        name : $scope.adminChampionName,
+			        	        enabled:$scope.adminChampionEnabled
 			        	    }
 			    }).then(function mySuccess(response) {
 
@@ -243,7 +519,8 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 			        url : "champions",
 			        	   params: {
 			        	        id : row.id,
-			        	        name : row.name
+			        	        name : row.name,
+			        	        enabled : row.enabled
 			        	    }
 			    }).then(function mySuccess(response) {
 
@@ -258,6 +535,8 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 		 
 		 $scope.adminDeleteChampion = function (id){
 
+			 if(!confirm("Είστε σίγουρος;"))
+				 return;
 			 $scope.result = "";
 		      //$scope.modalResult = "";
 			 $http({
@@ -291,6 +570,8 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 			    });
 			 
 		 }
+		 
+		 
 		 
 		 $scope.adminEditTeamgroup = function (row){
 			 $scope.result = "";
@@ -436,6 +717,27 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 					 
 				 }
 				 
+				 $scope.adminDeletePlayoff = function (row){
+					 $scope.result = "";
+		
+					 if(!confirm("Are you sure?"))
+						 return;
+						 
+					 $http({
+					        method : "DELETE",
+					        url : "playoffs/"+row.id
+					    }).then(function mySuccess(response) {
+					    	
+					    	$scope.getPlayoffs($scope.champion); 
+					    	//$window.location.reload();
+					    }, function myError(response) {
+					  
+					        $scope.result = "An Error occured. Try again.";
+					    });
+					 
+				 }
+				 
+				 
 				 $scope.generateMatchdays = function (row,roundNumber){
 					 if(!confirm("Είστε σίγουρος?"))
 						 return;
@@ -527,7 +829,57 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 				    });
 				 
 
+			 }
+			 
+			 
+			 $scope.adminEditPlayoffGame= function (row,playoffrow){
+					if(row.tmpdate)
+					{	row.date = row.tmpdate;
+			/*			var mydate = new Date(row.date);
+						row.date = $scope.getFormattedDate(mydate,row.gametime);*/
+					}
+	
+				 $scope.result=row.tmpdate;
+				 $http({
+				        method : "PUT",
+				        url : "playoffs/"+playoffrow.id+"/games",
+				        data: row,
+				        headers: {'Content-Type': 'application/json; charset=utf-8'} 
+					      // params: {id:row.id,teamid1:row.team1.id,teamid2:row.team2.id,
+					    	//   score1:row.score1,score2:row.score2, date:row.date, matchdayid:tmpmatchday.id}
+
+				    }).then(function mySuccess(response) {
+
+				    	alert("Done!");
+				    }, function myError(response) {
+				  
+				    	alert("An Error occured. Try again.");
+				      
+				    });
+				 
+
 			 } 
+			 
+			 
+			 $scope.adminDeletePlayoffGame = function (row){
+					// $scope.result = "";
+		
+					 if(!confirm("Are you sure?"))
+						 return;
+						 
+					 $http({
+					        method : "DELETE",
+					        url : "games/"+row.id
+					    }).then(function mySuccess(response) {
+
+					    	$scope.getPlayoffs($scope.champion); 
+					    }, function myError(response) {
+					  
+					        $scope.result = "An Error occured. Try again.";
+					    });
+					 
+				 }
+			 
 				 $scope.adminDeleteGame = function (row){
 						// $scope.result = "";
 			
@@ -567,6 +919,27 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 					    });
 					 
 				 }
+				  
+				  $scope.adminAddPlayoff= function (playoffname,championrow){
+						// $scope.result = gamerow.team1.name+" "+matchdayrow.name;
+			
+				/*		 if(!confirm("Are you sure?"))
+							 return;*/
+							 
+						 $http({
+						        method : "POST",
+						        url : "champions/"+championrow.id+"/playoffs",
+						        params: {name:playoffname}
+						    }).then(function mySuccess(response) {
+						    	$scope.getPlayoffs($scope.champion); 
+						    }, function myError(response) {
+						  
+						       alert("An Error occured. Try again.");
+						    });
+						 
+					 }
+				  
+				  
 				  $scope.adminAddMatchday = function (matchdayname,teamgrouprow){
 						// $scope.result = gamerow.team1.name+" "+matchdayrow.name;
 			
@@ -585,6 +958,32 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 						    });
 						 
 					 }
+				  
+				  
+				  $scope.adminUpdatePlayoff = function (row,championrow){
+						// $scope.result = gamerow.team1.name+" "+matchdayrow.name;
+			
+				/*		 if(!confirm("Are you sure?"))
+							 return;*/
+					  
+	
+					  
+					  //$scope.result=row; 
+						 $http({
+						        method : "PUT",
+						        url : "champions/"+championrow.id+"/playoffs",
+						        data: row,
+						        headers: {'Content-Type': 'application/json; charset=utf-8'} 
+						    }).then(function mySuccess(response) {
+
+						    		alert("Done!");
+						    }, function myError(response) {
+						  
+						       alert("An Error occured. Try again.");
+						    });
+						 
+					 }
+				  
 				  $scope.adminUpdateMatchday = function (row,teamgrouprow){
 						// $scope.result = gamerow.team1.name+" "+matchdayrow.name;
 			
@@ -630,6 +1029,45 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 						    }).then(function mySuccess(response) {
 
 						    	$scope.getMatchdays($scope.teamgroup);
+						    }, function myError(response) {
+						  
+						       alert("An Error occured. Try again.");
+						    });
+						 
+					 }
+				  $scope.generatePlayoffs = function (championrow,selectedPhase,selectedRound){
+						// $scope.result = gamerow.team1.name+" "+matchdayrow.name;
+			
+						 if(!confirm("Are you sure?"))
+							 return;
+					  //$scope.result=matchdayrow; 
+						 $http({
+						        method : "POST",
+						        url : "champions/"+championrow.id+"/actions/generateplayoffs",
+						        params:{phase:selectedPhase,round:selectedRound}
+						    }).then(function mySuccess(response) {
+
+						    	$scope.getPlayoffs($scope.champion);
+						    }, function myError(response) {
+						  
+						       alert("Προέυκυψε σφάλμα. Σιγουρευτήτε οτι αυτή η φάση δεν υπάρχει ήδη ή οτι έχετε συμπληρώσει ολα τα αποτελεσματα αγώνων της προηγούμενης φάσης.");
+						    });
+						 
+					 }
+				  
+				  $scope.adminAddPlayoffGame = function (team1,team2,playoffrow){
+						// $scope.result = gamerow.team1.name+" "+matchdayrow.name;
+			
+				/*		 if(!confirm("Are you sure?"))
+							 return;*/
+					  //$scope.result=matchdayrow; 
+						 $http({
+						        method : "POST",
+						        url : "playoffs/"+playoffrow.id+"/games",
+						        params:{teamid1: team1.id, teamid2: team2.id}
+						    }).then(function mySuccess(response) {
+
+						    	$scope.getPlayoffs($scope.champion);
 						    }, function myError(response) {
 						  
 						       alert("An Error occured. Try again.");
@@ -738,7 +1176,14 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 
 					  if(!row.number)
 						  return;
-					  
+					  for(i=0;i<$scope.scorers.length;i++)
+						  {
+						  	if($scope.scorers[i].contact.name==row.contact.name)
+						  		{
+						  			alert("Αυτό το όναμα υπάρχει ήδη. Κανετε αλλαγή των τερμάτων και αποθήκευση.");
+						  			return;
+						  		}
+						  }
 						 $http({
 						        method : "POST",
 						        url : "games/"+$scope.selectedgame.id+"/scorers",
@@ -1217,5 +1662,87 @@ appAdmin.controller("newsController",function($scope, $http, $location, $window)
 	
 		 
 });
+
+
+appAdmin.controller("usersController",function($scope, $http, $location, $window){
+	
+	 $http({
+	        method : "GET",
+	        url : "teams",
+	    }).then(function mySuccess(response) {
+
+	        $scope.teams = response.data;
+	      
+	    }, function myError(response) {
+	    		      
+	    });
+	  $http({
+	        method : "GET",
+	        	url : "contacts"
+	    }).then(function mySuccess(response) {
+
+	    	$scope.users=response.data
+	    }, function myError(response) {
+
+	        //alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");
+	    });
+	  
+	  $scope.addUser = function(row,teamrow){
+		  
+		//  $scope.result= "teams/"+teamrow.id+"/adminusers";
+		  $http({
+		        method : "POST",
+		        url : "teams/"+teamrow.id+"/adminusers",
+		        params:{password:row.password, name: row.name, username:row.username}
+		       // headers: {'Content-Type': 'application/json; charset=utf-8'} 
+			      // params: {id:row.id,teamid1:row.team1.id,teamid2:row.team2.id,
+			    	//   score1:row.score1,score2:row.score2, date:row.date, matchdayid:tmpmatchday.id}
+
+		    }).then(function mySuccess(response) {
+
+		      	$window.location.reload();
+		    }, function myError(response) {
+		  
+		    	alert("An Error occured. Try again.");
+		      
+		    });
+		 
+	  }
+		 $scope.deleteUser = function (row){ 
+			 if(!confirm("Είστε σίγουρος;"))
+				 return;
+			 $http({
+		        method : "DELETE",
+		        	url : "players/"+row.id
+		    }).then(function mySuccess(response) {
+		    	$window.location.reload();
+		        
+		    }, function myError(response) {
+
+		        alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");
+		    });
+		 }
+		 $scope.editUser = function (row){ 
+			// $scope.result = row;
+			 $http({
+		        method : "PUT",
+		        	url : "teamadmins",
+		        	params:{name:row.name, username:row.username, id:row.id, password:row.password}
+/*				        data: row,
+				        headers: {'Content-Type': 'application/json; charset=utf-8'}*/
+		    }).then(function mySuccess(response) {
+		    	$window.location.reload();
+		        
+		    }, function myError(response) {
+
+		        alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");
+		    });
+		 }
+		 
+		 
+		 
+		 
+});
+	
 
 

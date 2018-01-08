@@ -34,27 +34,40 @@ pageEncoding="UTF-8"%>
 	<spring:url value="/resources/admin.js" var="crunchifyJS" />
  	<spring:url value="/resources/main.css" var="maincss" />
  	<script src="${crunchifyJS}"></script>
-<%--  	<link rel="stylesheet" type="text/css" href="${maincss}">
- --%> 	<link rel="stylesheet" type="text/css" href="${resources}admin.css">      
+  	<link rel="stylesheet" type="text/css" href="${maincss}">
+ 	<link rel="stylesheet" type="text/css" href="${resources}admin.css">      
 <!-- <<<<<<<<<<<<< COMMON  -->
 
 
 </head>
-<body ng-app="appAdmin">
+<body ng-app="appAdmin" >
 <div class='champ'>
 	<ul>
 		<li><a ng-href='#!adminchampions'>ΠΡΩΤΑΘΛΗΜΑΤΑ</a></li>
-	</ul> 
-	<ul>
+	
+
 		<li><a  ng-href='#!adminteams'>ΟΜΑΔΕΣ</a></li>
-	</ul> 
-	<ul>
+	
+		<li><a  ng-href='#!adminusers'>ΧΡΗΣΤΕΣ</a></li>
+
 		<li><a  ng-href='#!adminnews'>ΝΕΑ</a></li>
-	</ul> 
+		
+		<li><a  ng-href='#!adminimages'>ΕΙΚΟΝΕΣ</a></li>
+
+						<li>
+					
+					<c:url value="/logout" var="logoutUrl" /> <form id="logout" action="${logoutUrl}" method="post" >
+					  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+					</form>
+					<c:if test="${pageContext.request.userPrincipal.name != null}">
+						<a style='' href="javascript:document.getElementById('logout').submit()"> Logout</a>
+					</c:if>
+					</li>
+					</ul>
 </div>
 
 
 
-<div ng-view></div>
+<div ng-view ></div>
 </body>
 </html>

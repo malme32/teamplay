@@ -7,9 +7,9 @@ pageEncoding="UTF-8"%>
 <spring:url value="/resources/theme1" var="resources" />
 
 
-<header class="header style-3" ng-app="appMain" ng-controller='headerController'>
+<header class="header style-3" ng-app="appMain" ng-controller='headerController' >
 
-<div class="topbar-and-logobar">
+<div class="topbar-and-logobar" >
 <div class="container">
 
 <div class="responsive-btn pull-right">
@@ -18,75 +18,33 @@ pageEncoding="UTF-8"%>
 
 
 <ul class="user-login-option pull-right">
-<li class="social-icon">
-<ul class="social-icons style-5">
-<li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
-<li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
-<li><a class="youtube" href="#"><i class="fa fa-youtube-play"></i></a></li>
-<li><a class="pinterest" href="#"><i class="fa fa-pinterest-p"></i></a></li>
-</ul>
-</li>
+
+
+<%if(pageContext.getAttribute("username", PageContext.REQUEST_SCOPE).equals("")){ %>
 <li class="login-modal">
-<a href="#" class="login" data-toggle="modal" data-target="#login-modal"><i class="fa fa-user"></i>ΣΥΝΔΕΣΗ</a>
-<div class="modal fade" id="login-modal">
-<div class="login-form position-center-center">
-<h2>Login<button class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button></h2>
-<form>
-<div class="form-group">
-<input type="text" class="form-control" name="user" placeholder="domain@live.com">
-<i class=" fa fa-envelope"></i>
-</div>
-<div class="form-group">
-<input type="password" class="form-control" name="pass" placeholder="**********">
-<i class=" fa fa-lock"></i>
-</div>
-<div class="form-group custom-checkbox">
-<label>
-<input type="checkbox"> Stay login
-</label>
-<a class="pull-right forgot-password" href="#"></a>
-<a href="#" class="pull-right forgot-password" data-toggle="modal" data-target="#login-modal-2">Forgot password?</a>
-</div>
-<div class="form-group">
-<button class="btn full-width red-btn">Login</button>
-</div>
-</form>
-<span class="or-reprater"></span>
-<ul class="others-login-way">
-<li><a class="facebook-bg" href="#"><i class="fa fa-facebook"></i>Facebook</a></li>
-<li><a class="tweet-bg" href="#"><i class="fa fa-twitter"></i>Tweet</a></li>
-<li><a class="linkedin-bg" href="#"><i class="fa fa-linkedin"></i>Linkedin</a></li>
-<li><a class="google-plus-bg" href="#"><i class="fa fa-google-plus"></i>Google+</a></li>
-</ul>
-</div>
-</div>
-<div class="modal fade" id="login-modal-2">
-<div class="login-form position-center-center">
-<h2>Forgot password<button class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button></h2>
-<form>
-<div class="form-group">
-<input type="text" class="form-control" name="user" placeholder="domain@live.com">
-<i class=" fa fa-envelope"></i>
-</div>
-<div class="form-group">
-<input type="password" class="form-control" name="pass" placeholder="**********">
-<i class=" fa fa-lock"></i>
-</div>
-<div class="form-group">
-<button class="btn full-width red-btn">Login</button>
-</div>
-</form>
-</div>
-</div>
+<a href="loginPage" class="login" ><i class="fa fa-user"></i> ΣΥΝΔΕΣΗ</a>
+
 </li>
-<li class="language-dropdown">
+<%}else{%>
+<li style='color:white'><%= pageContext.getAttribute("name", PageContext.REQUEST_SCOPE) %></li>
+						<li>
+					
+					<c:url value="/logout" var="logoutUrl" /> <form id="logout" action="${logoutUrl}" method="post" >
+					  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+					</form>
+					<c:if test="${pageContext.request.userPrincipal.name != null}">
+						<a style='color:white' href="javascript:document.getElementById('logout').submit()">Logout</a>
+					</c:if>
+					</li>
+<%}%>
+<%--<li class="language-dropdown">
 <a id="choses-lang" href="#"><i class="fa fa-globe"></i>ΕΛ<i class="fa fa-caret-down"></i></a>
-<%-- <ul id="language-dropdown">
+ <ul id="language-dropdown">
 <li><a href="#"><img src="${resources}/images/flags/img-02.jpg" alt="">ger</a></li>
 <li><a href="#"><img src="${resources}/images/flags/img-03.jpg" alt="">fra</a></li>
 <li><a href="#"><img src="${resources}/images/flags/img-04.jpg" alt="">bra</a></li>
-</ul> --%>
-</li>
+</ul> 
+</li>--%>
 </ul>
 
 </div>
@@ -111,8 +69,12 @@ pageEncoding="UTF-8"%>
 
 
 <ul class="nav-list pull-right">
+
+
+
 <li>
-<a href="soccer.html">ΑΡΧΙΚΗ</a>
+
+<a href="#!home">ΑΡΧΙΚΗ</a>
 <%-- <ul>
 <li><a >Home</a></li>
 <li><a href="${resources}/home-2.html">Home 2</a></li>
@@ -120,33 +82,35 @@ pageEncoding="UTF-8"%>
 
 </ul> --%>
 </li>
+
 <%-- <li><a href="${resources}/about.html">ΕΓΚΑΤΑΣΤΑΣΕΙΣ</a></li>
- --%><li>
-<a href="${resources}/team.html">ΑΚΑΔΗΜΙΕΣ</a>
+ --%>
+<li><a ng-href="#!point-table.html">ΠΡΩΤΑΘΛΗΜΑΤΑ</a>
 <ul>
-<li><a href="${resources}/team.html">team</a></li>
-<li><a href="${resources}/team-detail.html">Team detail</a></li>
-<li><a href="${resources}/team-width-sidebar.html">team-widthsidebar</a></li>
-</ul>
-<li><a href="point-table.html">ΠΡΩΤΑΘΛΗΜΑΤΑ</a>
-<ul>
-<li ng-repeat='row in headerChampions'><a href="point-table.html">{{row.name}}</a></li>
+<li ng-repeat='row in headerChampions'><a href="#!point-table.html">{{row.name}}</a></li>
 
 </ul>
 
 </li>
-<li><a href="team-list.html">ΟΜΑΔΕΣ</a>
+<li><a href="#!team-list.html">ΟΜΑΔΕΣ</a>
+<ul>
+<li ><a ng-click='getMyTeamLink()' href=''>Η ΟΜΑΔΑ ΜΟΥ</a></li><!-- ng-href="{{getMyTeamLink()}} -->
+<%if(!pageContext.getAttribute("username", PageContext.REQUEST_SCOPE).equals("")){ %>
+<li ><a href="#!editteam">ΕΠΕΞΕΡΓΑΣΙΑ ΟΜΑΔΑΣ</a></li>
+<%} %>
+<li ><a href="#!team-list.html">ΟΛΕΣ ΟΙ ΟΜΑΔΕΣ</a></li>
+</ul>
 </li>
 <li class="mega-dropdown">
-<a href="news-list.html">ΝΕΑ</a>
+<a href="#!news-list.html">ΝΕΑ</a>
 <ul>
 <li class="row">
 <div class="col-lg-3 col-md-3 col-sm-3">
 <div class="blog-categories">
 <h2>ΝΕΑ</h2>
 <ul class="blog-categories-list">
-<li><a href="news-list.html"><b>ΟΛΑ ΤΑ ΝΕΑ</b></a></li>
-<li ng-repeat='row in news | orderBy:"-date"'><a ng-href="news-detail?id={{row.id}}">{{row.title}}</a></li>
+<li><a href="#!news-list.html"><b>ΟΛΑ ΤΑ ΝΕΑ</b></a></li>
+<li ng-repeat='row in news | orderBy:"-date"'><a ng-href="#!news-detail.html/{{row.id}}">{{row.title}}</a></li>
 
  </ul>
 </div>
@@ -158,12 +122,13 @@ pageEncoding="UTF-8"%>
 <table>
 <tr>
 <td  ng-repeat='row in news | orderBy:"-date"'>
+
  <div class="item" style='margin:10px; width:180px; top:0;'>
 
 <div class="large-post-img">
 <%-- <img ng-src="${resources}{{row.imageurl}}" alt="">
  --%>
-  <div style='background:url(${resources}{{row.imageurl}}) no-repeat center; 
+  <div style='background:url(${resources}{{row.thumburl}}) no-repeat center; 
   width:180px; height:130px;background-size:cover; '>
 
 </div>
@@ -171,101 +136,14 @@ pageEncoding="UTF-8"%>
 
 	<div class="large-post-detail style-3 p-0" style='height:110px; overflow:hidden'>
 	<span class="red-color">{{row.date | date}}</span>
-	<a ng-href="news-detail?id={{row.id}}"><h2>{{row.title}}</h2></a>
+	<a ng-href="#!news-detail.html/{{row.id}}"><h2>{{row.title}}</h2></a>
 	</div>
 
 </div>
 </td>
 </tr>
 </table>
-<%--  <div class="item"  ng-repeat='row in news | orderBy:"-date"'>
 
-<div class="large-post-img">
-<img ng-src="${resources}{{row.imageurl}}" alt="">
-</div>
-
-
-<div class="large-post-detail style-3 p-0">
-<span class="red-color">{{row.date | date}}</span>
-<h2>{{row.title}}</h2>
-</div>
-
-</div> --%>
-
-<%--  <div class="item">
-
-<div class="large-post-img">
-<img src="${resources}/images/blog-grid-view/img-2-2.jpg" alt="">
-</div>
-
-
-<div class="large-post-detail style-3 p-0">
-<span class="red-color">Englis FA Cup</span>
-<h2>Man United reunion for Ibrahimovic,</h2>
-</div>
-
-</div> 
-
-
-
-<div class="item">
-
-<div class="large-post-img">
-<img src="${resources}/images/blog-grid-view/img-2-3.jpg" alt="">
-</div>
-
-
-<div class="large-post-detail style-3 p-0">
-<span class="red-color">Englis FA Cup</span>
-<h2>Man United reunion for Ibrahimovic,</h2>
-</div>
-
-</div> --%>
-
-<%-- 
-<div class="item">
-
-<div class="large-post-img">
-<img src="${resources}/images/blog-grid-view/img-2-4.jpg" alt="">
-</div>
-
-
-<div class="large-post-detail style-3 p-0">
-<span class="red-color">Englis FA Cup</span>
-<h2>Man United reunion for Ibrahimovic,</h2>
-</div>
-
-</div>
-
-
-<div class="item">
-
-<div class="large-post-img">
-<img src="${resources}/images/blog-grid-view/img-2-1.jpg" alt="">
-</div>
-
-
-<div class="large-post-detail style-3 p-0">
-<span class="red-color">Englis FA Cup</span>
-<h2>Man United reunion for Ibrahimovic,</h2>
-</div>
-
-</div>
-
-
-<div class="item">
-
-<div class="large-post-img">
-<img src="${resources}/images/blog-grid-view/img-2-2.jpg" alt="">
-</div>
-
-
-<div class="large-post-detail style-3 p-0">
-<span class="red-color">Englis FA Cup</span>
-<h2>Man United reunion for Ibrahimovic,</h2>
-</div>
-
-</div> --%>
 
 </div>
 </div>
@@ -273,20 +151,15 @@ pageEncoding="UTF-8"%>
 </ul>
 </li>
 <li>
-<a href="#">photo</a>
-<ul>
-<li><a href="match.html">Match</a></li>
-<li><a href="match-detail.html">Match Detail</a></li>
-<li><a href="match-result.html">Match Result</a></li>
-</ul>
+<a href="">ΑΚΑΔΗΜΙΕΣ</a>
 </li>
 <li>
-<a href="#">ΕΠΙΚΟΙΝΩΝΙΑ</a>
-<ul>
-<li><a href="shop.html">shop</a></li>
-<li><a href="shop-detail.html">shop detail</a></li>
-<li><a href="cart.html">cart</a></li>
-</ul>
+<a href="#!gallery">photo</a>
+
+</li>
+<li>
+<a href="">ΕΠΙΚΟΙΝΩΝΙΑ</a>
+
 </li>
 <!-- <li>
 <a href="#">pages</a>
@@ -311,3 +184,108 @@ pageEncoding="UTF-8"%>
 </div>
 
 </header>
+
+
+<nav id="menu" class="responive-nav" ng-app="appMain" ng-controller='headerController'>
+<a class="r-nav-logo" href="home-1.html"><img src="${resources}/images/logo-1.png" alt=""></a>
+<ul class="respoinve-nav-list">
+
+
+
+
+<%if(pageContext.getAttribute("username", PageContext.REQUEST_SCOPE).equals("")){ %>
+<li class="">
+<a href="loginPage" class= >ΣΥΝΔΕΣΗ</a>
+
+</li>
+<%}%>
+
+
+<li><a href="#!home">ΑΡΧΙΚΗ</a></li>
+<!-- <a data-toggle="collapse" href="#list-1"><i class="pull-right fa fa-angle-down"></i>ΑΡΧΙΚΗ</a>
+<ul class="collapse" id="list-1">
+<li><a href="#!home">ΑΡΧΙΚΗ</a></li>
+<li><a href="index-2.html">Home 2</a></li>
+<li><a href="index-3.html">Home 3</a></li>
+</ul> 
+</li>-->
+
+<!-- <li>
+<a data-toggle="collapse" href="#list-2"><i class="pull-right fa fa-angle-down"></i>Team</a>
+<ul class="collapse" id="list-2">
+<li><a href="#!team-list.html">ΟΜΑΔΕΣ</a></li>
+<li><a href="team-detail.html">Team Detail</a></li>
+<li><a href="team-widthsidebar.html">team widthsidebar</a></li>
+</ul>
+</li>
+ -->
+
+
+<li><a data-toggle="collapse" href="#list-2"><i class="pull-right fa fa-angle-down"></i>ΟΜΑΔΕΣ</a>
+<ul  class="collapse" id="list-2">
+<li  ng-click='getMyTeamLink()'><a href=''>Η ΟΜΑΔΑ ΜΟΥ</a></li>
+<%if(!pageContext.getAttribute("username", PageContext.REQUEST_SCOPE).equals("")){ %>
+<li ><a href="#!editteam">ΕΠΕΞΕΡΓΑΣΙΑ ΟΜΑΔΑΣ</a></li>
+<%} %>
+<li ><a href="#!team-list.html">ΟΛΕΣ ΟΙ ΟΜΑΔΕΣ</a></li>
+</ul>
+</li>
+
+
+<li>
+<li><a href="#!point-table.html">ΠΡΩΤΑΘΛΗΜΑΤΑ</a></li>
+
+<li>
+<a href="#!news-list.html">ΝΕΑ</a>
+</li>
+<li>
+<a href="">ΑΚΑΔΗΜΙΕΣ</a>
+</li>
+<li><a href="#!gallery">GALLERY</a></li>
+<li><a href="">ΕΠΙΚΟΙΝΩΝΙΑ</a></li>
+<%if(!pageContext.getAttribute("username", PageContext.REQUEST_SCOPE).equals("")){ %>
+
+<%-- <li style=''><a href='' ><%= pageContext.getAttribute("name", PageContext.REQUEST_SCOPE) %></a></li> --%>
+						<li>
+					
+					<c:url value="/logout" var="logoutUrl" /> <form id="logout" action="${logoutUrl}" method="post" >
+					  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+					</form>
+					<c:if test="${pageContext.request.userPrincipal.name != null}">
+						<a style='' href="javascript:document.getElementById('logout').submit()"><%= pageContext.getAttribute("name", PageContext.REQUEST_SCOPE) %> Logout</a>
+					</c:if>
+					</li>
+<%}%>
+<!-- <li>
+<a data-toggle="collapse" href="#list-3"><i class="pull-right fa fa-angle-down"></i>Match</a>
+<ul class="collapse" id="list-3">
+<li><a href="match.html">match</a></li>
+<li><a href="match-detail.html">match detail</a></li>
+<li><a href="match-result.html">match result</a></li>
+</ul>
+</li>
+<li>
+<a data-toggle="collapse" href="#list-4"><i class="pull-right fa fa-angle-down"></i>Shop</a>
+<ul class="collapse" id="list-4">
+<li><a href="shop.html">shop</a></li>
+<li><a href="cart.html">cart</a></li>
+<li><a href="shop-detail.html">shop detail</a></li>
+</ul>
+</li>
+<li>
+<a data-toggle="collapse" href="#list-5"><i class="pull-right fa fa-angle-down"></i>Pages</a>
+<ul class="collapse" id="list-5">
+<li><a href="404.html">404</a></li>
+<li><a href="underconstraction.html">underconstraction</a></li>
+</ul>
+</li>
+<li>
+<a data-toggle="collapse" href="#list-6"><i class="pull-right fa fa-angle-down"></i>Blog</a>
+<ul class="collapse" id="list-6">
+<li><a href="blog.html">blog</a></li>
+<li><a href="blog-detail.html">blog detail</a></li>
+</ul>
+</li>
+<li><a href="contact.html">Contact</a></li>-->
+</ul> 
+</nav>

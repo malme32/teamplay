@@ -32,6 +32,10 @@ public class Notice {
 	
 	@Column(name="imageurl", length=300)
 	private String imageurl;
+	
+
+	@Column(name="thumburl", length=300)
+	private String thumburl;
 
 	public int getId() {
 		return id;
@@ -71,6 +75,15 @@ public class Notice {
 
 	public void setImageurl(String imageurl) {
 		this.imageurl = imageurl;
+	}
+
+	public String getThumburl() {
+	
+		return (this.thumburl==null||this.thumburl.equals("")) ? (String) "/defaultimages/newsdefaultthumb.jpg" : thumburl;
+	}
+
+	public void setThumburl(String thumburl) {
+		this.thumburl = thumburl;
 	}
 
 }

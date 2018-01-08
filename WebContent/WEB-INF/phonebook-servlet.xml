@@ -33,6 +33,18 @@
  -->	
  <mvc:interceptors>
     <bean id="loggerInterceptor" class="com.event.interceptor.LoggerInterceptor"/>
+    
+     <mvc:interceptor>
+            <mvc:mapping path="/resources/**"/>
+            <bean
+                    class="org.springframework.web.servlet.mvc.WebContentInterceptor">
+                <property name="cacheSeconds" value="7000000" />
+                <property name="useExpiresHeader" value="true"/>
+                <property name="useCacheControlHeader" value="true"/>
+                <property name="useCacheControlNoStore" value="true"/>
+            </bean>
+        </mvc:interceptor>
+    
 </mvc:interceptors>
    <bean id = "loggingAspect" class = "com.phonebook.aspect.LoggingAspect"/> 
    
