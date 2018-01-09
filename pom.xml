@@ -22,7 +22,9 @@
 <!--         <version>2.6</version>  
  -->        <configuration>
 <!--          <encoding>Cp1252</encoding>
- -->          <warSourceDirectory>WebContent</warSourceDirectory>
+
+ -->           <encoding>UTF-8</encoding>
+ <warSourceDirectory>WebContent</warSourceDirectory>
         </configuration>
       </plugin>
     </plugins>

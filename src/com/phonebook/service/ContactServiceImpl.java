@@ -88,8 +88,7 @@ public class ContactServiceImpl implements ContactService{
 	public
 	ContactServiceImpl(PaintService paintService) {
 
-/*		greeklishMap.put('ò','s');greeklishMap.put('á','a');greeklishMap.put('â','b');greeklishMap.put('ã','g');greeklishMap.put('ä','d');greeklishMap.put('å','e');greeklishMap.put('æ','z');greeklishMap.put('ç','i');greeklishMap.put('è','8');greeklishMap.put('é','i');greeklishMap.put('ê','k');greeklishMap.put('ë','l');greeklishMap.put('ì','m');greeklishMap.put('í','n');greeklishMap.put('î','3');greeklishMap.put('ï','o');greeklishMap.put('ð','p');greeklishMap.put('ñ','r');greeklishMap.put('ó','s');greeklishMap.put('ô','t');greeklishMap.put('õ','y');greeklishMap.put('ö','f');greeklishMap.put('÷','x');greeklishMap.put('ø','p');greeklishMap.put('ù','w');
-*/		// TODO Auto-generated method stub
+	// TODO Auto-generated method stub
 		this.paintService=paintService;
 	}
 
