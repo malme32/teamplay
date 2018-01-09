@@ -37,6 +37,7 @@ pageEncoding="UTF-8"%>
 <!-- 		 <div class="" ng-repeat='row2 in row.standings.matchdays' style="margin:0;padding:0">
 		<h3 style="margin:0 0 5px 0; padding:0"><span><i class="red-color">{{row2.name}} </i></span></h3> -->
 		
+		<img ng-hide='champion.playoffgames' width=40 height=40 src="${resources}/customimages/loading.gif" alt="">
 		<div ng-show='champion.playoffgames.length'>
 		<!-- <h2>Play Offs</h2> -->
 
@@ -68,6 +69,7 @@ pageEncoding="UTF-8"%>
 			</div>
 
 
+<img ng-hide='teamgrouplist' width=40 height=40 src="${resources}/customimages/loading.gif" alt="">
 
 <div ng-repeat='row in teamgrouplist' style="margin-bottom:60px;">
 <div  class="macth-fixture" >
@@ -162,7 +164,7 @@ pageEncoding="UTF-8"%>
 			<tr>
 	<!--  		<th ng-show='desktop'>
 				</th>  -->
-				<th >
+				<th style='text-align:center'>ΓΚΟΛ
 				</th>
 				<th  style='text-align:center'>ΟΝΟΜΑ
 				</th>
@@ -175,9 +177,12 @@ pageEncoding="UTF-8"%>
 			<!-- 	<td>{{$index + 1}}</td> -->
 				<td>{{row2.number}}
 				</td>
-				<td>{{row2.contact.name}}
+				<td> <table>  <tr><td><div style='  background:url(${resources}{{row2.contact.thumbpath}}) no-repeat center; height:40px;width:40px; background-size:cover; '></div></td>
+				<td><div style=''><span>{{row2.contact.name}}</span></div></td>
+				</tr></table>
+				
 				</td>
-				<td>{{row2.team.name}}
+				<td><a ng-href='#!team-detail.html/{{row2.team.id}}'>{{row2.team.name}}</a>
 				</td>
 			</tr>
 

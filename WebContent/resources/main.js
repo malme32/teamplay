@@ -97,11 +97,11 @@ appMain.config(function($routeProvider) {
         controller: "teamController"
 
     })
-    .when("/", {
+/*    .when("/", {
             templateUrl : "home1",
             controller: "homeController"
 
-    })
+    })*/
     .when("/home", {
         templateUrl : "home1",
         controller: "homeController"
@@ -112,7 +112,11 @@ appMain.config(function($routeProvider) {
             templateUrl : "gallery",
             controller: "galleryController"
 
-    });
+    })
+    .when("/contactus", {
+        templateUrl : "contactus"
+
+});
     /*.
      $routeProvider.otherwise({redirectTo: '/index'});*/
  /* $locationProvider.html5Mode(true); */
@@ -141,7 +145,11 @@ appMain.run(function($rootScope, $window) {
     $rootScope.$on("$locationChangeStart", function(event, next, current) { 
         // handle route changes    
     	window.scrollTo(0, 0);
-    	
+/*    	if($rootScope.lastpage!=window.location.href)
+    		window.scrollTo(0, 0);
+    	else
+    		window.scrollTo(300, 0);*/
+    	$rootScope.lastpage = $rootScope.currentpage;
     	$rootScope.currentpage=window.location.href; 
     	//$rootScope.length = window.innerWidth;
     	  if(window.innerWidth<650)
@@ -163,7 +171,7 @@ appMain.run(function($rootScope, $window) {
     	    
     	  //  $rootScope.$on('$viewContentLoaded', function() {
     	    	//if(next.indexOf("#!/home") !== -1)//;=="http://localhost:60000/phonebook/soccer.html")
-        	    	if(next.indexOf("#!/home") !== -1 || next.length<50)//;=="http://localhost:60000/phonebook/soccer.html")
+        	    	if(next.indexOf("#!/home") !== -1)//;=="http://localhost:60000/phonebook/soccer.html")
     	    	//	$rootScope.isIndex=true;
     	    		$rootScope.indexClass="own-visible";
     	    	else
@@ -330,6 +338,21 @@ appMain.controller("homeController",function($scope, $http, $routeParams, $locat
 	    }).then(function mySuccess(response) {
 
 	        $scope.upcominggames = response.data;
+
+
+	    }, function myError(response) {
+
+	    	
+	        //$scope.result = response.statusText;
+	      
+	    });
+	 
+	 $http({
+	        method : "GET",
+	        url : "games?lastresults"
+	    }).then(function mySuccess(response) {
+
+	        $scope.lastresults = response.data;
 
 
 	    }, function myError(response) {
@@ -875,9 +898,25 @@ appMain.controller("teamdetailController",function($scope, $http, $location, $ro
 			        url : "followers"
 			    }).then(function mySuccess(response) {
 			    	if(response.data.length>0)
+		    		{
+
 			    		$scope.followingteam = response.data[0];
-			    	else 
+			    		
+			    	  	try{
+					    	Android.getFollowers(response.data[0].id); }
+					    	catch(err){}
+				    	
+		    		}
+		    	else {
+		    		
+
 			    		$scope.followingteam =null;
+			    		
+			    	  	try{
+					    	Android.getFollowers(""); }
+					    	catch(err){}
+				    	
+		    	}
 			        //alert(response.data[0].id);
 			    }, function myError(response) {
 			    	//alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");     
@@ -989,7 +1028,7 @@ appMain.controller("teamdetailController",function($scope, $http, $location, $ro
 
 appMain.controller("indexController",function($scope, $http, $location){
 
-	window.scrollTo(0, 0);
+	//window.scrollTo(0, 0);
 	/*$scope.isIndex=true;*/
 /*	 $http({
 	        method : "GET",
@@ -1011,7 +1050,7 @@ appMain.controller("indexController",function($scope, $http, $location){
 });
 
 appMain.controller("newsDetailController",function($scope, $http, $location,$routeParams){
-	window.scrollTo(0, 0);
+	//window.scrollTo(0, 0);
 
 	//var id = location.search.split('id=')[1];
 	 $http({
@@ -1033,7 +1072,7 @@ appMain.controller("newsDetailController",function($scope, $http, $location,$rou
 appMain.controller("newsController",function($scope, $http, $location){
 
 
-	window.scrollTo(0, 0);
+	//window.scrollTo(0, 0);
 	 $http({
 	        method : "GET",
 	        url : "news",
@@ -1091,12 +1130,51 @@ appMain.controller("headerController",function($scope, $http, $location){
 
 		        //$scope.followingteam = response.data[0];
 		    	$location.path( "team-detail.html/"+response.data[0].id );
+		    	
+
 		        //return "#!team-detail.html/"+response.data[0].id;
 		    }, function myError(response) {
 		    	alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");     
 		    });
 		 
 	 }
+	 
+	 
+	 //$scope.getFollowingTeams = function (){ 
+
+		 $http({
+		        method : "GET",
+		        url : "followers"
+		    }).then(function mySuccess(response) {
+		    	if(response.data.length>0)
+		    		{
+		    		//alert("xa");
+			    		//$scope.followingteam = response.data[0];
+			    		
+			    	  	try{
+					    	Android.getFollowers(response.data[0].id); }
+					    	catch(err){}
+				    	
+		    		}
+		    	else {
+		    		
+
+			    		//$scope.followingteam =null;
+			    		
+			    	  	try{
+					    	Android.getFollowers(""); }
+					    	catch(err){}
+				    	
+		    	}
+		    	
+		  
+		        //alert(response.data[0].id);
+		    }, function myError(response) {
+		    	//alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");     
+		    });
+		 
+	 //}
+	 
 });
 
 appMain.controller("teamlistController",function($scope, $http, $location){
@@ -1136,9 +1214,27 @@ appMain.controller("teamlistController",function($scope, $http, $location){
 		        url : "followers"
 		    }).then(function mySuccess(response) {
 		    	if(response.data.length>0)
-		    		$scope.followingteam = response.data[0];
-		    	else 
-		    		$scope.followingteam =null;
+		    		{
+
+			    		$scope.followingteam = response.data[0];
+			    		
+			    	  	try{
+					    	Android.getFollowers(response.data[0].id); }
+					    	catch(err){}
+				    	
+		    		}
+		    	else {
+		    		
+
+			    		$scope.followingteam =null;
+			    		
+			    	  	try{
+					    	Android.getFollowers(""); }
+					    	catch(err){}
+				    	
+		    	}
+		    	
+		  
 		        //alert(response.data[0].id);
 		    }, function myError(response) {
 		    	//alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");     

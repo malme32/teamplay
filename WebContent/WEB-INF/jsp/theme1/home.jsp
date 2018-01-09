@@ -26,8 +26,9 @@ pageEncoding="UTF-8"%>
 <div class="col-lg-9 col-sm-8">
 
 
+		<img ng-hide='upcominggames' width=40 height=40 src="${resources}/customimages/loading.gif" alt="">
  		<div ng-show='upcominggames.length' style="margin-bottom:40px">
-		<h2>ΕΠΕΡΧΟΜΕΝΑ ΠΑΙΧΝΙΔΙΑ</h2>
+		<h2>ΕΠΟΜΕΝΑ ΠΑΙΧΝΙΔΙΑ</h2>
 
 
 			<div class="matches-shedule-holder" style="margin:0;padding:0">
@@ -35,7 +36,7 @@ pageEncoding="UTF-8"%>
 
 			<div class="matches-dates-shedule" style='padding:0;margin:0;'>
 			<ul style='margin:0 0 10px 0;'>
-			<li ng-repeat='row1 in upcominggames  | orderBy: "date" | limitTo:10' style='padding:2px; '>
+			<li ng-repeat='row1 in upcominggames  | orderBy: "date" | limitTo:10' style='padding:2px; ' ng-show='row1.champion.enabled'>
 			<span class="pull-left"><img style='height:40px; width:40px' ng-src="${resources}{{row1.team1.logothumbpath}}" alt=""></span>
 			<span class="pull-right"><img style='height:40px; width:40px' ng-src="${resources}{{row1.team2.logothumbpath}}" alt=""></span>
 			<div class="detail" style='padding:0; margin:0'>
@@ -55,10 +56,41 @@ pageEncoding="UTF-8"%>
 
 
 
+		<img ng-hide='upcominggames' width=40 height=40 src="${resources}/customimages/loading.gif" alt="">
+ 		<div ng-show='upcominggames.length' style="margin-bottom:40px">
+		<h2>ΤΕΛΕΥΤΑΙΑ ΑΠΟΤΕΛΕΣΜΑΤΑ</h2>
+
+
+			<div class="matches-shedule-holder" style="margin:0;padding:0">
+
+
+			<div class="matches-dates-shedule" style='padding:0;margin:0;'>
+			<ul style='margin:0 0 10px 0;'>
+			<li ng-repeat='row1 in lastresults  | orderBy: "date" | limitTo:10' style='padding:2px; ' ng-show='row1.champion.enabled'>
+			<span class="pull-left"><img style='height:40px; width:40px' ng-src="${resources}{{row1.team1.logothumbpath}}" alt=""></span>
+			<span class="pull-right"><img style='height:40px; width:40px' ng-src="${resources}{{row1.team2.logothumbpath}}" alt=""></span>
+			<div class="detail" style='padding:0; margin:0'>
+			<a style='padding:0; margin:0' href="#!match.html/{{row1.id}}">Λεπτομέρειες<i class="fa fa-angle-double-right"></i></a>
+			<strong style='padding:0; margin:0'><a style='display:inline; padding:0; margin:0' href='#!team-detail.html/{{row1.team1.id}}'>{{row1.team1.name}}</a><i class="red-color"  style=''> {{row1.score1}} - {{row1.score2}}</i> <a style='display:inline; padding:0; margin:0'  href='#!team-detail.html/{{row1.team2.id}}'>{{row1.team2.name}}</a></strong>
+			 <span class="location-marker" style='padding:0; margin:0'><i class="fa "></i><b class="">{{row1.date |  date : "EEE dd MMM HH:mm"}} </b> ({{row1.champion.name}})</span> 
+			</div>
+			</li>
+			
+			</ul>
+			</div>
+			
+			</div>
+		
+		
+			</div>
+
+
 
 
 
 </div>
+
+
 
 <div class="col-lg-3 col-sm-4">
 

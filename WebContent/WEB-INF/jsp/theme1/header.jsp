@@ -5,17 +5,21 @@ pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <spring:url value="/resources/theme1" var="resources" />
+<div ng-app="appMain" ng-controller='headerController' >
 
-
-<header class="header style-3" ng-app="appMain" ng-controller='headerController' >
+<header class="header style-3" >
 
 <div class="topbar-and-logobar" >
-<div class="container">
 
-<div class="responsive-btn pull-right">
-<a href="#menu" class="menu-link"><i class="fa fa-bars"></i></a>
+<div class="container">
+<div    class="responsive-btn pull-right" >
+<a style= '  background-color:#cc0000' href="#menu" class="menu-link"><i class="fa fa-bars"></i></a>
 </div>
 
+<div   style= 'position:fixed; z-index:1000; right:15px' class="responsive-btn pull-right" >
+<a style= ' background-color:#cc0000; opacity:0.5' href="#menu" class="menu-link"><i class="fa fa-bars"></i></a>
+</div>
+<!--  style='position:fixed' -->
 
 <ul class="user-login-option pull-right">
 
@@ -56,7 +60,7 @@ pageEncoding="UTF-8"%>
 <div class="maga-drop-wrap">
 
 <div class="logo">
-<a href="home-1.html"><img src="${resources}/images/davourlislogo1.png" alt=""></a>
+<a href=""><img src="${resources}/images/davourlislogo1.png" alt=""></a>
 </div>
 
 
@@ -158,7 +162,7 @@ pageEncoding="UTF-8"%>
 
 </li>
 <li>
-<a href="">ΕΠΙΚΟΙΝΩΝΙΑ</a>
+<a href="#!contactus">ΕΠΙΚΟΙΝΩΝΙΑ</a>
 
 </li>
 <!-- <li>
@@ -184,24 +188,28 @@ pageEncoding="UTF-8"%>
 </div>
 
 </header>
+<script>
 
+ function applyClosedStyles1() {
+	    var bigSlideAPI = ($('.menu-link').bigSlide()).bigSlideAPI;
+	
+	      //bigSlideAPI.view.toggleClose();
+	      bigSlideAPI.view.applyClosedStyles();
+	      
+	} 
+</script>
 
-<nav id="menu" class="responive-nav" ng-app="appMain" ng-controller='headerController'>
-<a class="r-nav-logo" href="home-1.html"><img src="${resources}/images/logo-1.png" alt=""></a>
+<nav id="menu" class="responive-nav">
+<a class="r-nav-logo" href=""><img src="${resources}/images/logo-1.png" alt=""></a>
 <ul class="respoinve-nav-list">
 
 
 
 
-<%if(pageContext.getAttribute("username", PageContext.REQUEST_SCOPE).equals("")){ %>
-<li class="">
-<a href="loginPage" class= >ΣΥΝΔΕΣΗ</a>
-
-</li>
-<%}%>
 
 
-<li><a href="#!home">ΑΡΧΙΚΗ</a></li>
+
+<li onclick='applyClosedStyles1()'><a href="#!home">ΑΡΧΙΚΗ</a></li>
 <!-- <a data-toggle="collapse" href="#list-1"><i class="pull-right fa fa-angle-down"></i>ΑΡΧΙΚΗ</a>
 <ul class="collapse" id="list-1">
 <li><a href="#!home">ΑΡΧΙΚΗ</a></li>
@@ -221,28 +229,28 @@ pageEncoding="UTF-8"%>
  -->
 
 
-<li><a data-toggle="collapse" href="#list-2"><i class="pull-right fa fa-angle-down"></i>ΟΜΑΔΕΣ</a>
+<li><a data-toggle="collapse" href="#list-2" target="_self"><i class="pull-right fa fa-angle-down"></i>ΟΜΑΔΕΣ</a>
 <ul  class="collapse" id="list-2">
-<li  ng-click='getMyTeamLink()'><a href=''>Η ΟΜΑΔΑ ΜΟΥ</a></li>
+<li  onclick='applyClosedStyles1()' ng-click='getMyTeamLink()'><a href=''>Η ΟΜΑΔΑ ΜΟΥ</a></li>
 <%if(!pageContext.getAttribute("username", PageContext.REQUEST_SCOPE).equals("")){ %>
-<li ><a href="#!editteam">ΕΠΕΞΕΡΓΑΣΙΑ ΟΜΑΔΑΣ</a></li>
+<li  onclick='applyClosedStyles1()'><a href="#!editteam">ΕΠΕΞΕΡΓΑΣΙΑ ΟΜΑΔΑΣ</a></li>
 <%} %>
-<li ><a href="#!team-list.html">ΟΛΕΣ ΟΙ ΟΜΑΔΕΣ</a></li>
+<li onclick='applyClosedStyles1()' ><a href="#!team-list.html">ΟΛΕΣ ΟΙ ΟΜΑΔΕΣ</a></li>
 </ul>
 </li>
 
 
 <li>
-<li><a href="#!point-table.html">ΠΡΩΤΑΘΛΗΜΑΤΑ</a></li>
+<li onclick='applyClosedStyles1()'><a href="#!point-table.html">ΠΡΩΤΑΘΛΗΜΑΤΑ</a></li>
 
-<li>
+<li onclick='applyClosedStyles1()'>
 <a href="#!news-list.html">ΝΕΑ</a>
 </li>
-<li>
+<li onclick='applyClosedStyles1()'>
 <a href="">ΑΚΑΔΗΜΙΕΣ</a>
 </li>
-<li><a href="#!gallery">GALLERY</a></li>
-<li><a href="">ΕΠΙΚΟΙΝΩΝΙΑ</a></li>
+<li onclick='applyClosedStyles1()'><a href="#!gallery">GALLERY</a></li>
+<li onclick='applyClosedStyles1()'><a href="#!contactus">ΕΠΙΚΟΙΝΩΝΙΑ</a></li>
 <%if(!pageContext.getAttribute("username", PageContext.REQUEST_SCOPE).equals("")){ %>
 
 <%-- <li style=''><a href='' ><%= pageContext.getAttribute("name", PageContext.REQUEST_SCOPE) %></a></li> --%>
@@ -255,6 +263,13 @@ pageEncoding="UTF-8"%>
 						<a style='' href="javascript:document.getElementById('logout').submit()"><%= pageContext.getAttribute("name", PageContext.REQUEST_SCOPE) %> Logout</a>
 					</c:if>
 					</li>
+<%}%>
+<%if(pageContext.getAttribute("username", PageContext.REQUEST_SCOPE).equals("")){ %>
+
+<li class="">
+<a href="loginPage" class= >ΣΥΝΔΕΣΗ</a>
+
+</li>
 <%}%>
 <!-- <li>
 <a data-toggle="collapse" href="#list-3"><i class="pull-right fa fa-angle-down"></i>Match</a>
@@ -289,3 +304,4 @@ pageEncoding="UTF-8"%>
 <li><a href="contact.html">Contact</a></li>-->
 </ul> 
 </nav>
+</div>

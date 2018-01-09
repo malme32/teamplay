@@ -74,11 +74,11 @@ pageEncoding="UTF-8"%>
 </ul>
 <span class="follow-us">follow us </span>
 <ul class="social-icons">
-<li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
-<li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
-<li><a class="youtube" href="#"><i class="fa fa-youtube-play"></i></a></li>
-<li><a class="pinterest" href="#"><i class="fa fa-pinterest-p"></i></a></li>
-<li><a class="tumblr" href="#"><i class="fa fa-tumblr"></i></a></li>
+<li><a class="facebook" href=""><i class="fa fa-facebook"></i></a></li>
+<li><a class="twitter" href=""><i class="fa fa-twitter"></i></a></li>
+<li><a class="youtube" href=""><i class="fa fa-youtube-play"></i></a></li>
+<li><a class="pinterest" href=""><i class="fa fa-pinterest-p"></i></a></li>
+<li><a class="tumblr" href=""><i class="fa fa-tumblr"></i></a></li>
 </ul>
 </div>
 </div>
@@ -88,7 +88,7 @@ pageEncoding="UTF-8"%>
 <div class="col-sm-4 col-xs-6 r-full-width-2 r-full-width">
 <div class="column-widget h-white">
 <h5>Advertisment</h5>
-<a href="#"><img src="${resources}/images/footer-add.jpg" alt=""></a>
+<a href=""><img src="${resources}/images/footer-add.jpg" alt=""></a>
 </div>
 </div>
 
@@ -98,20 +98,20 @@ pageEncoding="UTF-8"%>
 <h5>Sponcer</h5>
 <ul id="brand-icons-slider-2" class="brand-icons-slider-2">
 <li>
-<a href="#"><img src="${resources}/images/brand-icons/img-1-1.png" alt=""></a>
-<a href="#"><img src="${resources}/images/brand-icons/img-1-2.png" alt=""></a>
-<a href="#"><img src="${resources}/images/brand-icons/img-1-3.png" alt=""></a>
-<a href="#"><img src="${resources}/images/brand-icons/img-1-4.png" alt=""></a>
-<a href="#"><img src="${resources}/images/brand-icons/img-1-5.png" alt=""></a>
-<a href="#"><img src="${resources}/images/brand-icons/img-1-6.png" alt=""></a>
+<a href=""><img src="${resources}/images/brand-icons/img-1-1.png" alt=""></a>
+<a href=""><img src="${resources}/images/brand-icons/img-1-2.png" alt=""></a>
+<a href=""><img src="${resources}/images/brand-icons/img-1-3.png" alt=""></a>
+<a href=""><img src="${resources}/images/brand-icons/img-1-4.png" alt=""></a>
+<a href=""><img src="${resources}/images/brand-icons/img-1-5.png" alt=""></a>
+<a href=""><img src="${resources}/images/brand-icons/img-1-6.png" alt=""></a>
 </li>
 <li>
-<a href="#"><img src="${resources}/images/brand-icons/img-1-1.png" alt=""></a>
-<a href="#"><img src="${resources}/images/brand-icons/img-1-2.png" alt=""></a>
-<a href="#"><img src="${resources}/images/brand-icons/img-1-3.png" alt=""></a>
-<a href="#"><img src="${resources}/images/brand-icons/img-1-4.png" alt=""></a>
-<a href="#"><img src="${resources}/images/brand-icons/img-1-5.png" alt=""></a>
-<a href="#"><img src="${resources}/images/brand-icons/img-1-6.png" alt=""></a>
+<a href=""><img src="${resources}/images/brand-icons/img-1-1.png" alt=""></a>
+<a href=""><img src="${resources}/images/brand-icons/img-1-2.png" alt=""></a>
+<a href=""><img src="${resources}/images/brand-icons/img-1-3.png" alt=""></a>
+<a href=""><img src="${resources}/images/brand-icons/img-1-4.png" alt=""></a>
+<a href=""><img src="${resources}/images/brand-icons/img-1-5.png" alt=""></a>
+<a href=""><img src="${resources}/images/brand-icons/img-1-6.png" alt=""></a>
 </li>
 </ul>
 </div>
@@ -126,7 +126,7 @@ pageEncoding="UTF-8"%>
 <div class="copy-rights">
 <div class="container">
 <p>Â© Copyright by <i class="red-color">FineLayers</i> All rights reserved.</p>
-<a class="back-to-top scrollup" href="#"><i class="fa fa-angle-up"></i></a>
+<a class="back-to-top scrollup" href=""><i class="fa fa-angle-up"></i></a>
 </div>
 </div>
 

@@ -854,8 +854,8 @@ public class SportServiceImpl  implements SportService{
 	@Override
 	public List<Game> getUpcomingGames() {
 		// TODO Auto-generated method stub
-		
-		List<Game> games = gameDao.findAll();
+/*		
+		List<Game> games = gameDao.getUpcomingGames();
 		List<Game> upcomingGames= new ArrayList<Game>();
 		 Date datenow = new Date();
 		for(Game game:games)
@@ -881,7 +881,16 @@ public class SportServiceImpl  implements SportService{
 				
 				
 			}
-		return upcomingGames;
+		*/
+		List<Game> games = gameDao.getUpcomingGames();
+		for(Game game:games)
+		{
+			if(game.getPlayoff()!=null)
+				game.setChampion(game.getPlayoff().getChampion());
+			else if(game.getMatchday()!=null) 
+				game.setChampion(game.getMatchday().getTeamgroup().getChampion());
+		}
+		return games;
 	}
 
 	@Override
@@ -1084,6 +1093,20 @@ public class SportServiceImpl  implements SportService{
 		list.add(team);
 		// TODO Auto-generated method stub
 		return list;
+	}
+
+	@Override
+	public List<Game> getLastResults() {
+		// TODO Auto-generated method stub
+		List<Game> games = gameDao.getLastResults();
+		for(Game game:games)
+		{
+			if(game.getPlayoff()!=null)
+				game.setChampion(game.getPlayoff().getChampion());
+			else if(game.getMatchday()!=null) 
+				game.setChampion(game.getMatchday().getTeamgroup().getChampion());
+		}
+		return games;
 	}
 	
 	

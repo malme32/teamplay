@@ -399,6 +399,20 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 		    }).then(function mySuccess(response) {
 		    	
 		    	$scope.playoffs = response.data;
+		    	for(i=0;i<$scope.playoffs.length;i++)
+	    		{
+		    	 //$scope.result = $scope.result+"333";
+	    			var games = $scope.playoffs[i].games;
+			    	 //$scope.result= $scope.result+ "444";
+			    	for(k=0;k<games.length;k++)
+		    		{
+				    	// $scope.result= $scope.result+ "555";
+				    	 if(games[k].date)
+				    		 games[k].tmpdate=new Date(games[k].date);
+		    		}
+	    		}
+		    	
+		    	
 		    }, function myError(response) {
 		  
 		        $scope.result = response;//;"/champions/"+row.id+"/teamgroups";

@@ -121,5 +121,7 @@ public interface SportService {
 	public void deleteNotice(int id,String path);
 
 	public List<Team> getFollowingTeams(String teamid);
+
+	public List<Game> getLastResults();
 	
 }

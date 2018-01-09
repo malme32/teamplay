@@ -240,14 +240,14 @@ pageEncoding="UTF-8"%>
 
 
 
-<div class="row" ng-show='players.length'>
+<div class="" ng-show='players.length'>
 <div class=" "><!-- pull-left to	p-palyer -->
 <h2>ΠΑΙΧΤΕΣ</h2>
 <div class="row">
 
 <div class="col-sm-4 col-xs-6 r-full-width" ng-repeat='row in players'>
 <div class="team-column">
- <div style='background:url(${resources}{{row.imagepath}}) no-repeat center; width:250px; height:250px;background-size:cover; '>
+ <div style='background:url(${resources}{{row.imagepath}}) no-repeat center;  height:240px;background-size:cover; '>
 <%--  <img ng-src="${resources}{{row.imagepath}}" alt="">  --%>
 <span ng-show='row.number' class="player-number">{{row.number}}</span>
 <div class="team-detail">

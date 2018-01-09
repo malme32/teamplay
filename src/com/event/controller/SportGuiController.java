@@ -198,4 +198,9 @@ response.addHeader("Cache-Control", headerValue);*/
 	public ModelAndView gallery(){
 		return new ModelAndView("theme1/gallery","","");
 	}
+	
+	@RequestMapping(value="/contactus", method=RequestMethod.GET)
+	public ModelAndView contactus(){
+		return new ModelAndView("theme1/contactus","","");
+	}
 }
