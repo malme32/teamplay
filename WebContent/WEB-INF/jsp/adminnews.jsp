@@ -9,7 +9,7 @@ pageEncoding="UTF-8"%>
 
 <div class='div_edit_team'>
 
-<h1>ΝΕΑ ΟΜΑΔΑ</h1>
+<h1>ΝΕΑ ΕΙΔΗΣΗ</h1>
 	<ul class='ul_nobullet'>
 		<li> <input type='text' ng-model='newnotice.title' placeholder='Ο τίτλος της νεας είδησης εδω..'/>	</li>
 		<li> <textarea rows="4" cols="50" ng-model='newnotice.content' maxlength="1000" class="width_100" placeholder='Το περιεχόμενο της νεας είδησης εδω..'>	</textarea> </li>
@@ -21,7 +21,7 @@ pageEncoding="UTF-8"%>
 
 
 
-<h1>ΟΜΑΔΕΣ</h1>
+<h1>ΕΙΔΗΣΕΙΣ</h1>
 <select ng-model="selectedNotice" ng-change="getNotice()" ng-options="row.title for row in news | orderBy:'-date'">
 <option value="">---Επιλέξτε---</option>
 </select>

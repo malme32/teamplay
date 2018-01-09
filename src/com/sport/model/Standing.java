@@ -20,7 +20,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="standing")
-public class Standing {
+public class Standing implements Comparable<Standing>{
 	@Id
 	@Column(name="id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -166,6 +166,19 @@ public class Standing {
 
 	public void setChampion(Champion champion) {
 		this.champion = champion;
+	}
+
+	@Override
+	public int compareTo(Standing o) {
+		// TODO Auto-generated method stub
+		if(this.getGrade()>o.getGrade())
+			return -1;
+		else if(this.getGrade()<o.getGrade())
+			return 1;
+		else if(this.getGoal()>o.getGoal())
+			return -1;
+		else
+			return 1;
 	}
 	
 

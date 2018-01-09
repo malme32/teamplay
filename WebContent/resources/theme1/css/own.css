@@ -18,3 +18,15 @@ own-td-vs{
 .own-red-shadow{
 	color:#cc0000; text-shadow: 1px 1px #FFFFFF;
 }
+
+.own-hidden{
+	
+	visibility: hidden;
+	height:0;
+}
+
+.own-visible{
+	
+	visibility: visible;
+		height:auto;
+}
