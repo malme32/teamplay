@@ -10,7 +10,4 @@ public interface GameDao{
 	
 	public List<Game> findAll();
 	
-	public List<Game> getUpcomingGames();
-	
-	public List<Game> getLastResults();
 }

@@ -48,16 +48,6 @@ public class TeamDaoImpl extends AbstractDao implements TeamDao{
 			list.add(game);
 		for(Game game: team.getTeam2games())	
 			list.add(game);
-		for(Game game: list)	
-			if(game.getPlayoff()!=null)
-			{
-				if(game.getPlayoff().getChampion().isEnabled())
-					game.setChampion(game.getPlayoff().getChampion());
-			}
-			else if(game.getMatchday()!=null) 
-				if(game.getMatchday().getTeamgroup().getChampion().isEnabled())
-					game.setChampion(game.getMatchday().getTeamgroup().getChampion());
-		
 		return list;
 	}
 
@@ -78,5 +68,9 @@ public class TeamDaoImpl extends AbstractDao implements TeamDao{
 		Hibernate.initialize(team.getPlayers());
 		return team.getPlayers();
 	}
+
+
+
+
 
 }

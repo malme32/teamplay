@@ -2,27 +2,19 @@ package com.event.controller;
 
 import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
-import java.nio.file.Files;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -38,15 +30,11 @@ import com.event.model.Event;
 import com.event.service.GeneralDaoService;
 import com.event.service.SportService;
 import com.phonebook.model.Contact;
-import com.phonebook.model.Userrole;
 import com.phonebook.service.ContactService;
-import com.sport.model.Album;
 import com.sport.model.Champion;
 import com.sport.model.Game;
-import com.sport.model.Image;
 import com.sport.model.Matchday;
 import com.sport.model.Notice;
-import com.sport.model.Playoff;
 import com.sport.model.Scorer;
 import com.sport.model.Standing;
 import com.sport.model.Team;
@@ -116,12 +104,7 @@ public class SportController {
 	@RequestMapping(value="/teams/{teamid}/games", method=RequestMethod.GET, produces = "application/json")
 	public @ResponseBody List<Game> getTeamGames(@PathVariable int teamid)
 	{
-		List<Game> games =null;
-		try {
-
-			 games = sportService.findTeamGames(teamid);
-		}catch(Exception e) {}
-		return games;
+		return sportService.findTeamGames(teamid);
 	}
 	
 	@RequestMapping(value="/teams/{teamid}/standings", method=RequestMethod.GET, produces = "application/json")
@@ -180,78 +163,7 @@ public class SportController {
 	}
 	
 	
-	@RequestMapping(value="/games/{id}", method=RequestMethod.GET, produces = "application/json")
-	public @ResponseBody Game getGame(@PathVariable int id)
-		
-	{
-		return sportService.findGameById(id);
-	}
-	
-/*	@RequestMapping(value="/champions/{championid}/playoffs", method=RequestMethod.GET, produces = "application/json")
-	public @ResponseBody void getPlayoffs(@PathVariable int championid)
-	{
-		sportService.getPlayoffs(championid,32);
-		return ;
-	}*/
-	
-	@RequestMapping(value="/champions/{championid}/playoffs", method=RequestMethod.GET, produces = "application/json")
-	public @ResponseBody List<Playoff> getPlayoffGames(@PathVariable int championid, @RequestParam(required = false)  Integer phase)
-	{
-
-		return sportService.getPlayoffGames(championid,phase);
-	}
-	
-	@RequestMapping(value="/games", method=RequestMethod.GET, produces = "application/json")
-	public @ResponseBody List<Game> getAllGames(@RequestParam(required = false)  String upcoming, @RequestParam(required = false)  String lastresults)
-	{
-		if(upcoming!=null)
-			return sportService.getUpcomingGames();
-		else if(lastresults!=null)
-			return sportService.getLastResults();
-		else return null;
-	}
-	
-	
-	@RequestMapping(value="/albums", method=RequestMethod.GET, produces = "application/json")
-	public @ResponseBody List<Album> getAlbums()
-	{
-		return sportService.getAlbums();
-		
-	}
-	
-	@RequestMapping(value="/followers", method=RequestMethod.GET, produces = "application/json")
-	public @ResponseBody List<Team> getFollowers(@CookieValue(value = "teamfollowing", defaultValue="noteam") String cookie)
-	{
-		
-		
-	 User user =null; 
-	 try{user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();}
-	 catch(Exception e){}
-	 if(user!=null)
-	 {
-		 String username = user.getUsername();
-		 Contact contact = contactService.findByUserName(username);
-		 if(contact.getAdminteam()!=null)
-		 {
-			 return sportService.getFollowingTeams(String.valueOf(contact.getAdminteam().getId()));
-		 }
-	 }
-		
-	if(cookie.equals("noteam"))
-		return new ArrayList<Team>();
-		
-		return sportService.getFollowingTeams(cookie);
-		
-	}
 	/////////////////////POST/////////////////////////////////////
-	
-	@RequestMapping(value="/teams/{id1}/adminusers", method=RequestMethod.POST, produces = "application/json")
-	public @ResponseBody void addNewAdminUserToTeam(@ModelAttribute Contact contact, @PathVariable int id1)
-	{	
-		sportService.addNewAdminUserToTeam(contact, id1);
-		return;
-	}
-	
 	
 	@RequestMapping(value="/champions", method=RequestMethod.POST, produces = "application/json")
 	public @ResponseBody void addChampion(@ModelAttribute Champion champion)
@@ -300,8 +212,6 @@ public class SportController {
 		 
 		 return ;
 	}
-	
-	
 	
 	@RequestMapping(value="/teams", method=RequestMethod.POST, produces = "application/json")
 	public @ResponseBody void addTeam(@RequestBody Team team)
@@ -353,32 +263,12 @@ public class SportController {
 	
 	
 	@RequestMapping(value="/matchdays/{id1}/games", method=RequestMethod.POST, produces = "application/json")
-	public @ResponseBody void addGameToMatchday(@ModelAttribute Game game,@PathVariable int id1, @RequestParam int teamid1, @RequestParam int teamid2)
+	public @ResponseBody void addMatchday(@ModelAttribute Game game,@PathVariable int id1, @RequestParam int teamid1, @RequestParam int teamid2)
 	{
 		game.setMatchday(sportService.findMatchdayById(id1));
 		game.setTeam1(sportService.findTeamById(teamid1));
 		game.setTeam2(sportService.findTeamById(teamid2));
 		generalDaoService.persist(game);
-		return;
-	}
-
-	
-	@RequestMapping(value="/playoffs/{id1}/games", method=RequestMethod.POST, produces = "application/json")
-	public @ResponseBody void addGameToPlayoff(@ModelAttribute Game game,@PathVariable int id1, @RequestParam int teamid1, @RequestParam int teamid2)
-	{
-		game.setPlayoff(sportService.findPlayoffById(id1));
-		game.setTeam1(sportService.findTeamById(teamid1));
-		game.setTeam2(sportService.findTeamById(teamid2));
-		generalDaoService.persist(game);
-		return;
-	}
-	
-	@RequestMapping(value="/champions/{id1}/playoffs", method=RequestMethod.POST, produces = "application/json")
-	public @ResponseBody void addPlayoff(@ModelAttribute Playoff playoff,@PathVariable int id1)
-	{
-		Champion champion = sportService.findChampionsById(id1);
-		playoff.setChampion(champion);
-		generalDaoService.persist(playoff);
 		return;
 	}
 
@@ -434,8 +324,7 @@ public class SportController {
 	{
 		Game game = sportService.findGameById(gameid);
 		scorer.setGame(game);
-		try {scorer.setTeamgroup(game.getMatchday().getTeamgroup());}
-		catch(Exception e) {}
+		scorer.setTeamgroup(game.getMatchday().getTeamgroup());
 		generalDaoService.persist(scorer);
 		return ;
 	}
@@ -454,63 +343,6 @@ public class SportController {
         
     }  
 
-	@RequestMapping(value="/champions/{championid}/actions/{action}", method=RequestMethod.POST, produces = "application/json")
-	public @ResponseBody void genPlayoffs(@PathVariable int championid, @PathVariable String action,  @RequestParam int phase,  @RequestParam int round)
-	{
-		if(action.equals("generateplayoffs"))
-			sportService.genPlayoffs(championid,phase,round);
-		return ;
-	}
-	
-	
-	
-	@RequestMapping(value = "/albums/{id}/images", method = RequestMethod.POST, produces = "application/json")
-	public @ResponseBody  void uploadAlbumImages(@PathVariable int id, @RequestParam(value = "files") CommonsMultipartFile[] files,HttpSession session){  
-      String path=session.getServletContext().getRealPath("/");  
-       
-        sportService.uploadAlbumImages(path, id, files);
-        return;
-    }  
-	
-	@RequestMapping(value="/albums", method=RequestMethod.POST, produces = "application/json")
-	public @ResponseBody void addAlbum(@ModelAttribute Album album)
-	{	
-		Date date = new Date();
-		album.setDate(date);
-		generalDaoService.persist(album);
-		return;
-	}
-	
-	@RequestMapping(value="/teams/{id}/followers", method=RequestMethod.POST, produces = "application/json")
-	public @ResponseBody void addTeamFollower(@CookieValue(value = "teamfollowing", defaultValue="noteam") String cookie,HttpServletResponse response,HttpServletRequest request,@PathVariable String id)
-	{	
-		
-		Cookie[] cookies = request.getCookies();
-		if (cookies != null)
-			for(Cookie cookie1:cookies) {
-				if(cookie1.getName().equals("teamfollowing"))
-				{
-					System.out.println("Cookie found: "+cookie1+" "+id);
-					if(cookie1.getValue().equals(id))
-						cookie1.setMaxAge(0); //set expire time 
-					else
-						cookie1.setMaxAge(100000000); //set expire time 
-					cookie1.setValue(id);
-					cookie1.setPath("/");
-					response.addCookie(cookie1);
-					return;
-				}
-			}
-		
-
-		Cookie cookie1 = new Cookie("teamfollowing", id); //bake cookie
-		cookie1.setMaxAge(100000000); //set expire time 
-		cookie1.setPath("/");
-		response.addCookie(cookie1);
-		return;
-	}
-	
-	
 	//////////////////PUT///////////////////////////
 	
 	@RequestMapping(value="/champions", method=RequestMethod.PUT, produces = "application/json")
@@ -584,9 +416,6 @@ public class SportController {
 		    matchday.setTeamgroup(teamgroup);
 		    matchday.setGames(sportService.findMatchdayById(matchday.getId()).getGames());
 			generalDaoService.update(matchday);
-			
-			
-			
 			return;
 	}
 	
@@ -619,10 +448,8 @@ public class SportController {
 	public @ResponseBody void editScorer(@RequestBody Scorer scorer,@PathVariable int gameid)
 	{
 		Game game = sportService.findGameById(gameid);
-		scorer.setGame(game);		
-		try {scorer.setTeamgroup(game.getMatchday().getTeamgroup());}
-		catch(Exception e) {}
-	
+		scorer.setGame(game);
+		scorer.setTeamgroup(game.getMatchday().getTeamgroup());
 		generalDaoService.update(scorer);
 		return ;
 	}
@@ -633,43 +460,8 @@ public class SportController {
 		generalDaoService.update(notice);
 		return;
 	}
-	@RequestMapping(value="champions/{championid}/playoffs", method=RequestMethod.PUT, produces = "application/json")
-	public @ResponseBody void editPlayoff(@RequestBody Playoff playoff,@PathVariable int championid)
-	//public @ResponseBody void editGame(@ModelAttribute Game game,@RequestParam int teamid1,@RequestParam int teamid2,@RequestParam int matchdayid)
-	{	
-		    Champion champion = sportService.findChampionsById(championid);
-			sportService.updatePlayoff(playoff,champion);
-			return;
-	}
 	
 	
-	@RequestMapping(value="playoffs/{playoffid}/games", method=RequestMethod.PUT, produces = "application/json")
-	public @ResponseBody void editPlayoffGame(@RequestBody Game game,@PathVariable int playoffid)
-	//public @ResponseBody void editGame(@PathVariable int matchdayid,@RequestParam int id,@RequestParam int teamid1,@RequestParam int teamid2, @RequestParam String date)
-	{	
-
-			Playoff playoff = sportService.findPlayoffById(playoffid);
-			game.setPlayoff(playoff);
-			generalDaoService.update(game);
-			return ;
-	}
-	
-	@RequestMapping(value="albums", method=RequestMethod.PUT, produces = "application/json")
-	public @ResponseBody void editAlbum(@RequestBody Album album)
-	//public @ResponseBody void editGame(@PathVariable int matchdayid,@RequestParam int id,@RequestParam int teamid1,@RequestParam int teamid2, @RequestParam String date)
-	{	
-			sportService.editAlbum(album);
-			return ;
-	}
-	
-	
-	@RequestMapping(value="teamadmins", method=RequestMethod.PUT, produces = "application/json")
-	public @ResponseBody void editTeamAdmin(@ModelAttribute Contact contact)
-	//public @ResponseBody void editGame(@PathVariable int matchdayid,@RequestParam int id,@RequestParam int teamid1,@RequestParam int teamid2, @RequestParam String date)
-	{	
-			sportService.editTeamAdmin(contact);
-			return ;
-	}
 		//////////////////////DELETE///////////////////////
 	/////////////////////////////////////////////////////////////////
 	
@@ -735,27 +527,24 @@ public class SportController {
 	public @ResponseBody void deleteGame(@PathVariable int id)
 	{
 		Game game = sportService.findGameById(id);
-		Matchday matchday = game.getMatchday();
 		generalDaoService.delete(game);
-		if(matchday!=null)
-			sportService.updateStandings(game.getMatchday().getTeamgroup());
+		sportService.updateStandings(game.getMatchday().getTeamgroup());
 		return; 
 	}
 	
 	@RequestMapping(value="/teams/{id}", method=RequestMethod.DELETE, produces = "application/json")
-	public @ResponseBody void deleteTeam(@PathVariable int id,HttpSession session)
+	public @ResponseBody void deleteTeam(@PathVariable int id)
 	{
-		String path=session.getServletContext().getRealPath("/"); 
-
-		sportService.deleteTeam(path,id);
+	
+		Team team = sportService.findTeamById(id);
+		generalDaoService.delete(team);
 		return; 
 	}	
 	
 	@RequestMapping(value="/players/{id}", method=RequestMethod.DELETE, produces = "application/json")
-	public @ResponseBody void deletePlayer(@PathVariable int id,HttpSession session)
+	public @ResponseBody void deletePlayer(@PathVariable int id)
 	{
-		String path=session.getServletContext().getRealPath("/"); 
-		sportService.deletePlayer(path,id);
+		generalDaoService.delete(contactService.getContact(id));
 		return ;
 	}
 	
@@ -769,40 +558,12 @@ public class SportController {
 	}
 	
 	@RequestMapping(value="/news/{id}", method=RequestMethod.DELETE, produces = "application/json")
-	public @ResponseBody void deleteNotice(@PathVariable int id,HttpSession session)
+	public @ResponseBody void deleteNotice(@PathVariable int id)
 	{
-		String path=session.getServletContext().getRealPath("/");  
-		sportService.deleteNotice(id,path);
+		Notice notice = sportService.findNewsById(id);
+		generalDaoService.delete(notice);
 		return ;
 	}
 	
-	
-	@RequestMapping(value="/playoffs/{id}", method=RequestMethod.DELETE, produces = "application/json")
-	public @ResponseBody void deletePlayoff(@PathVariable int id)
-	{
-		Playoff playoff = sportService.findPlayoffById(id);
-		generalDaoService.delete(playoff);
-		return ;
-	}
-	
-	@RequestMapping(value="/images/{id}", method=RequestMethod.DELETE, produces = "application/json")
-	public @ResponseBody void deleteImage(@PathVariable int id,HttpSession session)
-	{
-		String path=session.getServletContext().getRealPath("/");  
-		
-		sportService.deleteImage(path,id);
-		
-		return ;
-	}
-	
-	@RequestMapping(value="/albums/{id}", method=RequestMethod.DELETE, produces = "application/json")
-	public @ResponseBody void deleteAlbum(@PathVariable int id,HttpSession session)
-	{
-		String path=session.getServletContext().getRealPath("/");  
-		
-		sportService.deleteAlbum(path,id);
-		
-		return ;
-	}
 	
 }

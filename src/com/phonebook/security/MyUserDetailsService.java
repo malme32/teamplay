@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.hibernate.Hibernate;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryAware;
@@ -55,9 +54,8 @@ public class MyUserDetailsService implements UserDetailsService  {
 				
 		Contact contact = contactService.findByUserName(username);
 		//Contact contact = new Contact();
-		Hibernate.initialize(contact.getUserroles());
 		List<GrantedAuthority> authorities =
-                                      buildUserAuthority(contact.getUserroles());
+                                      buildUserAuthority(contact.getUserrole());
 
 		return buildUserForAuthentication(contact, authorities);
 
@@ -71,15 +69,14 @@ public class MyUserDetailsService implements UserDetailsService  {
 			contact.isEnabled(), true, true, true, authorities);
 	}
 
-	private List<GrantedAuthority> buildUserAuthority(List<Userrole> userRoles) {
+	private List<GrantedAuthority> buildUserAuthority(Userrole userRoles) {
 
 		Set<GrantedAuthority> setAuths = new HashSet<GrantedAuthority>();
-		//setAuths.add(new SimpleGrantedAuthority(userRoles.getRole()));
+		setAuths.add(new SimpleGrantedAuthority(userRoles.getRole()));
 		// Build user's authorities
-		
-		for (Userrole userRole : userRoles) {
-			setAuths.add(new SimpleGrantedAuthority(userRole.getRole()));
-		}
+//		for (Userrole userRole : userRoles) {
+//			setAuths.add(new SimpleGrantedAuthority(userRole.getRole()));
+//		}
 
 		List<GrantedAuthority> Result = new ArrayList<GrantedAuthority>(setAuths);
 

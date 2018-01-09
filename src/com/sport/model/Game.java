@@ -17,7 +17,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -60,14 +59,7 @@ public class Game {
 	@JoinColumn(name = "matchdayid")
 	private Matchday matchday;
 
-	@JsonIgnore
-	@ManyToOne
-	@JoinColumn(name = "playoffid")
-	private Playoff playoff;
-	
-/*	@Column(name="phase")
-	private Integer phase*/;
-	
+
 	@Column(name="date")
 	//@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM-dd-yyyy HH:mm:ss", timezone = "Europe/Athens")
 	private Date date;
@@ -85,8 +77,6 @@ public class Game {
 	@OneToMany(fetch = FetchType.LAZY,mappedBy="game",cascade = CascadeType.ALL)
 	List<Scorer> scorers;
 	
-	@Transient
-	private Champion champion;
 	
 	public Matchday getMatchday() {
 		return matchday;
@@ -176,39 +166,6 @@ public class Game {
 	public void setScorers(List<Scorer> scorers) {
 		this.scorers = scorers;
 	}
-
-/*
-
-	public Integer getPhase() {
-		return phase;
-	}
-
-
-	public void setPhase(Integer phase) {
-		this.phase = phase;
-	}
-*/
-
-	public Playoff getPlayoff() {
-		return playoff;
-	}
-
-
-	public void setPlayoff(Playoff playoff) {
-		this.playoff = playoff;
-	}
-
-
-	public Champion getChampion() {
-		return champion;
-	}
-
-
-	public void setChampion(Champion champion) {
-		this.champion = champion;
-	}
-
-
 
 
 

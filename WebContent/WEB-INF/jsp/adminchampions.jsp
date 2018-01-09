@@ -30,13 +30,11 @@
 	<table>
 		<tr>
 			<th>ΟΝΟΜΑ</th>
-			<th>ΟΡΑΤΟ</th>
 			<th>ΕΝΕΡΓΕΙΑ</th>
 		</tr>
 		<tr ng-repeat='row in championlist'>
 			<td><input type='text' ng-model='row.name'
-				ng-click='getTeamgroup(row); getPlayoffs(row)' /></td>
-			<td><input type=checkbox ng-model='row.enabled' ng-click='getTeamgroup(row); getPlayoffs(row)' /></td>
+				ng-click='getTeamgroup(row); ' /></td>
 			<td>
 				<button class='button_flat  background_dark_yellow'
 					ng-show='champion==row' ng-click='adminEditChampion(row)'>Αποθήκευση</button>
@@ -47,9 +45,8 @@
 		<tr>
 			<td><input type='text' ng-model="adminChampionName"
 				placeholder="Το νέο όνομα εδω.." /></td>
-			
-			<td><input type=checkbox ng-model='adminChampionEnabled'/></td>
-				<td><button class='button_flat background_green'
+			<td>
+				<button class='button_flat background_green'
 					ng-click='adminAddChampion()'>Εισαγωγή</button>
 
 			</td>
@@ -57,178 +54,6 @@
 
 	</table>
 </div>
-
-<div ng-show='champion' class="margin_left_small">
-
-	<h2>
-		Play Offs <span class="color_gray font_size_small">(σε
-			{{champion.name}})</span>
-	</h2>
-	
-	
-	<table class='table_stylish1 margin_bottom_medium' >
-	<tr>
-	<td>
-						 	<select ng-model="selectedPhase" >
-							<option value="">---Επιλέξτε Φάση---</option>
-							<option value="32">Φαση των 32</option>
-							<option value="16">Φαση των 16</option>
-							<option value="8">Προημιτελικα</option>
-							<option value="4">Ημιτελικα</option>
-							<option value="2">Τελικος</option>
-							</select>
-							<select ng-model="selectedRound" >
-							<option value="">---Επιλέξτε γύρους---</option>
-							<option value="1">1 γύρος</option>
-							<option value="2">2 γύροι</option>
-							</select>
-	</td>
-	<td>		<button class='button_flat  background_black'
-						 ng-click='generatePlayoffs(champion,selectedPhase,selectedRound)'>Δημιουργία Playoff</button>	</td>
-	</tr>
-	<tr>
-	<td>
-	<input type='text' ng-model="adminNewPlayoffName"
-		placeholder="Το νέο όνομα εδω" /></td>
-	<td>
-	<button class='button_flat  background_green' ng-click='adminAddPlayoff(adminNewPlayoffName,champion)'>Εισαγωγή</button>
-<!-- 	<button class='button_flat  background_red' ng-click='adminDeleteAllPlayoffs(champion)'>Διαγραφή όλων</button>
- -->	
-			
-						 
-	
-	</td>
-	</tr>
-	</table>
-
-
-	<div ng-repeat='row5 in playoffs  | orderBy: "phase"''>
-		<div class='table_stylish1'>
-			<table>
-	<!-- 			<tr>
-					<th>ΟΝΟΜΑ</th>
-					<th>ΗΜΕΡ. ΑΡΧΗΣ</th>
-					<th>ΗΜΕΡ. ΤΕΛΟΣ</th>
-					<th>ΕΝΕΡΓΕΙΑ</th>
-				</tr> -->
-				<tr class='background_gray '>
-					<td><input type='text' ng-model="row5.name" /></td>
-	<!-- 				<td><md-datepicker ng-model="row.startdate"
-							md-placeholder="Η ημερομηνία αρχής εδω.."></md-datepicker></td>
-					<td><md-datepicker ng-model="row.enddate"
-							md-placeholder="Η ημερομηνία τέλους εδω.."></md-datepicker></td> -->
-							<td><input type="number" ng-model='row5.phase'></td>
-					<td>
-						<button class='button_flat  background_dark_yellow'
-							ng-click='adminUpdatePlayoff(row5,champion)'>Αποθήκευση</button>
-							<button class='button_flat  background_red' ng-click='adminDeletePlayoff(row5)'>Διαγραφή</button>
-					</td>
-				</tr>
-
-				<!-- 			<tr>
-				<td><input type='text' ng-model="adminNewMatchdayName"
-					placeholder="Το νέο όνομα εδω.." />
-				<td></td>
-				<td></td>
-				<td>
-					<button class='button_flat background_green'
-						ng-click='adminAddMatchday(adminNewMatchdayName,teamgroup)'>Εισαγωγή</button>
-				</td>
-			</tr> -->
-			</table>
-
-
-
-
-
-
-		</div>
-
-
-
-
-		<div class='table_stylish1'>
-			<table>
-				<tr>
-					<th>ΑΓΩΝΑΣ</th>
-					<th>ΗΜΕΡΟΜΗΝΙΑ</th>
-					<th>ΩΡΑ</th>
-					<th>ΕΝΕΡΓΕΙΑ</th>
-			<!-- 		<th>ΑΛΛΑΓΗ</th>
-					<th></th> -->
-				</tr>
-				<tr ng-repeat='row1 in row5.games'>
-					<td><span class="td_matchday_team1">{{row1.team1.name}}</span>
-						<span class="td_score"><input type="number" min=0 max=100
-							class="inputSmall" value={{row1.score1}} ng-model='row1.score1' />
-							- <input type="number" min=0 max=100 value={{row1.score2}}
-							class="inputSmall" ng-model='row1.score2' /></span> <span
-						class="td_matchday_team2">{{row1.team2.name}}</span> <!-- 						<input type="text" class = "inputMedium" ng-model='row1.date|  date:"medium"'/> ng-model="row1.date"
- --></td>
-					<td class="td_date_small"><md-datepicker
-							ng-model="row1.tmpdate" md-placeholder="Enter date"></md-datepicker>
-					</td>
-					<td class="td_date_small"><input ng-model="row1.tmpdate"
-						type="time" /></td>
-					<td class="">
-					
-					<button
-							class='button_flat  background_dark_yellow'
-							ng-click='adminEditPlayoffGame(row1,row5)'>Αποθήκευση</button>
-						<button class='button_flat  background_red'
-							ng-click='adminDeletePlayoffGame(row1)'>Διαγραφή</button>
-							
-						<button class='button_flat  background_black'
-							ng-click='openScorerModal(row1)'>Σκορερς</button>
-							</td>
-<!-- 					<td><span><select ng-model="selectedmatchday"
-							ng-options="row.name for row in matchday | orderBy:'name'">
-							<option value="">---Επιλέξτε---</option>
-						</select></span> 
-					</td>
-					<td><span><button class='button_flat  background_black'
-								ng-click='addGameToMatchday(row1,selectedmatchday)'>Αλλαγή</button></span></td> -->
-
-				</tr>
-
-				<tr>
-
-
-
-					<td>
-					<select ng-model="selectedteam1_"
-							ng-options="row2.name for row2 in totalTeamList | orderBy:'name'" class='width_40'>
-							<option value="">---Επιλέξτε---</option>
-							</select>
-
-							-
-							<select  ng-model="selectedteam2_"
-							ng-options="row2.name for row2 in totalTeamList | orderBy:'name'" class='width_40'>
-							<option value="">---Επιλέξτε---</option>
-							</select>
-					</span></td>
-					<td></td>
-					<td></td>
-					<td><button class='button_flat background_green'
-							ng-click='adminAddPlayoffGame(selectedteam1_,selectedteam2_,row5)'>Εισαγωγή</button></td>
-					<td></td>
-					<td></td>
-				</tr>
-
-			</table>
-
-
-
-
-
-
-		</div>
-
-
-	</div>
-</div>
-
-
 <div ng-show='teamgrouplist' class="margin_left_small">
 
 
@@ -314,8 +139,8 @@
 				</td>
 			</tr>
 			<tr>
-				<td><select ng-model="selectedTeam "
-					ng-options="row.name for row in totalTeamList |filter : adminNewTeamName| orderBy:'name'">
+				<td><select ng-model="selectedTeam"
+					ng-options="row.name for row in totalTeamList | orderBy:'name'">
 					<option value="">---Επιλέξτε---</option>
 				</select>
 				<td>
@@ -376,7 +201,7 @@
 	</table>
 
 
-	<div ng-repeat='row in matchday | orderBy:"name"'>
+	<div ng-repeat='row in matchday'>
 		<div class='table_stylish1'>
 			<table>
 	<!-- 			<tr>

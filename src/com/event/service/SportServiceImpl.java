@@ -1,53 +1,36 @@
 package com.event.service;
 
-import java.awt.Dimension;
-import java.awt.image.BufferedImage;
 import java.io.BufferedOutputStream;
-import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Random;
 
-import javax.imageio.ImageIO;
+
 import javax.transaction.Transactional;
 
 import org.apache.commons.io.FilenameUtils;
 import org.hibernate.Hibernate;
-import org.imgscalr.Scalr;
-import org.imgscalr.Scalr.Method;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.event.dao.AlbumDao;
 import com.event.dao.ChampionDao;
 import com.event.dao.GameDao;
 import com.event.dao.GeneralDao;
-import com.event.dao.ImageDao;
 import com.event.dao.MatchdayDao;
 import com.event.dao.NoticeDao;
-import com.event.dao.PlayoffDao;
 import com.event.dao.ScorerDao;
 import com.event.dao.StandingDao;
 import com.event.dao.TeamDao;
 import com.event.dao.TeamgroupDao;
-
 import com.phonebook.model.Contact;
-import com.phonebook.model.Userrole;
 import com.phonebook.service.ContactService;
-import com.sport.model.Album;
 import com.sport.model.Champion;
 import com.sport.model.Game;
-import com.sport.model.Image;
 import com.sport.model.Matchday;
 import com.sport.model.Notice;
-import com.sport.model.Playoff;
 import com.sport.model.Scorer;
 import com.sport.model.Standing;
 import com.sport.model.Team;
@@ -85,22 +68,6 @@ public class SportServiceImpl  implements SportService{
 	@Autowired
 	NoticeDao noticeDao;
 	
-	@Autowired
-	PlayoffService playoffService;
-
-	@Autowired
-	PlayoffDao playoffDao;
-	
-	@Autowired
-	PasswordEncoder passwordEncoder;	
-	
-	@Autowired
-	AlbumDao albumDao;
-	
-	@Autowired
-	ImageDao imageDao;
-	
-	
 	@Override
 	public Champion findChampionsById(int id) {
 		// TODO Auto-generated method stub
@@ -110,7 +77,6 @@ public class SportServiceImpl  implements SportService{
 	@Override
 	public List<Champion> findAllChampions() {
 		// TODO Auto-generated method stub
-		System.out.println("xaxaxa");
 		return championDao.findAllChampions();
 	}
 
@@ -258,8 +224,7 @@ public class SportServiceImpl  implements SportService{
 	    {
 	    	System.out.println( (day + 1));
 	    	Matchday matchday = new Matchday();
-	    	String startName=day<9?"ΑΓΩΝΙΣΤΙΚΗ 0":"ΑΓΩΝΙΣΤΙΚΗ ";
-	    	matchday.setName(startName+ (day + 1));
+	    	matchday.setName("Matchday"+ (day + 1));
 	    	matchday.setTeamgroup(teamgroup);
 	    	generalDaoService.persist(matchday);
 	    	
@@ -267,12 +232,11 @@ public class SportServiceImpl  implements SportService{
 	    	
 	    	if(roundNumber==2) {
 	    		matchday2 = new Matchday();
-		    	startName=(day + numDays)<9?"ΑΓΩΝΙΣΤΙΚΗ 0":"ΑΓΩΝΙΣΤΙΚΗ ";
-		    	matchday2.setName(startName+ (day + numDays+ 1));
+		    	matchday2.setName("Matchday"+ (day + numDays+ 1));
 		    	matchday2.setTeamgroup(teamgroup);
 		    	generalDaoService.persist(matchday2);
 	    	}
-
+	    	
 	        int teamIdx = day % teamsSize;
 	    	if(teams.get(teamIdx)!=null&&ListTeam.get(0)!=null)
 	    	{
@@ -473,12 +437,7 @@ public class SportServiceImpl  implements SportService{
         //String path=session.getServletContext().getRealPath("/");  
         //String filename=file.getOriginalFilename(); 
         String extension = FilenameUtils.getExtension(file.getOriginalFilename()); 
-        
-        Random rand=new Random();
-
-        int randomNum = rand.nextInt((10000) + 1) + 0;
-        
-		String filename=String.valueOf(randomNum+"_"+team.getId())+"."+extension;
+		String filename=String.valueOf(team.getId())+"."+extension;
         try{  
         byte barr[]=file.getBytes();  
           
@@ -487,33 +446,6 @@ public class SportServiceImpl  implements SportService{
         bout.write(barr);  
         bout.flush();  
         bout.close();  
-        
-        ByteArrayInputStream bais = new ByteArrayInputStream(barr);
-        BufferedImage resizeMe = ImageIO.read(bais);
-        Dimension newMaxSize = new Dimension(60, 60);
-        BufferedImage resizedImg = Scalr.resize(resizeMe, Method.QUALITY, newMaxSize.width, newMaxSize.height);
-        
-        BufferedOutputStream bout1=new BufferedOutputStream(  
-                 new FileOutputStream(path+"/resources/theme1/customimages/logo_thumb_"+filename));  
-        
-        ImageIO.write(resizedImg, extension, bout1);
-    
-        bout1.flush();  
-        bout1.close();  
-
-        if(!team.getLogopath().contains("default"))
-        {
-			File file1 = new File(path+"/resources/theme1/"+team.getLogopath());
-			file1.delete();
-			
-			file1 = new File(path+"/resources/theme1/"+team.getLogothumbpath());
-			file1.delete();
-			System.out.println("DEFAULT_TEAM_THUMB_DELETED");
-        }
-        
-        
-        team.setLogothumbpath("/customimages/logo_thumb_"+filename);
-        
         team.setLogopath("/customimages/logo_"+filename);
         generalDaoService.update(team);
         }catch(Exception e){System.out.println(e);}  
@@ -521,64 +453,6 @@ public class SportServiceImpl  implements SportService{
         return;
 	}
 
-	
-	@Override
-	public Notice uploadNoticeImage(String path, int id, CommonsMultipartFile file) {
-		// TODO Auto-generated method stub
-		Notice notice = this.findNewsById(id);
-		// TODO Auto-generated method stub
-        String extension = FilenameUtils.getExtension(file.getOriginalFilename()); 
-        
-        Random rand=new Random();
-
-        int randomNum = rand.nextInt((10000) + 1) + 0;
-        
-		String filename=String.valueOf(randomNum+"_"+notice.getId())+"."+extension;
-		
-        try{  
-        byte barr[]=file.getBytes();  
-          
-        BufferedOutputStream bout=new BufferedOutputStream(  
-                 new FileOutputStream(path+"/resources/theme1/customimages/noticeimage_"+filename));  
-        bout.write(barr);  
-        bout.flush();  
-        bout.close();  
-        
-        ByteArrayInputStream bais = new ByteArrayInputStream(barr);
-        BufferedImage resizeMe = ImageIO.read(bais);
-        Dimension newMaxSize = new Dimension(350, 350);
-        BufferedImage resizedImg = Scalr.resize(resizeMe, Method.QUALITY, newMaxSize.width, newMaxSize.height);
-        
-        BufferedOutputStream bout1=new BufferedOutputStream(  
-                 new FileOutputStream(path+"/resources/theme1/customimages/noticethumb_"+filename));  
-        
-        ImageIO.write(resizedImg, extension, bout1);
-    
-        bout1.flush();  
-        bout1.close();  
-        
-        
-        
-        if(!notice.getImageurl().contains("default"))
-        {
-			File file1 = new File(path+"/resources/theme1/"+notice.getImageurl());
-			file1.delete();
-			
-			file1 = new File(path+"/resources/theme1/"+notice.getThumburl());
-			file1.delete();
-        }
-        
-        notice.setThumburl("/customimages/noticethumb_"+filename);
-        
-        notice.setImageurl("/customimages/noticeimage_"+filename);
-        generalDaoService.update(notice);
-        }catch(Exception e){System.out.println(e);}  
-        
-        return notice;
-	}
-
-	
-	
 	@Override
 	public void uploadTeamCover(String path, int id, CommonsMultipartFile file) {
 		// TODO Auto-generated method stub
@@ -617,60 +491,15 @@ public class SportServiceImpl  implements SportService{
 		Contact contact = contactService.getContact(id);
 		// TODO Auto-generated method stub
         String extension = FilenameUtils.getExtension(file.getOriginalFilename()); 
-        
-        
-        Random rand=new Random();
-
-        int randomNum = rand.nextInt((10000) + 1) + 0;
-		String filename=randomNum+"_"+String.valueOf(contact.getId())+"."+extension;
+		String filename=String.valueOf(contact.getId())+"."+extension;
         try{  
         byte barr[]=file.getBytes();  
           
-      /*  BufferedOutputStream bout=new BufferedOutputStream(  
+        BufferedOutputStream bout=new BufferedOutputStream(  
                  new FileOutputStream(path+"/resources/theme1/customimages/playerimage_"+filename));  
         bout.write(barr);  
         bout.flush();  
-        bout.close();  */
-
-        
-        ByteArrayInputStream bais = new ByteArrayInputStream(barr);
-        BufferedImage resizeMe = ImageIO.read(bais);
-        Dimension newMaxSize = new Dimension(400, 400);
-        BufferedImage resizedImg = Scalr.resize(resizeMe, Method.QUALITY, newMaxSize.width, newMaxSize.height);
-        
-        BufferedOutputStream bout1=new BufferedOutputStream(  
-                 new FileOutputStream(path+"/resources/theme1/customimages/playerimage_"+filename));  
-        
-        ImageIO.write(resizedImg, extension, bout1);
-    
-        bout1.flush();  
-        bout1.close();  
-        if(!contact.getImagepath().contains("default"))
-        {
-			File file1 = new File(path+"/resources/theme1/"+contact.getThumbpath());
-			file1.delete();
-			file1 = new File(path+"/resources/theme1/"+contact.getImagepath());
-			file1.delete();
-        }
-        
-        
-        bais = new ByteArrayInputStream(barr);
-        resizeMe = ImageIO.read(bais);
-        newMaxSize = new Dimension(60, 60);
-        resizedImg = Scalr.resize(resizeMe, Method.QUALITY, newMaxSize.width, newMaxSize.height);
-        
-        bout1=new BufferedOutputStream(  
-                 new FileOutputStream(path+"/resources/theme1/customimages/playerthumb_"+filename));  
-        
-        ImageIO.write(resizedImg, extension, bout1);
-    
-        bout1.flush();  
-        bout1.close();  
-
-        contact.setThumbpath("/customimages/playerthumb_"+filename);
-        
-        
-        
+        bout.close();  
         contact.setImagepath("/customimages/playerimage_"+filename);
         generalDaoService.update(contact);
         }catch(Exception e){System.out.println(e);}  
@@ -681,13 +510,10 @@ public class SportServiceImpl  implements SportService{
 	@Override
 	public void updateTeam(Team team) {
 		// TODO Auto-generated method stub
-		Team team1 = findTeamById(team.getId());
-		team1.setName(team.getName());
-		team1.setDescription(team.getDescription());
+		//Team team1 = findTeamById(team.getId());
 	//	Hibernate.initialize(team.getPlayers());
 		//team.setPlayers(team1.getPlayers());
-		
-		generalDaoService.update(team1);
+		generalDaoService.update(team);
 	}
 
 	@Override
@@ -764,7 +590,6 @@ public class SportServiceImpl  implements SportService{
 					newNotice.setDate(notice.getDate());
 					newNotice.setId(notice.getId());
 					newNotice.setImageurl(notice.getImageurl());
-					newNotice.setThumburl(notice.getThumburl());
 					tmpList.add(newNotice);
 				}
 				else
@@ -784,330 +609,25 @@ public class SportServiceImpl  implements SportService{
 	
 	}
 
-
 	@Override
-	public void genPlayoffs(int championid, int phase, int round) {
+	public Notice uploadNoticeImage(String path, int id, CommonsMultipartFile file) {
 		// TODO Auto-generated method stub
-		
-		playoffService.generatePlayoff(this.findChampionsById(championid), phase, round);
-		return ;
-	}
-
-	@Override
-	public List<Playoff> getPlayoffGames(int championid, Integer phase) {
-		// TODO Auto-generated method stub
-		Champion champion = this.findChampionsById(championid);
-		Hibernate.initialize(champion.getPlayoffs());
-	// TODO Auto-generated method stub;
-		if(phase==null) {
-			for(Playoff playoff : champion.getPlayoffs())
-				Hibernate.initialize(playoff.getGames());
-			return champion.getPlayoffs();
-		
-		}
-		else {
-
-			List<Playoff> list= new ArrayList<Playoff>();
-			for(Playoff playoff : champion.getPlayoffs())
-				if(playoff.getPhase().equals(phase))
-				{
-					Hibernate.initialize(playoff.getGames());
-					list.add(playoff);
-
-				}
-			return list;
-		}
-		
-
-	}
-
-	@Override
-	public Playoff findPlayoffById(int id) {
-		// TODO Auto-generated method stub
-		return playoffDao.findById(id);
-	}
-
-	@Override
-	public void updatePlayoff(Playoff playoff, Champion champion) {
-		// TODO Auto-generated method stub
-	    Playoff playoff1 = this.findPlayoffById(playoff.getId());
-	
-		playoff1.setName(playoff.getName());
-		playoff1.setPhase(playoff.getPhase());
-		generalDaoService.update(playoff1);
-	}
-
-	@Override
-	public void addNewAdminUserToTeam(Contact contact, int id1) {
-		// TODO Auto-generated method stub
-		contact.setAdminteam(this.findTeamById(id1));
-		contact.setEnabled(true);
-		contact.setPassword(passwordEncoder.encode(contact.getPassword()));
-		Userrole userrole =new Userrole();
-		userrole.setContact(contact);
-		userrole.setRole("ROLE_TEAM");
-		
-		generalDaoService.persist(contact);
-		generalDaoService.persist(userrole);
-	}
-
-	@Override
-	public List<Game> getUpcomingGames() {
-		// TODO Auto-generated method stub
-/*		
-		List<Game> games = gameDao.getUpcomingGames();
-		List<Game> upcomingGames= new ArrayList<Game>();
-		 Date datenow = new Date();
-		for(Game game:games)
-			if(game.getDate()!=null&&game.getScore1()==null&&game.getDate().after(datenow))
-			{
-				if(game.getPlayoff()!=null)
-				{
-					if(game.getPlayoff().getChampion().isEnabled())
-					{
-						game.setChampion(game.getPlayoff().getChampion());
-						upcomingGames.add(game);
-						
-					}
-				}
-				else if(game.getMatchday()!=null) 
-				{
-					if(game.getMatchday().getTeamgroup().getChampion().isEnabled())
-					{
-						game.setChampion(game.getMatchday().getTeamgroup().getChampion());
-						upcomingGames.add(game);
-					}
-				}
-				
-				
-			}
-		*/
-		List<Game> games = gameDao.getUpcomingGames();
-		for(Game game:games)
-		{
-			if(game.getPlayoff()!=null)
-				game.setChampion(game.getPlayoff().getChampion());
-			else if(game.getMatchday()!=null) 
-				game.setChampion(game.getMatchday().getTeamgroup().getChampion());
-		}
-		return games;
-	}
-
-	@Override
-	public List<Album> getAlbums() {
-		
-		// TODO Auto-generated method stub
-		//Hibernate.initialize(albumDao.findAll());
-		List<Album> albums = albumDao.findAll();
-		for(Album album:albums)
-			Hibernate.initialize(album.getImages());
-		
-		return albums;
-	}
-
-	@Override
-	public void uploadAlbumImages(String path, int id, CommonsMultipartFile[] files) {
-		// TODO Auto-generated method stub
-		
-		Album album = albumDao.findById(id);
-		for(CommonsMultipartFile file:files)
-		{
-			
-	        try{  
-			Image image = new Image();
-			generalDaoService.persist(image);
-	        String extension = FilenameUtils.getExtension(file.getOriginalFilename()); 
-			String filename=String.valueOf("album"+album.getId()+"_image"+ image.getId())+"."+extension;
-	        byte barr[]=file.getBytes();  
-	        
-        
-	        BufferedOutputStream bout=new BufferedOutputStream(  
-	                 new FileOutputStream(path+"/resources/theme1/customimages/albumimage_"+filename));  
-	        bout.write(barr);  
-	        bout.flush();  
-	        bout.close();  
-	        
-	        
-	        ByteArrayInputStream bais = new ByteArrayInputStream(barr);
-	        BufferedImage resizeMe = ImageIO.read(bais);
-	        Dimension newMaxSize = new Dimension(255, 255);
-	        BufferedImage resizedImg = Scalr.resize(resizeMe, Method.QUALITY, newMaxSize.width, newMaxSize.height);
-	        
-	        BufferedOutputStream bout1=new BufferedOutputStream(  
-	                 new FileOutputStream(path+"/resources/theme1/customimages/albumimage_thumb_"+filename));  
-	        
-	        ImageIO.write(resizedImg, extension, bout1);
-	    
-	        bout1.flush();  
-	        bout1.close();  
-
-	        image.setThumburl("/customimages/albumimage_thumb_"+filename);
-	        image.setUrl("/customimages/albumimage_"+filename);
-	        image.setAlbum(album);
-	        generalDaoService.update(image);
-	       
-	        }catch(Exception e){System.out.println(e);
-            }  
-	        
-	        //return ;
-		
-		}
-	}
-
-	@Override
-	public Image findImageById(int id) {
-		// TODO Auto-generated method stub
-		
-		return imageDao.findById(id);
-	}
-
-	@Override
-	public void deleteImage(String path, int id) {
-		// TODO Auto-generated method stub
-		Image image = this.findImageById(id);
-		File file = new File(path+"/resources/theme1/"+image.getUrl());
-
-		if(file.delete()){
-			System.out.println(file.getName() + " is deleted!");
-		}else{
-			System.out.println("Delete operation is failed.");
-		}
-		file = new File(path+"/resources/theme1/"+image.getThumburl());
-
-		if(file.delete()){
-			System.out.println(file.getName() + " is deleted!");
-		}else{
-			System.out.println("Delete operation is failed.");
-		}
-		generalDaoService.delete(image);
-	}
-
-	@Override
-	public void deleteAlbum(String path, int id) {
-		// TODO Auto-generated method stub
-		Album album = albumDao.findById(id);
-		Hibernate.initialize(album.getImages());
-		for(Image image:album.getImages())
-		{
-			File file = new File(path+"/resources/theme1/"+image.getUrl());
-			file.delete();
-
-			file = new File(path+"/resources/theme1/"+image.getThumburl());
-			file.delete();
-		}
-		generalDaoService.delete(album);
-	}
-
-	@Override
-	public void editAlbum(Album album) {
-		// TODO Auto-generated method stub
-		Album persistedAlbum = albumDao.findById(album.getId());
-		persistedAlbum.setName(album.getName());
-		album=null;
-		generalDaoService.update(persistedAlbum);
-	}
-
-	@Override
-	public void deleteTeam(String path, int id) {
-		// TODO Auto-generated method stub
-		Team team = this.findTeamById(id);
-		if(!team.getLogopath().contains("default"))
-		{
-			File file = new File(path+"/resources/theme1/"+team.getLogopath());
-			file.delete();
-			file = new File(path+"/resources/theme1/"+team.getLogothumbpath());
-			file.delete();
-		}
-		Hibernate.initialize(team.getPlayers());
-		for(Contact contact:team.getPlayers())
-		{	
-			if(!contact.getImagepath().contains("default"))
-				{
-				File file = new File(path+"/resources/theme1/"+contact.getImagepath());
-				file.delete();
-				file = new File(path+"/resources/theme1/"+contact.getThumbpath());
-				file.delete();
-			}
-		}
-		generalDaoService.delete(team);
-	}
-
-	@Override
-	public void deletePlayer(String path, int id) {
-		// TODO Auto-generated method stub
-		if(!contactService.getContact(id).getImagepath().contains("default"))
-		{
-			File file = new File(path+"/resources/theme1/"+contactService.getContact(id).getImagepath());
-			file.delete();
-			file = new File(path+"/resources/theme1/"+contactService.getContact(id).getThumbpath());
-			file.delete();
-		}
-		generalDaoService.delete(contactService.getContact(id));
-	}
-
-	@Override
-	public void editTeamAdmin(Contact contact) {
-		// TODO Auto-generated method stub
-		
-		if(contact==null)
-			return;
-		Contact contactp = contactService.getContact(contact.getId());
-	
-		if(contactp==null)
-			return;
-		contactp.setName(contact.getName());
-	
-		contactp.setUsername(contact.getUsername());
-	
-		if(contact.getPassword()!=null)
-			if(!contact.getPassword().equals(""))
-			{
-				contactp.setPassword(passwordEncoder.encode(contact.getPassword()));
-			}
-		generalDaoService.update(contactp);
-	}
-
-	@Override
-	public void deleteNotice(int id, String path) {
 		Notice notice = this.findNewsById(id);
-		generalDaoService.delete(notice);
-		
-        if(!notice.getImageurl().contains("default"))
-        {
-			File file1 = new File(path+"/resources/theme1/"+notice.getImageurl());
-			file1.delete();
-			
-			file1 = new File(path+"/resources/theme1/"+notice.getThumburl());
-			file1.delete();
-        }
+		// TODO Auto-generated method stub
+        String extension = FilenameUtils.getExtension(file.getOriginalFilename()); 
+		String filename=String.valueOf(notice.getId())+"."+extension;
+        try{  
+        byte barr[]=file.getBytes();  
+          
+        BufferedOutputStream bout=new BufferedOutputStream(  
+                 new FileOutputStream(path+"/resources/theme1/customimages/noticeimage_"+filename));  
+        bout.write(barr);  
+        bout.flush();  
+        bout.close();  
+        notice.setImageurl("/customimages/noticeimage_"+filename);
+        generalDaoService.update(notice);
+        }catch(Exception e){System.out.println(e);}  
         
-		
+        return notice;
 	}
-
-	@Override
-	public List<Team> getFollowingTeams(String teamid) {
-
-		int id = Integer.parseInt(teamid);
-		Team team = teamDao.findById(id);
-		List<Team> list  = new ArrayList<Team>();
-		list.add(team);
-		// TODO Auto-generated method stub
-		return list;
-	}
-
-	@Override
-	public List<Game> getLastResults() {
-		// TODO Auto-generated method stub
-		List<Game> games = gameDao.getLastResults();
-		for(Game game:games)
-		{
-			if(game.getPlayoff()!=null)
-				game.setChampion(game.getPlayoff().getChampion());
-			else if(game.getMatchday()!=null) 
-				game.setChampion(game.getMatchday().getTeamgroup().getChampion());
-		}
-		return games;
-	}
-	
-	
 }

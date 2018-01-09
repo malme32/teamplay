@@ -55,7 +55,7 @@ public class Contact  implements InitializingBean{
 
 	String name;
 
-	Integer age;
+	int age;
 	String email;
 	
 	
@@ -64,21 +64,11 @@ public class Contact  implements InitializingBean{
 	
 	@Column(name="imagepath", length=150)
 	String imagepath;
-
-	@Column(name="thumbpath", length=150)
-	String thumbpath;
 	
-/*	private List<Userrole> userrole = new HashSet<Userrole>(0);
+//	private Set<Userrole> userrole = new HashSet<Userrole>(0);
 	@ManyToOne
 	@JoinColumn(name = "user_role_id")
 	private Userrole userrole;
-	
-	*/
-	
-	@JsonIgnore
-	@OneToMany(fetch = FetchType.LAZY,mappedBy="contact",cascade = CascadeType.ALL)
-	private List<Userrole> userroles;
-	
 	
 	@ManyToOne
 	@JoinColumn(name = "position_id")
@@ -89,30 +79,22 @@ public class Contact  implements InitializingBean{
 	private String soccerposition;
 	
 	
-	@ManyToOne
-	@JoinColumn(name = "adminteamid")
-	private Team adminteam;
-	
-	
 	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY,mappedBy="admin",cascade = CascadeType.ALL)
-	private List<Event> adminevents;
+	List<Event> adminevents;
 	
 	@JsonIgnore
-	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "players")
+	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "players",cascade = CascadeType.ALL)
 	private List<Event> events;// = new ArrayList<Event>();
 	//, cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH,CascadeType.PERSIST}
 	@JsonIgnore
-	@ManyToMany(fetch = FetchType.LAZY,mappedBy ="players",cascade= {CascadeType.DETACH,
-            CascadeType.MERGE,
-            CascadeType.REFRESH,
-            CascadeType.PERSIST})
+	@ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL, mappedBy ="players")
 	private List<Team> teams = new ArrayList<Team>();
 	
 	
 	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY,mappedBy="contact",cascade = CascadeType.ALL)
-	private List<Scorer> scorers;
+	List<Scorer> scorers;
 	
 	public List<Team> getTeams() {
 		return teams;
@@ -197,10 +179,10 @@ public String getName() {
 public void setName(String name) {
 	this.name = name;
 }
-public Integer getAge() {
+public int getAge() {
 	return age;
 }
-public void setAge(Integer age) {
+public void setAge(int age) {
 	this.age = age;
 }
 public String getPhonenumber() {
@@ -218,12 +200,12 @@ public void setAddress(String address) {
 
 
 
-/*public Userrole getUserrole() {
+public Userrole getUserrole() {
 	return userrole;
 }
 public void setUserrole(Userrole userrole) {
 	this.userrole = userrole;
-}*/
+}
 
 //@OneToMany(fetch = FetchType.LAZY, mappedBy = "contact")
 //public Set<Userrole> getUserrole() {
@@ -265,26 +247,5 @@ public String getSoccerposition() {
 public void setSoccerposition(String soccerposition) {
 	this.soccerposition = soccerposition;
 }
-public List<Userrole> getUserroles() {
-	return userroles;
-}
-public void setUserroles(List<Userrole> userroles) {
-	this.userroles = userroles;
-}
-public Team getAdminteam() {
-	return adminteam;
-}
-public void setAdminteam(Team adminteam) {
-	this.adminteam = adminteam;
-}
-public String getThumbpath() {
-
-	return (this.thumbpath==null||this.thumbpath.equals("")) ? (String) "/defaultimages/playerdefaultthumb.png" : thumbpath;
-
-}
-public void setThumbpath(String thumbpath) {
-	this.thumbpath = thumbpath;
-}
-
 
 }

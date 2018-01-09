@@ -5,6 +5,7 @@ pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <spring:url value="/resources/theme1" var="resources" />
+<spring:url value="/resources/theme1" var="resources" />
 
 <script data-cfasync="false" src="${resources}/js/cloudflare-static/email-decode.min.js"></script><script src="${resources}/js/vendor/jquery.js"></script>
 <script src="${resources}/js/vendor/bootstrap.min.js"></script>
@@ -39,8 +40,8 @@ pageEncoding="UTF-8"%>
 <!--<link rel='stylesheet' href='https://material.angularjs.org/1.1.5/docs.css'> -->
 		<!-- <<<<< ANGULAR MATERIAL -->	
 	
-	<spring:url value="/resources/main.js?16" var="crunchifyJS" />
- 	<spring:url value="/resources/main.css?12" var="maincss" />
+	<spring:url value="/resources/main.js" var="crunchifyJS" />
+ 	<spring:url value="/resources/main.css" var="maincss" />
  	<script src="${crunchifyJS}"></script>
  	<link rel="stylesheet" type="text/css" href="${maincss}">   
 <!-- <<<<<<<<<<<<< COMMON  -->
@@ -55,11 +56,7 @@ pageEncoding="UTF-8"%>
 <link rel="stylesheet" href="${resources}/css/style.css">
 <link rel="stylesheet" href="${resources}/css/color.css">
 <link rel="stylesheet" href="${resources}/css/responsive.css">
-<link rel="stylesheet" href="${resources}/css/own.css?11">
+<link rel="stylesheet" href="${resources}/css/own.css">
 <link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i,800|Open+Sans:400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
 
 <script src="${resources}/js/vendor/modernizr.js"></script>
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<meta name="author" content="" />
