@@ -31,30 +31,30 @@ public class AppConfig{
 	@Bean
 	public Map<Character, Character> greeklishMap(){
 		HashMap<Character, Character> hashMap = new HashMap<Character, Character>();
-		hashMap.put('á', 'a');
-		hashMap.put('â', 'b');
-		hashMap.put('ã', 'g');
-		hashMap.put('ä', 'd');
-		hashMap.put('å', 'e');
-		hashMap.put('æ', 'z');
-		hashMap.put('ç', 'i');
-		hashMap.put('è', '8');
-		hashMap.put('é', 'i');
-		hashMap.put('ê', 'k');
-		hashMap.put('ë', 'l');
-		hashMap.put('ì', 'm');
-		hashMap.put('í', 'n');
-		hashMap.put('î', '3');
-		hashMap.put('ï', 'o');
-		hashMap.put('ğ', 'p');
-		hashMap.put('ñ', 'r');
-		hashMap.put('ó', 's');
-		hashMap.put('ô', 't');
-		hashMap.put('õ', 'y');
-		hashMap.put('ö', 'f');
-		hashMap.put('÷', 'x');
-		hashMap.put('ø', 'p');
-		hashMap.put('ù', 'w');
+		hashMap.put('Î±', 'a');
+		hashMap.put('Î²', 'b');
+		hashMap.put('Î³', 'g');
+		hashMap.put('Î´', 'd');
+		hashMap.put('Îµ', 'e');
+		hashMap.put('Î¶', 'z');
+		hashMap.put('Î·', 'i');
+		hashMap.put('Î¸', '8');
+		hashMap.put('Î¹', 'i');
+		hashMap.put('Îº', 'k');
+		hashMap.put('Î»', 'l');
+		hashMap.put('Î¼', 'm');
+		hashMap.put('Î½', 'n');
+		hashMap.put('Î¾', '3');
+		hashMap.put('Î¿', 'o');
+		hashMap.put('Ï€', 'p');
+		hashMap.put('Ï', 'r');
+		hashMap.put('Ïƒ', 's');
+		hashMap.put('Ï„', 't');
+		hashMap.put('Ï…', 'y');
+		hashMap.put('Ï†', 'f');
+		hashMap.put('Ï‡', 'x');
+		hashMap.put('Ï€', 'p');
+		hashMap.put('Ï‰', 'w');
 
 	   return hashMap;
    }
