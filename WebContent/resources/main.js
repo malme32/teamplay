@@ -178,8 +178,14 @@ appMain.run(function($rootScope, $window) {
     	    		$rootScope.indexClass="own-hidden";
     	    	//	$rootScope.isIndex=false;
     		//});
-    		
+        	    	try{
+			    	Android;$rootScope.indexClass="own-hidden";
 
+					$rootScope.isAndroid=true;}
+					catch(err){
+						$rootScope.isAndroid=false;
+					}
+        	    	
     });
     
     
@@ -237,6 +243,32 @@ appMain.filter('validDate', function() {
     	  var result = [];   
     	  for (var i=0; i<items.length; i++){
               if (items[i].date||(items[i].score1&&items[i].score2))  {
+                  result.push(items[i]);
+              }
+          }            
+          return result;
+    };
+});
+
+appMain.filter('nextGames', function() {
+    return function(items) {
+    	  var result = [];   
+    	  var d1 = new Date();
+    	  for (var i=0; i<items.length; i++){
+              if (items[i].date>d1&&!items[i].score1&&!items[i].score2)  {
+                  result.push(items[i]);
+              }
+          }            
+          return result;
+    };
+});
+
+appMain.filter('lastResults', function() {
+    return function(items) {
+    	  var result = [];   
+    	  var d1 = new Date();
+    	  for (var i=0; i<items.length; i++){
+              if (items[i].score1&&items[i].score2)  {
                   result.push(items[i]);
               }
           }            
@@ -884,14 +916,14 @@ appMain.controller("teamdetailController",function($scope, $http, $location, $ro
 
 			        ///$scope.teams = response.data;
 			        //alert("'Εγινε!");
-			        $scope.getFollowingTeams();
+			        $scope.getFollowingTeams(true);
 			    }, function myError(response) {
 			    	alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");     
 			    });
 			 
 		 }
 		 
-		 $scope.getFollowingTeams = function (){ 
+		 $scope.getFollowingTeams = function (buttonPushed){ 
 
 			 $http({
 			        method : "GET",
@@ -901,7 +933,9 @@ appMain.controller("teamdetailController",function($scope, $http, $location, $ro
 		    		{
 
 			    		$scope.followingteam = response.data[0];
-			    		
+			    	/*	if(buttonPushed)
+					        alert("Ακολουθείτε την ομάδα "+$scope.followingteam.name+"! Θα λαμβάνετε ειδοποιήσεις για αγώνες και αποτελέσματα!");
+*/
 			    	  	try{
 					    	Android.getFollowers(response.data[0].id); }
 					    	catch(err){}
@@ -933,7 +967,14 @@ appMain.controller("teamdetailController",function($scope, $http, $location, $ro
 
 		 }
 	    
-	    
+		 $scope.isFollowedText = function (row){
+			 
+			 if($scope.followingteam!=null&&row.id==$scope.followingteam.id)
+				 return "ΑΚΟΛΟΥΘΕΙΣ!";
+			 else
+				 return "ΑΚΟΛΟΥΘΕΙΣΕ";
+
+		 }
 	    
 	 $http({
 	        method : "GET",
@@ -1200,14 +1241,21 @@ appMain.controller("teamlistController",function($scope, $http, $location){
 
 		        ///$scope.teams = response.data;
 		        //alert("'Εγινε!");
-		        $scope.getFollowingTeams();
+		        $scope.getFollowingTeams(true);
 		    }, function myError(response) {
 		    	alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");     
 		    });
 		 
 	 }
-	 
-	 $scope.getFollowingTeams = function (){ 
+	 $scope.isFollowedText = function (row){
+		 
+		 if($scope.followingteam!=null&&row.id==$scope.followingteam.id)
+			 return "ΑΚΟΛΟΥΘΕΙΣ!";
+		 else
+			 return "ΑΚΟΛΟΥΘΕΙΣΕ";
+
+	 }
+	 $scope.getFollowingTeams = function (buttonPushed){ 
 
 		 $http({
 		        method : "GET",
@@ -1215,8 +1263,11 @@ appMain.controller("teamlistController",function($scope, $http, $location){
 		    }).then(function mySuccess(response) {
 		    	if(response.data.length>0)
 		    		{
-
+		    			
 			    		$scope.followingteam = response.data[0];
+			    		//if(buttonPushed)
+					       // alert("Ακολουθείτε την ομάδα "+$scope.followingteam.name+"! Θα λαμβάνετε ειδοποιήσεις για αγώνες και αποτελέσματα!");
+
 			    		
 			    	  	try{
 					    	Android.getFollowers(response.data[0].id); }
