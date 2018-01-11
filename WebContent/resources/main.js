@@ -1168,10 +1168,14 @@ appMain.controller("headerController",function($scope, $http, $location){
 		        method : "GET",
 		        url : "followers"
 		    }).then(function mySuccess(response) {
-
+		    	if(response.data[0])
 		        //$scope.followingteam = response.data[0];
-		    	$location.path( "team-detail.html/"+response.data[0].id );
-		    	
+		    		$location.path( "team-detail.html/"+response.data[0].id );
+		    	else
+		    		{
+		    			$location.path( "team-list.html" );
+		    			alert("Ακολουθήστε πρώτα μια ομάδα!");
+		    		}
 
 		        //return "#!team-detail.html/"+response.data[0].id;
 		    }, function myError(response) {
