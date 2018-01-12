@@ -33,7 +33,7 @@ public class HibernateConfiguration {
     public LocalSessionFactoryBean sessionFactory() {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(dataSource());
-        sessionFactory.setPackagesToScan(new String[] { "com.event.model","com.phonebook.model","com.sport.model" });
+        sessionFactory.setPackagesToScan(new String[] { "com.event.model","com.phonebook.model","com.sport.model" ,"com.general.model" });
         sessionFactory.setHibernateProperties(hibernateProperties());
         return sessionFactory;
      }

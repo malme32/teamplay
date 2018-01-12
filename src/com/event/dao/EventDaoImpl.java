@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.event.model.Event;
-import com.event.model.Message;
+import com.general.model.Message;
 import com.phonebook.model.Contact;
 
 @Repository("eventDao")

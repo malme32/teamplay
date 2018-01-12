@@ -202,13 +202,17 @@ public class SportController {
 	}
 	
 	@RequestMapping(value="/games", method=RequestMethod.GET, produces = "application/json")
-	public @ResponseBody List<Game> getAllGames(@RequestParam(required = false)  String upcoming, @RequestParam(required = false)  String lastresults)
+	public @ResponseBody List<Game> getAllGames(@RequestParam(required = false)  String upcoming, @RequestParam(required = false)  String lastresults, @RequestParam(required = false)  String calendargames)
 	{
 		if(upcoming!=null)
 			return sportService.getUpcomingGames();
 		else if(lastresults!=null)
 			return sportService.getLastResults();
-		else return null;
+		else if(calendargames!=null)
+			return sportService.getCalendarGames();
+		else 
+			return sportService.getAllGames();
+		
 	}
 	
 	

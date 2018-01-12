@@ -1108,6 +1108,30 @@ public class SportServiceImpl  implements SportService{
 		}
 		return games;
 	}
-	
+
+	@Override
+	public List<Game> getAllGames() {
+		List<Game> games = gameDao.findAll();
+		for(Game game:games)
+		{
+			if(game.getPlayoff()!=null)
+				game.setChampion(game.getPlayoff().getChampion());
+			else if(game.getMatchday()!=null) 
+				game.setChampion(game.getMatchday().getTeamgroup().getChampion());
+		}
+		return games;
+	}
+	@Override
+	public List<Game> getCalendarGames() {
+		List<Game> games = gameDao.getCalendarGames();
+		for(Game game:games)
+		{
+			if(game.getPlayoff()!=null)
+				game.setChampion(game.getPlayoff().getChampion());
+			else if(game.getMatchday()!=null) 
+				game.setChampion(game.getMatchday().getTeamgroup().getChampion());
+		}
+		return games;
+	}
 	
 }

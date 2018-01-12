@@ -10,5 +10,5 @@ public interface GeneralDaoService {
 	 
     public void delete(Object entity);
     public void update(Object entity);
-
+    
 }

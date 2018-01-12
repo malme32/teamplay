@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.event.model.Event;
-import com.event.model.Message;
+import com.general.model.Message;
 import com.phonebook.model.Contact;
 
 public interface EventService {

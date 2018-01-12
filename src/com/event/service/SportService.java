@@ -123,5 +123,9 @@ public interface SportService {
 	public List<Team> getFollowingTeams(String teamid);
 
 	public List<Game> getLastResults();
+
+	public List<Game> getAllGames();
+
+	public List<Game> getCalendarGames();
 	
 }

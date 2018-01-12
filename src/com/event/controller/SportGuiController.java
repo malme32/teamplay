@@ -203,4 +203,9 @@ response.addHeader("Cache-Control", headerValue);*/
 	public ModelAndView contactus(){
 		return new ModelAndView("theme1/contactus","","");
 	}
+	
+	@RequestMapping(value="/calendar", method=RequestMethod.GET)
+	public ModelAndView calendar(){
+		return new ModelAndView("theme1/calendar","","");
+	}
 }

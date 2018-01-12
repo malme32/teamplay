@@ -96,6 +96,8 @@ pageEncoding="UTF-8"%>
 </ul>
 
 </li>
+<li><a ng-href="#!calendar">CALENDAR</a>
+</li>
 <li><a href="#!team-list.html">ΟΜΑΔΕΣ</a>
 <ul>
 <li ><a ng-click='getMyTeamLink()' href=''>Η ΟΜΑΔΑ ΜΟΥ</a></li><!-- ng-href="{{getMyTeamLink()}} -->

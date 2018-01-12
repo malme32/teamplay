@@ -1,5 +1,16 @@
 package com.event.dao;
 
-public class MessageDao extends AbstractDao{
+import java.util.List;
+
+import com.general.model.Message;
+import com.phonebook.model.Contact;
+
+public interface MessageDao{
+  
+	public Message findById(int id);
+
+	public List<Message> findAll();
+
+	public List<Message> getMessages(Contact contact);
 
 }

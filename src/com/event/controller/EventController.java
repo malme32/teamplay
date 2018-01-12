@@ -24,10 +24,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.event.configuration.AppConfig;
 import com.event.model.Event;
-import com.event.model.Message;
 import com.event.service.EventService;
 import com.event.service.SportService;
-
+import com.general.model.Message;
 import com.phonebook.model.Contact;
 import com.phonebook.service.ContactService;
 import com.phonebook.service.SalaryService;

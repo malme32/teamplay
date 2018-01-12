@@ -13,4 +13,6 @@ public interface GameDao{
 	public List<Game> getUpcomingGames();
 	
 	public List<Game> getLastResults();
+
+	public List<Game> getCalendarGames();
 }

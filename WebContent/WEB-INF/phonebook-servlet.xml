@@ -16,7 +16,7 @@
 
     </mvc:annotation-driven>
       <aop:aspectj-autoproxy/>
-	<context:component-scan base-package="com.phonebook, com.event, com.sport" />
+	<context:component-scan base-package="com.phonebook, com.event, com.sport, com.general" />
 	<!-- 	<context:component-scan base-package="com.event" /> -->
 <context:annotation-config/> 
 	<bean id="viewResolver"

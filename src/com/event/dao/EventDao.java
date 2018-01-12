@@ -4,7 +4,7 @@ package com.event.dao;
 import java.util.List;
 
 import com.event.model.Event;
-import com.event.model.Message;
+import com.general.model.Message;
 import com.phonebook.model.Contact;
 
 public interface EventDao {

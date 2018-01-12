@@ -1,5 +1,6 @@
 package com.phonebook.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.SessionFactory;
@@ -22,6 +23,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.event.configuration.AppConfig;
 import com.event.model.Event;
+import com.event.service.GeneralDaoService;
+import com.event.service.MessageService;
+import com.general.model.Message;
 import com.phonebook.model.Contact;
 import com.phonebook.model.Position;
 import com.phonebook.model.Salary;
@@ -45,6 +49,16 @@ public class ContactController {
 	
 	@Autowired
 	private ContactService contactService;
+
+	@Autowired
+	private GeneralDaoService generalDaoService;
+
+	@Autowired
+	private MessageService messageService;
+	
+	//////////////////////////////////////
+	/////////////GET///////////////////////
+	/////////////////////////////////////
 	
 	@RequestMapping(value="/contacts", method=RequestMethod.GET, produces = "application/json")
 	public @ResponseBody List<Contact> getContactList()
@@ -52,30 +66,6 @@ public class ContactController {
 		
 		return contactService.getContacts();
 	}
-	
-	
-	@RequestMapping(value="/contacts", method=RequestMethod.POST)
-	public @ResponseBody void addContact(@ModelAttribute("contact")Contact contact,  @RequestParam("position_id") int position_id)
-	{
-		contact.setPosition(contactService.getPosition(position_id));
-		contactService.addContact(contact);
-		return;
-	}
-	@RequestMapping(value="/contacts", method=RequestMethod.DELETE)
-	public @ResponseBody void deleteContact(@ModelAttribute("contact")Contact contact, BindingResult result, ModelMap model)
-	{
-		
-		contactService.deleteContact(contact);
-		return;
-	}
-	@RequestMapping(value="/contacts", method=RequestMethod.PUT)
-	public @ResponseBody void updateContact( @RequestParam("position_id") int position_id, @ModelAttribute("contact")Contact contact, BindingResult result, ModelMap model)
-	{
-		contact.setPosition(contactService.getPosition(position_id));
-		contactService.updateContact(contact);
-		return;
-	}
-	
 	@RequestMapping(value="/contacts/search/{searchstr}", method=RequestMethod.GET)
 	public @ResponseBody List<Contact> searchContact(@PathVariable("searchstr") String searchstr)
 	{
@@ -83,14 +73,6 @@ public class ContactController {
 		return contactService.searchContactQuery(searchstr);
 	}
 	
-/*	@RequestMapping(value="/contacts/deleteall", method=RequestMethod.DELETE)
-	public @ResponseBody void deleteAllContacts()
-	{
-		//System.out.println();
-		contactService.deleteAllContacts();
-		return;
-	}
-	*/
 	
 	@RequestMapping(value="/contacts/{id}", method=RequestMethod.GET)
 	public @ResponseBody Contact getContact(@PathVariable("id") int id)
@@ -107,19 +89,6 @@ public class ContactController {
 		return contactService.getColumns();
 	}
 	
-	
-	//////////////////////////SALARY/////////////////////
-	
-	
-	@RequestMapping(value="/salaries", method=RequestMethod.POST)
-	public @ResponseBody void addSalary(@ModelAttribute("salary")Salary salary, @RequestParam("id") int id)
-	{
-		salary.setContact(contactService.getContact(id));
-		salaryService.addSalary(salary);
-		return;
-	}
-	
-	
 	@RequestMapping(value="/contacts/{id}/salaries", method=RequestMethod.GET)
 	public @ResponseBody List<Salary> getContactSalaries(@PathVariable("id") int id)
 	{		
@@ -127,17 +96,6 @@ public class ContactController {
 		return salaryService.getContactSalaries(id);
 	}
 	
-	///////////////POSITION//////////////////////////
-	
-	@RequestMapping(value="/positions", method=RequestMethod.POST)
-	public @ResponseBody void addPosition(@ModelAttribute("position")Position position)
-	{
-		contactService.addObject(position);
-		return;
-	}
-	
-	
-	/////////////GENERAL////////////////
 	@RequestMapping(value="/tables", method=RequestMethod.GET, produces = "application/json")
 	public @ResponseBody List<String> getTableNames()
 	{
@@ -151,5 +109,93 @@ public class ContactController {
 
 		return contactService.getContactEvents(contactid);
 	}
+	
+	
+	@RequestMapping(value="/contacts/{contactid}/messages", method=RequestMethod.GET, produces = "application/json")
+	public @ResponseBody List<Message> getMessages(@PathVariable int contactid)
+	{
+
+		return messageService.getMessages(contactid);
+	}
+	
+	
+	//////////////////////////////////////
+	/////////////POST///////////////////////
+	/////////////////////////////////////
+	
+	@RequestMapping(value="/contacts", method=RequestMethod.POST)
+	public @ResponseBody void addContact(@ModelAttribute("contact")Contact contact,  @RequestParam("position_id") int position_id)
+	{
+		contact.setPosition(contactService.getPosition(position_id));
+		contactService.addContact(contact);
+		return;
+	}
+	
+	@RequestMapping(value="/salaries", method=RequestMethod.POST)
+	public @ResponseBody void addSalary(@ModelAttribute("salary")Salary salary, @RequestParam("id") int id)
+	{
+		salary.setContact(contactService.getContact(id));
+		salaryService.addSalary(salary);
+		return;
+	}
+	
+	@RequestMapping(value="/positions", method=RequestMethod.POST)
+	public @ResponseBody void addPosition(@ModelAttribute("position")Position position)
+	{
+		contactService.addObject(position);
+		return;
+	}
+	
+	
+	@RequestMapping(value="/messages", method=RequestMethod.POST)
+	public @ResponseBody void addMessage(@ModelAttribute Message message, @RequestParam("senderid") int senderid, @RequestParam("receiverid") int receiverid)
+	{
+		Message message1 = new Message();
+				message.setContact(contactService.getContact(senderid));
+		message1.setReceiver(contactService.getContact(receiverid));
+		message1.setDate(new Date());
+		generalDaoService.persist(message1);
+		//messageService.addMessage(message, senderid, receiverid);
+		return;
+	}
+	
+	//////////////////////////////////////
+	/////////////PUT///////////////////////
+	/////////////////////////////////////
+	
+	
+	@RequestMapping(value="/contacts", method=RequestMethod.PUT)
+	public @ResponseBody void updateContact( @RequestParam("position_id") int position_id, @ModelAttribute("contact")Contact contact, BindingResult result, ModelMap model)
+	{
+		contact.setPosition(contactService.getPosition(position_id));
+		contactService.updateContact(contact);
+		return;
+	}
+	//////////////////////////////////////
+	/////////////DELETE///////////////////////
+	/////////////////////////////////////
+
+	
+
+	@RequestMapping(value="/contacts", method=RequestMethod.DELETE)
+	public @ResponseBody void deleteContact(@ModelAttribute("contact")Contact contact, BindingResult result, ModelMap model)
+	{
+		
+		contactService.deleteContact(contact);
+		return;
+	}
+
+	
+
+	
+/*	@RequestMapping(value="/contacts/deleteall", method=RequestMethod.DELETE)
+	public @ResponseBody void deleteAllContacts()
+	{
+		//System.out.println();
+		contactService.deleteAllContacts();
+		return;
+	}
+	*/
+
 
 }

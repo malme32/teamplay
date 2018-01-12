@@ -22,9 +22,9 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import com.event.model.Event;
-import com.event.model.Message;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.general.model.Message;
 import com.phonebook.model.Contact;
 import com.phonebook.model.Position;
 

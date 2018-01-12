@@ -116,7 +116,12 @@ appMain.config(function($routeProvider) {
     .when("/contactus", {
         templateUrl : "contactus"
 
-});
+})
+.when("/calendar", {
+    templateUrl : "calendar",
+    controller: "calendarController"
+
+})
     /*.
      $routeProvider.otherwise({redirectTo: '/index'});*/
  /* $locationProvider.html5Mode(true); */
@@ -1493,4 +1498,92 @@ appMain.controller("teamController",function($scope, $http, $location, $window){
 		    });
 		 }
 		 
+});
+
+
+appMain.controller("calendarController",function($scope, $http, $location, $window){
+	
+	events=[];
+	
+
+	 $http({
+	        method : "GET",
+	        url : "games?calendargames"
+	    }).then(function mySuccess(response) {
+
+	        $scope.upcominggames = response.data;
+	    
+            for(i=0;i<$scope.upcominggames.length;i++)
+            {
+            	var event={};
+            	if($scope.upcominggames[i].champion.enabled)
+            	{
+                	var date = new Date($scope.upcominggames[i].date);
+                	event.id = $scope.upcominggames[i].id;
+                	event.title = $scope.upcominggames[i].team1.name+" - "+$scope.upcominggames[i].team2.name +" ("+$scope.upcominggames[i].champion.name+")";
+                	event.start = date;
+                	var enddate = new Date(date);
+                	enddate.setHours(enddate.getHours() + 1);
+                	event.end = enddate;
+                    events.push(event);
+            	}
+
+            }
+	    	$scope.showCalendar();
+	    /*	$scope.result=events;*/
+ 
+	    }, function myError(response) {
+	    	$scope.showCalendar();
+	    	
+	        //$scope.result = response.statusText;
+	      
+	    });
+	
+	
+/*$(document).ready(function() {*/
+
+	 $scope.showCalendar = function (){ 
+    $('#calendar').fullCalendar({
+      header: {
+        left: 'prev,next, today',
+        center: 'title',
+        right: 'listWeek,listDay,month,agendaWeek,agendaDay'
+      },
+
+      // customize the button names,
+      // otherwise they'd all just say "list"
+      views: {
+        listDay: { buttonText: 'Ημέρα' },
+        listWeek: { buttonText: 'Βδομάδα' },
+        month: { buttonText: 'Μήνας' },
+        agendaWeek: { buttonText: 'Αντζέντα βδομάδας' },
+        agendaDay: { buttonText:  'Αντζέντα ημέρας' }
+      },
+
+      defaultView: 'listWeek',
+      defaultDate: new Date(),
+      navLinks: true, // can click day/week names to navigate views
+      selectable: true,
+      selectHelper: true,
+      select: function(start, end) {
+    	  alert("Καλέστε στο ... για να κάνετε κράτηση!");
+/*        var title = prompt('Event Title:');
+        var eventData;
+        if (title) {
+          eventData = {
+            title: title,
+            start: start,
+            end: end
+          };
+          $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
+        }
+        $('#calendar').fullCalendar('unselect');*/
+      },
+      editable: false,
+      eventLimit: true, // allow "more" link when too many events
+      events: events
+    });
+	 }
+ /* });*/
+
 });

@@ -44,4 +44,15 @@ public class GameDaoImpl extends AbstractDao implements GameDao{
 		return list;
 	}
 
+	@Override
+	public List<Game> getCalendarGames() {
+		// TODO Auto-generated method stub
+		
+		   @SuppressWarnings("unchecked")
+	
+		   List<Game> list = getSession().createQuery("FROM Game where Date > :curdate ORDER BY date desc").setParameter("curdate", new Date()).list(); 
+		// TODO Auto-generated method stub
+		return list;
+	}
+
 }

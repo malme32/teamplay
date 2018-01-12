@@ -14,7 +14,7 @@ import com.event.dao.AbstractDao;
 import com.event.dao.EventDao;
 
 import com.event.model.Event;
-import com.event.model.Message;
+import com.general.model.Message;
 import com.phonebook.model.Contact;
 
 
