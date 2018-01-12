@@ -18,6 +18,7 @@ import javax.servlet.http.HttpSession;
 
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
@@ -249,6 +250,7 @@ public class SportController {
 	}
 	/////////////////////POST/////////////////////////////////////
 	
+	@Secured("ROLE_ADMIN")
 	@RequestMapping(value="/teams/{id1}/adminusers", method=RequestMethod.POST, produces = "application/json")
 	public @ResponseBody void addNewAdminUserToTeam(@ModelAttribute Contact contact, @PathVariable int id1)
 	{	
@@ -256,7 +258,7 @@ public class SportController {
 		return;
 	}
 	
-	
+	@Secured("ROLE_ADMIN")
 	@RequestMapping(value="/champions", method=RequestMethod.POST, produces = "application/json")
 	public @ResponseBody void addChampion(@ModelAttribute Champion champion)
 	{
@@ -265,7 +267,7 @@ public class SportController {
 	}
 	
 	
-
+	@Secured("ROLE_ADMIN")
 	@RequestMapping(value="/champions/{id1}/teamgroups", method=RequestMethod.POST, produces = "application/json")
 	public @ResponseBody void addTeamGroup(@ModelAttribute Teamgroup teamgroup, @PathVariable int id1)
 	{
@@ -275,6 +277,7 @@ public class SportController {
 		return;
 	}
 	
+	@Secured("ROLE_ADMIN")
 	@RequestMapping(value="/teamgroups/{id1}/matchdays", method=RequestMethod.POST, produces = "application/json")
 	public @ResponseBody void addMatchday(@ModelAttribute Matchday matchday, @PathVariable int id1)
 	{
@@ -293,7 +296,7 @@ public class SportController {
 	
 	
 	
-	
+	@Secured("ROLE_ADMIN")
 	@RequestMapping(value="/games", method=RequestMethod.POST, produces = "application/json")
 	public @ResponseBody void addGame(@ModelAttribute Game game, @RequestParam int teamid1,@RequestParam int teamid2,@RequestParam int matchdayid)
 	{
@@ -306,7 +309,7 @@ public class SportController {
 	}
 	
 	
-	
+	@Secured({"ROLE_ADMIN", "ROLE_TEAM"})
 	@RequestMapping(value="/teams", method=RequestMethod.POST, produces = "application/json")
 	public @ResponseBody void addTeam(@RequestBody Team team)
 	{
@@ -516,7 +519,8 @@ public class SportController {
 	
 	
 	//////////////////PUT///////////////////////////
-	
+
+	@Secured("ROLE_ADMIN")
 	@RequestMapping(value="/champions", method=RequestMethod.PUT, produces = "application/json")
 	public @ResponseBody void editChampion(@ModelAttribute Champion champion)
 	{

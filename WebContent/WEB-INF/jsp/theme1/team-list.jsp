@@ -45,7 +45,7 @@ pageEncoding="UTF-8"%>
 </a></h5>
 
 </div>
-<div style='display:inline-block; float:right'>		<button style='' ng-class="isFollowed(row)"  ng-click="followTeam(row)">ΑΚΟΛΟΥΘΗΣΕ</button> 
+<div style='display:inline-block; float:right'>		<button style='' ng-class="isFollowed(row)"  ng-click="followTeam(row)">{{isFollowedText(row)}}</button> 
 </div>
 
 </div>

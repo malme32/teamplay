@@ -9,11 +9,11 @@ pageEncoding="UTF-8"%>
 
 <div class="page-heading-breadcrumbs">
 <div class="container">
-<h2>ΠΡΩΤΑΘΛΗΜΑΤΑ</h2>
-<ul class="breadcrumbs">
+<h2 class=''>ΠΡΩΤΑΘΛΗΜΑΤΑ</h2>
+<!-- <ul class="breadcrumbs">
 <li><a href="">ΑΡΧΙΚΗ</a></li>
 <li>ΠΡΩΤΑΘΛΗΜΑΤΑ</li>
-</ul>
+</ul> -->
 </div>
 </div>
 

@@ -72,7 +72,7 @@ pageEncoding="UTF-8"%>
 			<div class="detail" style='padding:0; margin:0'>
 			<a style='padding:0; margin:0' href="#!match.html/{{row1.id}}">Λεπτομέρειες<i class="fa fa-angle-double-right"></i></a>
 			<strong style='padding:0; margin:0'><a style='display:inline; padding:0; margin:0' href='#!team-detail.html/{{row1.team1.id}}'>{{row1.team1.name}}</a><i class="red-color"  style=''> {{row1.score1}} - {{row1.score2}}</i> <a style='display:inline; padding:0; margin:0'  href='#!team-detail.html/{{row1.team2.id}}'>{{row1.team2.name}}</a></strong>
-			 <span class="location-marker" style='padding:0; margin:0'><i class="fa "></i><b class="">{{row1.date |  date : "EEE dd MMM HH:mm"}} </b> ({{row1.champion.name}})</span> 
+			 <span class="location-marker" style='padding:0; margin:0'><i class="fa "></i>{{row1.date |  date : "EEE dd MMM HH:mm"}} ({{row1.champion.name}})</span> 
 			</div>
 			</li>
 			

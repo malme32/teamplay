@@ -56,7 +56,7 @@ pageEncoding="UTF-8"%>
 
 
 
-<footer class="main-footer style-2">
+<footer class="main-footer style-2" ng-hide='isAndroid'>
 
 <div class="container">
 

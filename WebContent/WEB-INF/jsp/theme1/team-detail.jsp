@@ -50,7 +50,7 @@ pageEncoding="UTF-8"%>
 <div class="team-detail-content theme-padding-bottom" >
 <h2>ΠΕΡΙΓΡΑΦΗ ΟΜΑΔΑΣ</h2>
 <p>{{team.description}}</p>
-<button style='' ng-class="isFollowed(team)"  ng-click="followTeam(team)">ΑΚΟΛΟΥΘΗΣΕ</button> 
+<button style='' ng-class="isFollowed(team)"  ng-click="followTeam(team)">{{isFollowedText(team)}}</button> 
 <div class="tags-holder">
 <!--  <ul class="tags-list pull-left">
 <li><i class="fa fa-tags"></i>Tags</li>
@@ -164,45 +164,48 @@ pageEncoding="UTF-8"%>
  
  
  		<div ng-show='games.length' class='theme-padding-bottom'>
- 		<h2>ΑΓΩΝΕΣ</h2>
-<%--  		<div class="upcoming-fixture" >
-		<div class="table-responsive">
-		<table class="table table-bordered">
-		<tbody>
-		<tr ng-repeat='row1 in games | validDate | orderBy: "-date" '  >
-		<td >
-		<div class="logo-width-name"><a href='#!team-detail.html/{{row1.team1.id}}'><img src="${resources}/images/team-logos-small/img-01.png" alt="">{{row1.team1.name}}</a></div>
-		</td>
-		
+ 		<h2>ΕΠΟΜΕΝΑ ΠΑΙΧΝΙΔΙΑ</h2>
 
-		<td class="upcoming-fixture-date own-td-vs" style="text-align:center"><a ng-href='#!match.html/{{row1.id}}'>
-			<span class="own-score own-red-shadow" ng-show="row1.score1">{{row1.score1}} - {{row1.score2}} </span><span class="own-date">{{row1.date |  date : "dd/MM HH:mm"}}</span>
-			</a></td>
-		<!--  w-icon -->
-		
-		<td>
-		<div class="logo-width-name"><a href='#!team-detail.html/{{row1.team2.id}}'><img src="${resources}/images/team-logos-small/img-02.png" alt="">{{row1.team2.name}}</a></div>
-		</td>
-		</tr>
-		
-		</tbody>
-		</table>
-		</div>
-		</div>
-		 --%>
-		
 		<div class="matches-shedule-holder">
 
 
 			<div class="matches-dates-shedule" style='padding:0'>
 			<ul>
-			<li ng-repeat='row1 in games | validDate | orderBy: "-date" ' style='padding:5px; ' ng-show='row1.champion.enabled'>
+			<li ng-repeat='row1 in games | nextGames | orderBy: "date" ' style='padding:5px; ' ng-show='row1.champion.enabled'>
 			<span class="pull-left"><img style='height:40px; width:40px' ng-src="${resources}{{row1.team1.logothumbpath}}" alt=""></span>
 			<span class="pull-right"><img style='height:40px; width:40px' ng-src="${resources}{{row1.team2.logothumbpath}}" alt=""></span>
 			<div class="detail">
 			<a href="#!match.html/{{row1.id}}">Λεπτομέρειες<i class="fa fa-angle-double-right"></i></a>
 			<strong><a style='display:inline; padding:0; margin:0' href='#!team-detail.html/{{row1.team1.id}}'>{{row1.team1.name}}</a><i class="red-color"  style=''> {{row1.score1}} - {{row1.score2}}</i> <a style='display:inline; padding:0; margin:0'  href='#!team-detail.html/{{row1.team2.id}}'>{{row1.team2.name}}</a></strong>
 			<span class="location-marker" style=''><i class="fa "></i><b class="own-red-shadow">{{row1.date |  date : "EEE dd MMM HH:mm"}}</b> ({{row1.champion.name}})</span>
+			</div>
+			</li>
+			
+			</ul>
+			</div>
+			
+			</div>
+		
+
+
+		</div>
+		
+		
+		 		<div ng-show='games.length' class='theme-padding-bottom'>
+ 		<h2>ΤΕΛΕΥΤΑΙΑ ΑΠΟΤΕΛΕΣΜΑΤΑ</h2>
+
+		<div class="matches-shedule-holder">
+
+
+			<div class="matches-dates-shedule" style='padding:0'>
+			<ul>
+			<li ng-repeat='row1 in games | lastResults | orderBy: "-date" ' style='padding:5px; ' ng-show='row1.champion.enabled'>
+			<span class="pull-left"><img style='height:40px; width:40px' ng-src="${resources}{{row1.team1.logothumbpath}}" alt=""></span>
+			<span class="pull-right"><img style='height:40px; width:40px' ng-src="${resources}{{row1.team2.logothumbpath}}" alt=""></span>
+			<div class="detail">
+			<a href="#!match.html/{{row1.id}}">Λεπτομέρειες<i class="fa fa-angle-double-right"></i></a>
+			<strong><a style='display:inline; padding:0; margin:0' href='#!team-detail.html/{{row1.team1.id}}'>{{row1.team1.name}}</a><i class="red-color"  style=''> {{row1.score1}} - {{row1.score2}}</i> <a style='display:inline; padding:0; margin:0'  href='#!team-detail.html/{{row1.team2.id}}'>{{row1.team2.name}}</a></strong>
+			<span class="location-marker" style=''><i class="fa "></i>{{row1.date |  date : "EEE dd MMM HH:mm"}} ({{row1.champion.name}})</span>
 			</div>
 			</li>
 			
