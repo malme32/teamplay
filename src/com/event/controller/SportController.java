@@ -248,6 +248,14 @@ public class SportController {
 		return sportService.getFollowingTeams(cookie);
 		
 	}
+	
+	@Secured("ROLE_ADMIN")
+	@RequestMapping(value="/teams/{id}/admins", method=RequestMethod.GET, produces = "application/json")
+	public @ResponseBody Contact getTeamAdmins (@PathVariable int id)
+	{
+		return sportService.findTeamById(id).getAdmin();
+		
+	}
 	/////////////////////POST/////////////////////////////////////
 	
 	@Secured("ROLE_ADMIN")
@@ -678,6 +686,8 @@ public class SportController {
 			sportService.editTeamAdmin(contact);
 			return ;
 	}
+	
+
 		//////////////////////DELETE///////////////////////
 	/////////////////////////////////////////////////////////////////
 	

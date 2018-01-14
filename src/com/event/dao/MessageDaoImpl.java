@@ -38,6 +38,7 @@ public class MessageDaoImpl extends AbstractDao implements MessageDao{
 	@Override
 	public List<Message> getMessages(Contact contact, Contact friend, Integer lastid) {
 		 List<Message> list= null;
+		 System.out.println("MESSAGELISTSIZE "+friend.getId()+" "+contact.getId());
 		 if(lastid!=null)  
 		 {
 			 	Session session = sessionFactory.openSession();
@@ -46,10 +47,16 @@ public class MessageDaoImpl extends AbstractDao implements MessageDao{
 		 }
 		 else
 		  list = getSession().createQuery("FROM Message M where (M.contact= :contact AND M.receiver= :friend) OR ( M.contact= :friend AND M.receiver= :contact ) order by M.id DESC").setMaxResults(30).setParameter("contact", contact).setParameter("friend", friend).list(); 
-		 System.out.println("XEXEXEXE"+list.size());
+		 System.out.println("MESSAGELISTSIZE "+list.size());
 		//List<Message> list = getSession().createQuery("FROM Message").list(); 
 
 		return list;
+	}
+
+	@Override
+	public void setSeenMessages(int id, int receiverid) {
+		// TODO Auto-generated method stub
+		
 	}
 
 

@@ -64,5 +64,11 @@ public class MessageServiceImpl implements MessageService{
 		message.setDate(new Date());
 		getneralDaoService.persist(message);
 	}
+
+	@Override
+	public void setSeenMessages(int id, int receiverid) {
+		// TODO Auto-generated method stub
+		messsageDao.setSeenMessages(id,receiverid);
+	}
 	
 }

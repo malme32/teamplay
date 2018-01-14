@@ -37,7 +37,9 @@ public class Message {
 
 	@Column(name="delivered")
 	private Boolean delivered;
-	
+
+	@Column(name="status")
+	private String status;
 	
 	@JsonIgnore
 	@ManyToOne
@@ -117,6 +119,14 @@ public class Message {
 
 	public void setReceiver(Contact receiver) {
 		this.receiver = receiver;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 }

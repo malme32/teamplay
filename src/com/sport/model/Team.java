@@ -16,6 +16,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.OnDelete;
@@ -74,9 +75,12 @@ public class Team {
 
 	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY,mappedBy="team",cascade = CascadeType.ALL)
-	List<Standing> standings;
+	private List<Standing> standings;
 	
-
+	@JsonIgnore	
+	@OneToOne(fetch = FetchType.LAZY,mappedBy="adminteam",cascade = CascadeType.ALL)
+	private Contact admin;
+	
 	public int getId() {
 		return id;
 	}
@@ -174,6 +178,16 @@ public class Team {
 
 	public void setLogothumbpath(String logothumbpath) {
 		this.logothumbpath = logothumbpath;
+	}
+
+
+	public Contact getAdmin() {
+		return admin;
+	}
+
+
+	public void setAdmin(Contact admin) {
+		this.admin = admin;
 	}
 
 }

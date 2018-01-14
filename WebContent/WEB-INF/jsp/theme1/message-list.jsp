@@ -6,7 +6,6 @@ pageEncoding="UTF-8"%>
 
 <spring:url value="/resources/theme1" var="resources" />
 
-<spring:url value="/resources" var="resources_start" />
 
 
 
@@ -46,9 +45,6 @@ pageEncoding="UTF-8"%>
 </a></h5>
 
 </div>
-<div style='display:inline-block; float:right'>		<img style='width:40px; height:40px; cursor:pointer' ng-click="sendMessage(row)" ng-src = "${resources_start}/generalimages/chat.png"/> 
-</div>
-
 <div style='display:inline-block; float:right'>		<button style='' ng-class="isFollowed(row)"  ng-click="followTeam(row)">{{isFollowedText(row)}}</button> 
 </div>
 

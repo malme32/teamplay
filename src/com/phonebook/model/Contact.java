@@ -89,8 +89,8 @@ public class Contact  implements InitializingBean{
 	private String soccerposition;
 	
 	
-	@ManyToOne
-	@JoinColumn(name = "adminteamid")
+	@OneToOne
+	@JoinColumn(name = "adminteamid", unique=true)
 	private Team adminteam;
 	
 	

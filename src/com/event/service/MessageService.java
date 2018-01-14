@@ -12,6 +12,8 @@ public interface MessageService {
 
 	List<Message> getMessages(Integer contactid, Integer friendid, Integer lastid);
 
+	void setSeenMessages(int id, int receiverid);
+
 	
     
 	

@@ -10,6 +10,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
@@ -33,6 +34,7 @@ import com.phonebook.model.Position;
 import com.phonebook.model.Salary;
 import com.phonebook.service.ContactService;
 import com.phonebook.service.SalaryService;
+import com.sport.model.Champion;
 
 @Controller
 public class ContactController {
@@ -176,6 +178,7 @@ public class ContactController {
 				message.setDate(new Date());
 				message.setSeen(false);
 				message.setDelivered(false);
+				message.setStatus("Sent");
 				generalDaoService.persist(message);
 				return message;
 		 }
@@ -194,6 +197,15 @@ public class ContactController {
 		contact.setPosition(contactService.getPosition(position_id));
 		contactService.updateContact(contact);
 		return;
+	}
+	
+	@Secured({"ROLE_ADMIN", "ROLE_TEAM"})
+	@RequestMapping(value="/contacts/{{id}}/actions", method=RequestMethod.PUT, produces = "application/json")
+	public @ResponseBody void contactActions(@PathVariable int id, @RequestParam String action,  @RequestParam(required=false) int receiverid)
+	{
+		if(action.equals("seenmessages"))
+		 messageService.setSeenMessages(id, receiverid);
+		 return ;
 	}
 	//////////////////////////////////////
 	/////////////DELETE///////////////////////

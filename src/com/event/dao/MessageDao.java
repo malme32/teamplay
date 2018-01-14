@@ -13,5 +13,7 @@ public interface MessageDao{
 
 	public List<Message> getMessages(Contact contact, Contact friend, Integer lastid);
 
+	public void setSeenMessages(int id, int receiverid);
+
 
 }

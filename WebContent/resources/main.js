@@ -122,7 +122,7 @@ appMain.config(function($routeProvider) {
     controller: "calendarController"
 
 })
-.when("/chat", {
+.when("/chat/:friendid", {
     templateUrl : "chat",
     controller: "chatController"
 
@@ -195,7 +195,12 @@ appMain.run(function($rootScope, $window) {
 					catch(err){
 						$rootScope.isAndroid=false;
 					}
-        	    	
+
+        	    	if(next.indexOf("#!/chat") !== -1)//;=="http://localhost:60000/phonebook/soccer.html")
+						$rootScope.hideFooter=true;
+        	    	else
+						$rootScope.hideFooter=false;
+        	    		
     });
     
     
@@ -1394,6 +1399,22 @@ appMain.controller("teamlistController",function($scope, $http, $location){
 			 return "btn black-btn";
 
 	 }
+	 
+	 $scope.sendMessage = function (row){
+		 
+		 $http({
+		        method : "GET",
+		        url : "teams/"+row.id+"/admins",
+		    }).then(function mySuccess(response) {
+		    	
+		        //$scope.teams = response.data;
+				 $location.path('chat/'+ response.data.id); 
+		      
+		    }, function myError(response) {
+		    		alert("Παρουσιαστηκε κάπιο σφάλμα. Προσπαθήστε ξανά.")      
+		    });
+
+	 }
 });
 
 appMain.controller("teamController",function($scope, $http, $location, $window){
@@ -1639,36 +1660,60 @@ appMain.controller("teamController",function($scope, $http, $location, $window){
 		 
 });
 
-appMain.controller("chatController",function($scope, $http, $location, $window,$timeout){
+appMain.controller("chatController",function($scope, $http, $location, $window,$timeout,$routeParams){
 	var path = window.location.href;
 
-
+/*	var link = document.getElementById('myfooter');
+	link.style.display = 'none'; //or
+	link.style.visibility = 'hidden';*/
+	
 		 $http({
 	        method : "GET",
-	        	url : "contacts/2"+"/messages"
+	        	url : "contacts/"+	$routeParams.friendid+"/messages"
 	    }).then(function mySuccess(response) {
 	    	$scope.messages = response.data;
-
+	    	
 			$scope.getLastMessages();  
+			//window.scrollTo(150, 150);
+		    $timeout($scope.scrolltobottom, 10);
 	    }, function myError(response) {
 	    	$scope.messages = [];
 			$scope.getLastMessages();  
 	    });
 	 
+
+		 $scope.scrolltobottom = function (){ window.scrollTo(0, 1000000);
+}
 		 
 		 $scope.getSender = function (message){ 
-			 if(message.receiver.id==2)
+			 if(message.receiver.id==$routeParams.friendid)
+				 return "self";
+				 else
+					return "other";
+		 
+		 }
+		 $scope.getPicture = function (message){ 
+			 if(message.contact.adminteam==null)
+				 return "/defaultimages/adminimage.png";
+				 else return message.contact.adminteam.logothumbpath;
+			 if(message.receiver.id==$routeParams.friendid)
 				 return "self";
 				 else
 					return "other";
 		 
 		 }
 		 
-		 $scope.sendMessage = function (text, receiverid){ 
+		 $scope.keyPressed = function(keyEvent) {
+			  if (keyEvent.which === 13)
+			    	$scope.sendMessage($scope.text);
+			}
+		 $scope.sendMessage = function (text){ 
+			 	if(text=="")
+			 		return;
 			 $http({
 			        method : "POST",
 			        	url : "messages",
-			        	params:{receiverid:receiverid,message:text}
+			        	params:{receiverid:$routeParams.friendid,message:text}
 			    }).then(function mySuccess(response) {
 			    	//$scope.messages = response.data;
 /*			    	var message = {};
@@ -1678,9 +1723,14 @@ appMain.controller("chatController",function($scope, $http, $location, $window,$
 			    	message.receiver.id=receiverid;
 			    	message.del=true;*/
 			    	if(response.data)
-			    		$scope.messages.push( response.data);
+			    		{
+
+			    			$scope.messages.push( response.data);
+			    			$scope.text = "";
+			    		}
 			    	else
 				    	alert("Το μήνυμα δεν σταλθηκε. Σιγουρευτείτε οτι είστε συνδεδεμένος.");
+				    $timeout($scope.scrolltobottom, 1);
 			    }, function myError(response) {
 			    	alert("Το μήνυμα δεν σταλθηκε. Προσπαθήστε ξανα.");
 /*		    		for(i=0;i<$scope.messages.length; i++)
@@ -1692,7 +1742,13 @@ appMain.controller("chatController",function($scope, $http, $location, $window,$
 			    });
 		 
 		 }
-		 $scope.getLastMessages = function (){ 
+		 $scope.getLastMessages = function (){
+/*			 if (document.hasFocus()) {
+				    $scope.text=$scope.text+ "focused";
+				}
+			 else
+				    $scope.text=$scope.text+ "nofocused";*/
+				 
 			 var lastid=0;
 			 if( $scope.messages!=null)
 				 if( $scope.messages.length>0)
@@ -1705,7 +1761,7 @@ appMain.controller("chatController",function($scope, $http, $location, $window,$
 		    	//alert("contacts/2/messages?lasti");
 			 $http({
 			        method : "GET",
-			        	url : "contacts/2/messages?lastid="+lastid
+			        	url : "contacts/"+$routeParams.friendid+"/messages?lastid="+lastid
 			    }).then(function mySuccess(response) {
 			    	//alert(response.data);
 			    	if(!response.data)
@@ -1729,7 +1785,11 @@ appMain.controller("chatController",function($scope, $http, $location, $window,$
 				    				break;
 				    			}
 				    		if(!found)
-				    			$scope.messages.push( response.data[i]);
+				    			{
+				    				$scope.messages.push( response.data[i]);
+				    				$timeout($scope.scrolltobottom, 10);
+				    			}
+				    				
 			    		}
 			    	}
 			    	//alert(response.data);
@@ -1753,6 +1813,10 @@ appMain.controller("chatController",function($scope, $http, $location, $window,$
 				//$scope.getLastMessages();  
 			  /*  $timeout(getLastMessages, 1000);*/    
 			//});
+
+	/*	 $window.onfocus = function(){
+			   $scope.text=$scope.text+" focused";
+			 }*/
 });
 
 
