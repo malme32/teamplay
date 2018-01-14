@@ -11,6 +11,7 @@ public interface MessageDao{
 
 	public List<Message> findAll();
 
-	public List<Message> getMessages(Contact contact);
+	public List<Message> getMessages(Contact contact, Contact friend, Integer lastid);
+
 
 }

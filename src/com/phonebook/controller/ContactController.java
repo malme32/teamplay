@@ -10,6 +10,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -111,11 +113,23 @@ public class ContactController {
 	}
 	
 	
-	@RequestMapping(value="/contacts/{contactid}/messages", method=RequestMethod.GET, produces = "application/json")
-	public @ResponseBody List<Message> getMessages(@PathVariable int contactid)
+	@RequestMapping(value="/contacts/{friendid}/messages", method=RequestMethod.GET, produces = "application/json")
+	public @ResponseBody List<Message> getMessages(@PathVariable Integer friendid, @RequestParam(required=false) Integer lastid)
 	{
+		
+		 User user =null; 
+		 try{user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();}
+		 catch(Exception e){}
+		 if(user!=null)
+		 {
+			 String username = user.getUsername();
+			 Contact contact = contactService.findByUserName(username);
+			return messageService.getMessages(contact.getId(), friendid, lastid);
 
-		return messageService.getMessages(contactid);
+		 }
+		 return null;
+		
+	
 	}
 	
 	
@@ -148,15 +162,25 @@ public class ContactController {
 	
 	
 	@RequestMapping(value="/messages", method=RequestMethod.POST)
-	public @ResponseBody void addMessage(@ModelAttribute Message message, @RequestParam("senderid") int senderid, @RequestParam("receiverid") int receiverid)
+	public @ResponseBody Message addMessage(@ModelAttribute Message message, @RequestParam("receiverid") int receiverid)
 	{
-		Message message1 = new Message();
-				message.setContact(contactService.getContact(senderid));
-		message1.setReceiver(contactService.getContact(receiverid));
-		message1.setDate(new Date());
-		generalDaoService.persist(message1);
+		 User user =null; 
+		 try{user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();}
+		 catch(Exception e){}
+		 if(user!=null)
+		 {
+			 	String username = user.getUsername();
+			 	Contact contact = contactService.findByUserName(username);
+				message.setContact(contact);
+				message.setReceiver(contactService.getContact(receiverid));
+				message.setDate(new Date());
+				message.setSeen(false);
+				message.setDelivered(false);
+				generalDaoService.persist(message);
+				return message;
+		 }
 		//messageService.addMessage(message, senderid, receiverid);
-		return;
+		return null;
 	}
 	
 	//////////////////////////////////////

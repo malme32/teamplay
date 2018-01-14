@@ -34,12 +34,12 @@ pageEncoding="UTF-8"%>
 </script>
 <style>
 
-  body {
+/*   body {
     margin: 40px 10px;
     padding: 0;
     font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
     font-size: 14px;
-  }
+  } */
 
   #calendar {
     max-width: 900px;
@@ -49,9 +49,10 @@ pageEncoding="UTF-8"%>
 </style>
 
 {{result}} 
+		<img ng-show='showclock' width=40 height=40 src="${resources}/customimages/loading.gif" alt="">
 <main class="main-content">
 
-  <div id='calendar'></div>
+   <div id='calendar'></div> 
 </main>
 
 

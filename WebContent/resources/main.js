@@ -122,6 +122,11 @@ appMain.config(function($routeProvider) {
     controller: "calendarController"
 
 })
+.when("/chat", {
+    templateUrl : "chat",
+    controller: "chatController"
+
+})
     /*.
      $routeProvider.otherwise({redirectTo: '/index'});*/
  /* $locationProvider.html5Mode(true); */
@@ -242,6 +247,85 @@ directive('fbComments', function() {
 	    }
 	  };
 	});*/
+
+
+
+
+
+appMain.filter('timeago', function() {
+    return function(input, p_allowFuture) {
+	
+        var substitute = function (stringOrFunction, number, strings) {
+                var string = angular.isFunction(stringOrFunction) ? stringOrFunction(number, dateDifference) : stringOrFunction;
+                var value = (strings.numbers && strings.numbers[number]) || number;
+                return string.replace(/%d/i, value);
+            },
+            nowTime = (new Date()).getTime(),
+            date = (new Date(input)).getTime(),
+            //refreshMillis= 6e4, //A minute
+            allowFuture = p_allowFuture || false,
+            strings= {
+                prefixAgo: '',
+                prefixFromNow: '',
+                suffixAgo: "ago",
+                suffixFromNow: "from now",
+                seconds: "less than a minute",
+                minute: "about a minute",
+                minutes: "%d minutes",
+                hour: "about an hour",
+                hours: "about %d hours",
+                day: "a day",
+                days: "%d days",
+                month: "about a month",
+                months: "%d months",
+                year: "about a year",
+                years: "%d years"
+            },
+            dateDifference = nowTime - date,
+            words,
+            seconds = Math.abs(dateDifference) / 1000,
+            minutes = seconds / 60,
+            hours = minutes / 60,
+            days = hours / 24,
+            years = days / 365,
+            separator = strings.wordSeparator === undefined ?  " " : strings.wordSeparator,
+        
+           
+            prefix = strings.prefixAgo,
+            suffix = strings.suffixAgo;
+            
+        if (allowFuture) {
+            if (dateDifference < 0) {
+                prefix = strings.prefixFromNow;
+                suffix = strings.suffixFromNow;
+            }
+        }
+
+        words = seconds < 45 && substitute(strings.seconds, Math.round(seconds), strings) ||
+        seconds < 90 && substitute(strings.minute, 1, strings) ||
+        minutes < 45 && substitute(strings.minutes, Math.round(minutes), strings) ||
+        minutes < 90 && substitute(strings.hour, 1, strings) ||
+        hours < 24 && substitute(strings.hours, Math.round(hours), strings) ||
+        hours < 42 && substitute(strings.day, 1, strings) ||
+        days < 30 && substitute(strings.days, Math.round(days), strings) ||
+        days < 45 && substitute(strings.month, 1, strings) ||
+        days < 365 && substitute(strings.months, Math.round(days / 30), strings) ||
+        years < 1.5 && substitute(strings.year, 1, strings) ||
+        substitute(strings.years, Math.round(years), strings);
+		console.log(prefix+words+suffix+separator);
+		prefix.replace(/ /g, '')
+		words.replace(/ /g, '')
+		suffix.replace(/ /g, '')
+		
+		substitute.$stateful = true;
+		return (prefix+' '+words+' '+suffix+' '+separator);
+        
+    };
+});
+
+
+
+
 
 appMain.filter('validDate', function() {
     return function(items) {
@@ -1555,12 +1639,128 @@ appMain.controller("teamController",function($scope, $http, $location, $window){
 		 
 });
 
+appMain.controller("chatController",function($scope, $http, $location, $window,$timeout){
+	var path = window.location.href;
+
+
+		 $http({
+	        method : "GET",
+	        	url : "contacts/2"+"/messages"
+	    }).then(function mySuccess(response) {
+	    	$scope.messages = response.data;
+
+			$scope.getLastMessages();  
+	    }, function myError(response) {
+	    	$scope.messages = [];
+			$scope.getLastMessages();  
+	    });
+	 
+		 
+		 $scope.getSender = function (message){ 
+			 if(message.receiver.id==2)
+				 return "self";
+				 else
+					return "other";
+		 
+		 }
+		 
+		 $scope.sendMessage = function (text, receiverid){ 
+			 $http({
+			        method : "POST",
+			        	url : "messages",
+			        	params:{receiverid:receiverid,message:text}
+			    }).then(function mySuccess(response) {
+			    	//$scope.messages = response.data;
+/*			    	var message = {};
+			    	message.message = text;
+			    	message.receiver={};
+			    	message.date=new Date();
+			    	message.receiver.id=receiverid;
+			    	message.del=true;*/
+			    	if(response.data)
+			    		$scope.messages.push( response.data);
+			    	else
+				    	alert("Το μήνυμα δεν σταλθηκε. Σιγουρευτείτε οτι είστε συνδεδεμένος.");
+			    }, function myError(response) {
+			    	alert("Το μήνυμα δεν σταλθηκε. Προσπαθήστε ξανα.");
+/*		    		for(i=0;i<$scope.messages.length; i++)
+				    	if($scope.messages[i].del)
+				    		{
+				    			$scope.messages.splice(i, $scope.messages.length-i);
+				    			break;
+				    		}*/
+			    });
+		 
+		 }
+		 $scope.getLastMessages = function (){ 
+			 var lastid=0;
+			 if( $scope.messages!=null)
+				 if( $scope.messages.length>0)
+					 {
+					 	for(i=0;i<$scope.messages.length;i++)
+					 		if($scope.messages[i].id>lastid)
+							 	lastid =  $scope.messages[i].id;
+					 }
+		    	//alert("contacts/2/messages?lastid="+lastid);
+		    	//alert("contacts/2/messages?lasti");
+			 $http({
+			        method : "GET",
+			        	url : "contacts/2/messages?lastid="+lastid
+			    }).then(function mySuccess(response) {
+			    	//alert(response.data);
+			    	if(!response.data)
+			    		return;
+	/*	    		for(i=0;i<$scope.messages.length; i++)
+				    	if($scope.messages[i].del)
+				    		{
+				    			$scope.messages.splice(i, $scope.messages.length-i);
+				    			break;
+				    		}*/
+			    	
+			    	if(response.data)
+			    	{
+			    		for(i=0;i<response.data.length; i++)
+			    		{	
+			    			var found = false;
+				    		for(y=$scope.messages.length -1;y>=0; y--)
+				    			if($scope.messages[y].id==response.data[i].id)
+				    			{
+				    				found=true;
+				    				break;
+				    			}
+				    		if(!found)
+				    			$scope.messages.push( response.data[i]);
+			    		}
+			    	}
+			    	//alert(response.data);
+				    //	$scope.getLastMessages(); 
+				    if(window.location.href!=path)
+				    	return;
+			    	$timeout($scope.getLastMessages, 500);    
+				    
+			    }, function myError(response) {
+
+				    if(window.location.href!=path)
+				    	return;
+			    	//alert("error");
+				    $timeout($scope.getLastMessages, 1000);   
+
+			    });
+		 
+		 }
+			//$scope.$on('$viewContentLoaded', function() {
+			    //call it here
+				//$scope.getLastMessages();  
+			  /*  $timeout(getLastMessages, 1000);*/    
+			//});
+});
+
 
 appMain.controller("calendarController",function($scope, $http, $location, $window){
 	
-	events=[];
+	$scope.events=[];
 	
-
+	$scope.showclock = true	;
 	 $http({
 	        method : "GET",
 	        url : "games?calendargames"
@@ -1580,14 +1780,44 @@ appMain.controller("calendarController",function($scope, $http, $location, $wind
                 	var enddate = new Date(date);
                 	enddate.setHours(enddate.getHours() + 1);
                 	event.end = enddate;
-                    events.push(event);
+                	$scope.events.push(event);
             	}
+            	
 
             }
+        	for(x=0;x<$scope.events.length;x++)
+            {
+        		
+            	for(y=0;y<$scope.events.length;y++)
+                {
+            		//if(dates.inRange (events[x].start,events[y].start,events[y].end)
+        			if(x!=y&&$scope.events[x].start.getTime()>=$scope.events[y].start.getTime()&&$scope.events[x].start.getTime()<$scope.events[y].end.getTime())
+        			{
+        				$scope.events[x].color='#ea9700';
+        				$scope.events[y].color='#ea9700';
+        			}
+        			if(x!=y&&$scope.events[x].start.getTime()==$scope.events[y].start.getTime()&&$scope.events[x].end.getTime()==$scope.events[y].end.getTime())
+        			{
+        				$scope.events[x].color='#FF0000';
+        				$scope.events[y].color='#FF0000';
+        			}
+        			
+        			/*
+        			if(x!=y&&events[x].end.getTime()>events[y].start.getTime()&&events[x].end.getTime()<=events[y].end.getTime())
+        			{
+                    	events[x].color='#ff4455';
+                    	events[y].color='#ff4455';
+        			}*/
+                }
+        		
+            }
+        	//events[0].color='#ffffff';
 	    	$scope.showCalendar();
-	    /*	$scope.result=events;*/
+	    	$scope.showclock=false;
+	/*   $scope.result=events;	*/
  
 	    }, function myError(response) {
+	    	$scope.showclock=false;
 	    	$scope.showCalendar();
 	    	
 	        //$scope.result = response.statusText;
@@ -1598,24 +1828,26 @@ appMain.controller("calendarController",function($scope, $http, $location, $wind
 /*$(document).ready(function() {*/
 
 	 $scope.showCalendar = function (){ 
+
     $('#calendar').fullCalendar({
       header: {
         left: 'prev,next, today',
         center: 'title',
-        right: 'listWeek,listDay,month,agendaWeek,agendaDay'
-      },
-
+        right: 'agendaWeek,month'/*listWeek, listDay, agendaDay*/
+      },height:  "auto",
+	  minTime: "08:00:00",
+	  firstDay:1,
       // customize the button names,
       // otherwise they'd all just say "list"
       views: {
         listDay: { buttonText: 'Ημέρα' },
-        listWeek: { buttonText: 'Βδομάδα' },
+        listWeek: { buttonText: 'Εβδομάδα' },
         month: { buttonText: 'Μήνας' },
-        agendaWeek: { buttonText: 'Αντζέντα βδομάδας' },
-        agendaDay: { buttonText:  'Αντζέντα ημέρας' }
+        agendaWeek: { buttonText: 'Εβδομάδα' },
+        agendaDay: { buttonText:  'Ημ.Μεγ' }
       },
 
-      defaultView: 'listWeek',
+      defaultView: 'agendaWeek',
       defaultDate: new Date(),
       navLinks: true, // can click day/week names to navigate views
       selectable: true,
@@ -1636,8 +1868,15 @@ appMain.controller("calendarController",function($scope, $http, $location, $wind
       },
       editable: false,
       eventLimit: true, // allow "more" link when too many events
-      events: events
+      events: $scope.events
     });
+    
+	 
+	/*	 $('#calendar').fullCalendar({
+			  minTime: "07:00:00",
+			  maxTime: "21:00:00"
+			});*/
+	 
 	 }
  /* });*/
 

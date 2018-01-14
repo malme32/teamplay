@@ -6,9 +6,12 @@ import com.general.model.Message;
 
 public interface MessageService {
 
-	List<Message> getMessages(int contactid);
+
 
 	void addMessage(Message message, int senderid, int receiverid);
+
+	List<Message> getMessages(Integer contactid, Integer friendid, Integer lastid);
+
 	
     
 	

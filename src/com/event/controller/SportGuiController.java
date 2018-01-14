@@ -208,4 +208,9 @@ response.addHeader("Cache-Control", headerValue);*/
 	public ModelAndView calendar(){
 		return new ModelAndView("theme1/calendar","","");
 	}
+	
+	@RequestMapping(value="/chat", method=RequestMethod.GET)
+	public ModelAndView chat(){
+		return new ModelAndView("theme1/chat","","");
+	}
 }

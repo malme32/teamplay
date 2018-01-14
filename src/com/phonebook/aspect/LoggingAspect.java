@@ -14,7 +14,7 @@ public class LoggingAspect {
       *  all the methods available. So advice will be called
       *  for all the methods.
    */
-   @Pointcut("execution(* com.phonebook.*.*.*(..))")
+   @Pointcut("execution(* com.phonebook.TBD.*.*(..))")
   // @Pointcut("execution(* com.phonebook.services.ContactService.searchContactQuery(..))")
    private void selectAll(){}
 
