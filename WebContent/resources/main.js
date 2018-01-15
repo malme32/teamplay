@@ -1666,7 +1666,7 @@ appMain.controller("chatController",function($scope, $http, $location, $window,$
 /*	var link = document.getElementById('myfooter');
 	link.style.display = 'none'; //or
 	link.style.visibility = 'hidden';*/
-	
+	$scope.unseen = [];
 		 $http({
 	        method : "GET",
 	        	url : "contacts/"+	$routeParams.friendid+"/messages"
@@ -1676,6 +1676,8 @@ appMain.controller("chatController",function($scope, $http, $location, $window,$
 			$scope.getLastMessages();  
 			//window.scrollTo(150, 150);
 		    $timeout($scope.scrolltobottom, 10);
+		    $timeout($scope.setSeenStatus, 1000);
+		    
 	    }, function myError(response) {
 	    	$scope.messages = [];
 			$scope.getLastMessages();  
@@ -1702,7 +1704,30 @@ appMain.controller("chatController",function($scope, $http, $location, $window,$
 					return "other";
 		 
 		 }
+
+		 $scope.getStatus = function (message, index){
+			 if(message.id!=$scope.getLastId())
+				 return "";
+			 if(message.contact.id==$routeParams.friendid)
+				 return "";
+			 else
+				 return message.status;
+			
 		 
+		 }
+		 
+
+		 $scope.getLastId = function() {
+		 var lastid=0;
+		 if( $scope.messages!=null)
+			 if( $scope.messages.length>0)
+				 {
+				 	for(i=0;i<$scope.messages.length;i++)
+				 		if($scope.messages[i].id>lastid)
+						 	lastid =  $scope.messages[i].id;
+				 }
+		 	return lastid;
+		 }
 		 $scope.keyPressed = function(keyEvent) {
 			  if (keyEvent.which === 13)
 			    	$scope.sendMessage($scope.text);
@@ -1742,6 +1767,51 @@ appMain.controller("chatController",function($scope, $http, $location, $window,$
 			    });
 		 
 		 }
+		 
+
+		 $scope.setSeenStatus = function (){
+/*			 		 if (document.hasFocus()) {
+			    $scope.text=$scope.text+ "focused";
+			}
+		 else
+			    $scope.text=$scope.text+ "nofocused";*/
+			 var found = false; //alert(0);
+			 if(document.hasFocus()&&$scope.unseen.length>0){
+				// alert(1);
+/*				 for(i=0;i<unseen.length;i++)
+				 { 
+					 if(unseen[i].contact.id==$routeParams.friendid&&unseen[i].status!="Seen")
+					 {
+						
+						 found=true;
+						 break;
+					}
+				 }
+				 if(found)
+				 {*/ //alert(2);
+					 $http({
+					        method : "PUT",
+					        	url : "contacts/actions",
+					        	params:{senderid:$routeParams.friendid,action:"set_messages_seen"}
+					    }).then(function mySuccess(response) {
+					    	$scope.unseen = [];
+							// alert(3);
+		/*					 for(i=0;i<$scope.messages.length;i++)
+								 if($scope.messages[i].contact.id==$routeParams.friendid&&$scope.messages[i].status!="Seen")
+								 {
+									 $scope.messages[i].status = "Seen";
+								 }*/
+					    }, function myError(response) {
+							// alert(4);
+					    });
+				 //}
+			// }
+			 }
+			 $timeout($scope.setSeenStatus, 300);
+			 
+			 
+		 }
+		 
 		 $scope.getLastMessages = function (){
 /*			 if (document.hasFocus()) {
 				    $scope.text=$scope.text+ "focused";
@@ -1750,18 +1820,22 @@ appMain.controller("chatController",function($scope, $http, $location, $window,$
 				    $scope.text=$scope.text+ "nofocused";*/
 				 
 			 var lastid=0;
+			 var laststatus="";
 			 if( $scope.messages!=null)
 				 if( $scope.messages.length>0)
 					 {
 					 	for(i=0;i<$scope.messages.length;i++)
 					 		if($scope.messages[i].id>lastid)
-							 	lastid =  $scope.messages[i].id;
+					 			{
+							 		lastid =  $scope.messages[i].id;
+							 		laststatus = $scope.messages[i].status;
+					 			}
 					 }
 		    	//alert("contacts/2/messages?lastid="+lastid);
 		    	//alert("contacts/2/messages?lasti");
 			 $http({
 			        method : "GET",
-			        	url : "contacts/"+$routeParams.friendid+"/messages?lastid="+lastid
+			        	url : "contacts/"+$routeParams.friendid+"/messages?lastid="+lastid+"&laststatus="+laststatus
 			    }).then(function mySuccess(response) {
 			    	//alert(response.data);
 			    	if(!response.data)
@@ -1781,6 +1855,10 @@ appMain.controller("chatController",function($scope, $http, $location, $window,$
 				    		for(y=$scope.messages.length -1;y>=0; y--)
 				    			if($scope.messages[y].id==response.data[i].id)
 				    			{
+				    				//alert($scope.messages[y].status + " "+response.data[i].status);
+				    				$scope.messages[y].status = response.data[i].status;
+				    				$scope.messages[y].message = response.data[i].message;
+				    				
 				    				found=true;
 				    				break;
 				    			}
@@ -1788,6 +1866,9 @@ appMain.controller("chatController",function($scope, $http, $location, $window,$
 				    			{
 				    				$scope.messages.push( response.data[i]);
 				    				$timeout($scope.scrolltobottom, 10);
+				    				if(response.data[i].contact.id==$routeParams.friendid)
+				    					$scope.unseen.push(response.data[i]);
+				    					
 				    			}
 				    				
 			    		}
@@ -1803,7 +1884,7 @@ appMain.controller("chatController",function($scope, $http, $location, $window,$
 				    if(window.location.href!=path)
 				    	return;
 			    	//alert("error");
-				    $timeout($scope.getLastMessages, 1000);   
+				    $timeout($scope.getLastMessages, 5000);   
 
 			    });
 		 

@@ -37,7 +37,8 @@ pageEncoding="UTF-8"%>
         <div class="avatar"><img ng-src="${resources}{{getPicture(message)}}" draggable="false"/></div>
       <div class="msg">
 				<p>{{message.message}}</p>
-        <time>{{message.date | timeago}}</time>
+        <time>{{message.date | timeago}} </time>
+        <p>{{getStatus(message)}} </p>
       </div>
     </li> 
   
@@ -64,7 +65,10 @@ pageEncoding="UTF-8"%>
      <table style="width:100%" >
      <tr>
      <td style=''><input class="textarea" type="text" placeholder="Γράψτε εδω!" ng-model='text' ng-keypress="keyPressed($event)"/></td>
-     <td style=' width:60px; padding:0 5px 0 5px'><img ng-src='${resources_start}/generalimages/sendmessage.ico' class='sendbutton' ng-click='sendMessage(text,2);'  ></td>
+     <td style=' width:60px; padding:0 5px 0 5px'>
+     <img ng-src='${resources_start}/generalimages/sendmessage.ico' class='sendbutton' ng-click='sendMessage(text,2);'  >
+    
+     </td>
      </tr>
      </table>
 <%--   <div class="row">

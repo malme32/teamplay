@@ -2,9 +2,12 @@ package com.event.dao;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Repository;
 
 import com.general.model.Message;
@@ -12,6 +15,7 @@ import com.phonebook.model.Contact;
 
 
 @Repository("messageDao")
+
 //@Cacheable(value = "entities", cacheManager = "springCM")
 public class MessageDaoImpl extends AbstractDao implements MessageDao{
 	
@@ -23,7 +27,16 @@ public class MessageDaoImpl extends AbstractDao implements MessageDao{
 		// TODO Auto-generated method stub
 		return (Message)getSession().get(Message.class, id);
 	}
+	
+	@Override
+	public Message findByIdNewSession(int id) {
+		// TODO Auto-generated method stub
 
+	 	Session session = sessionFactory.openSession();
+		Message message = session.get(Message.class, id);
+		 session.close();
+			return message; 
+	}
 	@Override
 	public List<Message> findAll() {
 		//Session session = sessionFactory1.openSession();
@@ -52,12 +65,16 @@ public class MessageDaoImpl extends AbstractDao implements MessageDao{
 
 		return list;
 	}
-
+	@Transactional
+	@Modifying
 	@Override
-	public void setSeenMessages(int id, int receiverid) {
+	public void setSeenMessages(Contact contact, Contact sender) {
 		// TODO Auto-generated method stub
-		
+	 	//Session session = sessionFactory.openSession();/*AND M.status!= :status  AND M.contact= :sender setParameter("sender", sender).*/
+		getSession().createQuery("update Message M set  M.status= :status where (M.receiver= :contact)").setParameter("contact", contact).setParameter("status", "Seen").executeUpdate();
+		//  session.close();
 	}
+
 
 
 

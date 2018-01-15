@@ -116,7 +116,7 @@ public class ContactController {
 	
 	
 	@RequestMapping(value="/contacts/{friendid}/messages", method=RequestMethod.GET, produces = "application/json")
-	public @ResponseBody List<Message> getMessages(@PathVariable Integer friendid, @RequestParam(required=false) Integer lastid)
+	public @ResponseBody List<Message> getMessages(@PathVariable Integer friendid, @RequestParam(required=false) Integer lastid, @RequestParam(required=false) String laststatus)
 	{
 		
 		 User user =null; 
@@ -126,7 +126,7 @@ public class ContactController {
 		 {
 			 String username = user.getUsername();
 			 Contact contact = contactService.findByUserName(username);
-			return messageService.getMessages(contact.getId(), friendid, lastid);
+			return messageService.getMessages(contact.getId(), friendid, lastid ,laststatus);
 
 		 }
 		 return null;
@@ -200,11 +200,24 @@ public class ContactController {
 	}
 	
 	@Secured({"ROLE_ADMIN", "ROLE_TEAM"})
-	@RequestMapping(value="/contacts/{{id}}/actions", method=RequestMethod.PUT, produces = "application/json")
-	public @ResponseBody void contactActions(@PathVariable int id, @RequestParam String action,  @RequestParam(required=false) int receiverid)
+	@RequestMapping(value="/contacts/actions", method=RequestMethod.PUT, produces = "application/json")
+	public @ResponseBody void contactActions( @RequestParam String action,  @RequestParam(required=false) Integer senderid)
 	{
-		if(action.equals("seenmessages"))
-		 messageService.setSeenMessages(id, receiverid);
+		
+		 User user =null; 
+		 Contact contact =null;
+		 try{user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();}
+		 catch(Exception e){}
+		 if(user!=null)
+		 {
+			 	String username = user.getUsername();
+			 	contact = contactService.findByUserName(username);
+		 }
+		 else return;
+		
+		if(action.equals("set_messages_seen"))
+			 messageService.setSeenMessages(contact, contactService.getContact(senderid));
+		// messageService.setSeenMessages(contactService.getContact(54), contactService.getContact(senderid));
 		 return ;
 	}
 	//////////////////////////////////////

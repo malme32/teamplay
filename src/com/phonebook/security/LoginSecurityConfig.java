@@ -45,23 +45,21 @@ public class LoginSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-			.antMatchers("/main").access("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
-			.antMatchers("/contact").access("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
+		.antMatchers("/main").access("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
+		/*	.antMatchers("/contact").access("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
 			.antMatchers("/event").access("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
 			.antMatchers("/eventlist").access("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
 			.antMatchers("/phonebook").access("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
-/*			.antMatchers("/events").access("hasRole('ROLE_USER')")
-*/			 .antMatchers("/contacts/*").access("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
+		 .antMatchers("/contacts/*").access("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
 			.antMatchers("/contacts").access("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
-			 .antMatchers("/contacts/*/events").access("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
-			.antMatchers("/contacts/*/salaries").access("hasRole('ROLE_ADMIN')")
+			.antMatchers("/contacts/salaries").access("hasRole('ROLE_ADMIN')")
 			.antMatchers("/positions/**").access("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
 			.antMatchers("/events/**").access("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
 //			.antMatchers("/contacts/*").access("hasRole('ROLE_USER')")
 		
 			//rossoneri
 			.antMatchers("/admin**").access("hasRole('ROLE_ADMIN')")
-			.antMatchers("/editteam**").access("hasRole('ROLE_TEAM')")
+			.antMatchers("/editteam**").access("hasRole('ROLE_TEAM')")*/
 			
 			
 /*			

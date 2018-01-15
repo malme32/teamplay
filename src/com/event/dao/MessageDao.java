@@ -13,7 +13,9 @@ public interface MessageDao{
 
 	public List<Message> getMessages(Contact contact, Contact friend, Integer lastid);
 
-	public void setSeenMessages(int id, int receiverid);
+	public void setSeenMessages(Contact contact, Contact sender);
+
+	Message findByIdNewSession(int id);
 
 
 }

@@ -55,7 +55,13 @@
 		<logback.version>1.0.13</logback.version>
 		<slf4j.version>1.7.5</slf4j.version>
 
+
+
 	</properties>
+
+
+<!-- https://mvnrepository.com/artifact/org.springframework.data/spring-data-jpa -->
+
 
 	<dependencies>
 	
@@ -73,6 +79,9 @@
     <version>5.15.2</version>
 </dependency> -->
 		<!-- Spring and Transactions -->
+		
+		
+
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
@@ -130,6 +139,13 @@
 			<artifactId>spring-security-config</artifactId>
 			<version>${spring.security.version}</version>
 		</dependency>
+<!-- https://mvnrepository.com/artifact/org.springframework.data/spring-data-jpa -->
+<dependency>
+    <groupId>org.springframework.data</groupId>
+    <artifactId>spring-data-jpa</artifactId>
+    <version>1.11.9.RELEASE</version>
+</dependency>
+
 
 		<!-- Logging with SLF4J & LogBack -->
 		<dependency>
