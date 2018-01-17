@@ -5,6 +5,7 @@ pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <spring:url value="/resources/theme1" var="resources" />
+<spring:url value="/resources" var="resources_start" />
 <div ng-app="appMain" ng-controller='headerController' >
 
 <header class="header style-3" >
@@ -20,7 +21,8 @@ pageEncoding="UTF-8"%>
 <a style= ' background-color:#cc0000; opacity:0.5' href="#menu" class="menu-link"><i class="fa fa-bars"></i></a>
 </div>
 <!--  style='position:fixed' -->
-
+<img ng-show='notification.messages.length' style='cursor:pointer; z-index:1500; position:fixed; left:10px; top:10px; width:40px ;height:40px' 
+ng-src='${resources_start}/generalimages/message2.png '/>
 <ul class="user-login-option pull-right">
 
 

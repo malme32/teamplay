@@ -39,7 +39,7 @@ pageEncoding="UTF-8"%>
 <!--<link rel='stylesheet' href='https://material.angularjs.org/1.1.5/docs.css'> -->
 		<!-- <<<<< ANGULAR MATERIAL -->	
 	
-	<spring:url value="/resources/main.js?113" var="crunchifyJS" />
+	<spring:url value="/resources/main.js?114" var="crunchifyJS" />
  	<spring:url value="/resources/main.css?12" var="maincss" />
  	<script src="${crunchifyJS}"></script>
  	<link rel="stylesheet" type="text/css" href="${maincss}">   

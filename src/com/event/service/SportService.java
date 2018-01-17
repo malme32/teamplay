@@ -1,6 +1,7 @@
 package com.event.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
@@ -12,6 +13,7 @@ import com.sport.model.Game;
 import com.sport.model.Image;
 import com.sport.model.Matchday;
 import com.sport.model.Notice;
+import com.sport.model.Notification;
 import com.sport.model.Playoff;
 import com.sport.model.Standing;
 import com.sport.model.Team;
@@ -127,5 +129,7 @@ public interface SportService {
 	public List<Game> getAllGames();
 
 	public List<Game> getCalendarGames();
+
+	public Notification getNotifications(Map<String, Integer> actions);
 	
 }

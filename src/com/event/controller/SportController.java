@@ -8,8 +8,10 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -47,6 +49,7 @@ import com.sport.model.Game;
 import com.sport.model.Image;
 import com.sport.model.Matchday;
 import com.sport.model.Notice;
+import com.sport.model.Notification;
 import com.sport.model.Playoff;
 import com.sport.model.Scorer;
 import com.sport.model.Standing;
@@ -255,6 +258,24 @@ public class SportController {
 	{
 		return sportService.findTeamById(id).getAdmin();
 		
+	}
+	
+	@Secured({"ROLE_ADMIN","ROLE_TEAM"})
+	@RequestMapping(value="/notifications", method=RequestMethod.GET, produces = "application/json")
+	public @ResponseBody Notification getNotifications (@RequestParam(required = false)  String getunseenmessages, 
+			@RequestParam(required = false) Integer getundeliveredmessages, @RequestParam(required = false)  Integer lastid,
+			@RequestParam(required = false) Integer delay)
+	{
+		Map<String,Integer> actions = new HashMap<String,Integer>();
+		if(getunseenmessages!=null)
+			actions.put("getunseenmessages", 0);
+		if(getundeliveredmessages!=null)
+			actions.put("getundeliveredmessages", 0);
+		if(delay!=null)
+			actions.put("delay", delay);
+		if(lastid!=null)
+			actions.put("lastid", lastid);
+		return sportService.getNotifications(actions);
 	}
 	/////////////////////POST/////////////////////////////////////
 	

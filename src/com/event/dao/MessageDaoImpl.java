@@ -75,8 +75,25 @@ public class MessageDaoImpl extends AbstractDao implements MessageDao{
 		//  session.close();
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Message> getUnseenMessages(Contact contact, Integer lastid) {
+		// TODO Auto-generated method stub
+			List<Message> list= null;
+	 		Session session = sessionFactory.openSession();
+	 		list = session.createQuery("FROM Message M where M.id > :lastid AND M.receiver= :contact AND M.status != :status").setParameter("contact", contact).setParameter("lastid", lastid).setParameter("status", "Seen").list(); 
+	 		session.close();
+	 		return list;
+	}
 
-
-
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Message> getUdeliveredMessages(Contact contact, Integer lastid) {
+		List<Message> list= null;
+ 		Session session = sessionFactory.openSession();
+ 		list = session.createQuery("FROM Message M where M.id > :lastid AND M.receiver= :contact AND M.status = :status").setParameter("contact", contact).setParameter("lastid", lastid).setParameter("status", "Sent").list(); 
+ 		session.close();
+ 		return list;
+	}
 
 }

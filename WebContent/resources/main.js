@@ -151,8 +151,62 @@ appMain.directive('fileModel', ['$parse', function ($parse) {
     };
 }]);
 
-appMain.run(function($rootScope, $window) {
+appMain.run(function($rootScope, $window, $http, $timeout) {
+
+	 var lastid=0;
+	 $rootScope.getNotifications = function (){
+		 if(!document.hasFocus())
+		 {
+
+		    	$timeout($rootScope.getNotifications, 500);   
+		    	return;
+		 }
+		 
+		 if( $rootScope.notification!=null)
+			 if( $rootScope.notification.messages.length>0)
+				 {
+				 	for(i=0;i<$rootScope.notification.messages.length;i++)
+				 		if($rootScope.notification.messages[i].id>lastid)
+						 	lastid = $rootScope.notification.messages[i].id;
+				 }
+		// alert(lastid);
+	   	 $http({
+		        method : "GET",
+		        	url : "notifications",
+		        	params:{getunseenmessages:"getunseenmessages",lastid:lastid,delay:1500}
+		    }).then(function mySuccess(response) {
+		    	//alert(response.data);
+		    	if(response.data)
+		    		$rootScope.notification = response.data;
+		   	 $timeout($rootScope.getNotifications, 5000);
+		    }, function myError(response) {
+		    	//alert(error);
+
+		   	 $timeout($rootScope.getNotifications, 20000);
+		    });
+		 }
+  	 
+	 $timeout($rootScope.getNotifications, 10);
+
     $rootScope.$on("$locationChangeStart", function(event, next, current) { 
+    	
+
+
+		 
+
+			// alert(1);
+/*		 $http({
+		        method : "GET",
+		        url : "events"
+		    }).then(function mySuccess(response) {
+		    	alert(response.data);
+		    	$rootScope.eventlist = response.data;
+		      
+		    }, function myError(response) {
+
+		    	alert("error");
+		      
+		    });*/
         // handle route changes    
     	window.scrollTo(0, 0);
 /*    	if($rootScope.lastpage!=window.location.href)
@@ -201,6 +255,11 @@ appMain.run(function($rootScope, $window) {
         	    	else
 						$rootScope.hideFooter=false;
         	    		
+        	    	
+        	 
+
+        		 
+        	    	
     });
     
     
@@ -1818,7 +1877,12 @@ appMain.controller("chatController",function($scope, $http, $location, $window,$
 				}
 			 else
 				    $scope.text=$scope.text+ "nofocused";*/
-				 
+			 if(!document.hasFocus())
+			 {
+
+			    	$timeout($scope.getLastMessages, 500);   
+			    	return;
+			 }
 			 var lastid=0;
 			 var laststatus="";
 			 if( $scope.messages!=null)
@@ -1828,7 +1892,10 @@ appMain.controller("chatController",function($scope, $http, $location, $window,$
 					 		if($scope.messages[i].id>lastid)
 					 			{
 							 		lastid =  $scope.messages[i].id;
-							 		laststatus = $scope.messages[i].status;
+							 		if($scope.messages[i].contact.id!=$routeParams.friendid)
+							 			laststatus = $scope.messages[i].status;
+							 		else
+							 			laststatus = "Seen";
 					 			}
 					 }
 		    	//alert("contacts/2/messages?lastid="+lastid);

@@ -7,8 +7,9 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
-import java.util.Date;
+
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
@@ -20,6 +21,8 @@ import org.imgscalr.Scalr;
 import org.imgscalr.Scalr.Method;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
@@ -31,13 +34,14 @@ import com.event.dao.GameDao;
 import com.event.dao.GeneralDao;
 import com.event.dao.ImageDao;
 import com.event.dao.MatchdayDao;
+import com.event.dao.MessageDao;
 import com.event.dao.NoticeDao;
 import com.event.dao.PlayoffDao;
 import com.event.dao.ScorerDao;
 import com.event.dao.StandingDao;
 import com.event.dao.TeamDao;
 import com.event.dao.TeamgroupDao;
-
+import com.general.model.Message;
 import com.phonebook.model.Contact;
 import com.phonebook.model.Userrole;
 import com.phonebook.service.ContactService;
@@ -47,6 +51,7 @@ import com.sport.model.Game;
 import com.sport.model.Image;
 import com.sport.model.Matchday;
 import com.sport.model.Notice;
+import com.sport.model.Notification;
 import com.sport.model.Playoff;
 import com.sport.model.Scorer;
 import com.sport.model.Standing;
@@ -99,7 +104,9 @@ public class SportServiceImpl  implements SportService{
 	
 	@Autowired
 	ImageDao imageDao;
-	
+
+	@Autowired
+	MessageDao messageDao;
 	
 	@Override
 	public Champion findChampionsById(int id) {
@@ -1132,6 +1139,64 @@ public class SportServiceImpl  implements SportService{
 				game.setChampion(game.getMatchday().getTeamgroup().getChampion());
 		}
 		return games;
+	}
+
+	@Override
+	public Notification getNotifications(Map<String, Integer> actions) {
+		// TODO Auto-generated method stub
+		 User user =null; 
+		 Contact contact = null;
+		 try{user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();}
+		 catch(Exception e){}
+		 if(user!=null)
+		 {
+			 String username = user.getUsername();
+			  contact = contactService.findByUserName(username);
+		 }
+		 Notification notification = new Notification();
+		 
+			int counter = 3;
+
+			for(int i=0;i<counter;i++)
+			{	
+					if(actions.get("getunseenmessages")!=null)
+					{
+						System.out.println("***INSIDE");
+						List<Message> messages=messageDao.getUnseenMessages( contact, actions.get("lastid"));
+						if(!messages.isEmpty())
+						{
+							System.out.println("***NOT EMPTY");
+							notification.setMessages(messages);
+							return notification;
+						}
+						System.out.println("***EMPTY");
+					}
+					if(actions.get("getundeliveredmessages")!=null)
+					{
+						System.out.println("***INSIDE1");
+						List<Message> messages=messageDao.getUdeliveredMessages( contact, actions.get("lastid"));
+						if(!messages.isEmpty())
+						{
+							System.out.println("***NOT EMPTY1");
+							notification.setMessages(messages);
+							return notification;
+						}
+						System.out.println("***EMPTY1");
+					}
+					if(actions.get("delay")!=null)
+					{
+
+						try {
+							Thread.sleep(15000);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+			}
+			System.out.println("***NULL");
+			
+		return null;
 	}
 	
 }

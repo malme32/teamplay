@@ -17,5 +17,9 @@ public interface MessageDao{
 
 	Message findByIdNewSession(int id);
 
+	public List<Message> getUnseenMessages(Contact contact, Integer integer);
+
+	public List<Message> getUdeliveredMessages(Contact contact, Integer integer);
+
 
 }
