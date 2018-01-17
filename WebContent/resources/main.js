@@ -153,27 +153,28 @@ appMain.directive('fileModel', ['$parse', function ($parse) {
 
 appMain.run(function($rootScope, $window, $http, $timeout) {
 
-	 var lastid=0;
-	 $rootScope.getNotifications = function (){
+		$rootScope.mlastid=0;
+		$rootScope.getNotifications = function (){
 		 if(!document.hasFocus())
 		 {
 
 		    	$timeout($rootScope.getNotifications, 500);   
 		    	return;
 		 }
-		 
-		 if( $rootScope.notification!=null)
+
+		 alert($rootScope.mlastid);
+	 if( $rootScope.notification!=null)
 			 if( $rootScope.notification.messages.length>0)
 				 {
 				 	for(i=0;i<$rootScope.notification.messages.length;i++)
-				 		if($rootScope.notification.messages[i].id>lastid)
-						 	lastid = $rootScope.notification.messages[i].id;
+				 		if($rootScope.notification.messages[i].id>$rootScope.mlastid)
+				 			$rootScope.mlastid = $rootScope.notification.messages[i].id;
 				 }
-		// alert(lastid);
+		 alert($rootScope.mlastid);
 	   	 $http({
 		        method : "GET",
 		        	url : "notifications",
-		        	params:{getunseenmessages:"getunseenmessages",lastid:lastid,delay:1500}
+		        	params:{getunseenmessages:"getunseenmessages",lastid:$rootScope.mlastid,delay:1500}
 		    }).then(function mySuccess(response) {
 		    	//alert(response.data);
 		    	if(response.data)
@@ -1314,7 +1315,11 @@ appMain.controller("headerController",function($scope, $http, $location){
 	        //$scope.result = response.statusText;
 	      
 	    });
-	 
+
+	 $scope.openMessages = function (messages){ 
+		
+ 		$location.path( "chat/"+messages[0].contact.id );
+	 }
 	 $scope.getMyTeamLink = function (){ 
 
 		 $http({

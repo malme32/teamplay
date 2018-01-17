@@ -22,7 +22,7 @@ pageEncoding="UTF-8"%>
 </div>
 <!--  style='position:fixed' -->
 <img ng-show='notification.messages.length' style='cursor:pointer; z-index:1500; position:fixed; left:10px; top:10px; width:40px ;height:40px' 
-ng-src='${resources_start}/generalimages/message2.png '/>
+ng-src='${resources_start}/generalimages/message-outline-256.png' ng-click='openMessages(notification.messages);notification=null; mlastid=0; '/>
 <ul class="user-login-option pull-right">
 
 
