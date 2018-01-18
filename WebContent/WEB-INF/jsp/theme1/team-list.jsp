@@ -36,7 +36,7 @@ pageEncoding="UTF-8"%>
  --><!-- </div>
  -->
 		<img ng-hide='teams' width=40 height=40 src="${resources}/customimages/loading.gif" alt="">
-<div class=" theme-margin-bottom" ng-repeat="row in teams  |orderBy: 'name'| filter:mysearch" style="padding:10px; border-bottom: 1px solid lightgray;border-top: 1px solid lightgray; height:70px;">
+<div class=" theme-margin-bottom" ng-repeat="row in teams  |orderBy: 'name' | filter:mysearch" style="padding:10px; border-bottom: 1px solid lightgray;border-top: 1px solid lightgray; height:70px;">
 <div style='display:inline-block'><img style='height:50px;' ng-src="${resources}{{row.logothumbpath}}" alt=""></div>
 <div style='display:inline-block'>
 <h5><a ng-href='#!team-detail.html/{{row.id}}'>
@@ -46,9 +46,6 @@ pageEncoding="UTF-8"%>
 </a></h5>
 
 </div>
-<div style='display:inline-block; float:right'>		<img style='width:40px; height:40px; cursor:pointer' ng-click="sendMessage(row)" ng-src = "${resources_start}/generalimages/chat.png"/> 
-</div>
-
 <div style='display:inline-block; float:right'>		<button style='' ng-class="isFollowed(row)"  ng-click="followTeam(row)">{{isFollowedText(row)}}</button> 
 </div>
 

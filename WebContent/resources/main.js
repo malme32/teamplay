@@ -77,6 +77,11 @@ appMain.config(function($routeProvider) {
         controller: "teamlistController"
 
     })
+    .when("/message-list.html", {
+        templateUrl : "message-list.html",
+        controller: "messageListController"
+
+    })
     .when("/news-detail.html/:id", {
         templateUrl : "news-detail.html",
         controller: "newsDetailController"
@@ -133,7 +138,11 @@ appMain.config(function($routeProvider) {
     //<<theme1<<
     
 });
-
+appMain.filter('reverse', function() {
+	  return function(items) {
+	    return items.slice().reverse();
+	  };
+	});
 
 appMain.directive('fileModel', ['$parse', function ($parse) {
     return {
@@ -162,7 +171,7 @@ appMain.run(function($rootScope, $window, $http, $timeout) {
 		    	return;
 		 }
 
-		 alert($rootScope.mlastid);
+		 //alert($rootScope.mlastid);
 	 if( $rootScope.notification!=null)
 			 if( $rootScope.notification.messages.length>0)
 				 {
@@ -170,7 +179,7 @@ appMain.run(function($rootScope, $window, $http, $timeout) {
 				 		if($rootScope.notification.messages[i].id>$rootScope.mlastid)
 				 			$rootScope.mlastid = $rootScope.notification.messages[i].id;
 				 }
-		 alert($rootScope.mlastid);
+	// alert($rootScope.mlastid);
 	   	 $http({
 		        method : "GET",
 		        	url : "notifications",
@@ -187,8 +196,26 @@ appMain.run(function($rootScope, $window, $http, $timeout) {
 		    });
 		 }
   	 
+		
 	 $timeout($rootScope.getNotifications, 10);
+	
+	 
+	
+   	 $http({
+	        method : "GET",
+	        	url : "logins"
+	    }).then(function mySuccess(response) {
 
+			
+	    	$rootScope.loggedin = response.data;
+	    	if(response.data&&response.data.username=="admin")
+	    		$rootScope.isAdmin = true;
+	    	else
+	    		$rootScope.isAdmin = false;
+	    }, function myError(response) {
+	    	
+	    });
+	 
     $rootScope.$on("$locationChangeStart", function(event, next, current) { 
     	
 
@@ -1285,7 +1312,7 @@ appMain.controller("newsController",function($scope, $http, $location){
 	 
 });
 
-appMain.controller("headerController",function($scope, $http, $location){
+appMain.controller("headerController",function($scope, $http, $location, $rootScope){
 
     
 	 $http({
@@ -1318,7 +1345,18 @@ appMain.controller("headerController",function($scope, $http, $location){
 
 	 $scope.openMessages = function (messages){ 
 		
- 		$location.path( "chat/"+messages[0].contact.id );
+		 //alert($rootScope.isAdmin);
+		 if($rootScope.isAdmin)
+		 {
+		  		$location.path( "message-list.html");
+		 }else
+		 {
+		 		$location.path( "chat/"+messages[0].contact.id );
+		 		$rootScope.notification=null;
+		 }
+		 
+	 	//$rootScope.mlastid=0;
+		 
 	 }
 	 $scope.getMyTeamLink = function (){ 
 
@@ -1380,6 +1418,69 @@ appMain.controller("headerController",function($scope, $http, $location){
 	 
 });
 
+
+appMain.controller("messageListController",function($scope, $http, $location){
+
+	
+	 $http({
+	        method : "GET",
+	        url : "teams",
+	    }).then(function mySuccess(response) {
+
+	      
+	   	 var tempteams = response.data;
+	      	 $http({
+	   	        method : "GET",
+	   	        	url : "notifications",
+	   	        	params:{getunseenmessages:"getunseenmessages",lastid:0}
+	   	    }).then(function mySuccess(response) {
+
+  	    		$scope.notif = response.data;
+	   	    		$scope.teams = tempteams;
+	   	   	
+	   	    }, function myError(response) {
+	   	    	//alert(error);
+
+	   	    });
+	   	 
+
+	        
+	    }, function myError(response) {
+	    		      
+	    });
+	 
+	 $scope.getMessageCount = function(team){
+		 var counter = 0;
+		 try{
+			
+				 for(i=0;i<$scope.notif.messages.length;i++)
+				 {//alert($scope.notif.messages[i].contact.adminteam.id);
+					 	if(team.id==$scope.notif.messages[i].contact.adminteam.id)
+							counter=counter+1;
+				 }
+			}
+		 catch(err){}
+		 return counter;
+	 }
+	 
+	 
+	 $scope.sendMessage = function (row){
+		 
+		 $http({
+		        method : "GET",
+		        url : "teams/"+row.id+"/admins",
+		    }).then(function mySuccess(response) {
+		    	
+		        //$scope.teams = response.data;
+				 $location.path('chat/'+ response.data.id); 
+		      
+		    }, function myError(response) {
+		    		alert("Παρουσιαστηκε κάπιο σφάλμα. Προσπαθήστε ξανά.")      
+		    });
+
+	 }
+});
+
 appMain.controller("teamlistController",function($scope, $http, $location){
 
 	
@@ -1388,11 +1489,17 @@ appMain.controller("teamlistController",function($scope, $http, $location){
 	        url : "teams",
 	    }).then(function mySuccess(response) {
 
-	        $scope.teams = response.data;
-	      
+
+	    		$scope.teams = response.data;
+	   	
+	   	 
+
+	        
 	    }, function myError(response) {
 	    		      
 	    });
+	 
+
 	 
 	 $scope.followTeam = function (row){ 
 
@@ -1464,21 +1571,7 @@ appMain.controller("teamlistController",function($scope, $http, $location){
 
 	 }
 	 
-	 $scope.sendMessage = function (row){
-		 
-		 $http({
-		        method : "GET",
-		        url : "teams/"+row.id+"/admins",
-		    }).then(function mySuccess(response) {
-		    	
-		        //$scope.teams = response.data;
-				 $location.path('chat/'+ response.data.id); 
-		      
-		    }, function myError(response) {
-		    		alert("Παρουσιαστηκε κάπιο σφάλμα. Προσπαθήστε ξανά.")      
-		    });
 
-	 }
 });
 
 appMain.controller("teamController",function($scope, $http, $location, $window){

@@ -164,6 +164,11 @@ response.addHeader("Cache-Control", headerValue);*/
 	public ModelAndView teamlist(){
 		return new ModelAndView("theme1/team-list","","");
 	}	
+
+	@RequestMapping(value="/message-list", method=RequestMethod.GET)
+	public ModelAndView messagelist(){
+		return new ModelAndView("theme1/message-list","","");
+	}	
 	
 	
 	@RequestMapping(value="/news-list", method=RequestMethod.GET)

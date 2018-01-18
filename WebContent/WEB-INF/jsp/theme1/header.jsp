@@ -21,8 +21,10 @@ pageEncoding="UTF-8"%>
 <a style= ' background-color:#cc0000; opacity:0.5' href="#menu" class="menu-link"><i class="fa fa-bars"></i></a>
 </div>
 <!--  style='position:fixed' -->
-<img ng-show='notification.messages.length' style='cursor:pointer; z-index:1500; position:fixed; left:10px; top:10px; width:40px ;height:40px' 
-ng-src='${resources_start}/generalimages/message-outline-256.png' ng-click='openMessages(notification.messages);notification=null; mlastid=0; '/>
+<div class="own-message-notif">
+<img ng-show='notification.messages.length' style='' 
+ng-src='${resources_start}/generalimages/message-outline-256.png' ng-click='openMessages(notification.messages); '/></div>
+<!-- {{notification}} -->
 <ul class="user-login-option pull-right">
 
 

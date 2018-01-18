@@ -277,6 +277,24 @@ public class SportController {
 			actions.put("lastid", lastid);
 		return sportService.getNotifications(actions);
 	}
+	
+	
+
+	@RequestMapping(value="/logins", method=RequestMethod.GET, produces = "application/json")
+	public @ResponseBody Contact getLogins ()
+	{
+		
+	 User user =null; 
+	 try{user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();}
+	 catch(Exception e){}
+	 if(user!=null)
+	 {
+		 String username = user.getUsername();
+		 Contact contact = contactService.findByUserName(username);
+		 return contact;
+	 }
+	 return null;
+	}
 	/////////////////////POST/////////////////////////////////////
 	
 	@Secured("ROLE_ADMIN")
