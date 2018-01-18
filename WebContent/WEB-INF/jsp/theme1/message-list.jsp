@@ -39,7 +39,7 @@ pageEncoding="UTF-8"%>
 <div class=" theme-margin-bottom" ng-repeat="row in teams  |orderBy: getMessageCount| reverse | filter:mysearch" style="padding:10px; border-bottom: 1px solid lightgray;border-top: 1px solid lightgray; height:70px;">
 <div style='display:inline-block'><img style='height:50px;' ng-src="${resources}{{row.logothumbpath}}" alt=""></div>
 <div style='display:inline-block'>
-<h5><a ng-href='#!team-detail.html/{{row.id}}'>
+<h5><a ng-click="sendMessage(row)" href=''>
 <i class="red-color">{{row.name}}</i>
 <!-- <p>Id quisque cursus est volutpat lorem phasellus ut neque vivamus dolor, ornare sociosqu purus taciti erat egestas integer enim sem porta ligula semper suspendisse mi metus auctor faucibus lobortis senectus, at metus nisl ornare consectetur.</p>
  --><!-- <span><a href="#"><i class="fa fa-twitter"></i>@marcobale #dominname</a></span> -->

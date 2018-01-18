@@ -21,5 +21,9 @@ public interface MessageDao{
 
 	public List<Message> getUdeliveredMessages(Contact contact, Integer integer);
 
+	void setDeliveredMessages(Contact contact, Contact sender);
+
+	void setAllDeliveredMessages(Contact contact);
+
 
 }

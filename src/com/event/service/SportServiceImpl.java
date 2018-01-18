@@ -1179,6 +1179,7 @@ public class SportServiceImpl  implements SportService{
 						{
 							System.out.println("***NOT EMPTY1");
 							notification.setMessages(messages);
+							messageDao.setAllDeliveredMessages(contact);
 							return notification;
 						}
 						System.out.println("***EMPTY1");

@@ -1343,15 +1343,17 @@ appMain.controller("headerController",function($scope, $http, $location, $rootSc
 	      
 	    });
 
-	 $scope.openMessages = function (messages){ 
+	 $scope.openMessages = function (){ 
 		
 		 //alert($rootScope.isAdmin);
 		 if($rootScope.isAdmin)
 		 {
 		  		$location.path( "message-list.html");
+		 		$rootScope.notification=null;
 		 }else
 		 {
-		 		$location.path( "chat/"+messages[0].contact.id );
+		 	//	$location.path( "chat/"+messages[0].contact.id );
+		 		$location.path( "chat/54");
 		 		$rootScope.notification=null;
 		 }
 		 
@@ -1998,6 +2000,7 @@ appMain.controller("chatController",function($scope, $http, $location, $window,$
 					 }
 		    	//alert("contacts/2/messages?lastid="+lastid);
 		    	//alert("contacts/2/messages?lasti");
+			// alert("contacts/"+$routeParams.friendid+"/messages?lastid="+lastid+"&laststatus="+laststatus);
 			 $http({
 			        method : "GET",
 			        	url : "contacts/"+$routeParams.friendid+"/messages?lastid="+lastid+"&laststatus="+laststatus
@@ -2032,8 +2035,11 @@ appMain.controller("chatController",function($scope, $http, $location, $window,$
 				    				$scope.messages.push( response.data[i]);
 				    				$timeout($scope.scrolltobottom, 10);
 				    				if(response.data[i].contact.id==$routeParams.friendid)
-				    					$scope.unseen.push(response.data[i]);
-				    					
+				    					{
+				    						$scope.unseen.push(response.data[i]);
+				    						var x = document.getElementById("myAudio"); 
+				    						x.play();
+				    					}
 				    			}
 				    				
 			    		}

@@ -88,4 +88,6 @@ pageEncoding="UTF-8"%>
 </div>
 </div>
 
-
+<audio id="myAudio">
+  <source src="${resources_start}/sounds/intuition.mp3" type="audio/mpeg">
+</audio>

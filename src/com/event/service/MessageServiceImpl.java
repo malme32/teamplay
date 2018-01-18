@@ -67,6 +67,7 @@ public class MessageServiceImpl implements MessageService{
 		}
 		else
 		{
+			System.out.println("HEREIN");
 			 this.setSeenMessages(contactService.getContact(contactid), contactService.getContact(friendid));
 			messages= messsageDao.getMessages(contactService.getContact(contactid), contactService.getContact(friendid),  lastid);
 		}

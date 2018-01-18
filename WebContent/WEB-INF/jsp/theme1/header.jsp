@@ -98,7 +98,7 @@ ng-src='${resources_start}/generalimages/message-outline-256.png' ng-click='open
 <li ng-repeat='row in headerChampions'><a href="#!point-table.html">{{row.name}}</a></li>
 <li><a ng-href="#!calendar">ΔΙΑΘΕΣΙΜΟΤΗΤΑ</a>
 </li>
-<li><a ng-href="#!chat/54">CHAT</a>
+<li><a ng-click='openMessages()' href="">CHAT</a>
 </li>
 </ul>
 
@@ -261,7 +261,7 @@ ng-src='${resources_start}/generalimages/message-outline-256.png' ng-click='open
 </li> -->
 <li onclick='applyClosedStyles1()'><a href="#!calendar">ΔΙΑΘΕΣΙΜΟΤΗΤΑ</a>
 </li>
-<li onclick='applyClosedStyles1()'><a href="#!chat/54">CHAT</a>
+<li onclick='applyClosedStyles1()'><a ng-click='openMessages()' href="">CHAT</a>
 </li>
 <li onclick='applyClosedStyles1()'><a href="#!gallery">GALLERY</a></li>
 <li onclick='applyClosedStyles1()'><a href="#!contactus">ΕΠΙΚΟΙΝΩΝΙΑ</a></li>

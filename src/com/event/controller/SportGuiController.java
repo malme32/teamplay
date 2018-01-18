@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.CacheControl;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
@@ -164,7 +165,7 @@ response.addHeader("Cache-Control", headerValue);*/
 	public ModelAndView teamlist(){
 		return new ModelAndView("theme1/team-list","","");
 	}	
-
+	@Secured({"ROLE_ADMIN"})
 	@RequestMapping(value="/message-list", method=RequestMethod.GET)
 	public ModelAndView messagelist(){
 		return new ModelAndView("theme1/message-list","","");
@@ -213,7 +214,7 @@ response.addHeader("Cache-Control", headerValue);*/
 	public ModelAndView calendar(){
 		return new ModelAndView("theme1/calendar","","");
 	}
-	
+	@Secured({"ROLE_ADMIN","ROLE_TEAM"})
 	@RequestMapping(value="/chat", method=RequestMethod.GET)
 	public ModelAndView chat(){
 		return new ModelAndView("theme1/chat","","");

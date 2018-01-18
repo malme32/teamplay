@@ -71,10 +71,31 @@ public class MessageDaoImpl extends AbstractDao implements MessageDao{
 	public void setSeenMessages(Contact contact, Contact sender) {
 		// TODO Auto-generated method stub
 	 	//Session session = sessionFactory.openSession();/*AND M.status!= :status  AND M.contact= :sender setParameter("sender", sender).*/
-		getSession().createQuery("update Message M set  M.status= :status where (M.receiver= :contact)").setParameter("contact", contact).setParameter("status", "Seen").executeUpdate();
+		getSession().createQuery("update Message M set  M.status= :status where (M.receiver= :contact AND M.contact= :sender AND M.status!= :status)").setParameter("contact", contact).setParameter("sender", sender).setParameter("status", "Seen").executeUpdate();
 		//  session.close();
 	}
-
+	
+	@Transactional
+	@Modifying
+	@Override
+	public void setDeliveredMessages(Contact contact, Contact sender) {
+		// TODO Auto-generated method stub
+	 	//Session session = sessionFactory.openSession();/*AND M.status!= :status  AND M.contact= :sender setParameter("sender", sender).*/
+		getSession().createQuery("update Message M set  M.status= :status where (M.receiver= :contact AND M.contact= :sender AND M.status= :status1)").setParameter("contact", contact).setParameter("sender", sender).setParameter("status", "Delivered").setParameter("status1", "Sent").executeUpdate();
+		//  session.close();
+	}
+	
+	@Transactional
+	@Modifying
+	@Override
+	public void setAllDeliveredMessages(Contact contact) {
+		// TODO Auto-generated method stub
+	 	//Session session = sessionFactory.openSession();/*AND M.status!= :status  AND M.contact= :sender setParameter("sender", sender).*/
+		getSession().createQuery("update Message M set  M.status= :status where (M.receiver= :contact AND M.status= :status1)").setParameter("contact", contact).setParameter("status", "Delivered").setParameter("status1", "Sent").executeUpdate();
+		//  session.close();
+	}
+	
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Message> getUnseenMessages(Contact contact, Integer lastid) {
