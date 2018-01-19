@@ -197,7 +197,7 @@ appMain.run(function($rootScope, $window, $http, $timeout) {
 		 }
   	 
 		
-	 $timeout($rootScope.getNotifications, 10);
+	
 	
 	 
 	
@@ -212,6 +212,10 @@ appMain.run(function($rootScope, $window, $http, $timeout) {
 	    		$rootScope.isAdmin = true;
 	    	else
 	    		$rootScope.isAdmin = false;
+	    	
+	    	 if($rootScope.loggedin)
+	    		 $timeout($rootScope.getNotifications, 10);
+	    	 
 	    }, function myError(response) {
 	    	
 	    });
@@ -1423,7 +1427,7 @@ appMain.controller("headerController",function($scope, $http, $location, $rootSc
 
 appMain.controller("messageListController",function($scope, $http, $location){
 
-	
+
 	 $http({
 	        method : "GET",
 	        url : "teams",
@@ -1819,7 +1823,7 @@ appMain.controller("teamController",function($scope, $http, $location, $window){
 		 
 });
 
-appMain.controller("chatController",function($scope, $http, $location, $window,$timeout,$routeParams){
+appMain.controller("chatController",function($scope, $http, $location, $window,$timeout,$routeParams, $rootScope){
 	var path = window.location.href;
 
 /*	var link = document.getElementById('myfooter');
@@ -1977,7 +1981,7 @@ appMain.controller("chatController",function($scope, $http, $location, $window,$
 				}
 			 else
 				    $scope.text=$scope.text+ "nofocused";*/
-			 if(!document.hasFocus())
+			 if(!document.hasFocus()||!$rootScope.loggedin)
 			 {
 
 			    	$timeout($scope.getLastMessages, 500);   
