@@ -17,6 +17,8 @@ public interface MessageService {
 
 	void setSeenMessages(Contact contact, Contact senderid);
 
+	void setAllDeliveredMessages(Contact contact);
+
 	
     
 	

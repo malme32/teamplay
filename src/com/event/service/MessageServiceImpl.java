@@ -90,5 +90,12 @@ public class MessageServiceImpl implements MessageService{
 
 		messsageDao.setSeenMessages(contact,sender);
 	}
+
+	@Override
+	public void setAllDeliveredMessages(Contact contact) {
+		System.out.println("SETDELIVERED0000 "+ contact.getId());
+		// TODO Auto-generated method stub
+		messsageDao.setAllDeliveredMessages(contact);
+	}
 	
 }

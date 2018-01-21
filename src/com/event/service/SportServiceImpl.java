@@ -1153,14 +1153,19 @@ public class SportServiceImpl  implements SportService{
 			 String username = user.getUsername();
 			  contact = contactService.findByUserName(username);
 		 }
+		 else if(actions.get("uid")!=null)
+		{
+			 contact = contactService.getContact(actions.get("uid"));
+		}
+		 else return null;
 		 Notification notification = new Notification();
 		 
-			int counter = 3;
-
-			for(int i=0;i<counter;i++)
-			{	
-					if(actions.get("getunseenmessages")!=null)
-					{
+			//int counter = 3;
+			if(actions.get("getunseenmessages")!=null)
+			{
+				for(int i=0;i<3;i++)
+				{	
+					
 						System.out.println("***INSIDE");
 						List<Message> messages=messageDao.getUnseenMessages( contact, actions.get("lastid"));
 						if(!messages.isEmpty())
@@ -1170,31 +1175,56 @@ public class SportServiceImpl  implements SportService{
 							return notification;
 						}
 						System.out.println("***EMPTY");
-					}
-					if(actions.get("getundeliveredmessages")!=null)
+						
+						
+						if(actions.get("delay")!=null)
+						{
+
+							try {
+								Thread.sleep(15000);
+							} catch (InterruptedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
+				}
+			}
+				if(actions.get("getundeliveredmessages")!=null)
+				{
+					int stayed=0;
+					if(actions.get("delay")!=null)
 					{
+						stayed+=actions.get("delay");
+					}
+					while(stayed<60000)
+					{	
 						System.out.println("***INSIDE1");
 						List<Message> messages=messageDao.getUdeliveredMessages( contact, actions.get("lastid"));
 						if(!messages.isEmpty())
 						{
 							System.out.println("***NOT EMPTY1");
 							notification.setMessages(messages);
-							messageDao.setAllDeliveredMessages(contact);
 							return notification;
 						}
 						System.out.println("***EMPTY1");
-					}
-					if(actions.get("delay")!=null)
-					{
+						
+						
+						if(actions.get("delay")!=null)
+						{
 
-						try {
-							Thread.sleep(15000);
-						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+							try {
+								Thread.sleep(actions.get("delay"));
+							} catch (InterruptedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							stayed+=actions.get("delay");
 						}
+						else stayed=70000;
+						
 					}
-			}
+				}
+			
 			System.out.println("***NULL");
 			
 		return null;

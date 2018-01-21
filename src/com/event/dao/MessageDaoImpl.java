@@ -90,6 +90,7 @@ public class MessageDaoImpl extends AbstractDao implements MessageDao{
 	@Override
 	public void setAllDeliveredMessages(Contact contact) {
 		// TODO Auto-generated method stub
+		System.out.println("SETDELIVERED "+ contact.getId());
 	 	//Session session = sessionFactory.openSession();/*AND M.status!= :status  AND M.contact= :sender setParameter("sender", sender).*/
 		getSession().createQuery("update Message M set  M.status= :status where (M.receiver= :contact AND M.status= :status1)").setParameter("contact", contact).setParameter("status", "Delivered").setParameter("status1", "Sent").executeUpdate();
 		//  session.close();

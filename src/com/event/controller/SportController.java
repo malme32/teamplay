@@ -260,11 +260,11 @@ public class SportController {
 		
 	}
 	
-	@Secured({"ROLE_ADMIN","ROLE_TEAM"})
+//	@Secured({"ROLE_ADMIN","ROLE_TEAM"})
 	@RequestMapping(value="/notifications", method=RequestMethod.GET, produces = "application/json")
 	public @ResponseBody Notification getNotifications (@RequestParam(required = false)  String getunseenmessages, 
-			@RequestParam(required = false) Integer getundeliveredmessages, @RequestParam(required = false)  Integer lastid,
-			@RequestParam(required = false) Integer delay)
+			@RequestParam(required = false) String getundeliveredmessages, @RequestParam(required = false)  Integer lastid,
+			@RequestParam(required = false) Integer delay, @RequestParam(required = false) Integer uid)
 	{
 		Map<String,Integer> actions = new HashMap<String,Integer>();
 		if(getunseenmessages!=null)
@@ -275,6 +275,8 @@ public class SportController {
 			actions.put("delay", delay);
 		if(lastid!=null)
 			actions.put("lastid", lastid);
+		if(uid!=null)
+			actions.put("uid", uid);
 		return sportService.getNotifications(actions);
 	}
 	

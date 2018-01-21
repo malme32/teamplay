@@ -198,12 +198,13 @@ public class ContactController {
 		contactService.updateContact(contact);
 		return;
 	}
-	
-	@Secured({"ROLE_ADMIN", "ROLE_TEAM"})
+	/*
+	@Secured({"ROLE_ADMIN", "ROLE_TEAM"})*/
 	@RequestMapping(value="/contacts/actions", method=RequestMethod.PUT, produces = "application/json")
-	public @ResponseBody void contactActions( @RequestParam String action,  @RequestParam(required=false) Integer senderid)
+	public @ResponseBody void contactActions( @RequestParam String action,  @RequestParam(required=false) Integer senderid, @RequestParam(required=false) Integer uid )
 	{
-		
+
+		System.out.println("SETDELIVEREDXXXXXXXXXX");
 		 User user =null; 
 		 Contact contact =null;
 		 try{user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();}
@@ -213,10 +214,19 @@ public class ContactController {
 			 	String username = user.getUsername();
 			 	contact = contactService.findByUserName(username);
 		 }
+		 else if(action.equals("set_messages_delivered"))
+			{
+
+				System.out.println("SETDELIVERED22222"+ contactService.getContact(uid).getId());
+				 messageService.setAllDeliveredMessages(contactService.getContact(uid));
+			}
 		 else return;
 		
 		if(action.equals("set_messages_seen"))
 			 messageService.setSeenMessages(contact, contactService.getContact(senderid));
+
+		System.out.println("SETDELIVEREDdddddddd");
+
 		// messageService.setSeenMessages(contactService.getContact(54), contactService.getContact(senderid));
 		 return ;
 	}

@@ -161,7 +161,13 @@ appMain.directive('fileModel', ['$parse', function ($parse) {
 }]);
 
 appMain.run(function($rootScope, $window, $http, $timeout) {
+	try{
+    	Android;$rootScope.indexClass="own-hidden";
 
+		$rootScope.isAndroid=true;}
+		catch(err){
+			$rootScope.isAndroid=false;
+		}
 		$rootScope.mlastid=0;
 		$rootScope.getNotifications = function (){
 		 if(!document.hasFocus())
@@ -208,6 +214,26 @@ appMain.run(function($rootScope, $window, $http, $timeout) {
 
 			
 	    	$rootScope.loggedin = response.data;
+	    	if($rootScope.isAndroid)
+	    	{
+	    		if(response.data)
+	    			{
+	
+			    	  	try{
+					    	Android.setUsername(response.data.id)}
+					    	catch(err){}
+			    	
+	    			}
+	    		else
+	    			{
+
+		    	  	try{
+				    	Android.setUsername("")}
+				    	catch(err){}
+		    	
+	    			}
+	    	}
+	    	
 	    	if(response.data&&response.data.username=="admin")
 	    		$rootScope.isAdmin = true;
 	    	else
@@ -270,13 +296,7 @@ appMain.run(function($rootScope, $window, $http, $timeout) {
     	    		$rootScope.indexClass="own-hidden";
     	    	//	$rootScope.isIndex=false;
     		//});
-        	    	try{
-			    	Android;$rootScope.indexClass="own-hidden";
-
-					$rootScope.isAndroid=true;}
-					catch(err){
-						$rootScope.isAndroid=false;
-					}
+    
 
         	    	if(next.indexOf("#!/chat") !== -1)//;=="http://localhost:60000/phonebook/soccer.html")
 						$rootScope.hideFooter=true;
