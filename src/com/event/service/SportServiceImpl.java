@@ -1158,7 +1158,7 @@ public class SportServiceImpl  implements SportService{
 			 contact = contactService.getContact(actions.get("uid"));
 		}
 		 else return null;
-		 Notification notification = new Notification();
+		  Notification notification = null;
 		 
 			//int counter = 3;
 			if(actions.get("getunseenmessages")!=null)
@@ -1171,8 +1171,10 @@ public class SportServiceImpl  implements SportService{
 						if(!messages.isEmpty())
 						{
 							System.out.println("***NOT EMPTY");
+
+							notification = new Notification();
 							notification.setMessages(messages);
-							return notification;
+							break;
 						}
 						System.out.println("***EMPTY");
 						
@@ -1203,8 +1205,9 @@ public class SportServiceImpl  implements SportService{
 						if(!messages.isEmpty())
 						{
 							System.out.println("***NOT EMPTY1");
+							notification = new Notification();
 							notification.setMessages(messages);
-							return notification;
+							break;
 						}
 						System.out.println("***EMPTY1");
 						
@@ -1226,8 +1229,14 @@ public class SportServiceImpl  implements SportService{
 				}
 			
 			System.out.println("***NULL");
-			
-		return null;
+
+		if(actions.get("games")!=null)
+		{
+			if(notification==null)
+				notification=new Notification();
+			notification.setTeamgames(this.findTeamGames(actions.get("teamid")));
+		}
+		return notification;
 	}
 	
 }
