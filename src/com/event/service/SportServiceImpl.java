@@ -1049,6 +1049,7 @@ public class SportServiceImpl  implements SportService{
 			file = new File(path+"/resources/theme1/"+contactService.getContact(id).getThumbpath());
 			file.delete();
 		}
+		System.out.println("DELETING CONTACT");
 		generalDaoService.delete(contactService.getContact(id));
 	}
 

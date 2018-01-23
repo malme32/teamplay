@@ -78,7 +78,7 @@ public class Team {
 	private List<Standing> standings;
 	
 	@JsonIgnore	
-	@OneToOne(fetch = FetchType.LAZY,mappedBy="adminteam",cascade = CascadeType.ALL)
+	@OneToOne(fetch = FetchType.LAZY,mappedBy="adminteam",cascade = CascadeType.DETACH)
 	private Contact admin;
 	
 	public int getId() {

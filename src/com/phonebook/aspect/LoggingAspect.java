@@ -24,7 +24,7 @@ public class LoggingAspect {
    */
    @Before("selectAll()")
    public void beforeAdvice(){
-      System.out.println("Going to setup Phonebook");
+      System.out.println("Subroutine Starts");
    }
 
    /** 
@@ -33,7 +33,7 @@ public class LoggingAspect {
    */
    @After("selectAll()")
    public void afterAdvice(){
-      System.out.println("Phonebook has been setup.");
+      System.out.println("Subroutine ends.");
    }
 
    /** 
@@ -42,7 +42,8 @@ public class LoggingAspect {
    */
    @AfterReturning(pointcut = "selectAll()", returning = "retVal")
    public void afterReturningAdvice(Object retVal){
-      System.out.println("Returning:" + retVal.toString() );
+	   if(retVal!=null)
+		   System.out.println("Returning:" + retVal.toString() );
    }
 
    /**

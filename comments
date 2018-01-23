@@ -1,7 +1,13 @@
-MUST - inactive active championhip
+
 
 different color if game is done or not
 
-MUST - popup images in news
-
 notifications in app in game changes and news.
+
+-- ADD cascading to messages tin databases
+
+
+
+DONE:
+MUST - inactive active championhip
+MUST - popup images in news
