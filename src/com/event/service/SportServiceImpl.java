@@ -1158,11 +1158,11 @@ public class SportServiceImpl  implements SportService{
 		{
 			 contact = contactService.getContact(actions.get("uid"));
 		}
-		 else return null;
+		 //else return null;
 		  Notification notification = null;
 		 
 			//int counter = 3;
-			if(actions.get("getunseenmessages")!=null)
+			if(actions.get("getunseenmessages")!=null&&contact!=null)
 			{
 				for(int i=0;i<3;i++)
 				{	
@@ -1192,7 +1192,7 @@ public class SportServiceImpl  implements SportService{
 						}
 				}
 			}
-				if(actions.get("getundeliveredmessages")!=null)
+				if(actions.get("getundeliveredmessages")!=null&&contact!=null)
 				{
 					int stayed=0;
 					if(actions.get("delay")!=null)
@@ -1235,7 +1235,9 @@ public class SportServiceImpl  implements SportService{
 		{
 			if(notification==null)
 				notification=new Notification();
-			notification.setTeamgames(this.findTeamGames(actions.get("teamid")));
+			
+			notification.setTeamgames(gameDao.getUpcomingTeamGames(this.findTeamById(actions.get("teamid"))));
+			//notification.setTeamgames(this.findTeamGames(actions.get("teamid")));
 		}
 		return notification;
 	}

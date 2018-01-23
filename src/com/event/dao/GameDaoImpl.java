@@ -7,6 +7,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 
 import com.sport.model.Game;
+import com.sport.model.Team;
 
 @Repository("gameDao")
 //@Cacheable(value = "entities", cacheManager = "springCM")
@@ -32,6 +33,13 @@ public class GameDaoImpl extends AbstractDao implements GameDao{
 	public List<Game> getUpcomingGames() {
 		   @SuppressWarnings("unchecked")
 		   List<Game> list = getSession().createQuery("FROM Game where (Score1=null OR Score2=null) AND Date > :curdate ORDER BY date asc").setParameter("curdate", new Date()).setMaxResults(10).list(); 
+		// TODO Auto-generated method stub
+		return list;
+	}
+	@Override
+	public List<Game> getUpcomingTeamGames(Team team) {
+		   @SuppressWarnings("unchecked")
+		   List<Game> list = getSession().createQuery("FROM Game G where (G.team1 = :team OR G.team2  =:team) AND G.date > :curdate ORDER BY date asc").setParameter("curdate", new Date()).setParameter("team", team).setMaxResults(10).list(); 
 		// TODO Auto-generated method stub
 		return list;
 	}
