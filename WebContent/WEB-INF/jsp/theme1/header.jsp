@@ -98,8 +98,7 @@ ng-src='${resources_start}/generalimages/message-outline-256.png' ng-click='open
 <li ng-repeat='row in headerChampions'><a href="#!point-table.html">{{row.name}}</a></li>
 <li><a ng-href="#!calendar">ΔΙΑΘΕΣΙΜΟΤΗΤΑ</a>
 </li>
-<li><a ng-click='openMessages()' href="">CHAT</a>
-</li>
+
 </ul>
 
 
@@ -170,6 +169,8 @@ ng-src='${resources_start}/generalimages/message-outline-256.png' ng-click='open
 <li>
 <a href="#!gallery">photo</a>
 
+</li>
+<li><a ng-click='openMessages()' href="">CHAT</a>
 </li>
 <li>
 <a href="#!contactus">ΕΠΙΚΟΙΝΩΝΙΑ</a>

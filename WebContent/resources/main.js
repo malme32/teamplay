@@ -1336,7 +1336,7 @@ appMain.controller("newsController",function($scope, $http, $location){
 	 
 });
 
-appMain.controller("headerController",function($scope, $http, $location, $rootScope){
+appMain.controller("headerController",function($scope, $http, $location, $rootScope, $route){
 
     
 	 $http({
@@ -1368,11 +1368,19 @@ appMain.controller("headerController",function($scope, $http, $location, $rootSc
 	    });
 
 	 $scope.openMessages = function (){ 
-		
+			
 		 //alert($rootScope.isAdmin);
 		 if($rootScope.isAdmin)
 		 {
-		  		$location.path( "message-list.html");
+			 
+		    	var currentp=window.location.href; 
+		    	if(currentp.indexOf("message-list") !== -1)
+		    		{
+		    		$route.reload();
+		    		}
+		    	else 
+			  		$location.path( "message-list.html");
+			 
 		 		$rootScope.notification=null;
 		 }else
 		 {
@@ -1490,21 +1498,29 @@ appMain.controller("messageListController",function($scope, $http, $location){
 	 }
 	 
 	 
+
+	 
 	 $scope.sendMessage = function (row){
 		 
 		 $http({
 		        method : "GET",
 		        url : "teams/"+row.id+"/admins",
 		    }).then(function mySuccess(response) {
-		    	
-		        //$scope.teams = response.data;
+		    	if(!response.data)
+		    		{
+
+		    			alert("Δεν έχετε ορίσει χρήστη για αυτή την ομάδα.") ;
+		    			return;
+		    		}
 				 $location.path('chat/'+ response.data.id); 
-		      
+		        //$scope.teams = response.data;
+
 		    }, function myError(response) {
 		    		alert("Παρουσιαστηκε κάπιο σφάλμα. Προσπαθήστε ξανά.")      
 		    });
 
 	 }
+	 
 });
 
 appMain.controller("teamlistController",function($scope, $http, $location){

@@ -13,11 +13,11 @@ pageEncoding="UTF-8"%>
 
 <div class="page-heading-breadcrumbs">
 <div class="container">
-<h2>ΟΜΑΔΕΣ</h2>
+<h2>ΜΗΝΥΜΑΤΑ</h2>
 
 <ul class="breadcrumbs">
 <li><a href="">ΑΡΧΙΚΗ</a></li>
-<li>ΟΜΑΔΕΣ</li>
+<li>ΜΗΝΥΜΑΤΑ</li>
 </ul>
 </div>
 </div>
@@ -46,11 +46,14 @@ pageEncoding="UTF-8"%>
 </a></h5>
 
 </div>
-<div style='display:inline-block; float:right'>		<img style='width:40px; height:40px; cursor:pointer' ng-click="sendMessage(row)" ng-src = "${resources_start}/generalimages/chat.png"/> 
+<div style='display:inline-block; float:right; position:relative'>	
+<div ng-show='getMessageCount(row)>0?true:false' style='display:inline-block; float:right; position:absolute; 
+background-color:red;     border-radius: 3px;
+right:3px; top:3px; color:white; background-color:red; padding:2px; cursor:pointer' ng-click="sendMessage(row)">{{getMessageCount(row)}}
+</div>
+	<img style='width:40px; height:40px; cursor:pointer' ng-click="sendMessage(row)" ng-src = "${resources_start}/generalimages/chat.png"/> 
 </div>
 
-<div style='display:inline-block; float:right'>{{getMessageCount(row)}}
-</div>
 
 </div>
 
