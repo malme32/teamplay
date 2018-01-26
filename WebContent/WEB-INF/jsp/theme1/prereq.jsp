@@ -39,8 +39,8 @@ pageEncoding="UTF-8"%>
 <!--<link rel='stylesheet' href='https://material.angularjs.org/1.1.5/docs.css'> -->
 		<!-- <<<<< ANGULAR MATERIAL -->	
 	
-	<spring:url value="/resources/main.js?115" var="crunchifyJS" />
- 	<spring:url value="/resources/main.css?12" var="maincss" />
+	<spring:url value="/resources/main.js?116" var="crunchifyJS" />
+ 	<spring:url value="/resources/main.css?16" var="maincss" />
  	<script src="${crunchifyJS}"></script>
  	<link rel="stylesheet" type="text/css" href="${maincss}">   
 <!-- <<<<<<<<<<<<< COMMON  -->
@@ -55,7 +55,7 @@ pageEncoding="UTF-8"%>
 <link rel="stylesheet" href="${resources}/css/style.css">
 <link rel="stylesheet" href="${resources}/css/color.css">
 <link rel="stylesheet" href="${resources}/css/responsive.css">
-<link rel="stylesheet" href="${resources}/css/own.css?11">
+<link rel="stylesheet" href="${resources}/css/own.css?15">
 <link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i,800|Open+Sans:400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
 
 <script src="${resources}/js/vendor/modernizr.js"></script>

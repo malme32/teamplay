@@ -7,7 +7,7 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
-
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -33,6 +33,7 @@ import com.event.dao.ChampionDao;
 import com.event.dao.GameDao;
 import com.event.dao.GeneralDao;
 import com.event.dao.ImageDao;
+import com.event.dao.InformationDao;
 import com.event.dao.MatchdayDao;
 import com.event.dao.MessageDao;
 import com.event.dao.NoticeDao;
@@ -41,6 +42,7 @@ import com.event.dao.ScorerDao;
 import com.event.dao.StandingDao;
 import com.event.dao.TeamDao;
 import com.event.dao.TeamgroupDao;
+import com.general.model.Information;
 import com.general.model.Message;
 import com.phonebook.model.Contact;
 import com.phonebook.model.Userrole;
@@ -107,7 +109,9 @@ public class SportServiceImpl  implements SportService{
 
 	@Autowired
 	MessageDao messageDao;
-	
+
+	@Autowired
+	InformationDao informationDao;
 	@Override
 	public Champion findChampionsById(int id) {
 		// TODO Auto-generated method stub
@@ -341,18 +345,67 @@ public class SportServiceImpl  implements SportService{
 		generalDaoService.update(teamgroup);
 		
 	}
+	@Override
+	public void updateGame(Game game, Playoff playoff) {
+		// TODO Auto-generated method stub
+		game.setPlayoff(playoff);
+		generalDaoService.update(game);
+		if(game.getDate()!=null)
+		{
+			Date now = new Date();
+			if(game.getDate().compareTo(now)>0)
+			{
+				Information info1 = new Information();
+				Information info2 = new Information();
+				info1.setTitle("Νέος Αγώνας!");
+				info2.setTitle("Νέος Αγώνας!");
+				info1.setTeam(game.getTeam1());
+				info2.setTeam(game.getTeam2());
 
-/*	@Override
+				info1.setDate(now);
+				info2.setDate(now);
+				info1.setMessage(game.getTeam1().getName()+" - "+game.getTeam2().getName() +" ("+game.getDate()+")");
+
+				info1.setMessage(game.getTeam1().getName()+" - "+game.getTeam2().getName() +" ("+game.getDate()+")");
+				info2.setMessage(game.getTeam1().getName()+" - "+game.getTeam2().getName() +" ("+game.getDate()+")");
+
+				generalDaoService.persist(info1);
+				generalDaoService.persist(info2);
+			}
+		}
+	}
+	
+	@Override
 	public void updateGame(Game game,Matchday matchday) {
 		// TODO Auto-generated method stub
 		//teamgroupDao.getGames(game.getTeam1());
-		for(Game game1: teamgroupDao.getGames(game.getTeam1(),matchday.getTeamgroup()))
+		game.setMatchday(matchday);
+		generalDaoService.update(game);
+		this.updateStandings(matchday.getTeamgroup());
+		if(game.getDate()!=null)
 		{
-			
-			System.out.println(game1.getTeam1().getName());
-			System.out.println(game1.getTeam2().getName());
+			Date now = new Date();
+			if(game.getDate().compareTo(now)>0)
+			{
+				Information info1 = new Information();
+				Information info2 = new Information();
+				info1.setTitle("Νέος Αγώνας!");
+				info2.setTitle("Νέος Αγώνας!");
+				info1.setTeam(game.getTeam1());
+				info2.setTeam(game.getTeam2());
+
+				info1.setDate(now);
+				info2.setDate(now);
+				info1.setMessage(game.getTeam1().getName()+" - "+game.getTeam2().getName() +" ("+game.getDate()+")");
+
+				info1.setMessage(game.getTeam1().getName()+" - "+game.getTeam2().getName() +" ("+game.getDate()+")");
+				info2.setMessage(game.getTeam1().getName()+" - "+game.getTeam2().getName() +" ("+game.getDate()+")");
+
+				generalDaoService.persist(info1);
+				generalDaoService.persist(info2);
+			}
 		}
-	}*/
+	}
 
 	@Override
 	public void updateStandings(Teamgroup teamgroup) 
@@ -1159,87 +1212,78 @@ public class SportServiceImpl  implements SportService{
 			 contact = contactService.getContact(actions.get("uid"));
 		}
 		 //else return null;
-		  Notification notification = null;
-		 
+ 		Notification notification = null;
+ 
+		int stayed=0;
+		if(actions.get("delay")!=null)
+		{
+			stayed+=actions.get("delay");
+		}
+		while(stayed<60000)
+		{
 			//int counter = 3;
 			if(actions.get("getunseenmessages")!=null&&contact!=null)
 			{
-				for(int i=0;i<3;i++)
-				{	
-					
-						System.out.println("***INSIDE");
-						List<Message> messages=messageDao.getUnseenMessages( contact, actions.get("lastid"));
-						if(!messages.isEmpty())
-						{
-							System.out.println("***NOT EMPTY");
-
-							notification = new Notification();
-							notification.setMessages(messages);
-							break;
-						}
-						System.out.println("***EMPTY");
-						
-						
-						if(actions.get("delay")!=null)
-						{
-
-							try {
-								Thread.sleep(15000);
-							} catch (InterruptedException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-						}
-				}
-			}
-				if(actions.get("getundeliveredmessages")!=null&&contact!=null)
+				System.out.println("***INSIDE");
+				List<Message> messages=messageDao.getUnseenMessages( contact, actions.get("lastid"));
+				if(!messages.isEmpty())
 				{
-					int stayed=0;
-					if(actions.get("delay")!=null)
-					{
-						stayed+=actions.get("delay");
-					}
-					while(stayed<60000)
-					{	
-						System.out.println("***INSIDE1");
-						List<Message> messages=messageDao.getUdeliveredMessages( contact, actions.get("lastid"));
-						if(!messages.isEmpty())
-						{
-							System.out.println("***NOT EMPTY1");
-							notification = new Notification();
-							notification.setMessages(messages);
-							break;
-						}
-						System.out.println("***EMPTY1");
-						
-						
-						if(actions.get("delay")!=null)
-						{
+					System.out.println("***NOT EMPTY");
 
-							try {
-								Thread.sleep(actions.get("delay"));
-							} catch (InterruptedException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-							stayed+=actions.get("delay");
-						}
-						else stayed=70000;
-						
-					}
+					notification = new Notification();
+					notification.setMessages(messages);
+					break;
 				}
-			
-			System.out.println("***NULL");
+				System.out.println("***EMPTY");
+			}
+			if(actions.get("getundeliveredmessages")!=null&&contact!=null)
+			{
+					System.out.println("***INSIDE1");
+					List<Message> messages=messageDao.getUdeliveredMessages( contact, actions.get("lastid"));
+					if(!messages.isEmpty())
+					{
+						System.out.println("***NOT EMPTY1");
+						notification = new Notification();
+						notification.setMessages(messages);
+						break;
+					}
+					System.out.println("***EMPTY1");
+					
+			}
+			if(actions.get("getinformations")!=null)
+			{
+				List<Information> informations = informationDao.getTeamInformations(this.findTeamById(actions.get("teamid")), actions.get("getinformations"));
+				if(!informations.isEmpty())
+				{
+					System.out.println("***NOT EMPTY3");
+					notification = new Notification();
+					notification.setInformations(informations);
+					break;
+				}
+				
+				//notification.setTeamgames(gameDao.getUpcomingTeamGames(this.findTeamById(actions.get("teamid"))));
+				//notification.setTeamgames(this.findTeamGames(actions.get("teamid")));
+			}
+			if(actions.get("delay")!=null)
+			{
 
-		if(actions.get("games")!=null)
-		{
-			if(notification==null)
-				notification=new Notification();
+				try {
+					Thread.sleep(actions.get("delay"));
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				stayed+=actions.get("delay");
+			}
+			else stayed=70000;
+				
 			
-			notification.setTeamgames(gameDao.getUpcomingTeamGames(this.findTeamById(actions.get("teamid"))));
-			//notification.setTeamgames(this.findTeamGames(actions.get("teamid")));
 		}
+
+	
+
 		return notification;
 	}
-	
+
+
 }

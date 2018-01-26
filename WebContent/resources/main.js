@@ -161,6 +161,18 @@ appMain.directive('fileModel', ['$parse', function ($parse) {
 }]);
 
 appMain.run(function($rootScope, $window, $http, $timeout) {
+	
+	
+	$rootScope.onFocus = function(){
+		if($rootScope.isAndroid)
+		{
+			return Android.isForeground()&document.hasFocus();
+		}
+		else
+			return document.hasFocus();
+	}
+
+	
 	try{
     	Android;$rootScope.indexClass="own-hidden";
 
@@ -170,7 +182,7 @@ appMain.run(function($rootScope, $window, $http, $timeout) {
 		}
 		$rootScope.mlastid=0;
 		$rootScope.getNotifications = function (){
-		 if(!document.hasFocus())
+		 if(!$rootScope.onFocus())
 		 {
 
 		    	$timeout($rootScope.getNotifications, 500);   
@@ -189,7 +201,7 @@ appMain.run(function($rootScope, $window, $http, $timeout) {
 	   	 $http({
 		        method : "GET",
 		        	url : "notifications",
-		        	params:{getunseenmessages:"getunseenmessages",lastid:$rootScope.mlastid,delay:1500}
+		        	params:{getunseenmessages:"getunseenmessages",lastid:$rootScope.mlastid,delay:15000}
 		    }).then(function mySuccess(response) {
 		    	//alert(response.data);
 		    	if(response.data)
@@ -1975,7 +1987,7 @@ appMain.controller("chatController",function($scope, $http, $location, $window,$
 		 else
 			    $scope.text=$scope.text+ "nofocused";*/
 			 var found = false; //alert(0);
-			 if(document.hasFocus()&&$scope.unseen.length>0){
+			 if($rootScope.onFocus()&&$scope.unseen.length>0){
 				// alert(1);
 /*				 for(i=0;i<unseen.length;i++)
 				 { 
@@ -2017,7 +2029,7 @@ appMain.controller("chatController",function($scope, $http, $location, $window,$
 				}
 			 else
 				    $scope.text=$scope.text+ "nofocused";*/
-			 if(!document.hasFocus()||!$rootScope.loggedin)
+			 if(!$rootScope.onFocus()||!$rootScope.loggedin)
 			 {
 
 			    	$timeout($scope.getLastMessages, 500);   

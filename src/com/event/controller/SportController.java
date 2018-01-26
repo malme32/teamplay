@@ -37,6 +37,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.event.dao.InformationDao;
 import com.event.model.Event;
 import com.event.service.GeneralDaoService;
 import com.event.service.SportService;
@@ -67,6 +68,8 @@ public class SportController {
 
 	@Autowired
 	private ContactService contactService;
+	
+
 	/////////////////////GET/////////////////////////////////////
 	
 	@RequestMapping(value="/champions", method=RequestMethod.GET, produces = "application/json")
@@ -264,7 +267,7 @@ public class SportController {
 	@RequestMapping(value="/notifications", method=RequestMethod.GET, produces = "application/json")
 	public @ResponseBody Notification getNotifications (@RequestParam(required = false)  String getunseenmessages, 
 			@RequestParam(required = false) String getundeliveredmessages, @RequestParam(required = false)  Integer lastid,
-			@RequestParam(required = false) Integer delay, @RequestParam(required = false) Integer uid,@RequestParam(required = false) Integer games, @RequestParam(required = false) Integer teamid)
+			@RequestParam(required = false) Integer delay, @RequestParam(required = false) Integer uid,@RequestParam(required = false) Integer getinformations, @RequestParam(required = false) Integer teamid)
 	{
 		Map<String,Integer> actions = new HashMap<String,Integer>();
 		if(getunseenmessages!=null)
@@ -277,8 +280,8 @@ public class SportController {
 			actions.put("lastid", lastid);
 		if(uid!=null)
 			actions.put("uid", uid);
-		if(games!=null)
-			actions.put("games", games);
+		if(getinformations!=null)
+			actions.put("getinformations", getinformations);
 		if(teamid!=null)
 			actions.put("teamid", teamid);
 		return sportService.getNotifications(actions);
@@ -617,15 +620,16 @@ public class SportController {
 			Game game = new Game();
 			System.out.println("XAXAXA "+date);
 */
-			Matchday matchday = sportService.findMatchdayById(matchdayid);
-			game.setMatchday(matchday);
 /*			game.setDate(date0);
 			game.setId(id);
 			game.setTeam1(sportService.findTeamById(teamid1));
 			game.setTeam2(sportService.findTeamById(teamid2));*/
 			
+			Matchday matchday = sportService.findMatchdayById(matchdayid);
+			sportService.updateGame(game, matchday);
+/*			game.setMatchday(matchday);
 			generalDaoService.update(game);
-			sportService.updateStandings(matchday.getTeamgroup());
+			sportService.updateStandings(matchday.getTeamgroup());*/
 			return ;
 	}
 	
@@ -710,8 +714,11 @@ public class SportController {
 	{	
 
 			Playoff playoff = sportService.findPlayoffById(playoffid);
-			game.setPlayoff(playoff);
-			generalDaoService.update(game);
+		
+			
+			//Matchday matchday = sportService.findMatchdayById(matchdayid);
+			sportService.updateGame(game, playoff);
+			
 			return ;
 	}
 	

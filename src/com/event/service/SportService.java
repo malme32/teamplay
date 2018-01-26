@@ -131,5 +131,9 @@ public interface SportService {
 	public List<Game> getCalendarGames();
 
 	public Notification getNotifications(Map<String, Integer> actions);
+
+	void updateGame(Game game, Matchday matchday);
+
+	public void updateGame(Game game, Playoff playoff);
 	
 }
