@@ -168,8 +168,11 @@ public class SportServiceImpl  implements SportService{
 	}
 
 	@Override
-	public List<Team> findAllTeams() {
+	public List<Team> findAllTeams(String orderby) {
 		// TODO Auto-generated method stub
+		if(orderby!=null)
+			if(orderby.equals("messagedate"))
+				return teamDao.findByMessageDate();
 		return teamDao.findAll();
 	}
 

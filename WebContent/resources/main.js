@@ -305,14 +305,14 @@ appMain.run(function($rootScope, $window, $http, $timeout) {
     	    
     	  //  $rootScope.$on('$viewContentLoaded', function() {
     	    	//if(next.indexOf("#!/home") !== -1)//;=="http://localhost:60000/phonebook/soccer.html")
-        	    	if(next.indexOf("#!/home") !== -1)//;=="http://localhost:60000/phonebook/soccer.html")
+        	    	if(next.indexOf("#!/home") !== -1&&!isAndroid)//;=="http://localhost:60000/phonebook/soccer.html")
     	    	//	$rootScope.isIndex=true;
     	    		$rootScope.indexClass="own-visible";
     	    	else
     	    		$rootScope.indexClass="own-hidden";
     	    	//	$rootScope.isIndex=false;
     		//});
-    
+        	    
 
         	    	if(next.indexOf("#!/chat") !== -1)//;=="http://localhost:60000/phonebook/soccer.html")
 						$rootScope.hideFooter=true;
@@ -1470,7 +1470,7 @@ appMain.controller("messageListController",function($scope, $http, $location){
 
 	 $http({
 	        method : "GET",
-	        url : "teams",
+	        url : "teams?orderby=messagedate",
 	    }).then(function mySuccess(response) {
 
 	      
@@ -1877,6 +1877,7 @@ appMain.controller("chatController",function($scope, $http, $location, $window,$
 /*	var link = document.getElementById('myfooter');
 	link.style.display = 'none'; //or
 	link.style.visibility = 'hidden';*/
+	$scope.disablesending=false;
 	$scope.unseen = [];
 		 $http({
 	        method : "GET",
@@ -1944,8 +1945,13 @@ appMain.controller("chatController",function($scope, $http, $location, $window,$
 			    	$scope.sendMessage($scope.text);
 			}
 		 $scope.sendMessage = function (text){ 
+			 if($scope.disablesending)
+				 return;
 			 	if(text=="")
 			 		return;
+			 	
+
+		    	$scope.disablesending=true;
 			 $http({
 			        method : "POST",
 			        	url : "messages",
@@ -1958,6 +1964,7 @@ appMain.controller("chatController",function($scope, $http, $location, $window,$
 			    	message.date=new Date();
 			    	message.receiver.id=receiverid;
 			    	message.del=true;*/
+			    	$scope.disablesending=false;
 			    	if(response.data)
 			    		{
 
@@ -1968,6 +1975,7 @@ appMain.controller("chatController",function($scope, $http, $location, $window,$
 				    	alert("Το μήνυμα δεν σταλθηκε. Σιγουρευτείτε οτι είστε συνδεδεμένος.");
 				    $timeout($scope.scrolltobottom, 1);
 			    }, function myError(response) {
+			    	$scope.disablesending=false;
 			    	alert("Το μήνυμα δεν σταλθηκε. Προσπαθήστε ξανα.");
 /*		    		for(i=0;i<$scope.messages.length; i++)
 				    	if($scope.messages[i].del)

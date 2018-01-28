@@ -29,6 +29,10 @@ public interface TeamDao{
 	public List<Contact> findPlayers(int teamid);
 
 
+
+	public List<Team> findByMessageDate();
+
+
 	
 
 }

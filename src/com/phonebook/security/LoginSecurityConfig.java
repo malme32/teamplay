@@ -1,10 +1,15 @@
 package com.phonebook.security;
 
+
+
+import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,6 +18,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
 
 @Configuration
@@ -25,6 +32,8 @@ public class LoginSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Qualifier("userDetailsService")
 	UserDetailsService userDetailsService;
 	
+	@Autowired 
+	DataSource dataSource;
 //	@Autowired
 //	public void configureGlobal(AuthenticationManagerBuilder authenticationMgr) throws Exception {
 //		authenticationMgr.inMemoryAuthentication()
@@ -65,19 +74,29 @@ public class LoginSecurityConfig extends WebSecurityConfigurerAdapter {
 /*			
 			.antMatchers("/resources/**", "/signup", "/about").permitAll()                  
 			.antMatchers("/admin/**").hasRole("ADMIN")                                      
-			.antMatchers("/db/**").access("hasRole('ADMIN') and hasRole('DBA')")      */      
+			.antMatchers("/db/**").access("hasRole('ADMIN') and hasRole('DBA')")      */   
+		 .antMatchers("/resources/**")
+         .permitAll()
 			.and()
 				.formLogin().loginPage("/loginPage")
 				.defaultSuccessUrl("/soccer#!/home")
 				.failureUrl("/loginPage?error")
 				.usernameParameter("username").passwordParameter("password")				
 			.and()
-				.logout().logoutSuccessUrl("/soccer#!/home"); 
+				.logout().logoutSuccessUrl("/soccer#!/home")
+				.and().rememberMe().rememberMeParameter("remember-me").tokenRepository(persistentTokenRepository()).tokenValiditySeconds(1155222111);
 		
 		http.csrf().disable(); /// this should normally be removed  to allow post to have csrf tokens
 		
 	}
 	
+	
+	@Bean PersistentTokenRepository persistentTokenRepository()
+	{
+		final JdbcTokenRepositoryImpl jdbcTokenRepository = new JdbcTokenRepositoryImpl();
+		jdbcTokenRepository.setDataSource(dataSource);
+		return jdbcTokenRepository;
+	}
 	@Bean
 	public PasswordEncoder passwordEncoder(){
 		PasswordEncoder encoder = new BCryptPasswordEncoder();

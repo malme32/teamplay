@@ -36,7 +36,7 @@ public interface SportService {
 	
 	public  List<Game> getGames(int matchdayid);
 	
-	public List<Team> findAllTeams();
+	public List<Team> findAllTeams(String orderby);
 	
 	public Teamgroup findTeamgroupById(int id);
 	

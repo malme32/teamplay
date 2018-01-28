@@ -6,7 +6,7 @@ pageEncoding="UTF-8"%>
 <spring:url value="/resources/theme1" var="resources" />
 <spring:url value="/resources" var="resources_start" />
 
-<link href='${resources_start}/chat.css?v=14' rel='stylesheet' />
+<link href='${resources_start}/chat.css?v=28' rel='stylesheet' />
 
 <div class="wrap push chattotal">
 
@@ -38,7 +38,7 @@ pageEncoding="UTF-8"%>
       <div class="msg">
 				<p>{{message.message}}</p>
         <time>{{message.date | timeago}} </time>
-        <p>{{getStatus(message)}} </p>
+        <p style="font-size: 1.2rem;">{{getStatus(message)}} </p>
       </div>
     </li> 
   
@@ -64,7 +64,7 @@ pageEncoding="UTF-8"%>
      <div class=" chatsend" >
      <table style="width:100%" >
      <tr>
-     <td style=''><input class="textarea" type="text" placeholder="Γράψτε εδω!" ng-model='text' ng-keypress="keyPressed($event)"/></td>
+     <td style='background-color:white'><textarea class="textarea" style='background-color:white; width:100%' type="text" placeholder="Γράψτε εδω!" ng-model='text' ng-keypress="keyPressed($event)"></textarea></td>
      <td style=' width:60px; padding:0 5px 0 5px'>
      <img ng-src='${resources_start}/generalimages/sendmessage.ico' class='sendbutton' ng-click='sendMessage(text,2);'  >
     

@@ -7,6 +7,7 @@ pageEncoding="UTF-8"%>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Σύνδεση</title>
 </head>
 <style>
 form {
@@ -76,7 +77,7 @@ span.psw {
 <html>
 <body>
 <div style='width:100%; max-width:400px; margin:auto'>
-	<h3>Login</h3>
+	<h3>Σύνδεση</h3>
 
 <%-- 	<c:if test="${not empty error}"><div>${error}</div></c:if>
 	<c:if test="${not empty message}"><div>${message}</div></c:if>
@@ -103,19 +104,22 @@ span.psw {
 
 
   <div class="container">
-    <label><b>Username</b></label>
+    <label><b>Όνομα χρήστη</b></label>
     <input type="text" placeholder="Enter Username" name="username" required>
 
-    <label><b>Password</b></label>
+    <label><b>Κωδικός</b></label>
     <input type="password" placeholder="Enter Password" name="password" required>
-        
-    <button type="submit">Login</button>
-    <input type="checkbox" checked="checked"> Remember me
+               
+              
+                <input type="checkbox" name="remember-me" checked="checked"/>Θυμήσου με
+            
+    <button type="submit">Σύνδεση</button><!-- 
+    <input type="checkbox" checked="checked"> Remember me -->
   </div>
 
   <div class="container" style="background-color:#f1f1f1">
-    <button type="button" class="cancelbtn">Cancel</button>
-    <span class="psw">Forgot <a href="#">password?</a></span>
+    <button type="button" class="cancelbtn">Ακύρωση</button>
+   <!--  <span class="psw">Forgot <a href="#">password?</a></span> -->
   </div>
 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 </form>

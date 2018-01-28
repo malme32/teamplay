@@ -18,6 +18,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -80,6 +81,12 @@ public class Team {
 	@JsonIgnore	
 	@OneToOne(fetch = FetchType.LAZY,mappedBy="adminteam",cascade = CascadeType.DETACH)
 	private Contact admin;
+	
+	@Transient
+	private Date lastseenonline;
+	@Transient
+	private String adminname;
+	
 	
 	public int getId() {
 		return id;
@@ -188,6 +195,26 @@ public class Team {
 
 	public void setAdmin(Contact admin) {
 		this.admin = admin;
+	}
+
+
+	public Date getLastseenonline() {
+		return lastseenonline;
+	}
+
+
+	public void setLastseenonline(Date lastseenonline) {
+		this.lastseenonline = lastseenonline;
+	}
+
+
+	public String getAdminname() {
+		return adminname;
+	}
+
+
+	public void setAdminname(String adminname) {
+		this.adminname = adminname;
 	}
 
 }

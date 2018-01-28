@@ -115,9 +115,9 @@ public class SportController {
 	
 	
 	@RequestMapping(value="/teams", method=RequestMethod.GET, produces = "application/json")
-	public @ResponseBody List<Team> getTeamList()
+	public @ResponseBody List<Team> getTeamList(@RequestParam(required=false) String orderby)
 	{
-		return sportService.findAllTeams();
+		return sportService.findAllTeams(orderby);
 	}
 	
 	@RequestMapping(value="/teams/{teamid}/games", method=RequestMethod.GET, produces = "application/json")

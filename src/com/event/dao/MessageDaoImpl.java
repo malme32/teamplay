@@ -59,7 +59,7 @@ public class MessageDaoImpl extends AbstractDao implements MessageDao{
 			  session.close();
 		 }
 		 else
-		  list = getSession().createQuery("FROM Message M where (M.contact= :contact AND M.receiver= :friend) OR ( M.contact= :friend AND M.receiver= :contact ) order by M.id DESC").setMaxResults(30).setParameter("contact", contact).setParameter("friend", friend).list(); 
+		  list = getSession().createQuery("FROM Message M where (M.contact= :contact AND M.receiver= :friend) OR ( M.contact= :friend AND M.receiver= :contact ) order by M.id DESC").setMaxResults(50).setParameter("contact", contact).setParameter("friend", friend).list(); 
 		 System.out.println("MESSAGELISTSIZE "+list.size());
 		//List<Message> list = getSession().createQuery("FROM Message").list(); 
 

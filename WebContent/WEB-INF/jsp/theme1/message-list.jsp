@@ -36,16 +36,18 @@ pageEncoding="UTF-8"%>
  --><!-- </div>
  -->
 		<img ng-hide='teams' width=40 height=40 src="${resources}/customimages/loading.gif" alt="">
-<div class=" theme-margin-bottom" ng-repeat="row in teams  |orderBy: getMessageCount| reverse | filter:mysearch" style="padding:10px; border-bottom: 1px solid lightgray;border-top: 1px solid lightgray; height:70px;">
-<div style='display:inline-block'><img style='height:50px;' ng-src="${resources}{{row.logothumbpath}}" alt=""></div>
+<div class=" theme-margin-bottom" ng-repeat="row in teams  | filter:mysearch" style="padding:10px; border-bottom: 1px solid lightgray;border-top: 1px solid lightgray;">
+
+<!-- <div class=" theme-margin-bottom" ng-repeat="row in teams  |orderBy: getMessageCount| reverse | filter:mysearch" style="padding:10px; border-bottom: 1px solid lightgray;border-top: 1px solid lightgray; height:70px;">
+ --><div style='display:inline-block'><img style='height:50px;' ng-src="${resources}{{row.logothumbpath}}" alt=""></div>
 <div style='display:inline-block'>
-<h5><a ng-click="sendMessage(row)" href=''>
+<a ng-click="sendMessage(row)" href=''>
 <i class="red-color">{{row.name}}</i>
 <!-- <p>Id quisque cursus est volutpat lorem phasellus ut neque vivamus dolor, ornare sociosqu purus taciti erat egestas integer enim sem porta ligula semper suspendisse mi metus auctor faucibus lobortis senectus, at metus nisl ornare consectetur.</p>
  --><!-- <span><a href="#"><i class="fa fa-twitter"></i>@marcobale #dominname</a></span> -->
-</a></h5>
 
-</div>
+<p ng-show='row.adminname' style='font-size:90%; color:gray'>{{row.adminname}} 	<span ng-show='row.lastseenonline' >({{row.lastseenonline | date:'dd/MM/yyyy HH:mm'}})</span></p>
+</a></div>
 <div style='display:inline-block; float:right; position:relative'>	
 <div ng-show='getMessageCount(row)>0?true:false' style='display:inline-block; float:right; position:absolute; 
 background-color:red;     border-radius: 3px;

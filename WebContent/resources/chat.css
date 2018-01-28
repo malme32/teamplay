@@ -96,9 +96,9 @@ html, body {
     list-style: none;
     background: none;
     margin: 0;
-    padding: 0 0 50px 0;
+    padding: 0 0 10px 0;
     margin-top: 60px;
-    margin-bottom: 10px;
+    margin-bottom: 60px; 
 }
 .chat li {
     padding: 0.5rem;
@@ -200,10 +200,11 @@ html, body {
     box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.07);
 }
 .msg p {
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     margin: 0 0 0.2rem 0;
     color: #777;
 }
+
 .msg img {
     position: relative;
     display: block;
@@ -229,7 +230,7 @@ html, body {
 }
 
 .msg time {
-    font-size: 0.8rem;
+    font-size: 1rem;
     color: #ccc;
     margin-top: 3px;
     float: right;
@@ -323,8 +324,9 @@ emoji.funny{background-image: url(https://i.imgur.com/qKia58V.png);}
     height: 50px;
       width: 50px;
 }
-
-input.textarea {
+textarea{ background-color:white;
+line-height:20px}
+textarea.textarea {
 /*  position: fixed;
     bottom: 0px;
     left: 0px;
@@ -332,13 +334,14 @@ input.textarea {
 /*    // width: 100%;
  */    height: 50px;
 /*     width:calc(100% - 50px);  */
-    background: #fafafa;
+    /* background: #fafafa; */
     border: none;
     outline: none;
 /*     padding-left: 55px;
     padding-right: 55px; */
     color: #666;
     font-weight: 400;
+    background-color:white;
 }
 .emojis {
     position: fixed;
@@ -346,7 +349,7 @@ input.textarea {
     bottom: 8px;
     left: 7px;
     width: 34px;
-    height: 34px;
+    height: 30px;
     background-image: url(https://i.imgur.com/5WUpcPZ.png);
     background-repeat: no-repeat;
     background-size: cover;
