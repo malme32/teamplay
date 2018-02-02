@@ -55,9 +55,8 @@ pageEncoding="UTF-8"%>
 			</div>
 
 
-
-		<img ng-hide='upcominggames' width=40 height=40 src="${resources}/customimages/loading.gif" alt="">
- 		<div ng-show='upcominggames.length' style="margin-bottom:40px">
+		<img ng-hide='lastresults' width=40 height=40 src="${resources}/customimages/loading.gif" alt="">
+ 		<div ng-show='lastresults.length' style="margin-bottom:40px">
 		<h2>ΤΕΛΕΥΤΑΙΑ ΑΠΟΤΕΛΕΣΜΑΤΑ</h2>
 
 

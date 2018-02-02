@@ -578,6 +578,7 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 			    }).then(function mySuccess(response) {
 			    	$scope.getTeamgroup($scope.champion);
 			    	//$window.location.reload();
+			    	$scope.adminTeamgroupName="";
 			    }, function myError(response) {
 			  
 			        alert( "An Error occured. Try again");
@@ -666,6 +667,7 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 					    }).then(function mySuccess(response) {
 					    	$scope.getMatchdays($scope.teamgroup); $scope.getTeams($scope.teamgroup);
 					    	//$window.location.reload();
+					    	$scope.adminNewTeamName="";
 					    }, function myError(response) {
 
 					        alert( "An Error occured. Team already exists?");

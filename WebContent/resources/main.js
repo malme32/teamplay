@@ -179,6 +179,7 @@ appMain.run(function($rootScope, $window, $http, $timeout) {
 		$rootScope.isAndroid=true;}
 		catch(err){
 			$rootScope.isAndroid=false;
+			
 		}
 		$rootScope.mlastid=0;
 		$rootScope.getNotifications = function (){
@@ -305,11 +306,17 @@ appMain.run(function($rootScope, $window, $http, $timeout) {
     	    
     	  //  $rootScope.$on('$viewContentLoaded', function() {
     	    	//if(next.indexOf("#!/home") !== -1)//;=="http://localhost:60000/phonebook/soccer.html")
-        	    	if(next.indexOf("#!/home") !== -1&&!isAndroid)//;=="http://localhost:60000/phonebook/soccer.html")
+        	    	if(next.indexOf("#!/home") !== -1&&!$rootScope.isAndroid)//;=="http://localhost:60000/phonebook/soccer.html")
     	    	//	$rootScope.isIndex=true;
-    	    		$rootScope.indexClass="own-visible";
+        	    		{
+        	    		$rootScope.indexClass="own-visible";
+        	    		
+        	    		}
     	    	else
+    	    		{
+    	    		
     	    		$rootScope.indexClass="own-hidden";
+    	    		}
     	    	//	$rootScope.isIndex=false;
     		//});
         	    
