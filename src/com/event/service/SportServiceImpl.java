@@ -351,8 +351,6 @@ public class SportServiceImpl  implements SportService{
 	@Override
 	public void updateGame(Game game, Playoff playoff) {
 		// TODO Auto-generated method stub
-		game.setPlayoff(playoff);
-		generalDaoService.update(game);
 		if(game.getDate()!=null)
 		{
 			Date now = new Date();
@@ -362,6 +360,8 @@ public class SportServiceImpl  implements SportService{
 				Information info2 = new Information();
 				info1.setTitle("Νέος Αγώνας!");
 				info2.setTitle("Νέος Αγώνας!");
+				info1.setGame(game);
+				info2.setGame(game);
 				info1.setTeam(game.getTeam1());
 				info2.setTeam(game.getTeam2());
 
@@ -376,6 +376,8 @@ public class SportServiceImpl  implements SportService{
 				generalDaoService.persist(info2);
 			}
 		}
+		game.setPlayoff(playoff);
+		generalDaoService.update(game);
 	}
 	
 	@Override

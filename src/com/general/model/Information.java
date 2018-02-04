@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sport.model.Game;
 import com.sport.model.Team;
 
 import javax.persistence.Id;
@@ -41,7 +42,11 @@ public class Information {
 	private Team team;
 
 
-
+	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(name="gameid", nullable=true)
+	private Game game;
+	
 	public int getId() {
 		return id;
 	}
@@ -80,6 +85,14 @@ public class Information {
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	public Game getGame() {
+		return game;
+	}
+
+	public void setGame(Game game) {
+		this.game = game;
 	}
 	
 
