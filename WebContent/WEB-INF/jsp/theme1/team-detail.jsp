@@ -7,7 +7,7 @@ pageEncoding="UTF-8"%>
 
 
 <div class="page-heading-breadcrumbs">
-<div class="container">
+<div class="container" >
 <h2>{{team.name}}</h2>
 
 <ul class="breadcrumbs">
@@ -25,7 +25,7 @@ pageEncoding="UTF-8"%>
 <main class="main-content">
 
 <div class="team-detail-holder theme-padding white-bg">
-<div class="container">
+<div class="container" style="padding:0">
 
 <div class="row">
 

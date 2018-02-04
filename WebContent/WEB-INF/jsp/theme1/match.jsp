@@ -116,7 +116,7 @@ pageEncoding="UTF-8"%>
 <div class="Popular-news">
 <ul>
 <li ng-repeat='row in news | orderBy:"-date"'>
- <img style='max-height:40px'ng-src="${resources}{{row.thumburl}}" alt=""> 
+ <img style='max-height:50px; max-width:65px' ng-src="${resources}{{row.thumburl}}" alt=""> 
 
 
 <h5><a href="#!news-detail.html/{{row.id}}">{{row.title}}</a></h5>

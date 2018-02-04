@@ -899,7 +899,22 @@ appMain.controller("championsController",function($scope, $http, $location, $win
 		});*/
 	 
 	 
+	 
+	 $http({
+	        method : "GET",
+	        url : "games?upcoming"
+	    }).then(function mySuccess(response) {
 
+	        $scope.upcominggames = response.data;
+
+
+	    }, function myError(response) {
+
+	    	
+	        //$scope.result = response.statusText;
+	      
+	    });
+	 
 	 
 	 
 	 $http({
