@@ -455,7 +455,8 @@ public class SportController {
 	@RequestMapping(value = "/teams/{id}/logos", method = RequestMethod.POST, produces = "application/json")
 	public @ResponseBody  void uploadTeamLogo(@PathVariable int id, @RequestParam CommonsMultipartFile file,HttpSession session){  
       String path=session.getServletContext().getRealPath("/");  
-       
+    //  String path=session.getServletContext().path  
+
         sportService.uploadTeamLogo(path, id, file);
         return;
     }  
