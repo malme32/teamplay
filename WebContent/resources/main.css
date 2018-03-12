@@ -210,13 +210,23 @@ td.text-right {
  }
  .td_matchday_team1{
  
- text-align:right
+ text-align:right;
+ cursor:pointer
   }
   .td_matchday_team2{
  
  text-align:left;
+ cursor:pointer
  }
+  .td_matchday_team1:hover{
  
+color:#ED645C
+  }
+  .td_matchday_team2:hover{
+ 
+ 
+color:#ED645C
+ }
  .inputSmall{
 width:40px;
  text-align:right;

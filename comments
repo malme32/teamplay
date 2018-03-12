@@ -7,6 +7,14 @@ notifications in app in game changes and news.
 -- ADD cascading to messages tin databases
 -- ADD more info in users (email etc..)
 
+ROSSONERI:
+- insert team and reorder the matchdays
+- change team in a champion with some other 
+- Add team cover
+- See all matches in team page
+- add tabs with custom content: photo, text, link
+- Add option for admin to disable team leader from changing teams name and players (pictures can be added)
+
 
 DONE:
 MUST - inactive active championhip

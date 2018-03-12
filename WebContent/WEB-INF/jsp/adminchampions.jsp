@@ -8,7 +8,7 @@
 
 <div class='font_size_small'>
 
-
+{{result}}sdfasd
 <h1>ΠΡΩΤΑΘΛΗΜΑΤΑ</h1>
 <!-- <div>
 	<ul>
@@ -158,12 +158,39 @@
 					<th></th> -->
 				</tr>
 				<tr ng-repeat='row1 in row5.games'>
-					<td><span class="td_matchday_team1">{{row1.team1.name}}</span>
+					<td>
+					
+					<div ><span class="">
+			 	<select style='display:inline; width:40%' ng-show='edhidden' ng-model="row1.team1"
+							ng-options="row7.name for row7 in totalTeamList | orderBy:'name'">
+						
+						</select> <button  ng-show='edhidden' ng-click='edhidden=false'>close</button>	</span></div>
+			
+				 
+					<span title='Κάντε κλικ για να αντικαταστήσετε την ομάδα'  class="td_matchday_team1" ng-click='edhidden=true'>{{row1.team1.name}}</span> 
+					
+					
+					<!-- <span class="td_matchday_team1">{{row1.team1.name}}</span> -->
 						<span class="td_score"><input type="number" min=0 max=100
 							class="inputSmall" value={{row1.score1}} ng-model='row1.score1' />
 							- <input type="number" min=0 max=100 value={{row1.score2}}
-							class="inputSmall" ng-model='row1.score2' /></span> <span
-						class="td_matchday_team2">{{row1.team2.name}}</span> <!-- 						<input type="text" class = "inputMedium" ng-model='row1.date|  date:"medium"'/> ng-model="row1.date"
+							class="inputSmall" ng-model='row1.score2' /></span>
+							
+						<span title='Κάντε κλικ για να αντικαταστήσετε την ομάδα'  class="td_matchday_team2" ng-click='edhidden2=true'>{{row1.team2.name}}</span> 
+						
+							<div ><span class="">
+			 	<select style='display:inline; width:40%' ng-show='edhidden2' ng-model="row1.team2"
+							ng-options="row7.name for row7 in totalTeamList | orderBy:'name'">
+						
+						</select> <button  ng-show='edhidden2' ng-click='edhidden2=false'>close</button>	</span></div>
+				
+							
+							
+					<!-- 		 <span
+						class="td_matchday_team2">{{row1.team2.name}}</span> 
+						 -->
+						
+						<!-- 						<input type="text" class = "inputMedium" ng-model='row1.date|  date:"medium"'/> ng-model="row1.date"
  --></td>
 					<td class="td_date_small"><md-datepicker
 							ng-model="row1.tmpdate" md-placeholder="Enter date"></md-datepicker>
@@ -431,12 +458,29 @@
 					<th></th>
 				</tr>
 				<tr ng-repeat='row1 in row.games'>
-					<td><span class="td_matchday_team1">{{row1.team1.name}}</span>
+					<td>
+			 	<div ><span class="">
+			 	<select style='display:inline; width:40%' ng-show='edhidden' ng-model="row1.team1"
+							ng-options="row7.name for row7 in curteams | orderBy:'name'">
+						
+						</select> <button  ng-show='edhidden' ng-click='edhidden=false'>close</button>	</span></div>
+			
+				 
+					<span title='Κάντε κλικ για να αντικαταστήσετε την ομάδα'  class="td_matchday_team1" ng-click='edhidden=true'>{{row1.team1.name}}</span> 
 						<span class="td_score"><input type="number" min=0 max=100
 							class="inputSmall" value={{row1.score1}} ng-model='row1.score1' />
 							- <input type="number" min=0 max=100 value={{row1.score2}}
-							class="inputSmall" ng-model='row1.score2' /></span> <span
-						class="td_matchday_team2">{{row1.team2.name}}</span> <!-- 						<input type="text" class = "inputMedium" ng-model='row1.date|  date:"medium"'/> ng-model="row1.date"
+							class="inputSmall" ng-model='row1.score2' /></span>
+							<span title='Κάντε κλικ για να αντικαταστήσετε την ομάδα'  class="td_matchday_team2" ng-click='edhidden2=true'>{{row1.team2.name}}</span> 
+						
+							<div ><span class="">
+			 	<select style='display:inline; width:40%' ng-show='edhidden2' ng-model="row1.team2"
+							ng-options="row7.name for row7 in curteams | orderBy:'name'">
+						
+						</select> <button  ng-show='edhidden2' ng-click='edhidden2=false'>close</button>	</span></div>
+			
+				 
+						<!-- 						<input type="text" class = "inputMedium" ng-model='row1.date|  date:"medium"'/> ng-model="row1.date"
  --></td>
 					<td class="td_date_small"><md-datepicker
 							ng-model="row1.tmpdate" md-placeholder="Enter date"></md-datepicker>
@@ -447,7 +491,7 @@
 					
 					<button
 							class='button_flat  background_dark_yellow'
-							ng-click='adminEditGame(row1,row)'>Αποθήκευση</button>
+							ng-click='adminEditGame(row1,row); edhidden=false; edhidden2=false'>Αποθήκευση</button>
 						<button class='button_flat  background_red'
 							ng-click='adminDeleteGame(row1)'>Διαγραφή</button>
 							

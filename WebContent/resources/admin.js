@@ -357,6 +357,7 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 /*	 $scope.getChampion = function (row){  
 */		 $scope.result = "";
 		 $scope.standings = "";
+		 $scope.curteams = "";
 		 $http({
 	        method : "GET",
 	        url : "champions"
@@ -426,6 +427,7 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 			 $scope.champion =row;
 			 $scope.matchday="";
 			 $scope.standings = "";
+			 $scope.curteams = "";
 			 $scope.teamgroup = "";
 			 $scope.playoffs = "";
 			 $http({
@@ -450,8 +452,13 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 				        method : "GET",
 				        url : "teamgroups/"+row.id+"/standings"
 				    }).then(function mySuccess(response) {
+				    	 $scope.curteams=[];
 				    	 $scope.standings=response.data;
-				    	
+				    	 $scope.standings=response.data;
+				    	for(i=0;i<$scope.standings.length;i++)
+				    	{
+				    		 $scope.curteams.push($scope.standings[i].team);
+				    	}
 				    	//$scope.result = matchday;
 				    }, function myError(response) {
 				  
@@ -825,8 +832,7 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 			/*			var mydate = new Date(row.date);
 						row.date = $scope.getFormattedDate(mydate,row.gametime);*/
 					}
-	
-				 $scope.result=row.tmpdate;
+				 $scope.result=row;
 				 $http({
 				        method : "PUT",
 				        url : "matchdays/"+tmpmatchday.id+"/games",
