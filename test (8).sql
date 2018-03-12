@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Mar 12, 2018 at 05:30 PM
+-- Generation Time: Mar 12, 2018 at 06:15 PM
 -- Server version: 5.7.19
 -- PHP Version: 5.6.31
 
@@ -257,14 +257,14 @@ CREATE TABLE IF NOT EXISTS `game` (
   KEY `FKo63pplnj6o7x500io9lippcuc` (`teamid2`),
   KEY `FKls9diasf8reb66lvy9i5iq034` (`championid`),
   KEY `FK6sqest9c9us6q7w9eki1asu0t` (`playoffid`)
-) ENGINE=InnoDB AUTO_INCREMENT=2084 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2085 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `game`
 --
 
 INSERT INTO `game` (`id`, `teamid1`, `teamid2`, `date`, `matchdayid`, `score1`, `score2`, `phase`, `championid`, `playoffid`) VALUES
-(1976, 83, 82, '2018-02-15 21:00:00', 464, '2', '3', NULL, NULL, NULL),
+(1976, 83, 82, '2018-03-23 21:00:00', 464, '2', '3', NULL, NULL, NULL),
 (1977, 84, 96, '2018-01-18 21:00:00', 464, '3', '4', NULL, NULL, NULL),
 (1978, 85, 94, '2018-01-01 23:00:00', 464, '1', '4', NULL, NULL, NULL),
 (1979, 86, 93, NULL, 464, NULL, NULL, NULL, NULL, NULL),
@@ -418,23 +418,17 @@ CREATE TABLE IF NOT EXISTS `information` (
   `title` varchar(100) DEFAULT NULL,
   `gameid` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `FK8hh0pu4w8l5aesa1k0b0veuno` (`teamid`),
-  KEY `FK2i5mk9b9kjbtd31l85sy5rp3r` (`gameid`)
-) ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=utf8;
+  KEY `FK2i5mk9b9kjbtd31l85sy5rp3r` (`gameid`),
+  KEY `teamid` (`teamid`)
+) ENGINE=InnoDB AUTO_INCREMENT=105 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `information`
 --
 
 INSERT INTO `information` (`id`, `date`, `message`, `teamid`, `title`, `gameid`) VALUES
-(93, '2018-02-04 19:57:08', 'ΣΥΝΤΕΤΡΙΜΕΝΟΙ - INTER ΕΚΠΛΗΞΗ (Thu Feb 15 21:00:00 EET 2018)', 83, 'Νέος Αγώνας!', NULL),
-(94, '2018-02-04 19:57:08', 'ΣΥΝΤΕΤΡΙΜΕΝΟΙ - INTER ΕΚΠΛΗΞΗ (Thu Feb 15 21:00:00 EET 2018)', 82, 'Νέος Αγώνας!', NULL),
-(95, '2018-02-04 19:58:58', 'ΣΥΝΤΕΤΡΙΜΕΝΟΙ - INTER ΕΚΠΛΗΞΗ (Thu Feb 15 21:00:00 EET 2018)', 83, 'Νέος Αγώνας!', NULL),
-(96, '2018-02-04 19:58:58', 'ΣΥΝΤΕΤΡΙΜΕΝΟΙ - INTER ΕΚΠΛΗΞΗ (Thu Feb 15 21:00:00 EET 2018)', 82, 'Νέος Αγώνας!', NULL),
-(97, '2018-02-04 20:00:14', 'ΣΥΝΤΕΤΡΙΜΕΝΟΙ - INTER ΕΚΠΛΗΞΗ (Thu Feb 15 21:00:00 EET 2018)', 83, 'Νέος Αγώνας!', NULL),
-(98, '2018-02-04 20:00:14', 'ΣΥΝΤΕΤΡΙΜΕΝΟΙ - INTER ΕΚΠΛΗΞΗ (Thu Feb 15 21:00:00 EET 2018)', 82, 'Νέος Αγώνας!', NULL),
-(99, '2018-02-04 20:01:03', 'ΣΥΝΤΕΤΡΙΜΕΝΟΙ - INTER ΕΚΠΛΗΞΗ (Thu Feb 15 21:00:00 EET 2018)', 83, 'Νέος Αγώνας!', NULL),
-(100, '2018-02-04 20:01:03', 'ΣΥΝΤΕΤΡΙΜΕΝΟΙ - INTER ΕΚΠΛΗΞΗ (Thu Feb 15 21:00:00 EET 2018)', 82, 'Νέος Αγώνας!', NULL);
+(101, '2018-03-12 20:05:31', 'ΣΥΝΤΕΤΡΙΜΕΝΟΙ - INTER ΕΚΠΛΗΞΗ (Fri Mar 23 21:00:00 EET 2018)', 83, 'Νέος Αγώνας!', 1976),
+(102, '2018-03-12 20:05:31', 'ΣΥΝΤΕΤΡΙΜΕΝΟΙ - INTER ΕΚΠΛΗΞΗ (Fri Mar 23 21:00:00 EET 2018)', 82, 'Νέος Αγώνας!', 1976);
 
 -- --------------------------------------------------------
 
@@ -501,7 +495,10 @@ CREATE TABLE IF NOT EXISTS `message` (
   PRIMARY KEY (`id`),
   KEY `FK7ssjguyeuyrbhvdremfxlvrad` (`eventid`),
   KEY `FKcmklxor1li66peguma7qlqfyb` (`contactid`),
-  KEY `FKfvngx0qbrcwk4n9rg6ynq7m5i` (`receiverid`)
+  KEY `FKfvngx0qbrcwk4n9rg6ynq7m5i` (`receiverid`),
+  KEY `contactid` (`contactid`),
+  KEY `receiverid` (`receiverid`),
+  KEY `status` (`status`)
 ) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=latin1;
 
 --
