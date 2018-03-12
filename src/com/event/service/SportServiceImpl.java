@@ -398,6 +398,8 @@ public class SportServiceImpl  implements SportService{
 				info2.setTitle("Νέος Αγώνας!");
 				info1.setTeam(game.getTeam1());
 				info2.setTeam(game.getTeam2());
+				info1.setGame(game);
+				info2.setGame(game);
 
 				info1.setDate(now);
 				info2.setDate(now);
