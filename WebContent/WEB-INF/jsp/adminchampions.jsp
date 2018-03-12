@@ -8,7 +8,6 @@
 
 <div class='font_size_small'>
 
-{{result}}sdfasd
 <h1>ΠΡΩΤΑΘΛΗΜΑΤΑ</h1>
 <!-- <div>
 	<ul>
