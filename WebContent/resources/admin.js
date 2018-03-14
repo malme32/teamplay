@@ -779,7 +779,24 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 					 
 				 } 
 				 
-
+				 $scope.reGenerateMatchdays = function (row,roundNumber){
+					 if(!confirm("Είστε σίγουρος?"))
+						 return;
+					 $scope.result = "";
+					 $http({
+					        method : "POST",
+					        url : "teamgroups/"+row.id+"/actions/regeneratematchdays",
+					        params:{roundNumber:roundNumber}
+					    }).then(function mySuccess(response) {
+					    	$scope.getMatchdays($scope.teamgroup); 
+					    	//$window.location.reload();
+					    }, function myError(response) {
+					  
+					        $scope.result = "Παρουσιάστηκε κάποιο σφάλμα. Προσπαθήστε ξανά.";
+					    });
+					 
+				 } 
+				 
 				 
 				 $scope.adminDeleteAllMatchdays = function (row){
 					 $scope.result = "";

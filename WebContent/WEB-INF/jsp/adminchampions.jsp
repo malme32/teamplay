@@ -200,7 +200,7 @@
 					
 					<button
 							class='button_flat  background_dark_yellow'
-							ng-click='adminEditPlayoffGame(row1,row5)'>Αποθήκευση</button>
+							ng-click='adminEditPlayoffGame(row1,row5);  edhidden=false; edhidden2=false'>Αποθήκευση</button>
 						<button class='button_flat  background_red'
 							ng-click='adminDeletePlayoffGame(row1)'>Διαγραφή</button>
 							
@@ -280,7 +280,8 @@
 						ng-show='teamgroup==row' ng-click='generateMatchdays(row,1)'>Αγωνιστικές</button>
 					<button class='button_flat  background_black'
 						ng-show='teamgroup==row' ng-click='generateMatchdays(row,2)'>Αγωνιστικές
-						(δύο γύροι) Matchdays(double round)</button>
+						(δύο γύροι)</button>
+				
 				</td>
 			</tr>
 			<tr>
@@ -398,6 +399,12 @@
 	<td>
 	<button class='button_flat  background_green' ng-click='adminAddMatchday(adminNewMatchdayName,teamgroup)'>Εισαγωγή</button>
 	<button class='button_flat  background_red' ng-click='adminDeleteAllMatchdays(teamgroup)'>Διαγραφή όλων</button></td>
+		<button class='button_flat  background_black'
+						 ng-click='reGenerateMatchdays(teamgroup,1)'>Επαναπροσαρμογή</button>
+					<button class='button_flat  background_black'
+						ng-click='reGenerateMatchdays(teamgroup,2)'>Επαναπροσαρμογή
+						(δύο γύροι)</button>
+	
 	</tr>
 	</table>
 

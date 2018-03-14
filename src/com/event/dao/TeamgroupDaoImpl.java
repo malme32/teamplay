@@ -60,6 +60,17 @@ public class TeamgroupDaoImpl extends AbstractDao implements TeamgroupDao{
 	}
 
 	@Override
+	public List<Game> getAllGames(Teamgroup teamgroup) {
+		//AND Matchday.teamgroup= :teamgroup  (Game.team1 = :team or Game.team2 = :team)    .setParameter("teamgroup", teamgroup)
+		   
+		   Session session = sessionFactory.openSession();
+		   @SuppressWarnings("unchecked")
+		   List<Game> list = session.createQuery("select g from Game g inner join Matchday m on g.matchday = m.id where m.teamgroup= :teamgroup ").setParameter("teamgroup", teamgroup).list(); 
+		   session.close();
+		return list;
+	}
+	
+	@Override
 	public List<Game> getGames(Team team,Teamgroup teamgroup) {
 		//AND Matchday.teamgroup= :teamgroup  (Game.team1 = :team or Game.team2 = :team)    .setParameter("teamgroup", teamgroup)
 		   

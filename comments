@@ -14,6 +14,7 @@ ROSSONERI:
 - See all matches in team page
 - add tabs with custom content: photo, text, link
 - Add option for admin to disable team leader from changing teams name and players (pictures can be added)
+- Improve the notification -> make it less resource consuming
 
 
 DONE:

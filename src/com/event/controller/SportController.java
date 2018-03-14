@@ -398,6 +398,15 @@ public class SportController {
 		{
 				sportService.generateMatchgames(teamgroupid,2);
 		}
+
+		if(action.equals("regeneratematchdays"))
+		{
+				sportService.reGenerateMatchgames(teamgroupid,roundNumber);
+		}
+		if(action.equals("regeneratedoublematchdays"))
+		{
+				sportService.reGenerateMatchgames(teamgroupid,2);
+		}
 			return ;
 	}
 	

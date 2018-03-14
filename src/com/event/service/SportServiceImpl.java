@@ -239,6 +239,24 @@ public class SportServiceImpl  implements SportService{
 		
 	}
 	
+	@Override
+	public void reGenerateMatchgames(int teamgroupid, int roundNumber) {
+
+		System.out.println("Generating matchgames");
+		Teamgroup teamgroup = teamgroupDao.findById(teamgroupid);
+		List<String> tmpList = new ArrayList<String>();
+/*		for(Standing standing:teamgroup.getStandings())
+		{
+			
+			System.out.println(standing.getTeam().getName());
+			tmpList.add(standing.getTeam().getName());
+			
+		}*/
+		reWriteMatchdays(teamgroup.getStandings(),teamgroup,roundNumber);
+		// TODO Auto-generated method stub
+		
+	}
+	
 	private void writeMatchgames(List<Standing> StandingList,Teamgroup teamgroup,int roundNumber)
 	{
 	    List<Standing> ListTeam = new ArrayList<Standing>();
@@ -337,6 +355,182 @@ public class SportServiceImpl  implements SportService{
 	    }
 	}
 
+	private void reWriteMatchdays(List<Standing> StandingList,Teamgroup teamgroup,int roundNumber)
+	{
+		
+		Hibernate.initialize(teamgroup.getMatchdays());
+		//teamgroup.getMatchdays().clear();
+		List<Matchday> matchdays = teamgroup.getMatchdays();
+		List<Game> games = teamgroupDao.getAllGames(teamgroup);
+/*		for(Matchday matchday:matchdays) {
+			for(Matchday matchday:matchdays) {
+				Hibernate.initialize(teamgroup.getMatchdays());
+				
+			}
+		}*/
+		System.out.println("REWRITING...");
+	    List<Standing> ListTeam = new ArrayList<Standing>();
+
+	    for(Standing team:StandingList) {
+	    	ListTeam.add(team);
+	    }
+		
+		if(ListTeam.size()==0)
+			return;
+		if(ListTeam.size()==1)
+			return;
+	    if (ListTeam.size() % 2 != 0)
+	    {
+	        ListTeam.add(null); // If odd number of teams add a dummy
+	    }
+
+	    int numDays = (ListTeam.size() - 1); // Days needed to complete tournament
+	    int halfSize = ListTeam.size()  / 2;
+
+	    List<Standing> teams = new ArrayList<Standing>();
+
+	    for(Standing team:ListTeam) {
+	    	teams.add(team);
+	    }
+	    teams.remove(0);
+
+	    int teamsSize = teams.size();
+
+	    for (int day = 0; day < numDays; day++)
+	    {
+	    	System.out.println( (day + 1));
+	    	Matchday matchday = new Matchday();
+	    	String startName=day<9?"ΑΓΩΝΙΣΤΙΚΗ 0":"ΑΓΩΝΙΣΤΙΚΗ ";
+	    	matchday.setName(startName+ (day + 1));
+	    	matchday.setTeamgroup(teamgroup);
+	    	generalDaoService.persist(matchday);
+	    	
+	    	Matchday matchday2=null;
+	    	
+	    	if(roundNumber==2) {
+	    		matchday2 = new Matchday();
+		    	startName=(day + numDays)<9?"ΑΓΩΝΙΣΤΙΚΗ 0":"ΑΓΩΝΙΣΤΙΚΗ ";
+		    	matchday2.setName(startName+ (day + numDays+ 1));
+		    	matchday2.setTeamgroup(teamgroup);
+		    	generalDaoService.persist(matchday2);
+	    	}
+
+	        int teamIdx = day % teamsSize;
+	    	if(teams.get(teamIdx)!=null&&ListTeam.get(0)!=null)
+	    	{
+	    		boolean found=false;
+	    		for(Game game:games) {
+	    			if(game.getTeam1().getId()==teams.get(teamIdx).getTeam().getId()
+	    					&& game.getTeam2().getId()==ListTeam.get(0).getTeam().getId())
+	    			{
+	    				game.setMatchday(matchday);
+	    	    		generalDaoService.update(game);
+	    	    		found = true;
+	    				break;
+	    			}
+	    		}
+	    		if(!found)
+	    		{
+
+		    		Game game1 = new Game();
+		    		game1.setTeam1(teams.get(teamIdx).getTeam());
+		    		game1.setTeam2(ListTeam.get(0).getTeam());
+		    		game1.setMatchday(matchday);
+		    		generalDaoService.persist(game1);
+	    		}
+	    		if(roundNumber==2) {
+		    		found = false;
+		    		for(Game game:games) {
+		    			if(game.getTeam1().getId()==ListTeam.get(0).getTeam().getId()
+		    					&& game.getTeam2().getId()==teams.get(teamIdx).getTeam().getId())
+		    			{
+		    				game.setMatchday(matchday2);
+		    	    		generalDaoService.update(game);
+		    	    		found = true;
+		    				break;
+		    			}
+		    		}
+		    		if(!found)
+		    		{
+
+		    			Game  game1 = new Game();
+			    		game1.setMatchday(matchday2);
+			    		game1.setTeam1(ListTeam.get(0).getTeam());
+			    		game1.setTeam2(teams.get(teamIdx).getTeam());
+			    		generalDaoService.persist(game1);
+		    		}
+	    		}
+	    		
+		        System.out.println( teams.get(teamIdx).getTeam().getName() + " vs " + ListTeam.get(0).getTeam().getName() );
+
+	    	}
+
+	        for (int idx = 1; idx < halfSize; idx++)
+	        {               
+	            int firstTeam = (day + idx) % teamsSize;
+	            int secondTeam = (day  + teamsSize - idx) % teamsSize;
+		    	if(teams.get(firstTeam)!=null&&teams.get(secondTeam)!=null)
+		    	{
+		    		
+		     		boolean found=false;
+		    		for(Game game:games) {
+		    			if(game.getTeam1().getId()==teams.get(firstTeam).getTeam().getId()
+		    					&& game.getTeam2().getId()==teams.get(secondTeam).getTeam().getId())
+		    			{
+		    				game.setMatchday(matchday);
+		    	    		generalDaoService.update(game);
+		    	    		found = true;
+		    				break;
+		    			}
+		    		}
+		    		if(!found)
+		    		{
+				        Game game1 = new Game();
+				        game1.setMatchday(matchday);
+				        game1.setTeam1(teams.get(firstTeam).getTeam());
+				        game1.setTeam2(teams.get(secondTeam).getTeam());
+				    	generalDaoService.persist(game1);
+		    		}
+			    	
+
+		    		if(roundNumber==2) {
+		    			found=false;
+			    		for(Game game:games) {
+			    			if(game.getTeam1().getId()==teams.get(secondTeam).getTeam().getId()
+			    					&& game.getTeam2().getId()==teams.get(firstTeam).getTeam().getId())
+			    			{
+			    				game.setMatchday(matchday2);
+			    	    		generalDaoService.update(game);
+			    	    		found = true;
+			    				break;
+			    			}
+			    		}
+			    		if(!found)
+			    		{
+					        Game game1 = new Game();
+					        game1.setMatchday(matchday2);
+					        game1.setTeam1(teams.get(secondTeam).getTeam());
+					        game1.setTeam2(teams.get(firstTeam).getTeam());
+					    	generalDaoService.persist(game1);
+			    		}
+		    		}
+			    	
+		            System.out.println( teams.get(firstTeam).getTeam().getName()  + " vs " +teams.get(secondTeam).getTeam().getName() );
+
+		    	}
+	            
+	        }
+	        
+	    }
+	/*    for(Matchday matchday:matchdays) {
+	    //	if(matchday.getGames().size()==0)
+	    	//{
+
+		    	generalDaoService.delete(matchday);
+	    	//}
+	    }*/
+	}
+	
 	@Override
 	public void deleteTeamgroupMatchdays(int teamgroupid) {
 		// TODO Auto-generated method stub

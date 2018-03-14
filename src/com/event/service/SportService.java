@@ -135,5 +135,7 @@ public interface SportService {
 	void updateGame(Game game, Matchday matchday);
 
 	public void updateGame(Game game, Playoff playoff);
+
+	void reGenerateMatchgames(int teamgroupid, int roundNumber);
 	
 }
