@@ -28,12 +28,14 @@ public class GeneralDaoServiceImpl implements GeneralDaoService{
 	}
 
 	@Override
+	public void deleteNewSession(Object entity) {
+		// TODO Auto-generated method stub
+		generalDao.deleteNewSession(entity);
+	}
+	@Override
 	public void update(Object entity) {
 		// TODO Auto-generated method stub
 		generalDao.update(entity);
 	}
 
-
-
-	
 }

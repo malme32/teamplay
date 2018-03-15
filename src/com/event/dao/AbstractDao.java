@@ -28,6 +28,12 @@ public abstract class AbstractDao {
         getSession().delete(entity);
     }
     
+    public void deleteNewSession(Object entity) {
+    	Session session = sessionFactory.openSession();
+    	session.delete(entity);
+    	session.close();
+    }
+    
 
     public void update(Object entity) {
         getSession().update(entity);

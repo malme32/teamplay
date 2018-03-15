@@ -358,9 +358,7 @@ public class SportServiceImpl  implements SportService{
 	private void reWriteMatchdays(List<Standing> StandingList,Teamgroup teamgroup,int roundNumber)
 	{
 		
-		Hibernate.initialize(teamgroup.getMatchdays());
-		//teamgroup.getMatchdays().clear();
-		List<Matchday> matchdays = teamgroup.getMatchdays();
+
 		List<Game> games = teamgroupDao.getAllGames(teamgroup);
 /*		for(Matchday matchday:matchdays) {
 			for(Matchday matchday:matchdays) {
@@ -522,13 +520,7 @@ public class SportServiceImpl  implements SportService{
 	        }
 	        
 	    }
-	/*    for(Matchday matchday:matchdays) {
-	    //	if(matchday.getGames().size()==0)
-	    	//{
 
-		    	generalDaoService.delete(matchday);
-	    	//}
-	    }*/
 	}
 	
 	@Override
@@ -1484,6 +1476,27 @@ public class SportServiceImpl  implements SportService{
 	
 
 		return notification;
+	}
+
+	@Override
+	public void clearEmptyMatchdays(int teamgroupid) {
+		// TODO Auto-generated method stub
+		Teamgroup teamgroup = this.findTeamgroupById(teamgroupid);
+		Hibernate.initialize(teamgroup.getMatchdays());
+		//teamgroup.getMatchdays().clear();
+		
+		List<Matchday> matchdays = teamgroup.getMatchdays();
+	    for(int i=0;i<matchdays.size();i++) {
+	    	Matchday matchday = matchdays.get(i);
+	    	System.out.println(matchday.getName());
+    		Hibernate.initialize(matchday.getGames());
+	    	if(matchday.getGames().size()==0)
+	    	{
+		    	matchdays.remove(matchday);
+		    	i=-1;
+	    	}
+	    }
+	    generalDaoService.update(teamgroup);
 	}
 
 

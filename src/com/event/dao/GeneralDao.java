@@ -8,4 +8,6 @@ public interface GeneralDao {
     public void delete(Object entity);
     
     public void update(Object entity);
+
+	public void deleteNewSession(Object entity);
 }

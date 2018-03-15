@@ -402,10 +402,12 @@ public class SportController {
 		if(action.equals("regeneratematchdays"))
 		{
 				sportService.reGenerateMatchgames(teamgroupid,roundNumber);
+				sportService.clearEmptyMatchdays(teamgroupid);
 		}
 		if(action.equals("regeneratedoublematchdays"))
 		{
 				sportService.reGenerateMatchgames(teamgroupid,2);
+				sportService.clearEmptyMatchdays(teamgroupid);
 		}
 			return ;
 	}

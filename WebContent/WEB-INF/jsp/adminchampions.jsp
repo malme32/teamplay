@@ -276,11 +276,6 @@
 						ng-show='teamgroup==row' ng-click='adminDeleteTeamgroup(row)'>Διαγραφή</button>
 					<button class='button_flat  background_dark_yellow'
 						ng-show='teamgroup==row' ng-click='adminEditTeamgroup(row)'>Αποθήκευση</button>
-					<button class='button_flat  background_black'
-						ng-show='teamgroup==row' ng-click='generateMatchdays(row,1)'>Αγωνιστικές</button>
-					<button class='button_flat  background_black'
-						ng-show='teamgroup==row' ng-click='generateMatchdays(row,2)'>Αγωνιστικές
-						(δύο γύροι)</button>
 				
 				</td>
 			</tr>
@@ -392,18 +387,33 @@
 	
 	
 	<table class='table_stylish1 margin_bottom_medium' >
-	<tr>
-	<td>
-	<input type='text' ng-model="adminNewMatchdayName"
-		placeholder="Το νέο όνομα εδω" /></td>
-	<td>
-	<button class='button_flat  background_green' ng-click='adminAddMatchday(adminNewMatchdayName,teamgroup)'>Εισαγωγή</button>
-	<button class='button_flat  background_red' ng-click='adminDeleteAllMatchdays(teamgroup)'>Διαγραφή όλων</button></td>
-		<button class='button_flat  background_black'
+	<tr><td>
+							<button class='button_flat  background_black'
+						ng-click='generateMatchdays(teamgroup,1)'>Παραγωγή</button>
+					<button class='button_flat  background_black'
+						 ng-click='generateMatchdays(teamgroup,2)'>Παραγωγή
+						(δύο γύροι)</button>
+	
+	</td></tr>
+	
+	<tr><td>
+			<button class='button_flat  background_black'
 						 ng-click='reGenerateMatchdays(teamgroup,1)'>Επαναπροσαρμογή</button>
 					<button class='button_flat  background_black'
 						ng-click='reGenerateMatchdays(teamgroup,2)'>Επαναπροσαρμογή
 						(δύο γύροι)</button>
+	</td></tr>
+	
+	<tr>
+	<td>
+	<input type='text' ng-model="adminNewMatchdayName"
+		placeholder="Το νέο όνομα αγωνιστικής εδω" /></td>
+	<td>
+	
+	<button class='button_flat  background_green' ng-click='adminAddMatchday(adminNewMatchdayName,teamgroup)'>Εισαγωγή</button>
+
+	<button class='button_flat  background_red' ng-click='adminDeleteAllMatchdays(teamgroup)'>Διαγραφή όλων</button></td>
+
 	
 	</tr>
 	</table>
