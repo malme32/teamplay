@@ -8,6 +8,7 @@ pageEncoding="UTF-8"%>
 
 <spring:url value="/resources" var="resources_start" />
 
+<spring:url value="/resources_static/theme1" var="resources_static" />
 
 
 
@@ -37,7 +38,7 @@ pageEncoding="UTF-8"%>
  -->
 		<img ng-hide='teams' width=40 height=40 src="${resources}/customimages/loading.gif" alt="">
 <div class=" theme-margin-bottom" ng-repeat="row in teams  |orderBy: 'name' | filter:mysearch" style="padding:10px; border-bottom: 1px solid lightgray;border-top: 1px solid lightgray; height:70px;">
-<div style='display:inline-block'><img style='height:50px;' ng-src="${resources}{{row.logothumbpath}}" alt=""></div>
+<div style='display:inline-block'><img style='height:50px;' ng-src="${resources_static}{{row.logothumbpath}}" alt=""></div>
 <div style='display:inline-block'>
 <h5><a ng-href='#!team-detail.html/{{row.id}}'>
 <i class="red-color">{{row.name}}</i>

@@ -5,6 +5,7 @@ pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <spring:url value="/resources/theme1" var="resources" />
 
+<spring:url value="/resources_static/theme1" var="resources_static" />
 <div class='font_size_small'>
 
 <div class='div_edit_team'>
@@ -58,7 +59,7 @@ pageEncoding="UTF-8"%>
 				<th>ΕΝΕΡΓΕΙΑ</th>
 			</tr>
 			<tr>
-				<td><img width=60 height=60 ng-show='team.logopath' ng-src='${resources}{{team.logothumbpath}}'/> </td>
+				<td><img width=60 height=60 ng-show='team.logopath' ng-src='${resources_static}{{team.logothumbpath}}'/> </td>
 				<td><input type = "file" file-model = "mylogo"  accept="image/*"/>
 	         <button class='button_flat background_dark_yellow' ng-click = "uploadLogo()">Upload</button></td>
 			</tr>
@@ -119,7 +120,7 @@ pageEncoding="UTF-8"%>
          <button class='button_flat background_red' ng-click = "deletePlayer(row)">Διαγραφή</button>
         </td>
          
-        <td><img width=50 height=50 ng-show='row.imagepath' ng-src='${resources}{{row.thumbpath}}'/> </td>
+        <td><img width=50 height=50 ng-show='row.imagepath' ng-src='${resources_static}{{row.thumbpath}}'/> </td>
             <td> <input type = "file" file-model = "row.playerimage" accept="image/*"/>
       
         </td>

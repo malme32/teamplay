@@ -28,6 +28,7 @@
 	</bean>
 	
 	<mvc:resources mapping="/resources/**" location="/resources/" />
+	<mvc:resources mapping="/resources_static/**" location="file:/home/and/javaresources/soccer/resources/" />
 	
 <!-- 	<mvc:resources mapping="/resources1/**" location="/resources/theme1/" />
  -->	

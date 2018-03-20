@@ -9,6 +9,7 @@ import com.sport.model.Scorer;
 import com.phonebook.model.Contact;
 import com.sport.model.Album;
 import com.sport.model.Champion;
+import com.sport.model.Custompage;
 import com.sport.model.Game;
 import com.sport.model.Image;
 import com.sport.model.Matchday;
@@ -139,5 +140,11 @@ public interface SportService {
 	void reGenerateMatchgames(int teamgroupid, int roundNumber);
 
 	public void clearEmptyMatchdays(int teamgroupid);
+
+	public List<Custompage> findCustompages(boolean headersonly);
+
+	public Custompage findCustompageById(int id);
+
+	public void deleteCustompage(int id, String staticPath);
 	
 }

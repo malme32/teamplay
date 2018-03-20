@@ -29,7 +29,7 @@ import com.sport.model.Team;
 
 //@XmlRootElement
 @Entity
-@Table(name="Contact")
+@Table(name="contact")
 //@Indexed
 public class Contact  implements InitializingBean{
 	@Id

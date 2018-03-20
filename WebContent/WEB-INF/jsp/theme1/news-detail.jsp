@@ -5,6 +5,7 @@ pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <spring:url value="/resources/theme1" var="resources" />
+<spring:url value="/resources_static/theme1" var="resources_static" />
 
 <div class="page-heading-breadcrumbs">
 <div class="container">
@@ -51,7 +52,7 @@ pageEncoding="UTF-8"%>
 </article>
 <div class="blog-detail">
 <figure>
-<img ng-src="${resources}{{notice.imageurl}}" alt="" style='max-height:400px'>
+<img ng-src="${resources_static}{{notice.imageurl}}" alt="" style='max-height:400px'>
 </figure>
 <article>
 <p>{{notice.content}}</p>

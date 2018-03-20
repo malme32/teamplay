@@ -30,6 +30,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.event.dao.AlbumDao;
 import com.event.dao.ChampionDao;
+import com.event.dao.CustompageDao;
 import com.event.dao.GameDao;
 import com.event.dao.GeneralDao;
 import com.event.dao.ImageDao;
@@ -49,6 +50,7 @@ import com.phonebook.model.Userrole;
 import com.phonebook.service.ContactService;
 import com.sport.model.Album;
 import com.sport.model.Champion;
+import com.sport.model.Custompage;
 import com.sport.model.Game;
 import com.sport.model.Image;
 import com.sport.model.Matchday;
@@ -112,6 +114,11 @@ public class SportServiceImpl  implements SportService{
 
 	@Autowired
 	InformationDao informationDao;
+	
+
+	@Autowired
+	CustompageDao custompageDao;
+	
 	@Override
 	public Champion findChampionsById(int id) {
 		// TODO Auto-generated method stub
@@ -1497,6 +1504,27 @@ public class SportServiceImpl  implements SportService{
 	    	}
 	    }
 	    generalDaoService.update(teamgroup);
+	}
+
+	@Override
+	public List<Custompage> findCustompages(boolean headersonly) {
+		// TODO Auto-generated method stub
+		
+		return custompageDao.findAll();
+	}
+
+	@Override
+	public Custompage findCustompageById(int id) {
+		// TODO Auto-generated method stub
+		//Custompage custompage = this.findCustompageById(id);
+		return custompageDao.findById(id);
+	}
+
+	@Override
+	public void deleteCustompage(int id, String staticPath) {
+		// TODO Auto-generated method stub
+	
+		generalDaoService.delete(this.findCustompageById(id));
 	}
 
 

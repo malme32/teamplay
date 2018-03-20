@@ -15,7 +15,7 @@ import org.hibernate.search.annotations.Store;
 
 
 @Entity
-@Table(name="Position")
+@Table(name="position")
 
 public class Position {
 	@Id

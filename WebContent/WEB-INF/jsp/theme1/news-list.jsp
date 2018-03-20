@@ -7,6 +7,7 @@ pageEncoding="UTF-8"%>
 
 <spring:url value="/resources/theme1" var="resources" />
 
+<spring:url value="/resources_static/theme1" var="resources_static" />
 
 <div class="page-heading-breadcrumbs">
 <div class="container">
@@ -32,7 +33,7 @@ pageEncoding="UTF-8"%>
 
 <div class="large-post-img">
 
-<div style='background:url(${resources}{{row.thumburl}}) no-repeat center; 
+<div style='background:url(${resources_static}{{row.thumburl}}) no-repeat center; 
   width:100%; height:250px;background-size:cover; '>
 </div>
 

@@ -46,6 +46,7 @@ import com.phonebook.model.Userrole;
 import com.phonebook.service.ContactService;
 import com.sport.model.Album;
 import com.sport.model.Champion;
+import com.sport.model.Custompage;
 import com.sport.model.Game;
 import com.sport.model.Image;
 import com.sport.model.Matchday;
@@ -70,6 +71,16 @@ public class SportController {
 	private ContactService contactService;
 	
 
+	private String getStaticPath(HttpSession session)
+	{
+		
+		  //  String path=session.getServletContext().getRealPath("/");  
+		  String homeDir = System.getProperty("user.home");
+
+	      String path=homeDir+"/javaresources/soccer";
+	      return path;
+	}
+	
 	/////////////////////GET/////////////////////////////////////
 	
 	@RequestMapping(value="/champions", method=RequestMethod.GET, produces = "application/json")
@@ -179,11 +190,28 @@ public class SportController {
 	}
 	
 	
+	@RequestMapping(value="/custompages", method=RequestMethod.GET, produces = "application/json")
+	public @ResponseBody List<Custompage> getCustompages(@RequestParam(required = false)  Boolean headersonly)
+	{
+	
+		boolean headersonly1=false;
+		if(headersonly!=null)
+			headersonly1=headersonly;
+			
+		return sportService.findCustompages(headersonly1);
+	}
+	
 	@RequestMapping(value="/news/{id}", method=RequestMethod.GET, produces = "application/json")
 	public @ResponseBody Notice getNewsDetail(@PathVariable int id)
 		
 	{
 		return sportService.findNewsById(id);
+	}
+	@RequestMapping(value="/custompages/{id}", method=RequestMethod.GET, produces = "application/json")
+	public @ResponseBody Custompage getCustomPage(@PathVariable int id)
+		
+	{
+		return sportService.findCustompageById(id);
 	}
 	
 	
@@ -465,17 +493,20 @@ public class SportController {
 	
 	@RequestMapping(value = "/teams/{id}/logos", method = RequestMethod.POST, produces = "application/json")
 	public @ResponseBody  void uploadTeamLogo(@PathVariable int id, @RequestParam CommonsMultipartFile file,HttpSession session){  
-      String path=session.getServletContext().getRealPath("/");  
-    //  String path=session.getServletContext().path  
+    //  String path=session.getServletContext().getRealPath("/");  
+/*	  String homeDir = System.getProperty("user.home");
 
-        sportService.uploadTeamLogo(path, id, file);
+      String path=homeDir+"/javaresources/soccer";
+*/
+        sportService.uploadTeamLogo(getStaticPath(session), id, file);
         return;
     }  
 	
 	@RequestMapping(value = "/teams/{id}/covers", method = RequestMethod.POST, produces = "application/json")
 	public @ResponseBody  void uploadTeamCover(@PathVariable int id, @RequestParam CommonsMultipartFile file,HttpSession session){  
-      String path=session.getServletContext().getRealPath("/");  
-        sportService.uploadTeamCover(path, id, file);
+    //  String path=session.getServletContext().getRealPath("/");  
+      //String path="/home/and/Javaresources/soccer";
+        sportService.uploadTeamCover(getStaticPath(session), id, file);
         return;
     }  
 	
@@ -498,8 +529,9 @@ public class SportController {
 	
 	@RequestMapping(value = "/players/{id}/images", method = RequestMethod.POST, produces = "application/json")
 	public @ResponseBody  Contact uploadPlayerImage(@PathVariable int id, @RequestParam CommonsMultipartFile file,HttpSession session){  
-      String path=session.getServletContext().getRealPath("/");  
-      return sportService.uploadPlayerImage(path, id, file);
+    //  String path=session.getServletContext().getRealPath("/");  
+      //String path="/home/and/Javaresources/soccer";
+      return sportService.uploadPlayerImage(getStaticPath(session), id, file);
         
     }  
 	
@@ -522,10 +554,18 @@ public class SportController {
 		return notice;
 	}
 	
+	@RequestMapping(value="/custompages", method=RequestMethod.POST, produces = "application/json")
+	public @ResponseBody Custompage addCustompage(@RequestBody Custompage custompage)
+	{
+		generalDaoService.persist(custompage);
+		return custompage;
+	}
+	
 	@RequestMapping(value = "/news/{id}/images", method = RequestMethod.POST, produces = "application/json")
 	public @ResponseBody  Notice uploadNoticeImage(@PathVariable int id, @RequestParam CommonsMultipartFile file,HttpSession session){  
-      String path=session.getServletContext().getRealPath("/");  
-      return sportService.uploadNoticeImage(path, id, file);
+    //  String path=session.getServletContext().getRealPath("/");  
+      //String path="/home/and/Javaresources/soccer";
+      return sportService.uploadNoticeImage(getStaticPath(session), id, file);
         
     }  
 
@@ -541,9 +581,10 @@ public class SportController {
 	
 	@RequestMapping(value = "/albums/{id}/images", method = RequestMethod.POST, produces = "application/json")
 	public @ResponseBody  void uploadAlbumImages(@PathVariable int id, @RequestParam(value = "files") CommonsMultipartFile[] files,HttpSession session){  
-      String path=session.getServletContext().getRealPath("/");  
+      //String path=session.getServletContext().getRealPath("/");  
+      //String path="/home/and/Javaresources/soccer";
        
-        sportService.uploadAlbumImages(path, id, files);
+        sportService.uploadAlbumImages(getStaticPath(session), id, files);
         return;
     }  
 	
@@ -710,6 +751,14 @@ public class SportController {
 		generalDaoService.update(notice);
 		return;
 	}
+	
+	@RequestMapping(value="/custompages", method=RequestMethod.PUT, produces = "application/json")
+	public @ResponseBody void editCustompage(@RequestBody Custompage custompage)
+	{
+		generalDaoService.update(custompage);
+		return;
+	}
+	
 	@RequestMapping(value="champions/{championid}/playoffs", method=RequestMethod.PUT, produces = "application/json")
 	public @ResponseBody void editPlayoff(@RequestBody Playoff playoff,@PathVariable int championid)
 	//public @ResponseBody void editGame(@ModelAttribute Game game,@RequestParam int teamid1,@RequestParam int teamid2,@RequestParam int matchdayid)
@@ -827,17 +876,19 @@ public class SportController {
 	@RequestMapping(value="/teams/{id}", method=RequestMethod.DELETE, produces = "application/json")
 	public @ResponseBody void deleteTeam(@PathVariable int id,HttpSession session)
 	{
-		String path=session.getServletContext().getRealPath("/"); 
+		//String path=session.getServletContext().getRealPath("/"); 
+	     // String path="/home/and/Javaresources/soccer";
 
-		sportService.deleteTeam(path,id);
+		sportService.deleteTeam(getStaticPath(session),id);
 		return; 
 	}	
 	
 	@RequestMapping(value="/players/{id}", method=RequestMethod.DELETE, produces = "application/json")
 	public @ResponseBody void deletePlayer(@PathVariable int id,HttpSession session)
 	{
-		String path=session.getServletContext().getRealPath("/"); 
-		sportService.deletePlayer(path,id);
+		//String path=session.getServletContext().getRealPath("/"); 
+	      //String path="/home/and/Javaresources/soccer";
+		sportService.deletePlayer(getStaticPath(session),id);
 		return ;
 	}
 	
@@ -853,11 +904,21 @@ public class SportController {
 	@RequestMapping(value="/news/{id}", method=RequestMethod.DELETE, produces = "application/json")
 	public @ResponseBody void deleteNotice(@PathVariable int id,HttpSession session)
 	{
-		String path=session.getServletContext().getRealPath("/");  
-		sportService.deleteNotice(id,path);
+		//String path=session.getServletContext().getRealPath("/"); 
+	   //   String path="/home/and/Javaresources/soccer"; 
+		sportService.deleteNotice(id,getStaticPath(session));
 		return ;
 	}
 	
+	
+	@RequestMapping(value="/custompages/{id}", method=RequestMethod.DELETE, produces = "application/json")
+	public @ResponseBody void deleteCustompage(@PathVariable int id,HttpSession session)
+	{
+		//String path=session.getServletContext().getRealPath("/"); 
+	   //   String path="/home/and/Javaresources/soccer"; 
+		sportService.deleteCustompage(id,getStaticPath(session));
+		return ;
+	}
 	
 	@RequestMapping(value="/playoffs/{id}", method=RequestMethod.DELETE, produces = "application/json")
 	public @ResponseBody void deletePlayoff(@PathVariable int id)
@@ -870,7 +931,8 @@ public class SportController {
 	@RequestMapping(value="/images/{id}", method=RequestMethod.DELETE, produces = "application/json")
 	public @ResponseBody void deleteImage(@PathVariable int id,HttpSession session)
 	{
-		String path=session.getServletContext().getRealPath("/");  
+	//	String path=session.getServletContext().getRealPath("/");  
+	      String path="/home/and/Javaresources/soccer";
 		
 		sportService.deleteImage(path,id);
 		
@@ -880,9 +942,10 @@ public class SportController {
 	@RequestMapping(value="/albums/{id}", method=RequestMethod.DELETE, produces = "application/json")
 	public @ResponseBody void deleteAlbum(@PathVariable int id,HttpSession session)
 	{
-		String path=session.getServletContext().getRealPath("/");  
+		//String path=session.getServletContext().getRealPath("/");  
+	    //  String path="/home/and/Javaresources/soccer";
 		
-		sportService.deleteAlbum(path,id);
+		sportService.deleteAlbum(getStaticPath(session),id);
 		
 		return ;
 	}

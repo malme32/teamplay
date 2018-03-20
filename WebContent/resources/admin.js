@@ -27,6 +27,11 @@ appAdmin.config(function($routeProvider) {
         templateUrl : "adminimages",
         controller: "imagesController"
 
+    })
+    .when("/admincustompages", {
+        templateUrl : "admincustompages",
+        controller: "custompagesController"
+
     });
     
 });
@@ -1702,6 +1707,136 @@ appAdmin.controller("newsController",function($scope, $http, $location, $window)
 		 
 });
 
+
+appAdmin.controller("custompagesController",function($scope, $http, $location, $window){
+
+	 
+	/* $scope.getTeams = function (){ */ 
+		 $http({
+	        method : "GET",
+	        url : "custompages",
+	        params:{headersonly:1}
+	    }).then(function mySuccess(response) {
+
+	        $scope.news = response.data;
+	      
+	    }, function myError(response) {
+
+		      alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");
+	      
+	    });
+/*	 }*/
+	 
+
+		 
+		 $scope.getCustompage = function (){ 
+		
+		        $scope.custompage = "";
+			 $http({
+		        method : "GET",
+		        url : "custompages/"+$scope.selectedCustompage.id
+		    }).then(function mySuccess(response) {
+
+			
+		        $scope.custompage = response.data;
+		        
+/*				 $http({
+				        method : "GET",
+				        url : "teams/"+$scope.selectedTeam.id+"/players"
+				    }).then(function mySuccess(response) {
+				        $scope.players = response.data;
+				    }, function myError(response) {
+				  
+				        alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");
+				    });*/
+
+		    }, function myError(response) {
+		  
+		        alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");
+		    });
+		 }
+		 
+		 $scope.addCustompage = function (){ 
+			 $scope.newcustompage.date = new Date();
+			 $http({
+		        method : "POST",
+		        	url : "custompages",
+			        data: $scope.newcustompage,
+			        headers: {'Content-Type': 'application/json; charset=utf-8'}
+		    }).then(function mySuccess(response) {
+
+		    	$window.location.reload();
+		        
+		    }, function myError(response) {
+		  
+		        alert("Κατι δεν πηγε καλα. Μήπως η ομάδα υπάρχει ήδη?");
+		    });
+		 }
+		 
+		 $scope.deleteCustompage = function (){ 
+
+			 if(!confirm("Είστε σίγουρος;"))
+				 return;
+				 
+			 $http({
+		        method : "DELETE",
+		        url : "custompages/"+$scope.custompage.id
+		    }).then(function mySuccess(response) {
+
+		    	$window.location.reload();
+		      
+		    }, function myError(response) {
+		  
+		        alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");
+		    });
+		 }
+		 
+		 $scope.editCustompage = function (){ 
+			 $scope.custompage.date = new Date();
+			 //$scope.team.players=$scope.players;
+			 //$scope.result=$scope.team;
+			 $http({
+		        method : "PUT",
+		        	url : "custompages",
+			        data: $scope.custompage,
+			        headers: {'Content-Type': 'application/json; charset=utf-8'}
+		    }).then(function mySuccess(response) {
+		    	
+		    	$scope.getCustompage();
+		    }, function myError(response) {
+
+		        alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");
+		    });
+		 }
+		 
+		 $scope.uploadImage = function(){
+		     var fd = new FormData();
+             fd.append('file', $scope.mylogo);
+         
+             
+			 $http({
+			        method : "POST",
+			        	url : "custompages/"+$scope.custompage.id+"/images",
+				        data: fd,
+				       // params:{file: $scope.myfile},
+                        transformRequest: angular.identity,
+                        headers: {'Content-Type': undefined}     
+			    }).then(function mySuccess(response) {
+
+			    	$scope.getCustompage();
+			    }, function myError(response) {
+
+			        alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");
+			    });
+             
+		 }
+ 
+		
+	
+		 
+	
+		 
+});
 
 appAdmin.controller("usersController",function($scope, $http, $location, $window){
 	

@@ -5,6 +5,9 @@ pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <spring:url value="/resources/theme1" var="resources" />
+
+<spring:url value="/resources_static/theme1" var="resources_static" />
+
 <spring:url value="/resources" var="resources_start" />
 <div ng-app="appMain" ng-controller='headerController' >
 
@@ -67,7 +70,7 @@ ng-src='${resources_start}/generalimages/message-outline-256.png' ng-click='open
 <a href=""><img src="${resources}/images/davourlislogo1.png" alt=""></a>
 </div>
 
-
+<!-- 
 <div class="search-bar-holder pull-right">
 <div class="search-bar">
 <input type="text" class="form-control" placeholder="search enter please...">
@@ -75,7 +78,7 @@ ng-src='${resources_start}/generalimages/message-outline-256.png' ng-click='open
 </div>
 </div>
 
-
+ -->
 <ul class="nav-list pull-right">
 
 
@@ -139,7 +142,7 @@ ng-src='${resources_start}/generalimages/message-outline-256.png' ng-click='open
 <div class="large-post-img">
 <%-- <img ng-src="${resources}{{row.imageurl}}" alt="">
  --%>
-  <div style='background:url(${resources}{{row.thumburl}}) no-repeat center; 
+  <div style='background:url(${resources_static}{{row.thumburl}}) no-repeat center; 
   width:180px; height:130px;background-size:cover; '>
 
 </div>
@@ -170,11 +173,19 @@ ng-src='${resources_start}/generalimages/message-outline-256.png' ng-click='open
 <a href="#!gallery">photo</a>
 
 </li>
-<li><a ng-click='openMessages()' href="">CHAT</a>
+<li><a href='#!custompage/start' href="">ΠΕΡΙΣΣΟΤΕΡΑ</a>
+<ul>
+<li ng-repeat='row in custompages'><a href="#!custompage/{{row.id}}">{{row.title}}</a></li>
+</li>
+
+</ul>
 </li>
 <li>
-<a href="#!contactus">ΕΠΙΚΟΙΝΩΝΙΑ</a>
-
+<a href="">ΕΠΙΚΟΙΝΩΝΙΑ</a>
+<ul>
+<li><a ng-click='openMessages()' href="">CHAT</a></li>
+<li><a href="#!contactus">ΕΠΙΚΟΙΝΩΝΙΑ</a></li>
+</ul>
 </li>
 <!-- <li>
 <a href="#">pages</a>

@@ -10,11 +10,11 @@ pageEncoding="UTF-8"%>
 
 <div class='div_edit_team'>
 
-<h1>ΝΕΑ ΕΙΔΗΣΗ</h1>
+<h1>ΝΕΑ ΣΕΛΙΔΑ</h1>
 	<ul class='ul_nobullet'>
-		<li> <input type='text' ng-model='newnotice.title' placeholder='Ο τίτλος της νεας είδησης εδω..'/>	</li>
-		<li> <textarea rows="4" cols="50" ng-model='newnotice.content' maxlength="1000" class="width_100" placeholder='Το περιεχόμενο της νεας είδησης εδω..'>	</textarea> </li>
-		<li> <button class='button_flat background_green float_right' ng-click="addNotice()">Προσθηκη</button> </li>
+		<li> <input type='text' ng-model='newcustompage.title' placeholder='Ο τίτλος της νεας σελίδας εδω..'/>	</li>
+		<li> <textarea rows="4" cols="50" ng-model='newcustompage.content' maxlength="1000" class="width_100" placeholder='Το περιεχόμενο της νεας σελίδας εδω..'>	</textarea> </li>
+		<li> <button class='button_flat background_green float_right' ng-click="addCustompage()">Προσθηκη</button> </li>
 	</ul>
 
 </div>
@@ -22,19 +22,19 @@ pageEncoding="UTF-8"%>
 
 
 
-<h1>ΕΙΔΗΣΕΙΣ</h1>
-<select ng-model="selectedNotice" ng-change="getNotice()" ng-options="row.title for row in news | orderBy:'-date'">
+<h1>ΕΠΕΞΕΡΓΑΣΙΑ ΣΕΛΙΔΩΝ</h1>
+<select ng-model="selectedCustompage" ng-change="getCustompage()" ng-options="row.title for row in news | orderBy:'-date'">
 <option value="">---Επιλέξτε---</option>
 </select>
-<div ng-show="notice" class='margin_left_small'>
+<div ng-show="custompage" class='margin_left_small'>
 
        <h2>ΕΠΕΞΕΡΓΑΣΙΑ</h2>
 	<ul class='ul_nobullet'>
-		<li> <input type='text' ng-model='notice.title' placeholder='Ο τίτλος της είδησης εδω'/>	</li>
-		<li><textarea rows="4" cols="50" ng-model='notice.content' maxlength="1000" class="width_100" placeholder='Το περιεχόμενο της είδησης εδω..'></textarea>  </li>
+		<li> <input type='text' ng-model='custompage.title' placeholder='Ο τίτλος της σελίδας εδω'/>	</li>
+		<li><textarea rows="4" cols="50" ng-model='custompage.content' maxlength="1000" class="width_100" placeholder='Το περιεχόμενο της είδησης εδω..'></textarea>  </li>
 		
-		<li> <button class='button_flat background_dark_yellow float_right' ng-click="editNotice()">Αποθήκευση</button> 
-		<button class='button_flat background_red float_right'  ng-click="deleteNotice()">Διαγραφή</button></li>
+		<li> <button class='button_flat background_dark_yellow float_right' ng-click="editCustompage()">Αποθήκευση</button> 
+		<button class='button_flat background_red float_right'  ng-click="deleteCustompage()">Διαγραφή</button></li>
 		
 
 		
@@ -57,7 +57,7 @@ pageEncoding="UTF-8"%>
 				<th>ΕΝΕΡΓΕΙΑ</th>
 			</tr>
 			<tr>
-				<td><img width=60 height=60 ng-show='notice.imageurl' ng-src='${resources_static}{{notice.imageurl}}'/> </td>
+				<td><img width=60 height=60 ng-show='custompage.imageurl' ng-src='${resources_static}{{custompage.imageurl}}'/> </td>
 				<td><input type = "file" file-model = "mylogo" class='button_flat background_dark_yellow' accept="image/*"/>
 	         <button class='button_flat background_dark_yellow' ng-click = "uploadImage()">Αλλαγή ΕΙΚΟΝΑΣ</button></td>
 			</tr>
@@ -90,3 +90,7 @@ pageEncoding="UTF-8"%>
 
 
 <!-- {{result}} -->
+
+
+
+

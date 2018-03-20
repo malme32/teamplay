@@ -4,6 +4,7 @@ pageEncoding="UTF-8"%>
 
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <spring:url value="/resources/theme1" var="resources" />
+<spring:url value="/resources_static/theme1" var="resources_static" />
 
 
 <div class="page-heading-breadcrumbs">
@@ -31,7 +32,7 @@ pageEncoding="UTF-8"%>
 
 <div class="col-lg-3 col-md-3 col-sm-5" style='margin-bottom:30px'>
 <div class="team-column ">
-<img ng-src="${resources}{{team.logopath}}" alt="">
+<img ng-src="${resources_static}{{team.logopath}}" alt="">
 <!-- <span class="player-number">12</span>
  --><div class="team-detail">
 <!-- <h5>Lionel AndrÃ©s Messi</h5> -->
@@ -172,8 +173,8 @@ pageEncoding="UTF-8"%>
 			<div class="matches-dates-shedule" style='padding:0'>
 			<ul>
 			<li ng-repeat='row1 in games | nextGames | orderBy: "date" ' style='padding:5px; ' ng-show='row1.champion.enabled'>
-			<span class="pull-left"><img style='height:40px; width:40px' ng-src="${resources}{{row1.team1.logothumbpath}}" alt=""></span>
-			<span class="pull-right"><img style='height:40px; width:40px' ng-src="${resources}{{row1.team2.logothumbpath}}" alt=""></span>
+			<span class="pull-left"><img style='height:40px; width:40px' ng-src="${resources_static}{{row1.team1.logothumbpath}}" alt=""></span>
+			<span class="pull-right"><img style='height:40px; width:40px' ng-src="${resources_static}{{row1.team2.logothumbpath}}" alt=""></span>
 			<div class="detail">
 			<a href="#!match.html/{{row1.id}}">Λεπτομέρειες<i class="fa fa-angle-double-right"></i></a>
 			<strong><a style='display:inline; padding:0; margin:0' href='#!team-detail.html/{{row1.team1.id}}'>{{row1.team1.name}}</a><i class="red-color"  style=''> {{row1.score1}} - {{row1.score2}}</i> <a style='display:inline; padding:0; margin:0'  href='#!team-detail.html/{{row1.team2.id}}'>{{row1.team2.name}}</a></strong>
@@ -200,8 +201,8 @@ pageEncoding="UTF-8"%>
 			<div class="matches-dates-shedule" style='padding:0'>
 			<ul>
 			<li ng-repeat='row1 in games | lastResults | orderBy: "-date" ' style='padding:5px; ' ng-show='row1.champion.enabled'>
-			<span class="pull-left"><img style='height:40px; width:40px' ng-src="${resources}{{row1.team1.logothumbpath}}" alt=""></span>
-			<span class="pull-right"><img style='height:40px; width:40px' ng-src="${resources}{{row1.team2.logothumbpath}}" alt=""></span>
+			<span class="pull-left"><img style='height:40px; width:40px' ng-src="${resources_static}{{row1.team1.logothumbpath}}" alt=""></span>
+			<span class="pull-right"><img style='height:40px; width:40px' ng-src="${resources_static}{{row1.team2.logothumbpath}}" alt=""></span>
 			<div class="detail">
 			<a href="#!match.html/{{row1.id}}">Λεπτομέρειες<i class="fa fa-angle-double-right"></i></a>
 			<strong><a style='display:inline; padding:0; margin:0' href='#!team-detail.html/{{row1.team1.id}}'>{{row1.team1.name}}</a><i class="red-color"  style=''> {{row1.score1}} - {{row1.score2}}</i> <a style='display:inline; padding:0; margin:0'  href='#!team-detail.html/{{row1.team2.id}}'>{{row1.team2.name}}</a></strong>
@@ -250,7 +251,7 @@ pageEncoding="UTF-8"%>
 
 <div class="col-sm-4 col-xs-6 r-full-width" ng-repeat='row in players'>
 <div class="team-column">
- <div style='background:url(${resources}{{row.imagepath}}) no-repeat center;  height:240px;background-size:cover; '>
+ <div style='background:url(${resources_static}{{row.imagepath}}) no-repeat center;  height:240px;background-size:cover; '>
 <%--  <img ng-src="${resources}{{row.imagepath}}" alt="">  --%>
 <span ng-show='row.number' class="player-number">{{row.number}}</span>
 <div class="team-detail">

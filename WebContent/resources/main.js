@@ -67,6 +67,11 @@ appMain.config(function($routeProvider) {
         controller: "championsController"
 
     })
+    .when("/custompage/:custompageid", {
+        templateUrl : "custompage",
+        controller: "custompageController"
+
+    })
     .when("/news-list.html", {
         templateUrl : "news-list.html",
         controller: "newsController"
@@ -1384,6 +1389,16 @@ appMain.controller("headerController",function($scope, $http, $location, $rootSc
 	    		      
 	    });
 	 
+	 $http({
+	        method : "GET",
+	        	url : "custompages"
+	    }).then(function mySuccess(response) {
+	    	$scope.custompages = response.data;
+	    	
+		    
+	    }, function myError(response) {
+	 
+	    });
 
 	 $http({
 	        method : "GET",
@@ -2278,4 +2293,46 @@ appMain.controller("calendarController",function($scope, $http, $location, $wind
 	 }
  /* });*/
 
+});
+
+
+appMain.controller("custompageController",function($scope, $http, $location, $window,$routeParams){
+	
+	
+	 $http({
+	        method : "GET",
+	        	url : "custompages"
+	    }).then(function mySuccess(response) {
+	    	$scope.custompages = response.data;
+	    	
+
+		    if($routeParams.custompageid == "start"&&$scope.custompages.length>0)
+		    {
+		    	$scope.getCustompage($scope.custompages[0].id);
+		    }
+	    }, function myError(response) {
+	 
+	    });
+	 
+	    $scope.cssLiChampionClass = function (row) {
+	    	if(row.id==$scope.custompage.id)
+	    		return "css_li_champion_active";
+	    	else return "css_li_champion"
+	    };
+	    
+	   
+	    $scope.getCustompage = function (custompageid) {
+	   	 $http({
+		        method : "GET",
+		        	url : "custompages/"+custompageid
+		    }).then(function mySuccess(response) {
+		    	$scope.custompage = response.data;
+		    	
+			    
+		    }, function myError(response) {
+		 
+		    });
+	    }
+	    if($routeParams.custompageid != "start")
+	    	$scope.getCustompage($routeParams.custompageid);
 });
