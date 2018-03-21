@@ -765,7 +765,7 @@ public class SportController {
 	@RequestMapping(value="/custompages", method=RequestMethod.PUT, produces = "application/json")
 	public @ResponseBody void editCustompage(@RequestBody Custompage custompage)
 	{
-		generalDaoService.update(custompage);
+		sportService.editCustompage(custompage);
 		return;
 	}
 	

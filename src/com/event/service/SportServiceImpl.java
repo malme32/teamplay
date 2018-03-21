@@ -1576,5 +1576,14 @@ public class SportServiceImpl  implements SportService{
 				}
 	}
 
+	@Override
+	public void editCustompage(Custompage custompage) {
+		// TODO Auto-generated method stub
+		Custompage custompage1 = this.findCustompageById(custompage.getId());
+		custompage1.setTitle(custompage.getTitle());
+		custompage1.setContent(custompage.getContent());
+		generalDaoService.update(custompage1);
+	}
+
 
 }

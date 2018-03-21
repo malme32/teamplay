@@ -61,7 +61,7 @@ pageEncoding="UTF-8"%>
 <div class="blog-detail">
 
 <article>
-<p>{{custompage.content}}</p>
+<p style="white-space: pre;" ng-bind-html="custompage.content | parseUrl"></p>
  </article>
 </div>
 <div class="blog-detail">

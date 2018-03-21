@@ -23,7 +23,7 @@ pageEncoding="UTF-8"%>
 
 
 <h1>ΕΠΕΞΕΡΓΑΣΙΑ ΣΕΛΙΔΩΝ</h1>
-<select ng-model="selectedCustompage" ng-change="getCustompage()" ng-options="row.title for row in news | orderBy:'-date'">
+<select ng-model="selectedCustompage" ng-change="getCustompage(selectedCustompage)" ng-options="row.title for row in news | orderBy:'-date'">
 <option value="">---Επιλέξτε---</option>
 </select>
 <div ng-show="custompage" class='margin_left_small'>
@@ -31,7 +31,7 @@ pageEncoding="UTF-8"%>
        <h2>ΕΠΕΞΕΡΓΑΣΙΑ</h2>
 	<ul class='ul_nobullet'>
 		<li> <input type='text' ng-model='custompage.title' placeholder='Ο τίτλος της σελίδας εδω'/>	</li>
-		<li><textarea rows="4" cols="50" ng-model='custompage.content' maxlength="1000" class="width_100" placeholder='Το περιεχόμενο της είδησης εδω..'></textarea>  </li>
+		<li><textarea rows="4" cols="200" ng-model='custompage.content' maxlength="6000" class="width_100" placeholder='Το περιεχόμενο της είδησης εδω..'></textarea>  </li>
 		
 		<li> <button class='button_flat background_dark_yellow float_right' ng-click="editCustompage()">Αποθήκευση</button> 
 		<button class='button_flat background_red float_right'  ng-click="deleteCustompage()">Διαγραφή</button></li>
@@ -49,6 +49,9 @@ pageEncoding="UTF-8"%>
 		<button ng-click="deleteTeam()">Διαγραφή Ομάδας</button>
 		 -->
 			</ul>
+			<br/><br/>
+			   <h2>ΕΠΕΞΕΡΓΑΣΙΑ ΕΙΚΟΝΩΝ</h2>
+			{{waiting}}
 <div class='admin_album table_stylish1'>
 
 		<table>

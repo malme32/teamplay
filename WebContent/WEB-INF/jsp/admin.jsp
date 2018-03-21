@@ -17,6 +17,9 @@ pageEncoding="UTF-8"%>
 
 
 <!-- COMMON >>>>>>>>>>>>> -->
+
+
+
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.5/angular.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.5/angular-route.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.5/angular-animate.js"></script>

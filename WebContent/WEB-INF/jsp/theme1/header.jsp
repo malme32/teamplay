@@ -170,7 +170,7 @@ ng-src='${resources_start}/generalimages/message-outline-256.png' ng-click='open
 </li>
  -->
 <li>
-<a href="#!gallery">photo</a>
+<a href="#!gallery">GALLERY</a>
 
 </li>
 <li><a href='#!custompage/start' href="">ΠΕΡΙΣΣΟΤΕΡΑ</a>

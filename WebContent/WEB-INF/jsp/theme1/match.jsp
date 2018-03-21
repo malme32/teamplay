@@ -5,6 +5,7 @@ pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <spring:url value="/resources/theme1" var="resources" />
 
+<spring:url value="/resources_static/theme1" var="resources_static" />
 
 
 <div class="wrap push">
@@ -29,8 +30,8 @@ pageEncoding="UTF-8"%>
 <div class="matches-dates-shedule" style =''>
 <ul style ='border-style:none; '>
 <li style ='background-color:black; color:white; border-style:none; '>
-<span  class="pull-left"><img style='width:100px; height:100px' ng-src="${resources}{{game.team1.logopath}}" alt=""></span>
-<span class="pull-right"><img style='width:100px; height:100px' ng-src="${resources}{{game.team2.logopath}}" alt=""></span>
+<span  class="pull-left"><img style='width:100px; height:100px' ng-src="${resources_static}{{game.team1.logopath}}" alt=""></span>
+<span class="pull-right"><img style='width:100px; height:100px' ng-src="${resources_static}{{game.team2.logopath}}" alt=""></span>
 <div class="detail">
 <a href="">Match Detail<i class="fa fa-angle-double-right"></i></a>
 <strong style='font-size:140%;'>{{game.team1.name}}<i class="red-color"> {{game.score1}} - {{game.score2}}  </i> {{game.team2.name}}</strong>
@@ -116,7 +117,7 @@ pageEncoding="UTF-8"%>
 <div class="Popular-news">
 <ul>
 <li ng-repeat='row in news | orderBy:"-date"'>
- <img style='max-height:50px; max-width:65px' ng-src="${resources}{{row.thumburl}}" alt=""> 
+ <img style='max-height:50px; max-width:65px' ng-src="${resources_static}{{row.thumburl}}" alt=""> 
 
 
 <h5><a href="#!news-detail.html/{{row.id}}">{{row.title}}</a></h5>

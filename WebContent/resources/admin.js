@@ -1729,12 +1729,12 @@ appAdmin.controller("custompagesController",function($scope, $http, $location, $
 	 
 
 		 
-		 $scope.getCustompage = function (){ 
+		 $scope.getCustompage = function (custompage){ 
 		
 		        $scope.custompage = "";
 			 $http({
 		        method : "GET",
-		        url : "custompages/"+$scope.selectedCustompage.id
+		        url : "custompages/"+custompage.id
 		    }).then(function mySuccess(response) {
 
 			
@@ -1802,7 +1802,7 @@ appAdmin.controller("custompagesController",function($scope, $http, $location, $
 			        headers: {'Content-Type': 'application/json; charset=utf-8'}
 		    }).then(function mySuccess(response) {
 		    	
-		    	$scope.getCustompage();
+		    	$scope.getCustompage($scope.selectedCustompage);
 		    }, function myError(response) {
 
 		        alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");
@@ -1823,7 +1823,7 @@ appAdmin.controller("custompagesController",function($scope, $http, $location, $
                         headers: {'Content-Type': undefined}     
 			    }).then(function mySuccess(response) {
 
-			    	$scope.getCustompage();
+			    	$scope.getCustompage($scope.selectedCustompage);
 			    }, function myError(response) {
 
 			        alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");
@@ -1881,7 +1881,8 @@ appAdmin.controller("custompagesController",function($scope, $http, $location, $
                 headers: {'Content-Type': undefined}     
 		    }).then(function mySuccess(response) {
 		    	 $scope.waiting= "";
-		    	$window.location.reload();
+		    	 $window.location.reload();
+		    	//$scope.getCustompage($scope.selectedCustompage);
 		    	//$scope.getTeam();
 		    }, function myError(response) {
 
