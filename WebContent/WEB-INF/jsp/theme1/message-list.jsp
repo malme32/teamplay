@@ -7,6 +7,7 @@ pageEncoding="UTF-8"%>
 <spring:url value="/resources/theme1" var="resources" />
 
 <spring:url value="/resources" var="resources_start" />
+<spring:url value="/resources_static/theme1" var="resources_static" />
 
 
 
@@ -39,7 +40,7 @@ pageEncoding="UTF-8"%>
 <div class=" theme-margin-bottom" ng-repeat="row in teams  | filter:mysearch" style="padding:10px; border-bottom: 1px solid lightgray;border-top: 1px solid lightgray;">
 
 <!-- <div class=" theme-margin-bottom" ng-repeat="row in teams  |orderBy: getMessageCount| reverse | filter:mysearch" style="padding:10px; border-bottom: 1px solid lightgray;border-top: 1px solid lightgray; height:70px;">
- --><div style='display:inline-block'><img style='height:50px;' ng-src="${resources}{{row.logothumbpath}}" alt=""></div>
+ --><div style='display:inline-block'><img style='height:50px;' ng-src="${resources_static}{{row.logothumbpath}}" alt=""></div>
 <div style='display:inline-block'>
 <a ng-click="sendMessage(row)" href=''>
 <i class="red-color">{{row.name}}</i>

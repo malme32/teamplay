@@ -8,6 +8,7 @@ pageEncoding="UTF-8"%>
 
 <link href='${resources_start}/chat.css?v=28' rel='stylesheet' />
 
+<spring:url value="/resources_static/theme1" var="resources_static" />
 <div class="wrap push chattotal">
 
 
@@ -34,7 +35,7 @@ pageEncoding="UTF-8"%>
         </div> -->
     <ol class="chat">
      <li ng-repeat="message in messages | orderBy: 'date'" ng-class="getSender(message)">
-        <div class="avatar"><img ng-src="${resources}{{getPicture(message)}}" draggable="false"/></div>
+        <div class="avatar"><img ng-src="${resources_static}{{getPicture(message)}}" draggable="false"/></div>
       <div class="msg">
 				<p>{{message.message}}</p>
         <time>{{message.date | timeago}} </time>

@@ -1239,7 +1239,7 @@ public class SportServiceImpl  implements SportService{
 		}else{
 			System.out.println("Delete operation is failed.");
 		}
-		generalDaoService.delete(image);
+		generalDaoService.deleteNewSession(image);
 	}
 
 	@Override
@@ -1509,7 +1509,6 @@ public class SportServiceImpl  implements SportService{
 	@Override
 	public List<Custompage> findCustompages(boolean headersonly) {
 		// TODO Auto-generated method stub
-		
 		return custompageDao.findAll();
 	}
 
@@ -1525,6 +1524,56 @@ public class SportServiceImpl  implements SportService{
 		// TODO Auto-generated method stub
 	
 		generalDaoService.delete(this.findCustompageById(id));
+	}
+
+	@Override
+	public void uploadCustompageImages(String staticPath, int id, CommonsMultipartFile[] files) {
+		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub
+		
+				Custompage custompage = custompageDao.findById(id);
+				for(CommonsMultipartFile file:files)
+				{
+					
+			        try{  
+					Image image = new Image();
+					generalDaoService.persist(image);
+			        String extension = FilenameUtils.getExtension(file.getOriginalFilename()); 
+					String filename=String.valueOf("custompage"+custompage.getId()+"_image"+ image.getId())+"."+extension;
+			        byte barr[]=file.getBytes();  
+			        
+		        
+			        BufferedOutputStream bout=new BufferedOutputStream(  
+			                 new FileOutputStream(staticPath+"/resources/theme1/customimages/custompageimage_"+filename));  
+			        bout.write(barr);  
+			        bout.flush();  
+			        bout.close();  
+			        
+			        
+			        ByteArrayInputStream bais = new ByteArrayInputStream(barr);
+			        BufferedImage resizeMe = ImageIO.read(bais);
+			        Dimension newMaxSize = new Dimension(255, 255);
+			        BufferedImage resizedImg = Scalr.resize(resizeMe, Method.QUALITY, newMaxSize.width, newMaxSize.height);
+			        
+			        BufferedOutputStream bout1=new BufferedOutputStream(  
+			                 new FileOutputStream(staticPath+"/resources/theme1/customimages/custompageimage_thumb_"+filename));  
+			        
+			        ImageIO.write(resizedImg, extension, bout1);
+			    
+			        bout1.flush();  
+			        bout1.close();  
+
+			        image.setThumburl("/customimages/custompageimage_thumb_"+filename);
+			        image.setUrl("/customimages/custompageimage_"+filename);
+			        image.setCustompage(custompage);
+			        generalDaoService.update(image);
+			       
+			        }catch(Exception e){System.out.println(e);
+		            }  
+			        
+			        //return ;
+				
+				}
 	}
 
 

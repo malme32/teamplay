@@ -5,6 +5,7 @@ pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <spring:url value="/resources/theme1" var="resources" />
 
+<spring:url value="/resources_static/theme1" var="resources_static" />
 <div class='font_size_small'>
 
 <div class=''>
@@ -54,7 +55,7 @@ pageEncoding="UTF-8"%>
     </p>
     
     {{result}}
- <span ng-repeat='image in album.images'  > <img ng-click='deleteImage(image)' ng-src="${resources}{{image.thumburl}}"></span>
+ <span ng-repeat='image in album.images'  > <img ng-click='deleteImage(image)' ng-src="${resources_static}{{image.thumburl}}"></span>
 
 </div>
 

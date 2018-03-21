@@ -1832,10 +1832,63 @@ appAdmin.controller("custompagesController",function($scope, $http, $location, $
 		 }
  
 		
-	
+	/*images*/
 		 
-	
-		 
+	 
+	 
+	 
+    var formdata = new FormData();
+    $scope.getTheFiles = function ($files) {
+        angular.forEach($files, function (value, key) {
+            formdata.append("files", value);
+        });
+    };
+	 
+    
+    $scope.deleteImage = function (image) {
+		   
+
+			 if(!confirm("Είστε σίγουρος οτι θέλετε να διαγράψετε αυτή την εικόνα;"))
+				 return;
+		   
+			 $http({
+		    method : "DELETE",
+     	url : "images/"+image.id  
+ }).then(function mySuccess(response) {
+
+ 	$window.location.reload();
+ 	//$scope.getTeam();
+ }, function myError(response) {
+
+ 	
+     alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");
+ });
+		   
+	   }
+    
+    
+    
+    // NOW UPLOAD THE FILES.
+    $scope.uploadFiles = function (custompage) {
+
+   	 $scope.waiting= "Οι εικόνες ανεβαίνουν. Παρακαλώ περιμένετε..";
+   	 $http({
+		        method : "POST",
+		        	url : "custompages/"+custompage.id+"/images",
+			        data: formdata,
+			        //params:{files: upl},
+                transformRequest: angular.identity,
+                headers: {'Content-Type': undefined}     
+		    }).then(function mySuccess(response) {
+		    	 $scope.waiting= "";
+		    	$window.location.reload();
+		    	//$scope.getTeam();
+		    }, function myError(response) {
+
+		    	
+		        alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");
+		    });
+    }
 });
 
 appAdmin.controller("usersController",function($scope, $http, $location, $window){

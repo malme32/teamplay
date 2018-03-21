@@ -49,21 +49,35 @@ pageEncoding="UTF-8"%>
 		<button ng-click="deleteTeam()">Διαγραφή Ομάδας</button>
 		 -->
 			</ul>
-       <h3>ΕΙΚΟΝΕΣ</h3>
-	<div class='table_stylish1'>
+<div class='admin_album table_stylish1'>
+
 		<table>
-			<tr>
-				<th>EIKONA</th>
+				<tr>
+				<th>EIKONΕΣ</th>
+			<!-- 	<th>ΕΠΙΛΟΓΗ</th> -->
 				<th>ΕΝΕΡΓΕΙΑ</th>
 			</tr>
 			<tr>
-				<td><img width=60 height=60 ng-show='custompage.imageurl' ng-src='${resources_static}{{custompage.imageurl}}'/> </td>
-				<td><input type = "file" file-model = "mylogo" class='button_flat background_dark_yellow' accept="image/*"/>
-	         <button class='button_flat background_dark_yellow' ng-click = "uploadImage()">Αλλαγή ΕΙΚΟΝΑΣ</button></td>
+				<!-- <td><input type = "file" ng-file-model = "newimages" multiple accept="image/*"/></td> -->
+				<td>
+				        <input type="file" id="file1" name="file" multiple
+            				ng-files="getTheFiles($files)" multiple accept="image/*"/>
+
+<!--        				 <input type="button" ng-click="uploadFiles(album)" value="Upload" />
+ -->				</td>
+				
+	        <td> <button class='button_flat background_dark_yellow'  ng-click="uploadFiles(custompage)">Upload</button></td>
 			</tr>
 
 		</table>
-	</div>
+		    <p ng-repeat="file in newimages">
+      {{file.name}}
+    </p>
+    
+    {{result}}
+ <span ng-repeat='image in custompage.images'  > <img ng-click='deleteImage(image)' ng-src="${resources_static}{{image.thumburl}}"></span>
+
+</div>
 </div>
 </div>
 </div>

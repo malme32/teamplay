@@ -31,8 +31,12 @@ public class Custompage {
 	@Column(name="content", length=6000)
 	private String content;
 	
-	@JsonIgnore
-	@OneToMany(fetch = FetchType.LAZY,mappedBy="album",cascade = CascadeType.ALL)
+	@Column(name="link", length=3000)
+	private String link;
+	
+	
+	/*@JsonIgnore*/
+	@OneToMany(fetch = FetchType.EAGER,mappedBy="custompage",cascade = CascadeType.ALL)
 	private List<Image> images;
 
 	public int getId() {
@@ -65,6 +69,14 @@ public class Custompage {
 
 	public void setImages(List<Image> images) {
 		this.images = images;
+	}
+
+	public String getLink() {
+		return link;
+	}
+
+	public void setLink(String link) {
+		this.link = link;
 	}
 
 

@@ -6,6 +6,7 @@ pageEncoding="UTF-8"%>
 <spring:url value="/resources/theme1" var="resources" />
 
 
+<spring:url value="/resources_static/theme1" var="resources_static" />
 
 
 <div class="page-heading-breadcrumbs">
@@ -39,13 +40,13 @@ pageEncoding="UTF-8"%>
 
 <div class="col-sm-3 col-xs-6 r-full-width p-0" ng-repeat="image in album.images">
 <figure class="gallery-figure">
-<img ng-src="${resources}{{image.thumburl}}" alt="">
+<img ng-src="${resources_static}{{image.thumburl}}" alt="">
 <figcaption class="overlay">
 <div class="position-center-center">
 <ul class="btn-list">
 <!-- <li><a class="fa fa-link" href="#"></a></li>
  --><%-- <li><a href="${resources}{{image.url}}" data-rel="prettyPhoto[gallery]"><i class="fa fa-search"></i></a></li>
- --%><li><a prettyp ng-href="${resources}{{image.url}}" rel="prettyPhoto[gallery]"><i class="fa fa-search"></i></a></li>
+ --%><li><a prettyp ng-href="${resources_static}{{image.url}}" rel="prettyPhoto[gallery]"><i class="fa fa-search"></i></a></li>
 </ul>
 </div>
 </figcaption>

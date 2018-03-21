@@ -146,5 +146,7 @@ public interface SportService {
 	public Custompage findCustompageById(int id);
 
 	public void deleteCustompage(int id, String staticPath);
+
+	public void uploadCustompageImages(String staticPath, int id, CommonsMultipartFile[] files);
 	
 }

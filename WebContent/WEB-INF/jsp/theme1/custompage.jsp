@@ -59,11 +59,16 @@ pageEncoding="UTF-8"%>
 <p></p>
 </article>
 <div class="blog-detail">
-<figure>
-<img ng-src="${resources_static}{{notice.imageurl}}" alt="" style='max-height:400px'>
-</figure>
+
 <article>
 <p>{{custompage.content}}</p>
+ </article>
+</div>
+<div class="blog-detail">
+<figure ng-repeat="image in custompage.images">
+<img ng-src="${resources_static}{{image.url}}" alt="" style='max-width:800px'>
+</figure>
+<article>
  </article>
 </div>
 <!-- <div class="tags-holder">

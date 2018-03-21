@@ -561,6 +561,16 @@ public class SportController {
 		return custompage;
 	}
 	
+	@RequestMapping(value = "/custompages/{id}/images", method = RequestMethod.POST, produces = "application/json")
+	public @ResponseBody  void uploadCustompageImages(@PathVariable int id, @RequestParam(value = "files") CommonsMultipartFile[] files,HttpSession session){  
+      //String path=session.getServletContext().getRealPath("/");  
+      //String path="/home/and/Javaresources/soccer";
+       System.out.println("CUSTOMPAGEIMAGES");
+        sportService.uploadCustompageImages(getStaticPath(session), id, files);
+        return;
+    }  
+	
+	
 	@RequestMapping(value = "/news/{id}/images", method = RequestMethod.POST, produces = "application/json")
 	public @ResponseBody  Notice uploadNoticeImage(@PathVariable int id, @RequestParam CommonsMultipartFile file,HttpSession session){  
     //  String path=session.getServletContext().getRealPath("/");  
@@ -932,9 +942,9 @@ public class SportController {
 	public @ResponseBody void deleteImage(@PathVariable int id,HttpSession session)
 	{
 	//	String path=session.getServletContext().getRealPath("/");  
-	      String path="/home/and/Javaresources/soccer";
+	   // String path="/home/and/Javaresources/soccer";
 		
-		sportService.deleteImage(path,id);
+		sportService.deleteImage(getStaticPath(session),id);
 		
 		return ;
 	}

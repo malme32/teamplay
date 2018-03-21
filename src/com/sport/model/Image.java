@@ -27,8 +27,6 @@ public class Image {
 	private int id;
 
 	
-	
-	
 	@Column(name="url", length=250)
 	private String url;
 	
@@ -43,6 +41,11 @@ public class Image {
 	private Album album;
 
 
+	
+	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(name="custompageid")
+	private Custompage custompage;
 
 	public int getId() {
 		return id;
@@ -88,6 +91,18 @@ public class Image {
 
 	public void setThumburl(String thumburl) {
 		this.thumburl = thumburl;
+	}
+
+
+
+	public Custompage getCustompage() {
+		return custompage;
+	}
+
+
+
+	public void setCustompage(Custompage custompage) {
+		this.custompage = custompage;
 	}
 
 

@@ -84,7 +84,7 @@ public class TeamDaoImpl extends AbstractDao implements TeamDao{
 	public List<Team> findByMessageDate() {
 		// TODO Auto-generated method stub
 		   @SuppressWarnings("unchecked")
-		   List<Object> list = getSession().createSQLQuery("select Q.*,P.last_used from ((SELECT max(M.date) D ,M.message, T.*,C.name adminname, C.username  from Message M, Contact C, Team T  where M.contactid=C.id AND c.adminteamid = T.id group by M.contactid) UNION DISTINCT (SELECT max(date) D ,M.message, T.*,C.name adminname, C.username  from Message M, Contact C, Team T  where M.receiverid=C.id AND c.adminteamid = T.id group by M.receiverid) UNION DISTINCT (select null, null, T.*,C.name adminname, C.username from Team T LEFT JOIN Contact C ON C.adminteamid = T.id) order by D DESC) Q left join persistent_logins P on Q.username = P.username").list();
+		   List<Object> list = getSession().createSQLQuery("select Q.*,P.last_used from ((SELECT max(M.date) D ,M.message, T.*,C.name adminname, C.username  from message M, contact C, team T  where M.contactid=C.id AND C.adminteamid = T.id group by M.contactid) UNION DISTINCT (SELECT max(date) D ,M.message, T.*,C.name adminname, C.username  from message M, contact C, team T  where M.receiverid=C.id AND C.adminteamid = T.id group by M.receiverid) UNION DISTINCT (select null, null, T.*,C.name adminname, C.username from team T LEFT JOIN contact C ON C.adminteamid = T.id) order by D DESC) Q left join persistent_logins P on Q.username = P.username").list();
 			
 		   List<Team> teamlist = new ArrayList<Team>();
 		   for(int i=0; i<list.size(); i++) {
