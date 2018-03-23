@@ -49,7 +49,6 @@ pageEncoding="UTF-8"%>
 <%@include  file="homefake.jsp" %> 
 
 
-
 <%-- <img style='position:fixed; left:0; top:200px; opacity:0.1; z-index:-1; ' 	ng-src='${resources}/newimages/soccer_ball.png'/> --%>
 <div ng-view class="main"></div>
 

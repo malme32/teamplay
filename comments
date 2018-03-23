@@ -8,15 +8,25 @@ notifications in app in game changes and news.
 -- ADD more info in users (email etc..)
 
 ROSSONERI:
-- insert team and reorder the matchdays
-(DONE) change team in a champion with some other 
-- Add team cover
+
 - See all matches in team page
+- add email to user and send notifications to mail also
+- add tab to add and edit sponsors
+- mark news as important and add them to main page
+- improve gui in admin page
+- improve gui in main page. footer has problem
+- fix issue with permenent login
+- fix deletion of images in pages and albums
+- fix issues in android
+- fix inactive champion in some cases
+- fix gui in edit team and add waiting when uploading
+
+DONE:
+- Add team cover
 - add tabs with custom content: photo, text, link
 - Add option for admin to disable team leader from changing teams name and players (pictures can be added)
 - Improve the notification -> make it less resource consuming
-
-
-DONE:
+(DONE) insert team and reorder the matchdays
+(DONE) change team in a champion with some other 
 MUST - inactive active championhip
 MUST - popup images in news

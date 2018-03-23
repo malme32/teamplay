@@ -55,7 +55,7 @@ pageEncoding="UTF-8"%>
 <img ng-src="${resources_static}{{notice.imageurl}}" alt="" style='max-height:400px'>
 </figure>
 <article>
-<p>{{notice.content}}</p>
+<p style=" white-space: pre-wrap !important; overflow-wrap: break-word;" ng-bind-html="notice.content | parseUrl"></p>
  </article>
 </div>
 <div class="tags-holder">

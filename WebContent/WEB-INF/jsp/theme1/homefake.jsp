@@ -13,22 +13,22 @@ pageEncoding="UTF-8"%>
 <div id="animated-slider" class="carousel slide carousel-fade">
 
 <div class="carousel-inner" role="listbox">
-
+<div ng-class='indexClass'>
 <div class="item active">
 <img src="${resources}/images/banner-slider/40781.jpg" alt="">
 <div class="position-center-x full-width">
 <div class="container">
  <div class="banner-caption style-1 p-white h-white pull-right">
-<h1 class="animated fadeInUp delay-1s " style="color:#cc0000; text-shadow: 1px 1px #FFFFFF;">Το δημοφιλέστερο άθλημα στην Ευρώπη, το ποδόσφαιρο, βρίσκει το "δικό" του γήπεδο</h1>
-<p class="animated fadeInUp delay-2s red-btn" style="color:#cc0000; text-shadow: 1px 1px #FFFFFF;">Εγκαταστάσεις τελευταίας τεχνολογίας, μέσα από το Rossoneri Mini Football CLub! </p>
+<h2 class="animated fadeInUp delay-1s " style="color:#cc0000; text-shadow: 1px 1px #FFFFFF;">Το δημοφιλέστερο άθλημα στην Ευρώπη, το ποδόσφαιρο, βρίσκει το "δικό" του γήπεδο.</h2>
+<p class="animated fadeInUp delay-2s red-btn" style="; "> Εγκαταστάσεις τελευταίας τεχνολογίας, μέσα από το Rossoneri Mini Football CLub! </p>
 <a class="btn lg red-btn animated fadeInRight delay-3s" href="#"><i>+</i>Περισσοτερα</a>
 </div>
 </div>
 </div>
 </div>
+</div>
 
-
-<div class="item">
+<%-- <div class="item">
 <img src="${resources}/images/banner-slider/black2.jpg" alt="">
 <div class="position-center-x full-width">
 <div class="container">
@@ -53,7 +53,7 @@ pageEncoding="UTF-8"%>
 </div>
 </div>
 </div>
-</div>
+</div> --%>
 
 </div>
 
@@ -73,13 +73,16 @@ pageEncoding="UTF-8"%>
 
 <li>
 <img src="${resources}/images/banner-slider/jointheplayers.jpg" alt="">
+
 <div class="video-banner-caption position-center-center p-white h-white">
+<div >
 <!-- <h1>Continuous effort not strength or<br> intelligence is the key to unlocking our potential</h1>
 <p>Hart's short pass wasn't controlled by Fernando, and the Swedish striker's tackle<br> resulted in the ball rolling into the net. While the bulk</p> -->
 <ul class="btn-list">
 <!-- <li><a class="btn lg red-btn" href="http://www.youtube.com/watch?v=cH6kxtzovew" data-rel="prettyPhoto[video]">watch video<i class="fa fa-play-circle"></i></a></li>
- --><li><a class="btn lg red-btn" href="http://jointheplayers.com/videos/games/rossoneri">ΔΕΙΤΕ Videos<i class="fa fa-angle-right"></i></a></li>
+ --><li ><a class="btn lg red-btn" href="http://jointheplayers.com/videos/games/rossoneri">ΔΕΙΤΕ Videos<i class="fa fa-angle-right"></i></a></li>
 </ul>
+</div>
 </div>
 </li>
 
@@ -108,9 +111,9 @@ pageEncoding="UTF-8"%>
 </ul>
 
 
-<div class="main-slides-thumb">
+<div  class="main-slides-thumb">
 <div class="container">
-<ul id="slides-thmnail" class="slides-thmnail">
+<ul id="slides-thmnail" class="slides-thmnail" >
 <li>
 <span><i class="fa fa-sliders"></i>ΔΙΑΦΑΝΕΙΕΣ</span>
 </li>
@@ -124,10 +127,10 @@ pageEncoding="UTF-8"%>
 <span><i class="fa fa-bar-chart"></i>ΓΙΑ ΕΜΑΣ</span>
 </li>
 </ul>
-<ul class="thmnail-arrows">
+<!-- <ul class="thmnail-arrows">
 <li class="prev-1"><span class="icon-arrow-01"></span></li>
 <li class="next-1"><span class="icon-arrow-01"></span></li>
-</ul>
+</ul> -->
 </div>
 </div>
 

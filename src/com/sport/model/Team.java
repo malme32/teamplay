@@ -53,8 +53,16 @@ public class Team {
 	@Column(name="coverpath", length=200)
 	private String coverpath;
 	
+	@Column(name="coverthumbpath", length=200)
+	private String coverthumbpath;
+	
+	
 	@Column(name="description", length=1000)
 	private String description;
+	
+	@Column(name="locked")
+	private Boolean locked;
+	
 	
 	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY,mappedBy="team1",cascade = CascadeType.ALL)
@@ -215,6 +223,26 @@ public class Team {
 
 	public void setAdminname(String adminname) {
 		this.adminname = adminname;
+	}
+
+
+	public Boolean getLocked() {
+		return locked;
+	}
+
+
+	public void setLocked(Boolean locked) {
+		this.locked = locked;
+	}
+
+
+	public String getCoverthumbpath() {
+		return (this.coverthumbpath==null||this.coverthumbpath.equals("")) ? (String) "/defaultimages/teamdefaultcoverthumb.jpg" : coverthumbpath;
+	}
+
+
+	public void setCoverthumbpath(String coverthumbpath) {
+		this.coverthumbpath = coverthumbpath;
 	}
 
 }

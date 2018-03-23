@@ -24,7 +24,7 @@ pageEncoding="UTF-8"%>
 
 <h1>ΟΜΑΔΕΣ</h1>
  <input ng-model='mysearch' type="text" class="form-control" placeholder="Αναζητηστε ομάδα εδώ...">
-<i class="fa fa-search"></i></div>
+<i class="fa fa-search"></i>
 <select ng-model="selectedTeam" ng-change="getTeam()" ng-options="row.name for row in teams | filter:mysearch | orderBy:'name'">
 <option value="">---Επιλέξτε---</option>
 </select>
@@ -32,8 +32,9 @@ pageEncoding="UTF-8"%>
 
        <h2>ΕΠΕΞΕΡΓΑΣΙΑ</h2>
 	<ul class='ul_nobullet'>
-		<li> <input type='text' ng-model='team.name' placeholder='Το ονομα της ομαδας εδω'/>	</li>
-		<li><textarea rows="4" cols="50" ng-model='team.description' maxlength="1000" class="width_100" placeholder='Η περιγραφή της ομάδας εδω..'></textarea>  </li>
+		<li> Τίτλος: <input type='text' ng-model='team.name' placeholder='Το ονομα της ομαδας εδω'/>	</li>
+		<li>Περιγραφή:  <textarea rows="4" cols="50" ng-model='team.description' maxlength="1000" class="width_100" placeholder='Η περιγραφή της ομάδας εδω..'></textarea>  
+		  <input title='Εαν είναι επιλεγμένο τότε ο αρχηγός της ομάδας δεν θα μπορεί τους παίχτες της ομάδας εκτος απο εικόνα και θέση' type="checkbox" ng-model='team.locked'/> Παίχτες κλειδωμένοι	</li>
 		
 		<li> <button class='button_flat background_dark_yellow float_right' ng-click="editTeam()">Αποθήκευση</button> 
 		<button class='button_flat background_red float_right'  ng-click="deleteTeam()">Διαγραφή</button></li>
@@ -61,15 +62,15 @@ pageEncoding="UTF-8"%>
 			<tr>
 				<td><img width=60 height=60 ng-show='team.logopath' ng-src='${resources_static}{{team.logothumbpath}}'/> </td>
 				<td><input type = "file" file-model = "mylogo"  accept="image/*"/>
-	         <button class='button_flat background_dark_yellow' ng-click = "uploadLogo()">Upload</button></td>
+	         <button class='button_flat background_dark_yellow' ng-click = "uploadLogo()">Upload Logo</button></td>
 			</tr>
-<%-- 			<tr>
-				<td><img width=60 height=60 ng-show='team.coverpath' ng-src='${resources}{{team.coverpath}}'/></td>
+			<tr>
+				<td><img width=60 height=60 ng-show='team.coverpath' ng-src='${resources_static}{{team.coverthumbpath}}'/></td>
 	
 				<td>		 <input type = "file" file-model = "mycover" class='button_flat background_dark_yellow' accept="image/*"/>
-	         <button class='button_flat background_dark_yellow' ng-click = "uploadCover()">Αλλαγή Cover</button>
+	         <button class='button_flat background_dark_yellow' ng-click = "uploadCover()">Upload Cover</button>
 	         </td>
-			</tr> --%>
+			</tr> 
 		</table>
 	</div>
 
@@ -112,8 +113,11 @@ pageEncoding="UTF-8"%>
 
           <td><select  ng-model="row.soccerposition">
 		      <option value="">---Επιλέξτε---</option> <!-- not selected / blank option -->
-		      <option value="Defender">Αμυντικός</option> <!-- interpolation -->
-		      <option value="Goalkeeper">Τερματοφύλακας</option>
+	      <option value="">---Επιλέξτε θέση παίχτη---</option> <!-- not selected / blank option -->
+		      <option value="Αμυντικος">Αμυντικός</option> <!-- interpolation -->
+		      <option value="Μεσος">Μέσος</option>
+		      <option value="Επιθετικος">Επιθετικός</option>
+		      <option value="Τερματοφυλακας">Τερματοφύλακας</option>
 		    </select>
    		 </td>
                 <td> <button class='button_flat background_dark_yellow' ng-click = "editPlayer(row)">Αποθήκευση</button>
@@ -138,8 +142,11 @@ pageEncoding="UTF-8"%>
         
             <td><select  ng-model="newplayer.soccerposition">
 		      <option value="">---Επιλέξτε---</option> <!-- not selected / blank option -->
-		      <option value="Defender">Αμυντικός</option> <!-- interpolation -->
-		      <option value="Goalkeeper">Τερματοφύλακας</option>
+	      <option value="">---Επιλέξτε θέση παίχτη---</option> <!-- not selected / blank option -->
+		      <option value="Αμυντικος">Αμυντικός</option> <!-- interpolation -->
+		      <option value="Μεσος">Μέσος</option>
+		      <option value="Επιθετικος">Επιθετικός</option>
+		      <option value="Τερματοφυλακας">Τερματοφύλακας</option>
 		    </select>
    		 </td>
         
@@ -155,7 +162,8 @@ pageEncoding="UTF-8"%>
         </div>
          </div>
          </div>
-        </div>
+      <!--   </div>
+        </div> -->
 <!--    <form method="POST" ng-submit="teams/{{team.id}}/images" enctype="multipart/form-data">
     <table>
         <tr>

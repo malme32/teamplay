@@ -97,12 +97,14 @@ pageEncoding="UTF-8"%>
 </div>
 <button class="btn red-btn pull-right">Send Comments</button>
 </form>
+<br/><br/>
 
+<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3132.6990918650517!2d21.761337014688557!3d38.263284391676926!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x135e498170f510a1%3A0xb96a331302d3545d!2zzpPOrs-AzrXOtM6_IM6UzrHOss6_z4XPgc67zq7Pgg!5e0!3m2!1sel!2sgr!4v1521837560040" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
 
-<figure class="col-sm-6 tower-img">
+<!-- <figure class="col-sm-6 tower-img">
 <div id="custom-map" class="contact-map"></div>
 </figure>
-
+ -->
 </div>
 </div>
 </div>

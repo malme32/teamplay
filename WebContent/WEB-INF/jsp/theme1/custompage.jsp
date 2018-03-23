@@ -61,7 +61,7 @@ pageEncoding="UTF-8"%>
 <div class="blog-detail">
 
 <article>
-<p style="white-space: pre;" ng-bind-html="custompage.content | parseUrl"></p>
+<p style=" white-space: pre-wrap !important; overflow-wrap: break-word;" ng-bind-html="custompage.content | parseUrl"></p>
  </article>
 </div>
 <div class="blog-detail">
@@ -101,7 +101,7 @@ pageEncoding="UTF-8"%>
 <a href="#"><img src="${resources}/images/adds-02.jpg" alt=""></a>
 </div>
  --%>
-<div ng-show='upcominggames.length' style="margin-bottom:40px">
+<%-- <div ng-show='upcominggames.length' style="margin-bottom:40px">
 		<h3>ΕΠΟΜΕΝΑ ΠΑΙΧΝΙΔΙΑ</h3>
 
 
@@ -128,7 +128,7 @@ pageEncoding="UTF-8"%>
 		
 			</div>
 
-
+ --%>
 
 <div class="aside-widget" ng-show='news.length'>
 <h3><span>ΤΕΛΕΥΤΑΙΑ ΝΕΑ</span></h3>

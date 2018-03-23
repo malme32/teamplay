@@ -782,6 +782,84 @@ public class SportServiceImpl  implements SportService{
 	}
 
 	
+	
+	@Override
+	public void uploadTeamCover(String path, int id, CommonsMultipartFile file) {
+		// TODO Auto-generated method stub
+		
+		
+		Team team = teamDao.findById(id);
+		// TODO Auto-generated method stub
+        //String path=session.getServletContext().getRealPath("/");  
+        //String filename=file.getOriginalFilename(); 
+        String extension = FilenameUtils.getExtension(file.getOriginalFilename()); 
+        
+        Random rand=new Random();
+
+        int randomNum = rand.nextInt((10000) + 1) + 0;
+        
+		String filename=String.valueOf(randomNum+"_"+team.getId())+"."+extension;
+        try{  
+        byte barr[]=file.getBytes();  
+          
+        BufferedOutputStream bout=new BufferedOutputStream(  
+                 new FileOutputStream(path+"/resources/theme1/customimages/cover_"+filename));  
+        bout.write(barr);  
+        bout.flush();  
+        bout.close();  
+        
+        ByteArrayInputStream bais = new ByteArrayInputStream(barr);
+        BufferedImage resizeMe = ImageIO.read(bais);
+        Dimension newMaxSize = new Dimension(60, 60);
+        BufferedImage resizedImg = Scalr.resize(resizeMe, Method.QUALITY, newMaxSize.width, newMaxSize.height);
+        
+        BufferedOutputStream bout1=new BufferedOutputStream(  
+                 new FileOutputStream(path+"/resources/theme1/customimages/cover_thumb_"+filename));  
+        
+        ImageIO.write(resizedImg, extension, bout1);
+    
+        bout1.flush();  
+        bout1.close();  
+
+        if(!team.getCoverpath().contains("default"))
+        {
+			File file1 = new File(path+"/resources/theme1/"+team.getCoverpath());
+			file1.delete();
+		
+			file1 = new File(path+"/resources/theme1/"+team.getCoverthumbpath());
+			file1.delete();
+			System.out.println("TEAM_COVER_DELETED");
+        }
+        
+        
+        team.setCoverpath("/customimages/cover_"+filename);
+        team.setCoverthumbpath("/customimages/cover_thumb_"+filename);
+    
+        generalDaoService.update(team);
+        }catch(Exception e){System.out.println(e);}  
+        
+        return;
+		////////////////////////////////////////////////////////////////////////////////
+		
+        /*	Team team = teamDao.findById(id);
+		// TODO Auto-generated method stub
+        String extension = FilenameUtils.getExtension(file.getOriginalFilename()); 
+		String filename=String.valueOf(team.getId())+"."+extension;
+        try{  
+        byte barr[]=file.getBytes();  
+          
+        BufferedOutputStream bout=new BufferedOutputStream(  
+                 new FileOutputStream(path+"/resources/theme1/customimages/cover_"+filename));  
+        bout.write(barr);  
+        bout.flush();  
+        bout.close();  
+        team.setCoverpath("/customimages/cover_"+filename);
+        generalDaoService.update(team);
+        }catch(Exception e){System.out.println(e);}  
+        
+        return;*/
+	}
+	
 	@Override
 	public Notice uploadNoticeImage(String path, int id, CommonsMultipartFile file) {
 		// TODO Auto-generated method stub
@@ -838,28 +916,7 @@ public class SportServiceImpl  implements SportService{
 	}
 
 	
-	
-	@Override
-	public void uploadTeamCover(String path, int id, CommonsMultipartFile file) {
-		// TODO Auto-generated method stub
-		Team team = teamDao.findById(id);
-		// TODO Auto-generated method stub
-        String extension = FilenameUtils.getExtension(file.getOriginalFilename()); 
-		String filename=String.valueOf(team.getId())+"."+extension;
-        try{  
-        byte barr[]=file.getBytes();  
-          
-        BufferedOutputStream bout=new BufferedOutputStream(  
-                 new FileOutputStream(path+"/resources/theme1/customimages/cover_"+filename));  
-        bout.write(barr);  
-        bout.flush();  
-        bout.close();  
-        team.setCoverpath("/customimages/cover_"+filename);
-        generalDaoService.update(team);
-        }catch(Exception e){System.out.println(e);}  
-        
-        return;
-	}
+
 
 	@Override
 	public void addPlayerToTeam(int teamid, int playerid) {
@@ -944,6 +1001,7 @@ public class SportServiceImpl  implements SportService{
 		Team team1 = findTeamById(team.getId());
 		team1.setName(team.getName());
 		team1.setDescription(team.getDescription());
+		team1.setLocked(team.getLocked());
 	//	Hibernate.initialize(team.getPlayers());
 		//team.setPlayers(team1.getPlayers());
 		
@@ -1277,7 +1335,19 @@ public class SportServiceImpl  implements SportService{
 			file.delete();
 			file = new File(path+"/resources/theme1/"+team.getLogothumbpath());
 			file.delete();
+
 		}
+		if(!team.getCoverpath().contains("default"))
+		{
+
+			File file = new File(path+"/resources/theme1/"+team.getCoverpath());
+			file.delete();
+
+			file = new File(path+"/resources/theme1/"+team.getCoverthumbpath());
+			file.delete();
+
+		}
+
 		Hibernate.initialize(team.getPlayers());
 		for(Contact contact:team.getPlayers())
 		{	

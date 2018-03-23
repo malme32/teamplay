@@ -1347,8 +1347,8 @@ appMain.controller("indexController",function($scope, $http, $location){
 	        //$scope.result = response.statusText;
 	      
 	    });*/
-
-	 
+	
+	//$location.path('home'); 
 });
 
 appMain.controller("newsDetailController",function($scope, $http, $location,$routeParams){
@@ -1784,18 +1784,7 @@ appMain.controller("teamController",function($scope, $http, $location, $window){
 		 $scope.uploadLogo = function(){
 		     var fd = new FormData();
              fd.append('file', $scope.mylogo);
-          
-
-/*             $http.post("teams/"+$scope.team.id+"/images",fd,
-                     {
-                         transformRequest: angular.identity,
-                         headers: {'Content-Type': undefined}                     
-                      }).success(function(d)
-                          {
-                    	  	$window.location.reload();
-                          })        
-                 }*/
-           
+        
              
 			 $http({
 			        method : "POST",
@@ -1813,11 +1802,12 @@ appMain.controller("teamController",function($scope, $http, $location, $window){
 			    });
              
 		 }
- 
-		 $scope.uploadCover = function(){
+		 
+		 $scope.uploadCover= function(){
 		     var fd = new FormData();
-             fd.append('file', $scope.mycover);
-                     
+             fd.append('file', $scope.mylogo);
+        
+             
 			 $http({
 			        method : "POST",
 			        	url : "teams/"+$scope.team.id+"/covers",
@@ -1834,6 +1824,7 @@ appMain.controller("teamController",function($scope, $http, $location, $window){
 			    });
              
 		 }
+
 		 
 		 $scope.editPlayer = function (row){ 
 
@@ -1863,6 +1854,8 @@ appMain.controller("teamController",function($scope, $http, $location, $window){
 		    }).then(function mySuccess(response) {
 		    			$scope.newplayer={};
 		    			$scope.getTeam();
+		    			alert("Ο παίχτης έχει εισαχθεί με επιτυχία! Επέλεξε τον παίχτη απο το απο την λίστα για εισαγωγή εικόνας και επεξεργασία στοιχείων!")
+
 				    		//$scope.newplayer = response.data;
 				    		//$scope.result=$scope.newplayer;
 		/*					 $http({

@@ -21,16 +21,18 @@ pageEncoding="UTF-8"%>
 
 <%-- <div class="overlay-dark theme-padding parallax-window" data-appear-top-offset="600" data-parallax="scroll" data-image-src="${resources}/images/inner-banner/img-03.jpg">
 </div> --%>
-
+ <div style='background:url(${resources_static}{{team.coverpath}}) no-repeat center;  height:280px;background-size:cover; '></div>
+<br/>
 
 <main class="main-content">
 
 <div class="team-detail-holder theme-padding white-bg">
 <div class="container" style="padding:0">
-
+<h1 style=''><b>{{team.name}}</b></h1>
 <div class="row">
 
 <div class="col-lg-3 col-md-3 col-sm-5" style='margin-bottom:30px'>
+
 <div class="team-column ">
 <img ng-src="${resources_static}{{team.logopath}}" alt="">
 <!-- <span class="player-number">12</span>
@@ -50,7 +52,7 @@ pageEncoding="UTF-8"%>
 
 <div class="team-detail-content theme-padding-bottom" >
 <h2>ΠΕΡΙΓΡΑΦΗ ΟΜΑΔΑΣ</h2>
-<p>{{team.description}}</p>
+<p style=" white-space: pre-wrap !important; overflow-wrap: break-word;" ng-bind-html="team.description | parseUrl"></p>
 <button style='' ng-class="isFollowed(team)"  ng-click="followTeam(team)">{{isFollowedText(team)}}</button> 
 <div class="tags-holder">
 <!--  <ul class="tags-list pull-left">
