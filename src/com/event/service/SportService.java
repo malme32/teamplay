@@ -85,7 +85,7 @@ public interface SportService {
 
 	public Scorer findScorerById(int id);
 
-	public List<Notice> findAllNews(int count, boolean headersonly);
+	public List<Notice> findAllNews(int count, boolean headersonly, String option);
 
 	public Notice findNewsById(int id);
 

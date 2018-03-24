@@ -34,8 +34,8 @@ pageEncoding="UTF-8"%>
 
 <div class="main-heading-holder">
 <div class="main-heading">
-<h2>contact us</h2>
-<p>Chelsea captain John Terry is not ready to start against Stoke on Saturday and is struggling to prove his fitness.</p>
+<h2>ΕΠΙΚΟΙΝΩΝΙΑ</h2>
+<p>Διοργανώνουμε Ακαδημίες, Πρωταθλήματα, Φιλικά παιχνίδια! Επικοινωνήστε μαζί μας για λεπτομέρειες!</p>
 </div>
 </div>
 
@@ -44,27 +44,29 @@ pageEncoding="UTF-8"%>
 <li class="col-sm-4">
 <div class="address-widget">
 <span class="address-icon"><i class="fa fa-phone"></i></span>
-<h5>OUR NUMBERS</h5>
-<p>49 30 47373795<span class="red-color">Alise Vivienne ( manager )</span></p>
-<p>49 30 47373795<span class="red-color">Tina Rollandos ( secretary )</span></p>
-<p>Call at any time convenient for you. We are available for you 24/7</p>
+<h5>ΤΗΛΕΦΩΝΑ</h5>
+<p>2610 436900<span class="red-color">Γραμματεία Rossoneri MFC</span></p>
+<p>6989480880<span class="red-color">Whats up (5:00 εως 23:00 )</span></p>
 </div>
 </li>
 <li class="col-sm-4">
 <div class="address-widget more-info">
 <span class="address-icon"><i class="fa fa-info"></i></span>
-<h5>MORE INFO</h5>
-<strong>Cupim brisket shank, prosciutto porchetta kevin jowl ham hock.</strong>
-<p>Bresaola alcatra boudin andouille, ball tip rump pancetta shoulder. Beef ribs turducken tail flank. Leberkas pancetta tri-tip biltong spare ribs.</p>
+<h5>ΛΕΠΤΟΜΕΡΙΕΣ</h5>
+<strong>Rossoneri Mini Football CLub!</strong>
+<p>Οι εγκαταστάσεις του Rossoneri mini football club είναι από τις κορυφαίες στο είδος τους. Διακρίνονται για την ποιότητα κατασκευής τους, την αισθητική, την λειτουργικότητα αλλά και την ασφάλεια. 
+</p>
 </div>
 </li>
 <li class="col-sm-4">
 <div class="address-widget office-adderss">
 <span class="address-icon"><i class="fa fa-map-marker"></i></span>
-<h5>OUR office address</h5>
-<p>1782 Harrison Street Sun Prairie, WI 53590</p>
-<p><i class="red-color fa fa-envelope-o"></i><a href="http://html.crunchpress.com/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="ee83818780ae8c8287808a9a8b969a898b808b9c8f9a819cc08a8b">[email&#160;protected]</a></p>
-<p>Our office is located near the city center, on the left is a spacious park, swimming pool.</p>
+<h5>ΕΓΚΑΤΑΣΤΑΣΕΙΣ</h5>
+<p>Μειλίχου κ.Συχαινά, Πάτρα</p>
+<p><i class="red-color fa fa-envelope-o"></i><a href="mailto:rossonerimfc@hotmail.com" class="__cf_email__" >rossonerimfc@hotmail.com</a></p>
+<p>Το αθλητικό μας κέντρο βρίσκεται στην καταπράσινη περιοχή των Συχαινών μόλις 5 λεπτά απο το κέντρο της Πάτρας. 
+</p>
+<a href='' onclick='window.scrollTo(0,document.body.scrollHeight-1000);'>Χάρτης</a>
 </div>
 </li>
 </ul>
@@ -75,12 +77,12 @@ pageEncoding="UTF-8"%>
 
 <div class="theme-padding-bottom">
 <div class="container">
-<h2>Send us an email</h2>
+<h2>ΣΤΕΙΛΤΕ ΜΑΣ ΕΝΑ ΜΗΝΥΜΑ</h2>
 <div class="row">
 
 <form id="contact-form" class="contact-form col-sm-6">
 <div class="form-group">
-<input type="text" class="form-control" required="required" placeholder="Name">
+<input type="text" class="form-control" required="required" placeholder="Ονομα">
 <i class="fa fa-user"></i>
 </div>
 <div class="form-group">
@@ -88,18 +90,17 @@ pageEncoding="UTF-8"%>
 <i class="fa fa-envelope"></i>
 </div>
 <div class="form-group">
-<input type="text" class="form-control" required="required" placeholder="Phone">
+<input type="text" class="form-control" required="required" placeholder="Τηλεφωνο">
 <i class="fa fa-phone"></i>
 </div>
 <div class="form-group">
-<textarea class="form-control style-d" rows="6" id="comment" placeholder="Write Comments here..."></textarea>
+<textarea class="form-control style-d" rows="6" id="comment" placeholder="Γραψτε σχολια εδω..."></textarea>
 <i class="fa fa-pencil-square-o"></i>
 </div>
-<button class="btn red-btn pull-right">Send Comments</button>
+<button class="btn red-btn pull-right">Αποστολη</button>
 </form>
 <br/><br/>
 
-<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3132.6990918650517!2d21.761337014688557!3d38.263284391676926!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x135e498170f510a1%3A0xb96a331302d3545d!2zzpPOrs-AzrXOtM6_IM6UzrHOss6_z4XPgc67zq7Pgg!5e0!3m2!1sel!2sgr!4v1521837560040" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
 
 <!-- <figure class="col-sm-6 tower-img">
 <div id="custom-map" class="contact-map"></div>
@@ -108,6 +109,7 @@ pageEncoding="UTF-8"%>
 </div>
 </div>
 </div>
+<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3132.6990918650517!2d21.761337014688557!3d38.263284391676926!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x135e498170f510a1%3A0xb96a331302d3545d!2zzpPOrs-AzrXOtM6_IM6UzrHOss6_z4XPgc67zq7Pgg!5e0!3m2!1sel!2sgr!4v1521837560040" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
 
 </main>
 

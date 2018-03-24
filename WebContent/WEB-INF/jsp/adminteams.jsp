@@ -33,8 +33,8 @@ pageEncoding="UTF-8"%>
        <h2>ΕΠΕΞΕΡΓΑΣΙΑ</h2>
 	<ul class='ul_nobullet'>
 		<li> Τίτλος: <input type='text' ng-model='team.name' placeholder='Το ονομα της ομαδας εδω'/>	</li>
-		<li>Περιγραφή:  <textarea rows="4" cols="50" ng-model='team.description' maxlength="1000" class="width_100" placeholder='Η περιγραφή της ομάδας εδω..'></textarea>  
-		  <input title='Εαν είναι επιλεγμένο τότε ο αρχηγός της ομάδας δεν θα μπορεί τους παίχτες της ομάδας εκτος απο εικόνα και θέση' type="checkbox" ng-model='team.locked'/> Παίχτες κλειδωμένοι	</li>
+		<li>Περιγραφή:  <textarea rows="4" cols="50" ng-model='team.description' maxlength="1000" class="width_100" placeholder='Η περιγραφή της ομάδας εδω..'></textarea> </li> 
+		<li title='Εαν είναι επιλεγμένο τότε ο αρχηγός της ομάδας δεν θα μπορεί τους παίχτες της ομάδας εκτος απο εικόνα και θέση'>  <input  type="checkbox" ng-model='team.locked'/> Παίχτες κλειδωμένοι	</li>
 		
 		<li> <button class='button_flat background_dark_yellow float_right' ng-click="editTeam()">Αποθήκευση</button> 
 		<button class='button_flat background_red float_right'  ng-click="deleteTeam()">Διαγραφή</button></li>

@@ -168,7 +168,26 @@ myApp.service('fileUpload', ['$http', function ($http) {
    }
 }]);
 */
+appAdmin.controller("adminStartController",function($scope, $http, $location, $window,$route){
+//alert($location.path());//$location.path('home'); 
 
+
+
+$scope.$on("$locationChangeStart", function(event, next, current) { 
+	
+
+	    	//if(next.indexOf("#!/home") !== -1&&!$rootScope.isAndroid)
+//if(next!=current)
+	if(next.indexOf("#!/admin")==-1)
+		$location.path('adminchampions')
+/*	 alert(current);
+	 alert(next);*/
+
+		 
+	    	
+});
+
+});
 
 appAdmin.controller("imagesController",function($scope, $http, $location, $window){
 	
@@ -378,15 +397,18 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 	 /*}*/
 	 
 	 $scope.getTotalTeamList = function (){  
+		 $scope.loading=true;
 		 $http({
 	        method : "GET",
 	        url : "teams"
 	    }).then(function mySuccess(response) {
 
+			 $scope.loading=false;
 	        $scope.totalTeamList = response.data;
 	      
 	    }, function myError(response) {
-	  
+
+			 $scope.loading=false;
 	        $scope.result = response.statusText;
 	      
 	    });
@@ -398,6 +420,7 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 		 $scope.matchday="";
 		 $scope.standings = "";
 		 $scope.teamgroup = "";*/
+		 $scope.loading=true;
 		 $scope.playoffs = "";
 		 $http({
 		        method : "GET",
@@ -417,10 +440,12 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 				    		 games[k].tmpdate=new Date(games[k].date);
 		    		}
 	    		}
-		    	
+
+				 $scope.loading=false;
 		    	
 		    }, function myError(response) {
-		  
+
+				 $scope.loading=false;
 		        $scope.result = response;//;"/champions/"+row.id+"/teamgroups";
 		      
 		    });
@@ -435,12 +460,14 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 			 $scope.curteams = "";
 			 $scope.teamgroup = "";
 			 $scope.playoffs = "";
+			 $scope.loading=true;
 			 $http({
 			        method : "GET",
 			        url : "champions/"+row.id+"/teamgroups"
 			    }).then(function mySuccess(response) {
 
 			        $scope.teamgrouplist = response.data;
+					 $scope.loading=false;
 			    }, function myError(response) {
 			  
 			        $scope.result = response;//;"/champions/"+row.id+"/teamgroups";
@@ -452,7 +479,7 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 		        //$scope.standings =  row.standings;
 		        $scope.teamgroup = row; 
 		        
-		        
+
 				 $http({
 				        method : "GET",
 				        url : "teamgroups/"+row.id+"/standings"
@@ -466,7 +493,7 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 				    	}
 				    	//$scope.result = matchday;
 				    }, function myError(response) {
-				  
+
 				        $scope.result = "An Error Occurred";//;"/champions/"+row.id+"/teamgroups";
 				      
 				    });
@@ -479,7 +506,8 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 			 $scope.result = "";
 			 //$scope.teamgroup =row;
 			// $scope.matchday = row.matchdays;
-			 
+
+			 $scope.loading=true;
 			 $http({
 			        method : "GET",
 			        url : "teamgroups/"+row.id+"/matchdays"
@@ -498,11 +526,13 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 					    		 games[k].tmpdate=new Date(games[k].date);
 			    		}
 		    		}
+					 $scope.loading=false;
 			    	//$scope.result = matchday;
 			    }, function myError(response) {
 			  
 			        $scope.result = "An Error Occurred";//;"/champions/"+row.id+"/teamgroups";
-			      
+
+					 $scope.loading=false;
 			    });
 			 
 		 }
@@ -511,6 +541,7 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 			 	if( $scope.adminChampionName=="") 
 			 		return;
 		        $scope.modalResult = "";
+				 $scope.loading=true;
 			 $http({
 			        method : "POST",
 			        url : "champions",
@@ -522,8 +553,9 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 
 			    	$window.location.reload();
 			    }, function myError(response) {
-			  
-			        $scope.result = "An Error occured. Try again.";
+
+					 $scope.loading=false;
+			        alert("An Error occured. Try again.");
 			      
 			    });
 			 
@@ -539,6 +571,7 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 			 $scope.result = "";
 			 	if( row.name=="") 
 			 		return;
+				 $scope.loading=true;
 		        //$scope.modalResult = "";
 			 $http({
 			        method : "PUT",
@@ -552,8 +585,9 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 
 			    	$window.location.reload();
 			    }, function myError(response) {
-			  
-			        $scope.result = "An Error occured. Try again.";
+
+					 $scope.loading=false;
+			        alert("An Error occured. Try again.");
 			      
 			    });
 			 
@@ -564,6 +598,7 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 			 if(!confirm("Είστε σίγουρος;"))
 				 return;
 			 $scope.result = "";
+			 $scope.loading=true;
 		      //$scope.modalResult = "";
 			 $http({
 			        method : "DELETE",
@@ -571,7 +606,8 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 			    }).then(function mySuccess(response) {
 			    	$window.location.reload();
 			    }, function myError(response) {
-			        $scope.result = "An Error occured. Try again.";
+					 $scope.loading=false;
+			        alert("An Error occured. Try again.");
 			    });
 		 }
 		 
@@ -581,6 +617,7 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 			 	if( $scope.adminChampionName=="") 
 			 		return;
 		        $scope.modalResult = "";
+				 $scope.loading=true;
 			 $http({
 			        method : "POST",
 			        url : "champions/"+row.id+"/teamgroups",
@@ -588,11 +625,13 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 			        	        name : $scope.adminTeamgroupName
 			        	    }
 			    }).then(function mySuccess(response) {
+					 $scope.loading=false;
 			    	$scope.getTeamgroup($scope.champion);
 			    	//$window.location.reload();
 			    	$scope.adminTeamgroupName="";
 			    }, function myError(response) {
-			  
+
+					 $scope.loading=false;
 			        alert( "An Error occured. Try again");
 			    });
 			 
@@ -605,6 +644,7 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 			 	if( row.name=="") 
 			 		return;
 		        //$scope.modalResult = "";
+				 $scope.loading=true;
 			 $http({
 			        method : "PUT",
 			        url : "champions/"+$scope.champion.id+"/teamgroups",
@@ -614,9 +654,11 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 			        	    }
 			    }).then(function mySuccess(response) {
 
+					 $scope.loading=false;
 			    	alert("Εγινε!");
 			    }, function myError(response) {
 
+					 $scope.loading=false;
 			        alert( "An Error occured. Try again");
 			      
 			    });
@@ -627,14 +669,17 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 			 $scope.result = "";
 			 if(!confirm("Are you sure?"))
 				 return;
-				 
+
+			 $scope.loading=true;
 			 $http({
 			        method : "DELETE",
 			        url : "teamgroups/"+row.id
 			    }).then(function mySuccess(response) {
+					 $scope.loading=false;
 			    	$scope.getTeamgroup($scope.champion);
 			    	//$window.location.reload();
 			    }, function myError(response) {
+					 $scope.loading=false;
 			        alert( "An Error occured. Try again");
 			    });
 		 }
@@ -651,15 +696,19 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 					 	if( team_==null) 
 					 		return;
 				       // $scope.modalResult = "";
+						 $scope.loading=true;
 					 $http({
 					        method : "PUT",
 					        url : "teamgroups/"+teamgroup_.id+"/teams/"+team_.id
 					    }).then(function mySuccess(response) {
+							 $scope.loading=false;
 					    	$scope.getTeams($scope.teamgroup);
 					    	$scope.getMatchdays($scope.teamgroup); 
+					    	$scope.selectedTeam="";
 					    	//$window.location.reload();
 					    }, function myError(response) {
 
+							 $scope.loading=false;
 					        alert( "An Error occured. Team already exists?");
 					    });
 					 
@@ -670,18 +719,21 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 
 					 	if( team_name=="") 
 					 		return;
-			
+
+						 $scope.loading=true;
 				       // $scope.modalResult = "";
 					 $http({
 					        method : "POST",
 					        url : "teamgroups/"+teamgroup_obj.id+"/teams",
 					        params: { name : team_name}
 					    }).then(function mySuccess(response) {
+							 $scope.loading=false;
 					    	$scope.getMatchdays($scope.teamgroup); $scope.getTeams($scope.teamgroup);
 					    	//$window.location.reload();
 					    	$scope.adminNewTeamName="";
 					    }, function myError(response) {
 
+							 $scope.loading=false;
 					        alert( "An Error occured. Team already exists?");
 					    });
 					 
@@ -711,16 +763,19 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 				 $scope.result = "";
 				 if(!confirm("Are you sure?"))
 					 return;
-			
+
+				 $scope.loading=true;
 				 $http({
 				        method : "DELETE",
 				        url : "standings/"+row.id
 				    }).then(function mySuccess(response) {
 				    	$scope.getMatchdays($scope.teamgroup); $scope.getTeams($scope.teamgroup);
 				    	//$window.location.reload();
+						 $scope.loading=false;
 				    }, function myError(response) {
+						 $scope.loading=false;
 				  
-				        $scope.result = "An Error occured. Try again.";
+				        alert("An Error occured. Try again.");
 				    });
 				 
 			 }
@@ -730,17 +785,20 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 		
 					 if(!confirm("Are you sure?"))
 						 return;
-						 
+
+					 $scope.loading=true;
 					 $http({
 					        method : "DELETE",
 					        url : "matchdays/"+row.id
 					    }).then(function mySuccess(response) {
 					    	
 					    	$scope.getMatchdays($scope.teamgroup); 
+							 $scope.loading=false;
 					    	//$window.location.reload();
 					    }, function myError(response) {
-					  
-					        $scope.result = "An Error occured. Try again.";
+
+							 $scope.loading=false;
+					        alert("An Error occured. Try again.");
 					    });
 					 
 				 }
@@ -750,16 +808,19 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 		
 					 if(!confirm("Are you sure?"))
 						 return;
-						 
+
+					 $scope.loading=true;
 					 $http({
 					        method : "DELETE",
 					        url : "playoffs/"+row.id
 					    }).then(function mySuccess(response) {
 					    	
 					    	$scope.getPlayoffs($scope.champion); 
+							 $scope.loading=false;
 					    	//$window.location.reload();
 					    }, function myError(response) {
-					  
+
+							 $scope.loading=false;
 					        $scope.result = "An Error occured. Try again.";
 					    });
 					 
@@ -770,16 +831,19 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 					 if(!confirm("Είστε σίγουρος?"))
 						 return;
 					 $scope.result = "";
+					 $scope.loading=true;
 					 $http({
 					        method : "POST",
 					        url : "teamgroups/"+row.id+"/actions/generatematchdays",
 					        params:{roundNumber:roundNumber}
 					    }).then(function mySuccess(response) {
 					    	$scope.getMatchdays($scope.teamgroup); 
+							 $scope.loading=false;
 					    	//$window.location.reload();
 					    }, function myError(response) {
-					  
-					        $scope.result = "Παρουσιάστηκε κάποιο σφάλμα. Προσπαθήστε ξανά.";
+
+							 $scope.loading=false;
+					        alert("Παρουσιάστηκε κάποιο σφάλμα. Προσπαθήστε ξανά.");
 					    });
 					 
 				 } 
@@ -787,17 +851,20 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 				 $scope.reGenerateMatchdays = function (row,roundNumber){
 					 if(!confirm("Είστε σίγουρος?"))
 						 return;
+					 $scope.loading=true;
 					 $scope.result = "";
 					 $http({
 					        method : "POST",
 					        url : "teamgroups/"+row.id+"/actions/regeneratematchdays",
 					        params:{roundNumber:roundNumber}
 					    }).then(function mySuccess(response) {
+							 $scope.loading=false;
 					    	$scope.getMatchdays($scope.teamgroup); 
 					    	//$window.location.reload();
 					    }, function myError(response) {
-					  
-					        $scope.result = "Παρουσιάστηκε κάποιο σφάλμα. Προσπαθήστε ξανά.";
+
+							 $scope.loading=false;
+					        alert("Παρουσιάστηκε κάποιο σφάλμα. Προσπαθήστε ξανά.");
 					    });
 					 
 				 } 
@@ -808,17 +875,21 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 		
 					 if(!confirm("Are you sure?"))
 						 return;
-						 
+
+					 $scope.loading=true;
 					 $http({
 					        method : "DELETE",
 					        url : "teamgroups/"+row.id+"/matchdays"
 					    }).then(function mySuccess(response) {
-					    	$scope.getMatchdays($scope.teamgroup); $scope.getTeams($scope.teamgroup);
+							 $scope.loading=false;
+					    	$scope.getMatchdays($scope.teamgroup); 
+					    	$scope.getTeams($scope.teamgroup);
 
-					    	$scope.getMatchdays($scope.teamgroup);
+					    	//$scope.getMatchdays($scope.teamgroup);
 					    }, function myError(response) {
-					  
-					        $scope.result = "An Error occured. Try again.";
+
+							 $scope.loading=false;
+					        alert("An Error occured. Try again.");
 					    });
 					 
 				 }
@@ -855,6 +926,7 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 						row.date = $scope.getFormattedDate(mydate,row.gametime);*/
 					}
 				 $scope.result=row;
+				 $scope.loading=true;
 				 $http({
 				        method : "PUT",
 				        url : "matchdays/"+tmpmatchday.id+"/games",
@@ -865,9 +937,11 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 
 				    }).then(function mySuccess(response) {
 
+						 $scope.loading=false;
 				    	alert("Done!");
 				    }, function myError(response) {
-				  
+
+						 $scope.loading=false;
 				    	alert("An Error occured. Try again.");
 				      
 				    });
@@ -884,6 +958,7 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 					}
 	
 				 $scope.result=row.tmpdate;
+				 $scope.loading=true;
 				 $http({
 				        method : "PUT",
 				        url : "playoffs/"+playoffrow.id+"/games",
@@ -893,9 +968,11 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 					    	//   score1:row.score1,score2:row.score2, date:row.date, matchdayid:tmpmatchday.id}
 
 				    }).then(function mySuccess(response) {
+						 $scope.loading=false;
 
 				    	alert("Done!");
 				    }, function myError(response) {
+						 $scope.loading=false;
 				  
 				    	alert("An Error occured. Try again.");
 				      
@@ -910,16 +987,19 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 		
 					 if(!confirm("Are you sure?"))
 						 return;
-						 
+
+					 $scope.loading=true;
 					 $http({
 					        method : "DELETE",
 					        url : "games/"+row.id
 					    }).then(function mySuccess(response) {
 
+							 $scope.loading=false;
 					    	$scope.getPlayoffs($scope.champion); 
 					    }, function myError(response) {
-					  
-					        $scope.result = "An Error occured. Try again.";
+
+							 $scope.loading=false;
+					       alert("An Error occured. Try again.");
 					    });
 					 
 				 }
@@ -929,16 +1009,19 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 			
 						 if(!confirm("Are you sure?"))
 							 return;
-							 
+
+						 $scope.loading=true;
 						 $http({
 						        method : "DELETE",
 						        url : "games/"+row.id
 						    }).then(function mySuccess(response) {
 
+								 $scope.loading=false;
 						    	$scope.getMatchdays($scope.teamgroup);
 						    }, function myError(response) {
-						  
-						        $scope.result = "An Error occured. Try again.";
+
+								 $scope.loading=false;
+						        alert("An Error occured. Try again.");
 						    });
 						 
 					 }
@@ -949,17 +1032,20 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 		
 					 if(!confirm("Are you sure?"))
 						 return;
-						 
+
+					 $scope.loading=true;
 					 $http({
 					        method : "PUT",
 					        url : "matchdays/"+matchdayrow.id+"/games/"+gamerow.id
 					    }).then(function mySuccess(response) {
 
+							 $scope.loading=false;
 
 					    	$scope.getMatchdays($scope.teamgroup);
 					    }, function myError(response) {
-					  
-					        $scope.result = "An Error occured. Try again.";
+
+							 $scope.loading=false;
+					        alert("An Error occured. Try again.");
 					    });
 					 
 				 }
@@ -969,15 +1055,18 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 			
 				/*		 if(!confirm("Are you sure?"))
 							 return;*/
-							 
+
+						 $scope.loading=true;
 						 $http({
 						        method : "POST",
 						        url : "champions/"+championrow.id+"/playoffs",
 						        params: {name:playoffname}
 						    }).then(function mySuccess(response) {
+								 $scope.loading=false;
 						    	$scope.getPlayoffs($scope.champion); 
 						    }, function myError(response) {
-						  
+
+								 $scope.loading=false;
 						       alert("An Error occured. Try again.");
 						    });
 						 
@@ -989,15 +1078,18 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 			
 				/*		 if(!confirm("Are you sure?"))
 							 return;*/
-							 
+
+						 $scope.loading=true;
 						 $http({
 						        method : "POST",
 						        url : "teamgroups/"+teamgrouprow.id+"/matchdays",
 						        params: {name:matchdayname}
 						    }).then(function mySuccess(response) {
+								 $scope.loading=false;
 						    	$scope.getMatchdays($scope.teamgroup);
 						    }, function myError(response) {
-						  
+
+								 $scope.loading=false;
 						       alert("An Error occured. Try again.");
 						    });
 						 
@@ -1013,6 +1105,7 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 	
 					  
 					  //$scope.result=row; 
+						 $scope.loading=true;
 						 $http({
 						        method : "PUT",
 						        url : "champions/"+championrow.id+"/playoffs",
@@ -1020,9 +1113,11 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 						        headers: {'Content-Type': 'application/json; charset=utf-8'} 
 						    }).then(function mySuccess(response) {
 
+								 $scope.loading=false;
 						    		alert("Done!");
 						    }, function myError(response) {
-						  
+
+								 $scope.loading=false;
 						       alert("An Error occured. Try again.");
 						    });
 						 
@@ -1045,6 +1140,8 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 						}
 					  
 					  //$scope.result=row; 
+
+						 $scope.loading=true;
 						 $http({
 						        method : "PUT",
 						        url : "teamgroups/"+teamgrouprow.id+"/matchdays",
@@ -1052,9 +1149,11 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 						        headers: {'Content-Type': 'application/json; charset=utf-8'} 
 						    }).then(function mySuccess(response) {
 
+								 $scope.loading=false;
 						    		alert("Done!");
 						    }, function myError(response) {
-						  
+
+								 $scope.loading=false;
 						       alert("An Error occured. Try again.");
 						    });
 						 
@@ -1066,15 +1165,18 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 				/*		 if(!confirm("Are you sure?"))
 							 return;*/
 					  //$scope.result=matchdayrow; 
+						 $scope.loading=true;
 						 $http({
 						        method : "POST",
 						        url : "matchdays/"+matchdayrow.id+"/games",
 						        params:{teamid1: team1.id, teamid2: team2.id}
 						    }).then(function mySuccess(response) {
 
+								 $scope.loading=false;
 						    	$scope.getMatchdays($scope.teamgroup);
 						    }, function myError(response) {
-						  
+
+								 $scope.loading=false;
 						       alert("An Error occured. Try again.");
 						    });
 						 
@@ -1084,6 +1186,7 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 			
 						 if(!confirm("Are you sure?"))
 							 return;
+						 $scope.loading=true;
 					  //$scope.result=matchdayrow; 
 						 $http({
 						        method : "POST",
@@ -1091,9 +1194,11 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 						        params:{phase:selectedPhase,round:selectedRound}
 						    }).then(function mySuccess(response) {
 
+								 $scope.loading=false;
 						    	$scope.getPlayoffs($scope.champion);
 						    }, function myError(response) {
-						  
+
+								 $scope.loading=false;
 						       alert("Προέυκυψε σφάλμα. Σιγουρευτήτε οτι αυτή η φάση δεν υπάρχει ήδη ή οτι έχετε συμπληρώσει ολα τα αποτελεσματα αγώνων της προηγούμενης φάσης.");
 						    });
 						 
@@ -1105,15 +1210,18 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 				/*		 if(!confirm("Are you sure?"))
 							 return;*/
 					  //$scope.result=matchdayrow; 
+						 $scope.loading=true;
 						 $http({
 						        method : "POST",
 						        url : "playoffs/"+playoffrow.id+"/games",
 						        params:{teamid1: team1.id, teamid2: team2.id}
 						    }).then(function mySuccess(response) {
 
+								 $scope.loading=false;
 						    	$scope.getPlayoffs($scope.champion);
 						    }, function myError(response) {
-						  
+
+								 $scope.loading=false;
 						       alert("An Error occured. Try again.");
 						    });
 						 
@@ -1189,7 +1297,8 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 		
 					  var modal = document.getElementById('myModal');
 					  
-					  
+
+						 $scope.loading=true;
 						 $http({
 						        method : "PUT",
 						        url : "games/"+$scope.selectedgame.id+"/scorers",
@@ -1198,11 +1307,13 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 						        
 						    }).then(function mySuccess(response) {
 
+								 $scope.loading=false;
 							    alert("Εγινε!");
 						    	//$scope.scorers=response.data;
 						    	//modal.style.display = "block";
 						    }, function myError(response) {
-						  
+
+								 $scope.loading=false;
 						       alert("Κάτι πήγε στραβά. Προσπαθήστε ξανά.");
 						    });
 						 
@@ -1228,6 +1339,7 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 						  			return;
 						  		}
 						  }
+						 $scope.loading=true;
 						 $http({
 						        method : "POST",
 						        url : "games/"+$scope.selectedgame.id+"/scorers",
@@ -1235,7 +1347,8 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 						        headers: {'Content-Type': 'application/json; charset=utf-8'} 
 						        
 						    }).then(function mySuccess(response) {
-						  
+
+								 $scope.loading=false;
 						    	$scope.openScorerModal($scope.selectedgame);
 							    //alert("Εγινε!");
 						    	//$scope.scorers=response.data;
@@ -1248,7 +1361,8 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 						    	
 						    	
 						    }, function myError(response) {
-						  
+
+								 $scope.loading=false;
 						       alert("Κάτι πήγε στραβά. Προσπαθήστε ξανά.");
 						    });
 						 
@@ -1260,17 +1374,20 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 						  return;
 						 if(!confirm("Είστε σίγουρος;"))
 							 return;
+						 $scope.loading=true;
 						 $http({
 						        method : "DELETE",
 						        url : "scorers/"+row.id
 						    }).then(function mySuccess(response) {
 
+								 $scope.loading=false;
 						    	$scope.openScorerModal($scope.selectedgame);
 							    //alert("Εγινε!");
 						    	//$scope.scorers=response.data;
 						    	//modal.style.display = "block";
 						    }, function myError(response) {
-						  
+
+								 $scope.loading=false;
 						       alert("Κάτι πήγε στραβά. Προσπαθήστε ξανά.");
 						    });
 						 
@@ -1296,7 +1413,8 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 						  if(!player.name)
 							  return;
 						  
-						 
+
+							 $scope.loading=true;
 							 $http({
 						        method : "POST",
 						        	url : "teams/"+team.id+"/players",
@@ -1304,7 +1422,8 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 							        headers: {'Content-Type': 'application/json; charset=utf-8'}
 						    }).then(function mySuccess(response) {
 						    	
-						    	
+
+								 $scope.loading=false;
 						    			scorer.contact = response.data;
 						    			$scope.addScorer(scorer);
 						    			
@@ -1327,7 +1446,8 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 							
 						    	
 						    }, function myError(response) {
-						  
+
+								 $scope.loading=false;
 						        alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");
 						    });
 						 }

@@ -27,7 +27,7 @@ public class Notice {
 	@Column(name="content", length=4000)
 	private String content;
 
-	@Column(name="date", length=4000)
+	@Column(name="date")
 	private Date date;
 	
 	@Column(name="imageurl", length=300)
@@ -37,6 +37,10 @@ public class Notice {
 	@Column(name="thumburl", length=300)
 	private String thumburl;
 
+	@Column(name="important")
+	private Boolean important;
+	
+	
 	public int getId() {
 		return id;
 	}
@@ -84,6 +88,14 @@ public class Notice {
 
 	public void setThumburl(String thumburl) {
 		this.thumburl = thumburl;
+	}
+
+	public Boolean getImportant() {
+		return important;
+	}
+
+	public void setImportant(Boolean important) {
+		this.important = important;
 	}
 
 }

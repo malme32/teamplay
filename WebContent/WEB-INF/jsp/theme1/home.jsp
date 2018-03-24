@@ -17,13 +17,27 @@ pageEncoding="UTF-8"%>
 <main class="main-content">
 
 
-
-
 <div class="theme-padding white-bg">
 <div class="container" style="padding:0">
 
 <div class="col-lg-9 col-sm-8" style="padding:0">
 
+<div class="Popular-news" ng-show='importantnews.length'>
+<ul>
+<li ng-repeat='row in importantnews | orderBy:"-date"'>
+ <img style='max-height:50px; max-width:65px' ng-src="${resources_static}{{row.thumburl}}" alt=""> 
+
+
+<h5 ><a class="red-color" href="#!news-detail.html/{{row.id}}">{{row.title}}</a></h5><!-- 
+<span class="red-color"><i class="fa fa-clock-o"></i>{{row.date | date}}</span> -->
+<span style=" " ng-bind-html="row.content | parseUrl"></span> 
+
+</li>
+
+</ul>
+<br/>
+<br/>
+</div>
 
 		<img ng-hide='upcominggames' width=40 height=40 src="${resources}/customimages/loading.gif" alt="">
  		<div ng-show='upcominggames.length' style="margin-bottom:40px">

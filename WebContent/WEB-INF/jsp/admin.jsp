@@ -43,7 +43,7 @@ pageEncoding="UTF-8"%>
 
 
 </head>
-<body ng-app="appAdmin" >
+<body ng-app="appAdmin" ng-controller='adminStartController'>
 <div class='champ'>
 	<ul>
 		<li><a ng-href='#!adminchampions'>ΠΡΩΤΑΘΛΗΜΑΤΑ</a></li>
@@ -74,5 +74,11 @@ pageEncoding="UTF-8"%>
 
 
 <div ng-view ></div>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
 </body>
 </html>

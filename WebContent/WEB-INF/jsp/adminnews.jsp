@@ -32,6 +32,8 @@ pageEncoding="UTF-8"%>
 	<ul class='ul_nobullet'>
 		<li> <input type='text' ng-model='notice.title' placeholder='Ο τίτλος της είδησης εδω'/>	</li>
 		<li><textarea rows="4" cols="50" ng-model='notice.content' maxlength="1000" class="width_100" placeholder='Το περιεχόμενο της είδησης εδω..'></textarea>  </li>
+		<li title='Εαν είναι επιλεγμένο τότε αυτή η είδηση θα φένεται στην αρχική σελίδα'>		 
+		 <input  type="checkbox" ng-model='notice.important'/> Σημαντική είδηση	</li>
 		
 		<li> <button class='button_flat background_dark_yellow float_right' ng-click="editNotice()">Αποθήκευση</button> 
 		<button class='button_flat background_red float_right'  ng-click="deleteNotice()">Διαγραφή</button></li>

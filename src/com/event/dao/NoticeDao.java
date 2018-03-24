@@ -11,5 +11,7 @@ public interface NoticeDao{
 	public Notice findById(int id);
 	
 	public List<Notice> findAll();
+
+	public List<Notice> findImportant();
 	
 }

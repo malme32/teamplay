@@ -1062,8 +1062,13 @@ public class SportServiceImpl  implements SportService{
 	}*/
 
 	@Override
-	public List<Notice> findAllNews(int count, boolean headersonly) {
+	public List<Notice> findAllNews(int count, boolean headersonly, String option) {
 		// TODO Auto-generated method stub
+		if(option!=null)
+		{
+			if(option.equals("important"))
+				return noticeDao.findImportant();
+		}
 		if(count>0||headersonly)
 		{
 			List<Notice> tmpList = new ArrayList<Notice>();

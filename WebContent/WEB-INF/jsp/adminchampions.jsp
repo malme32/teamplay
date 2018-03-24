@@ -5,7 +5,7 @@
 
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <spring:url value="/resources/theme1" var="resources" />
-
+	<img class='admin_loading' ng-show='loading' width=80 height=80 src="${resources}/customimages/loading.gif" alt="">
 <div class='font_size_small'>
 
 <h1>ΠΡΩΤΑΘΛΗΜΑΤΑ</h1>
@@ -45,7 +45,7 @@
 		</tr>
 		<tr>
 			<td><input type='text' ng-model="adminChampionName"
-				placeholder="Το νέο όνομα εδω.." /></td>
+				placeholder="Το νέο όνομα πρωταθλήματος εδω.." /></td>
 			
 			<td><input type=checkbox ng-model='adminChampionEnabled'/></td>
 				<td><button class='button_flat background_green'
@@ -60,8 +60,8 @@
 <div ng-show='champion' class="margin_left_small">
 
 	<h2>
-		Play Offs <span class="color_gray font_size_small">(σε
-			{{champion.name}})</span>
+		Play Offs <span class="color_red font_size_small">
+			(σε {{champion.name}})</span>
 	</h2>
 	
 	
@@ -88,7 +88,7 @@
 	<tr>
 	<td>
 	<input type='text' ng-model="adminNewPlayoffName"
-		placeholder="Το νέο όνομα εδω" /></td>
+		placeholder="Το νέο όνομα playoff εδω" /></td>
 	<td>
 	<button class='button_flat  background_green' ng-click='adminAddPlayoff(adminNewPlayoffName,champion)'>Εισαγωγή</button>
 <!-- 	<button class='button_flat  background_red' ng-click='adminDeleteAllPlayoffs(champion)'>Διαγραφή όλων</button>
@@ -259,8 +259,8 @@
 
 
 	<h2>
-		ΟΜΙΛΟΙ <span class="color_gray font_size_small">(σε
-			{{champion.name}})</span>
+		ΟΜΙΛΟΙ <span class="color_red font_size_small">
+			(σε {{champion.name}})</span>
 	</h2>
 	<div class='table_stylish1'>
 		<table>
@@ -270,7 +270,7 @@
 			</tr>
 			<tr ng-repeat='row in teamgrouplist'>
 				<td><input type='text' ng-model='row.name'
-					ng-click='getMatchdays(row); getTeams(row)' /></td>
+					ng-click='getMatchdays(row); getTeams(row);' /></td>
 				<td>
 					<button class='button_flat  background_red'
 						ng-show='teamgroup==row' ng-click='adminDeleteTeamgroup(row)'>Διαγραφή</button>
@@ -281,7 +281,7 @@
 			</tr>
 			<tr>
 				<td><input type='text' ng-model="adminTeamgroupName"
-					placeholder="Το νέο όνομα εδω.." /></td>
+					placeholder="Το νέο όνομα ομίλου εδω.." /></td>
 				<td>
 					<button class='button_flat background_green'
 						ng-click='adminAddTeamgroup(champion)'>Εισαγωγή</button>
@@ -318,8 +318,8 @@
 
 <div ng-show='teamgroup' class="margin_left_medium">
 	<h3>
-		ΟΜΑΔΕΣ <span class="color_gray font_size_small">(σε
-			{{champion.name}}/{{teamgroup.name}})</span>
+		ΟΜΑΔΕΣ 
+			<span class="color_red font_size_small">(σε {{champion.name}} /{{teamgroup.name}})</span>
 	</h3>
 	<div class='table_stylish1'>
 		<table>
@@ -336,9 +336,9 @@
 				</td>
 			</tr>
 			<tr>
-				<td><select ng-model="selectedTeam "
+				<td><select ng-model="selectedTeam"
 					ng-options="row.name for row in totalTeamList |filter : adminNewTeamName| orderBy:'name'">
-					<option value="">---Επιλέξτε---</option>
+					<option value="">---Επιλέξτε από υπάρχουσες---</option>
 				</select>
 				<td>
 					<button class='button_flat background_green'
@@ -348,10 +348,10 @@
 			</tr>
 			<tr>
 				<td><input type='text' ng-model="adminNewTeamName"
-					placeholder="Το νέο όνομα εδω.." /></td>
+					placeholder="Εισάγετε όνομα νέας ομάδας εδώ.." /></td>
 				<td>
 					<button class='button_flat background_green'
-						ng-click='adminAddNewTeamToTeamgroup(teamgroup,adminNewTeamName)'>Εισαγωγή</button>
+						ng-click='adminAddNewTeamToTeamgroup(teamgroup,adminNewTeamName)'>Εισαγωγή νέας</button>
 
 				</td>
 			</tr>
@@ -381,26 +381,26 @@
 		</ul>
 	</div> -->
 	<h3>
-		ΑΓΩΝΙΣΤΗΚΕΣ <span class="color_gray font_size_small">(σε
+		ΑΓΩΝΙΣΤΗΚΕΣ <span class="color_red font_size_small">(σε
 			{{champion.name}}/{{teamgroup.name}})</span>
 	</h3>
 	
 	
 	<table class='table_stylish1 margin_bottom_medium' >
-	<tr><td>
+	<tr title='Αυτόματη δημιουργία αγωνιστηκών ενός ή δύο γύρων'><td>
 							<button class='button_flat  background_black'
-						ng-click='generateMatchdays(teamgroup,1)'>Παραγωγή</button>
+						ng-click='generateMatchdays(teamgroup,1)'>Δημιουργία</button>
 					<button class='button_flat  background_black'
-						 ng-click='generateMatchdays(teamgroup,2)'>Παραγωγή
+						 ng-click='generateMatchdays(teamgroup,2)'>Δημιουργία
 						(δύο γύροι)</button>
 	
 	</td></tr>
 	
-	<tr><td>
+	<tr title='Επιλέξτε αναπροσαρμογή στην περίπτωση που προσθέσατε νέα ομάδα στον όμιλο'><td>
 			<button class='button_flat  background_black'
-						 ng-click='reGenerateMatchdays(teamgroup,1)'>Επαναπροσαρμογή</button>
+						 ng-click='reGenerateMatchdays(teamgroup,1)'>Αναπροσαρμογή</button>
 					<button class='button_flat  background_black'
-						ng-click='reGenerateMatchdays(teamgroup,2)'>Επαναπροσαρμογή
+						ng-click='reGenerateMatchdays(teamgroup,2)'>Αναπροσαρμογή
 						(δύο γύροι)</button>
 	</td></tr>
 	
@@ -712,7 +712,7 @@
 				<td>
 					<select ng-model="newscorer1.contact"
 							ng-options="row.name for row in team1players | orderBy:'name'">
-							<option value="">---Επιλέξτε---</option>
+							<option value="">---Επιλέξτε απο υπάρχοντες---</option>
 						</select>
 				
 				</td>
@@ -729,7 +729,7 @@
 			<tr>
 				
 				<td>
-					<input type='text' ng-model="newplayer1.name"/>
+					<input type='text' ng-model="newplayer1.name" placeholder='Εισάγετε το όνομα του νέου παίχτη εδω..'/>
 				</td>
 				<td>{{selectedgame.team1.name}}
 				</td>
@@ -737,7 +737,7 @@
 				</td>
 				<td><button
 							class='button_flat  background_green'
-							ng-click='addScorerAndPlayer(newscorer1_,newplayer1,selectedgame.team1)'>Εισαγωγή</button>
+							ng-click='addScorerAndPlayer(newscorer1_,newplayer1,selectedgame.team1)'>Εισαγωγή νέου</button>
 				</td>
 			</tr>
 			
@@ -746,7 +746,7 @@
 				<td>
 					<select ng-model="newscorer2.contact"
 							ng-options="row.name for row in team2players | orderBy:'name'">
-							<option value="">---Επιλέξτε---</option>
+							<option value="">---Επιλέξτε από υπάρχοντες---</option>
 						</select>
 				
 				</td>
@@ -763,7 +763,7 @@
 			<tr>
 				
 				<td>
-					<input type='text' ng-model="newplayer2.name"/>
+					<input type='text' ng-model="newplayer2.name" placeholder='Εισάγετε το όνομα του νέου παίχτη εδω..'/>
 				</td>
 				<td>{{selectedgame.team2.name}}
 				</td>
@@ -771,7 +771,7 @@
 				</td>
 				<td><button
 							class='button_flat  background_green'
-							ng-click='addScorerAndPlayer(newscorer2_,newplayer2,selectedgame.team2)'>Εισαγωγή</button>
+							ng-click='addScorerAndPlayer(newscorer2_,newplayer2,selectedgame.team2)'>Εισαγωγή νέου</button>
 				</td>
 			</tr>
 			

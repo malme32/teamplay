@@ -76,6 +76,9 @@ input[type=number] {
 .color_white{
 	color:white;
 }
+.color_red{
+	color:#cf695a;
+}
 
 .background_green {
 	background-color: #458748;
@@ -229,4 +232,11 @@ padding:0;
 .admin_album img{
 	width:150px;
 	cursor:pointer;
+}
+
+.admin_loading{
+	position:fixed;
+	 left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
 }

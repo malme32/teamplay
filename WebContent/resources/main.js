@@ -593,6 +593,21 @@ appMain.controller("homeController",function($scope, $http, $routeParams, $locat
 	 
 	 $http({
 	        method : "GET",
+	        url : "news?option=important"
+	    }).then(function mySuccess(response) {
+
+	        $scope.importantnews = response.data;
+
+
+	    }, function myError(response) {
+
+	    	
+	        //$scope.result = response.statusText;
+	      
+	    });
+	 
+	 $http({
+	        method : "GET",
 	        url : "news",
 	        params:{headersonly:1,count:5}
 	    }).then(function mySuccess(response) {
@@ -608,7 +623,6 @@ appMain.controller("homeController",function($scope, $http, $routeParams, $locat
 	    });
 	 
 	
-	 
 	 
 	 $http({
 	        method : "GET",

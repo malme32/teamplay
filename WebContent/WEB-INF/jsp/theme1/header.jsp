@@ -99,7 +99,7 @@ ng-src='${resources_start}/generalimages/message-outline-256.png' ng-click='open
 <li><a ng-href="#!point-table.html">ΠΡΩΤΑΘΛΗΜΑΤΑ</a>
 <ul>
 <li ng-repeat='row in headerChampions'><a href="#!point-table.html">{{row.name}}</a></li>
-<li><a ng-href="#!calendar">ΔΙΑΘΕΣΙΜΟΤΗΤΑ</a>
+<li><a ng-href="#!calendar">ΠΑΝΟΡΑΜΑ</a>
 </li>
 
 </ul>
@@ -181,9 +181,9 @@ ng-src='${resources_start}/generalimages/message-outline-256.png' ng-click='open
 </ul>
 </li>
 <li>
-<a href="">ΕΠΙΚΟΙΝΩΝΙΑ</a>
+<a href="#!contactus">ΕΠΙΚΟΙΝΩΝΙΑ</a>
 <ul>
-<li><a ng-click='openMessages()' href="">CHAT</a></li>
+<li><a ng-click='openMessages()' href="">CHAT με Rossoneri</a></li>
 <li><a href="#!contactus">ΕΠΙΚΟΙΝΩΝΙΑ</a></li>
 </ul>
 </li>
@@ -271,7 +271,7 @@ ng-src='${resources_start}/generalimages/message-outline-256.png' ng-click='open
 <!-- <li onclick='applyClosedStyles1()'>
 <a href="">ΑΚΑΔΗΜΙΕΣ</a>
 </li> -->
-<li onclick='applyClosedStyles1()'><a href="#!calendar">ΔΙΑΘΕΣΙΜΟΤΗΤΑ</a>
+<li onclick='applyClosedStyles1()'><a href="#!calendar">ΠΑΝΟΡΑΜΑ</a>
 </li>
 <li onclick='applyClosedStyles1()'><a ng-click='openMessages()' href="">CHAT</a>
 </li>

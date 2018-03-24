@@ -65,36 +65,38 @@ pageEncoding="UTF-8"%>
 <div class="col-sm-4 col-xs-6 r-full-width-2 r-full-width">
 <div class="column-widget h-white">
 <div class="logo-column p-white">
-<img class="footer-logo" src="${resources}/images/footer-logo.png" alt="">
+<img class="footer-logo" src="${resources}/images/logowhite.jpg" alt="">
 <ul class="address-list style-2">
-<li><span>Address:</span>1782 Harrison Street Sun Prairie</li>
-<li><span>Phone Number:</span>49 30 47373795</li>
-<li><span>Email Address:</span><a href="http://html.crunchpress.com/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="6a070503042a080603040e1e0f121e0d0f040f180b1e0518440e0f">[email&#160;protected]</a></li>
+<li><span>Διεύθυνση:</span>Μειλίχου κ.Συχαινά, Πάτρα</li>
+<li><span>Τηλέφωνο:</span>2610 436900</li>
+<li><span>Email:</span>rossonerimfc@hotmail.com
+<!-- <a href="" class="__cf_email__" data-cfemail="6a070503042a080603040e1e0f121e0d0f040f180b1e0518440e0f">[email&#160;protected]</a>
+ --></li>
 </ul>
 <span class="follow-us">follow us </span>
 <ul class="social-icons">
-<li><a class="facebook" href=""><i class="fa fa-facebook"></i></a></li>
-<li><a class="twitter" href=""><i class="fa fa-twitter"></i></a></li>
-<li><a class="youtube" href=""><i class="fa fa-youtube-play"></i></a></li>
-<li><a class="pinterest" href=""><i class="fa fa-pinterest-p"></i></a></li>
-<li><a class="tumblr" href=""><i class="fa fa-tumblr"></i></a></li>
+<li><a class="facebook" href="https://www.facebook.com/RossoneriMfc"><i class="fa fa-facebook"></i></a></li>
+<li><a class="twitter" href="https://twitter.com/rossonerimfc"><i class="fa fa-twitter"></i></a></li>
+<li><a class="youtube" href="https://www.youtube.com/channel/UC4ftG1CjmWZNORuPtLVAIng"><i class="fa fa-youtube-play"></i></a></li>
+<!-- <li><a class="pinterest" href=""><i class="fa fa-pinterest-p"></i></a></li>
+<li><a class="tumblr" href=""><i class="fa fa-tumblr"></i></a></li> -->
 </ul>
 </div>
 </div>
 </div>
 
-
+<%-- 
 <div class="col-sm-4 col-xs-6 r-full-width-2 r-full-width">
 <div class="column-widget h-white">
 <h5>Advertisment</h5>
 <a href=""><img src="${resources}/images/footer-add.jpg" alt=""></a>
 </div>
 </div>
-
+ --%>
 
 <div class="col-sm-4 col-xs-6 r-full-width-2 r-full-width">
 <div class="column-widget h-white">
-<h5>Sponcer</h5>
+<h5>ΣΠΟΝΣΟΡΕΣ</h5>
 <ul id="brand-icons-slider-2" class="brand-icons-slider-2">
 <li>
 <a href=""><img src="${resources}/images/brand-icons/img-1-1.png" alt=""></a>
@@ -124,7 +126,7 @@ pageEncoding="UTF-8"%>
 
 <div class="copy-rights">
 <div class="container">
-<p>Â© Copyright by <i class="red-color">FineLayers</i> All rights reserved.</p>
+<p>© Copyright by <i class="red-color">Rossoneri</i> All rights reserved.</p>
 <a class="back-to-top scrollup" href=""><i class="fa fa-angle-up"></i></a>
 </div>
 </div>

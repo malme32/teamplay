@@ -30,4 +30,12 @@ public class NoticeDaoImpl extends AbstractDao implements NoticeDao{
 		return list;
 	}
 
+	@Override
+	public List<Notice> findImportant() {
+		// TODO Auto-generated method stub
+		   @SuppressWarnings("unchecked")
+		   List<Notice> list = getSession().createQuery("FROM Notice N where N.important=1 order by Date DESC").list(); 
+		return list;
+	}
+
 }

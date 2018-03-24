@@ -11,15 +11,15 @@ ROSSONERI:
 
 - See all matches in team page
 - add email to user and send notifications to mail also
-- add tab to add and edit sponsors
-- mark news as important and add them to main page
 - improve gui in admin page
-- improve gui in main page. footer has problem
+- in champions page show next games of each champion. also fix the header links
 - fix issue with permenent login
 - fix deletion of images in pages and albums
 - fix issues in android
 - fix inactive champion in some cases
 - fix gui in edit team and add waiting when uploading
+- fix security
+- add tab to add and edit sponsors
 
 DONE:
 - Add team cover
@@ -28,5 +28,10 @@ DONE:
 - Improve the notification -> make it less resource consuming
 (DONE) insert team and reorder the matchdays
 (DONE) change team in a champion with some other 
+- mark news as important and add them to main page
+- improve gui in main page. footer has problem
+
+
+
 MUST - inactive active championhip
 MUST - popup images in news

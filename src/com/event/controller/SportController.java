@@ -177,7 +177,7 @@ public class SportController {
 	
 	@RequestMapping(value="/news", method=RequestMethod.GET, produces = "application/json")
 	public @ResponseBody List<Notice> getNews(@RequestParam(required = false)  Integer count, 
-			@RequestParam(required = false)  Boolean headersonly)
+			@RequestParam(required = false)  Boolean headersonly,@RequestParam(required = false)  String option)
 	{
 		int count1=0;
 		boolean headersonly1=false;
@@ -186,7 +186,7 @@ public class SportController {
 		if(headersonly!=null)
 			headersonly1=headersonly;
 			
-		return sportService.findAllNews(count1, headersonly1);
+		return sportService.findAllNews(count1, headersonly1,option);
 	}
 	
 	
