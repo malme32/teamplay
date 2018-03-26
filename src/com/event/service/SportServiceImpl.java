@@ -48,6 +48,7 @@ import com.general.model.Message;
 import com.phonebook.model.Contact;
 import com.phonebook.model.Userrole;
 import com.phonebook.service.ContactService;
+import com.phonebook.service.MailService;
 import com.sport.model.Album;
 import com.sport.model.Champion;
 import com.sport.model.Custompage;
@@ -118,6 +119,10 @@ public class SportServiceImpl  implements SportService{
 
 	@Autowired
 	CustompageDao custompageDao;
+	
+
+	@Autowired
+	MailService mailService;
 	
 	@Override
 	public Champion findChampionsById(int id) {
@@ -317,6 +322,7 @@ public class SportServiceImpl  implements SportService{
 	    	{
 	    		Game game1 = new Game();
 	    		game1.setMatchday(matchday);
+		        game1.setChampion(matchday.getTeamgroup().getChampion());
 	    		game1.setTeam1(teams.get(teamIdx).getTeam());
 	    		game1.setTeam2(ListTeam.get(0).getTeam());
 	    		generalDaoService.persist(game1);
@@ -324,6 +330,7 @@ public class SportServiceImpl  implements SportService{
 	    		if(roundNumber==2) {
 		    		game1 = new Game();
 		    		game1.setMatchday(matchday2);
+			        game1.setChampion(matchday2.getTeamgroup().getChampion());
 		    		game1.setTeam1(ListTeam.get(0).getTeam());
 		    		game1.setTeam2(teams.get(teamIdx).getTeam());
 		    		generalDaoService.persist(game1);
@@ -341,6 +348,7 @@ public class SportServiceImpl  implements SportService{
 		    	{
 			        Game game = new Game();
 			        game.setMatchday(matchday);
+			        game.setChampion(matchday.getTeamgroup().getChampion());
 			        game.setTeam1(teams.get(firstTeam).getTeam());
 			        game.setTeam2(teams.get(secondTeam).getTeam());
 			    	generalDaoService.persist(game);
@@ -349,6 +357,7 @@ public class SportServiceImpl  implements SportService{
 		    		if(roundNumber==2) {
 				        game = new Game();
 				        game.setMatchday(matchday2);
+				        game.setChampion(matchday2.getTeamgroup().getChampion());
 				        game.setTeam1(teams.get(secondTeam).getTeam());
 				        game.setTeam2(teams.get(firstTeam).getTeam());
 				    	generalDaoService.persist(game);
@@ -441,6 +450,7 @@ public class SportServiceImpl  implements SportService{
 		    		game1.setTeam1(teams.get(teamIdx).getTeam());
 		    		game1.setTeam2(ListTeam.get(0).getTeam());
 		    		game1.setMatchday(matchday);
+			        game1.setChampion(matchday.getTeamgroup().getChampion());
 		    		generalDaoService.persist(game1);
 	    		}
 	    		if(roundNumber==2) {
@@ -462,6 +472,7 @@ public class SportServiceImpl  implements SportService{
 			    		game1.setMatchday(matchday2);
 			    		game1.setTeam1(ListTeam.get(0).getTeam());
 			    		game1.setTeam2(teams.get(teamIdx).getTeam());
+				        game1.setChampion(matchday2.getTeamgroup().getChampion());
 			    		generalDaoService.persist(game1);
 		    		}
 	    		}
@@ -492,6 +503,7 @@ public class SportServiceImpl  implements SportService{
 		    		{
 				        Game game1 = new Game();
 				        game1.setMatchday(matchday);
+				        game1.setChampion(matchday.getTeamgroup().getChampion());
 				        game1.setTeam1(teams.get(firstTeam).getTeam());
 				        game1.setTeam2(teams.get(secondTeam).getTeam());
 				    	generalDaoService.persist(game1);
@@ -514,6 +526,7 @@ public class SportServiceImpl  implements SportService{
 			    		{
 					        Game game1 = new Game();
 					        game1.setMatchday(matchday2);
+					        game1.setChampion(matchday2.getTeamgroup().getChampion());
 					        game1.setTeam1(teams.get(secondTeam).getTeam());
 					        game1.setTeam2(teams.get(firstTeam).getTeam());
 					    	generalDaoService.persist(game1);
@@ -551,8 +564,8 @@ public class SportServiceImpl  implements SportService{
 			{
 				Information info1 = new Information();
 				Information info2 = new Information();
-				info1.setTitle("Νέος Αγώνας!");
-				info2.setTitle("Νέος Αγώνας!");
+				info1.setTitle("Ενημέρωση Αγώνα!");
+				info2.setTitle("Ενημέρωση Αγώνα!");
 				info1.setGame(game);
 				info2.setGame(game);
 				info1.setTeam(game.getTeam1());
@@ -560,13 +573,64 @@ public class SportServiceImpl  implements SportService{
 
 				info1.setDate(now);
 				info2.setDate(now);
-				info1.setMessage(game.getTeam1().getName()+" - "+game.getTeam2().getName() +" ("+game.getDate()+")");
 
 				info1.setMessage(game.getTeam1().getName()+" - "+game.getTeam2().getName() +" ("+game.getDate()+")");
 				info2.setMessage(game.getTeam1().getName()+" - "+game.getTeam2().getName() +" ("+game.getDate()+")");
 
 				generalDaoService.persist(info1);
 				generalDaoService.persist(info2);
+
+				(new Thread() {
+					  public void run() {
+				System.out.println("ATTEMPTING TO SEND MAIL");
+				Hibernate.initialize(game.getTeam1().getAdmin());
+				Contact admin1=game.getTeam1().getAdmin();
+				List<Contact> contacts=contactService.getContacts();
+				for(Contact contact:contacts) {
+					if(contact.getAdminteam()!=null&&contact.getAdminteam().getId()==game.getTeam1().getId())
+					{
+
+						admin1=contact;
+						break;
+					}
+				}
+				if(admin1!=null)
+				{
+				
+					if(admin1.getEmail()!=null&&admin1.getEmail().contains("@"))
+						mailService.sendEmail(admin1.getEmail(), "soccer@mail.com", "Ενημέρωση Αγώνα "+game.getTeam1().getName()+"!", game.getTeam1().getName()+" - "+game.getTeam2().getName() +" ("+game.getDate()+")");
+					else
+						System.out.println("MAIL2 NULL");
+				
+				}
+				else
+
+					System.out.println("ADMIN1 NULL");
+
+							Hibernate.initialize(game.getTeam2().getAdmin());
+							Contact admin2=game.getTeam2().getAdmin();
+							for(Contact contact:contacts) {
+								if(contact.getAdminteam()!=null&&contact.getAdminteam().getId()==game.getTeam2().getId())
+								{
+
+									admin2=contact;
+									break;
+								}
+							}
+							if(admin2!=null)
+							{
+							
+								if(admin2.getEmail()!=null&&admin2.getEmail().contains("@"))
+									mailService.sendEmail(admin2.getEmail(), "soccer@mail.com", "Ενημέρωση Αγώνα "+game.getTeam2().getName()+"!", game.getTeam1().getName()+" - "+game.getTeam2().getName() +" ("+game.getDate()+")");
+								else
+									System.out.println("MAIL2 NULL");
+									
+							}
+							else
+
+								System.out.println("ADMIN2 NULL");
+					  }
+					 }).start();
 			}
 		}
 		game.setPlayoff(playoff);
@@ -603,6 +667,60 @@ public class SportServiceImpl  implements SportService{
 
 				generalDaoService.persist(info1);
 				generalDaoService.persist(info2);
+				
+				(new Thread() {
+					  public void run() {
+				System.out.println("ATTEMPTING TO SEND MAIL");
+				Hibernate.initialize(game.getTeam1().getAdmin());
+				Contact admin1=game.getTeam1().getAdmin();
+				List<Contact> contacts=contactService.getContacts();
+				for(Contact contact:contacts) {
+					if(contact.getAdminteam()!=null&&contact.getAdminteam().getId()==game.getTeam1().getId())
+					{
+
+						admin1=contact;
+						break;
+					}
+				}
+				if(admin1!=null)
+				{
+				
+					if(admin1.getEmail()!=null&&admin1.getEmail().contains("@"))
+						mailService.sendEmail(admin1.getEmail(), "soccer@mail.com", "Νέος Αγώνας "+game.getTeam1().getName()+"!", game.getTeam1().getName()+" - "+game.getTeam2().getName() +" ("+game.getDate()+")");
+					else
+						System.out.println("MAIL2 NULL");
+				
+				}
+				else
+
+					System.out.println("ADMIN1 NULL");
+
+							Hibernate.initialize(game.getTeam2().getAdmin());
+							Contact admin2=game.getTeam2().getAdmin();
+							for(Contact contact:contacts) {
+								if(contact.getAdminteam()!=null&&contact.getAdminteam().getId()==game.getTeam2().getId())
+								{
+
+									admin2=contact;
+									break;
+								}
+							}
+							if(admin2!=null)
+							{
+							
+								if(admin2.getEmail()!=null&&admin2.getEmail().contains("@"))
+									mailService.sendEmail(admin2.getEmail(), "soccer@mail.com", "Νέος Αγώνας "+game.getTeam2().getName()+"!", game.getTeam1().getName()+" - "+game.getTeam2().getName() +" ("+game.getDate()+")");
+								else
+									System.out.println("MAIL2 NULL");
+									
+							}
+							else
+
+								System.out.println("ADMIN2 NULL");
+					  }
+					 }).start();
+		
+				
 			}
 		}
 	}
@@ -1165,6 +1283,7 @@ public class SportServiceImpl  implements SportService{
 		// TODO Auto-generated method stub
 		contact.setAdminteam(this.findTeamById(id1));
 		contact.setEnabled(true);
+		String temp_password=contact.getPassword();
 		contact.setPassword(passwordEncoder.encode(contact.getPassword()));
 		Userrole userrole =new Userrole();
 		userrole.setContact(contact);
@@ -1172,6 +1291,21 @@ public class SportServiceImpl  implements SportService{
 		
 		generalDaoService.persist(contact);
 		generalDaoService.persist(userrole);
+		
+		
+		(new Thread() {
+			  public void run() {
+		System.out.println("ATTEMPTING TO SEND MAIL TO USER");
+
+		
+			if(contact.getEmail()!=null&&contact.getEmail().contains("@"))
+				mailService.sendEmail(contact.getEmail(), "soccer@mail.com", "Εγραφή χρήστη", "Username: "+ contact.getUsername()+" \n Password: "+temp_password);
+			else
+				System.out.println("MAIL NULL");
+			  }
+			 }).start();
+		
+		
 	}
 
 	@Override
@@ -1206,13 +1340,13 @@ public class SportServiceImpl  implements SportService{
 			}
 		*/
 		List<Game> games = gameDao.getUpcomingGames();
-		for(Game game:games)
+/*		for(Game game:games)
 		{
 			if(game.getPlayoff()!=null)
 				game.setChampion(game.getPlayoff().getChampion());
 			else if(game.getMatchday()!=null) 
 				game.setChampion(game.getMatchday().getTeamgroup().getChampion());
-		}
+		}*/
 		return games;
 	}
 
@@ -1394,6 +1528,10 @@ public class SportServiceImpl  implements SportService{
 		contactp.setName(contact.getName());
 	
 		contactp.setUsername(contact.getUsername());
+		
+		contactp.setPhonenumber(contact.getPhonenumber());
+		contactp.setAddress(contact.getAddress());
+		contactp.setEmail(contact.getEmail());
 	
 		if(contact.getPassword()!=null)
 			if(!contact.getPassword().equals(""))
@@ -1435,38 +1573,38 @@ public class SportServiceImpl  implements SportService{
 	public List<Game> getLastResults() {
 		// TODO Auto-generated method stub
 		List<Game> games = gameDao.getLastResults();
-		for(Game game:games)
+/*		for(Game game:games)
 		{
 			if(game.getPlayoff()!=null)
 				game.setChampion(game.getPlayoff().getChampion());
 			else if(game.getMatchday()!=null) 
 				game.setChampion(game.getMatchday().getTeamgroup().getChampion());
-		}
+		}*/
 		return games;
 	}
 
 	@Override
 	public List<Game> getAllGames() {
 		List<Game> games = gameDao.findAll();
-		for(Game game:games)
+/*		for(Game game:games)
 		{
 			if(game.getPlayoff()!=null)
 				game.setChampion(game.getPlayoff().getChampion());
 			else if(game.getMatchday()!=null) 
 				game.setChampion(game.getMatchday().getTeamgroup().getChampion());
-		}
+		}*/
 		return games;
 	}
 	@Override
 	public List<Game> getCalendarGames() {
 		List<Game> games = gameDao.getCalendarGames();
-		for(Game game:games)
-		{
+		/*	for(Game game:games)
+	{
 			if(game.getPlayoff()!=null)
 				game.setChampion(game.getPlayoff().getChampion());
 			else if(game.getMatchday()!=null) 
 				game.setChampion(game.getMatchday().getTeamgroup().getChampion());
-		}
+		}*/
 		return games;
 	}
 
@@ -1658,6 +1796,19 @@ public class SportServiceImpl  implements SportService{
 		custompage1.setTitle(custompage.getTitle());
 		custompage1.setContent(custompage.getContent());
 		generalDaoService.update(custompage1);
+	}
+
+	@Override
+	public List<Game> getUpcomingTeamgroupGames(Integer teamgroupid) {
+		// TODO Auto-generated method stub
+		return gameDao.getUpcomingTeamgroupGames(this.findTeamgroupById(teamgroupid));
+	}
+
+	@Override
+	public List<Game> getUpcomingChampiongames(Integer championid) {
+		// TODO Auto-generated method stub
+
+		return gameDao.getUpcomingChampionGames(this.findChampionsById(championid));
 	}
 
 

@@ -62,7 +62,7 @@ appMain.config(function($routeProvider) {
 
     })
 
-    .when("/point-table.html", {
+    .when("/point-table.html/:championid", {
         templateUrl : "point-table.html",
         controller: "championsController"
 
@@ -182,7 +182,7 @@ appMain.directive('fileModel', ['$parse', function ($parse) {
     };
 }]);
 
-appMain.run(function($rootScope, $window, $http, $timeout) {
+appMain.run(function($rootScope, $window, $http, $timeout,$location) {
 	
 	
 	$rootScope.onFocus = function(){
@@ -283,7 +283,8 @@ appMain.run(function($rootScope, $window, $http, $timeout) {
 	 
     $rootScope.$on("$locationChangeStart", function(event, next, current) { 
     	
-
+	if(next.indexOf("#!")==-1)
+		$location.path('home');
 
 		 
 
@@ -501,7 +502,9 @@ appMain.filter('nextGames', function() {
     	  var result = [];   
     	  var d1 = new Date();
     	  for (var i=0; i<items.length; i++){
-              if (items[i].date>d1&&!items[i].score1&&!items[i].score2)  {
+    		  if(!items[i].champion.enabled)
+    			  continue;
+              if (items[i].date>=d1&&!items[i].score1&&!items[i].score2)  {
                   result.push(items[i]);
               }
           }            
@@ -514,10 +517,27 @@ appMain.filter('lastResults', function() {
     	  var result = [];   
     	  var d1 = new Date();
     	  for (var i=0; i<items.length; i++){
+    		  if(!items[i].champion.enabled)
+    			  continue;
               if (items[i].score1&&items[i].score2)  {
                   result.push(items[i]);
               }
           }            
+          return result;
+    };
+});
+
+appMain.filter('otherGames', function() {
+    return function(items) {
+    	  var result = [];   
+    	  var d1 = new Date();
+    	  for (var i=0; i<items.length; i++){
+    		  if(!items[i].champion.enabled)
+    			  continue;
+              if ((!items[i].date||items[i].date<d1)&&(!items[i].score1||!items[i].score2))  {
+                  result.push(items[i]);
+              }
+          }          
           return result;
     };
 });
@@ -907,8 +927,10 @@ appMain.controller("contactController",function($scope, $http, $routeParams,$loc
 
 });
 //var appMain = angular.module("appMain",[]);
-appMain.controller("championsController",function($scope, $http, $location, $window){
-	
+appMain.controller("championsController",function($scope, $http, $location, $window,$routeParams){
+	   
+
+    
 	 $scope.championlist ="";
 	 $scope.champion;
 	 $scope.phases=[];
@@ -936,21 +958,7 @@ appMain.controller("championsController",function($scope, $http, $location, $win
 	 
 	 
 	 
-	 $http({
-	        method : "GET",
-	        url : "games?upcoming"
-	    }).then(function mySuccess(response) {
 
-	        $scope.upcominggames = response.data;
-
-
-	    }, function myError(response) {
-
-	    	
-	        //$scope.result = response.statusText;
-	      
-	    });
-	 
 	 
 	 
 	 $http({
@@ -978,20 +986,36 @@ appMain.controller("championsController",function($scope, $http, $location, $win
 	    }).then(function mySuccess(response) {
 
 	        $scope.championlist = response.data;
-	        $scope.getChampion($scope.championlist[0]);
+		    if($routeParams.championid == "start"&&$scope.championlist.length>0)
+		    {
+		    	$scope.getChampion($scope.championlist[0].id);
+		    }
+		    else if($scope.championlist.length>0){
+		    	$scope.getChampion($routeParams.championid);
+		    }
+	        
+	        //$scope.getChampion($scope.championlist[0]);
 	    }, function myError(response) {
 	  
 	        $scope.result = response.statusText;
 	      
 	    });
 		 
-		 $scope.getChampion = function (row){
-			 $scope.champion =row;
+		 $scope.getChampion = function (id){
+			// $scope.champion =row;
 			 $scope.matchday="";
-			 
+			
+			 for(i=0;i<$scope.championlist.length;i++)
+			 {
+			 	if($scope.championlist[i].id==id) 
+			 		{
+					 	$scope.champion =$scope.championlist[i];
+					 	break;
+			 		}
+			 }
 			 $http({
 			        method : "GET",
-			        url : "champions/"+row.id+"/teamgroups"
+			        url : "champions/"+id+"/teamgroups"
 			    }).then(function mySuccess(response) {
 
 			        $scope.teamgrouplist = response.data;
@@ -1004,7 +1028,7 @@ appMain.controller("championsController",function($scope, $http, $location, $win
 			 
 			 $http({
 			        method : "GET",
-			        url : "champions/"+row.id+"/playoffs"
+			        url : "champions/"+id+"/playoffs"
 			    }).then(function mySuccess(response) {
 
 			        $scope.champion.playoffgames = response.data;
@@ -1015,7 +1039,33 @@ appMain.controller("championsController",function($scope, $http, $location, $win
 			      
 			    });
 			 
+			 $http({
+			        method : "GET",
+			        url : "games?upcomingchampiongames="+id
+			    }).then(function mySuccess(response) {
+
+			        $scope.upcominggames = response.data;
+			        
+			
+			    }, function myError(response) {
+
+			    	
+			        //$scope.result = response.statusText;
+			      
+			    });
+			 
+			 
+			 
 		 }
+		 
+
+		       
+/*		       if($routeParams.championid != "start")
+		    	   {
+
+			       	$scope.getChampion($routeParams.championid);
+		    	   }
+		 */
 		 
 		 $scope.getMatchdays = function (row){
 			 //$scope.teamgroup =row;

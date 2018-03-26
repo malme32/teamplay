@@ -21,4 +21,5 @@ public interface TeamgroupDao{
 	public  List<Game> getGames(Team team,Teamgroup teamgroup);
 
 	public List<Game> getAllGames(Teamgroup teamgroup);
+
 }

@@ -2041,7 +2041,7 @@ appAdmin.controller("usersController",function($scope, $http, $location, $window
 		  $http({
 		        method : "POST",
 		        url : "teams/"+teamrow.id+"/adminusers",
-		        params:{password:row.password, name: row.name, username:row.username}
+		        params:{password:row.password, name: row.name, username:row.username,email:row.email,address:row.address,phonenumber:row.phonenumber}
 		       // headers: {'Content-Type': 'application/json; charset=utf-8'} 
 			      // params: {id:row.id,teamid1:row.team1.id,teamid2:row.team2.id,
 			    	//   score1:row.score1,score2:row.score2, date:row.date, matchdayid:tmpmatchday.id}
@@ -2075,7 +2075,7 @@ appAdmin.controller("usersController",function($scope, $http, $location, $window
 			 $http({
 		        method : "PUT",
 		        	url : "teamadmins",
-		        	params:{name:row.name, username:row.username, id:row.id, password:row.password}
+		        	params:{name:row.name, username:row.username, id:row.id, password:row.password,email:row.email,address:row.address,phonenumber:row.phonenumber}
 /*				        data: row,
 				        headers: {'Content-Type': 'application/json; charset=utf-8'}*/
 		    }).then(function mySuccess(response) {

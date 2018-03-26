@@ -101,7 +101,7 @@ pageEncoding="UTF-8"%>
 </thead>
 <tbody>
 			<tr ng-repeat='row1 in standings | orderBy: "-grade"' ng-show='row1.champion.enabled'>
-				<td><a href='#!point-table.html'>{{row1.champion.name}}</a>
+				<td><a href='#!point-table.html/{{row1.champion.id}}'>{{row1.champion.name}}</a>
 				</td>
 				<td class="td_grade">{{row1.grade}}
 				</td>
@@ -166,7 +166,7 @@ pageEncoding="UTF-8"%>
 </div> -->
  
  
- 		<div ng-show='games.length' class='theme-padding-bottom'>
+ 		<div ng-show='(games | nextGames).length' class='theme-padding-bottom'>
  		<h2>ΕΠΟΜΕΝΑ ΠΑΙΧΝΙΔΙΑ</h2>
 
 		<div class="matches-shedule-holder">
@@ -194,7 +194,7 @@ pageEncoding="UTF-8"%>
 		</div>
 		
 		
-		 		<div ng-show='games.length' class='theme-padding-bottom'>
+		 		<div ng-show='(games | lastResults).length' class='theme-padding-bottom'>
  		<h2>ΤΕΛΕΥΤΑΙΑ ΑΠΟΤΕΛΕΣΜΑΤΑ</h2>
 
 		<div class="matches-shedule-holder">
@@ -203,6 +203,32 @@ pageEncoding="UTF-8"%>
 			<div class="matches-dates-shedule" style='padding:0'>
 			<ul>
 			<li ng-repeat='row1 in games | lastResults | orderBy: "-date" ' style='padding:5px; ' ng-show='row1.champion.enabled'>
+			<span class="pull-left"><img style='height:40px; width:40px' ng-src="${resources_static}{{row1.team1.logothumbpath}}" alt=""></span>
+			<span class="pull-right"><img style='height:40px; width:40px' ng-src="${resources_static}{{row1.team2.logothumbpath}}" alt=""></span>
+			<div class="detail">
+			<a href="#!match.html/{{row1.id}}">Λεπτομέρειες<i class="fa fa-angle-double-right"></i></a>
+			<strong><a style='display:inline; padding:0; margin:0' href='#!team-detail.html/{{row1.team1.id}}'>{{row1.team1.name}}</a><i class="red-color"  style=''> {{row1.score1}} - {{row1.score2}}</i> <a style='display:inline; padding:0; margin:0'  href='#!team-detail.html/{{row1.team2.id}}'>{{row1.team2.name}}</a></strong>
+			<span class="location-marker" style=''><i class="fa "></i>{{row1.date |  date : "EEE dd MMM HH:mm"}} ({{row1.champion.name}})</span>
+			</div>
+			</li>
+			
+			</ul>
+			</div>
+			
+			</div>
+		
+
+
+		</div>
+		<div ng-show='(games | otherGames).length' class='theme-padding-bottom' >
+ 		<h2>ΥΠΟΛΟΙΠΑ ΠΑΙΧΝΙΔΙΑ</h2>
+
+		<div class="matches-shedule-holder">
+
+
+			<div class="matches-dates-shedule" style='padding:0'>
+			<ul>
+			<li ng-repeat='row1 in games | otherGames | orderBy: "-date" ' style='padding:5px; ' ng-show='row1.champion.enabled'>
 			<span class="pull-left"><img style='height:40px; width:40px' ng-src="${resources_static}{{row1.team1.logothumbpath}}" alt=""></span>
 			<span class="pull-right"><img style='height:40px; width:40px' ng-src="${resources_static}{{row1.team2.logothumbpath}}" alt=""></span>
 			<div class="detail">

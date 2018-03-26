@@ -96,9 +96,10 @@ ng-src='${resources_start}/generalimages/message-outline-256.png' ng-click='open
 
 <%-- <li><a href="${resources}/about.html">ΕΓΚΑΤΑΣΤΑΣΕΙΣ</a></li>
  --%>
-<li><a ng-href="#!point-table.html">ΠΡΩΤΑΘΛΗΜΑΤΑ</a>
+<li><a href="#!point-table.html/start">ΠΡΩΤΑΘΛΗΜΑΤΑ</a>
 <ul>
-<li ng-repeat='row in headerChampions'><a href="#!point-table.html">{{row.name}}</a></li>
+<li ng-repeat='row in headerChampions' ng-show='row.enabled'><a href="#!point-table.html/{{row.id}}">{{row.name}}</a></li>
+
 <li><a ng-href="#!calendar">ΠΑΝΟΡΑΜΑ</a>
 </li>
 
@@ -153,6 +154,7 @@ ng-src='${resources_start}/generalimages/message-outline-256.png' ng-click='open
 	<a ng-href="#!news-detail.html/{{row.id}}"><h2>{{row.title}}</h2></a>
 	</div>
 
+</div>
 </div>
 </td>
 </tr>

@@ -85,7 +85,8 @@ public class Game {
 	@OneToMany(fetch = FetchType.LAZY,mappedBy="game",cascade = CascadeType.ALL)
 	List<Scorer> scorers;
 	
-	@Transient
+	@ManyToOne
+	@JoinColumn(name = "championid")
 	private Champion champion;
 	
 	public Matchday getMatchday() {

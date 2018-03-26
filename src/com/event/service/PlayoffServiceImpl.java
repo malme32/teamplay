@@ -238,6 +238,7 @@ private  void genPlayoffs() {
 			System.out.println(standtmp1.get(0).getTeam().getName()+" vs "+standtmp2.get(standtmp2.size()-1).getTeam().getName());
 			Game game = new Game();
 			game.setPlayoff(playoff);
+			game.setChampion(playoff.getChampion());
 			game.setTeam1(standtmp1.get(0).getTeam());
 			game.setTeam2(standtmp2.get(standtmp2.size()-1).getTeam());
 			this.generalDaoService.persist(game);
@@ -245,6 +246,7 @@ private  void genPlayoffs() {
 			if(round==2) {
 				Game game2 = new Game();
 				game2.setPlayoff(playoff2);
+				game2.setChampion(playoff2.getChampion());
 				game2.setTeam1(standtmp2.get(standtmp2.size()-1).getTeam());
 				game2.setTeam2(standtmp1.get(0).getTeam());
 				this.generalDaoService.persist(game2);
@@ -513,12 +515,14 @@ private  void genPlayoffs() {
 			System.out.println("NEXTPLAYOFF "+winTeams.get(i).getName()+" vs "+winTeams.get(i+1).getName());
 			Game game = new Game();
 			game.setPlayoff(playoff);
+			game.setChampion(playoff.getChampion());
 			game.setTeam1(winTeams.get(i));
 			game.setTeam2(winTeams.get(i+1));
 			this.generalDaoService.persist(game);
 			if(round==2) {
 				Game game2 = new Game();
 				game2.setPlayoff(playoff2);
+				game2.setChampion(playoff2.getChampion());
 				game2.setTeam1(winTeams.get(i+1));
 				game2.setTeam2(winTeams.get(i));
 				this.generalDaoService.persist(game2);

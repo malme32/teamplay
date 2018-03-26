@@ -150,5 +150,9 @@ public interface SportService {
 	public void uploadCustompageImages(String staticPath, int id, CommonsMultipartFile[] files);
 
 	public void editCustompage(Custompage custompage);
+
+	public List<Game> getUpcomingTeamgroupGames(Integer teamgroupid);
+
+	public List<Game> getUpcomingChampiongames(Integer championid);
 	
 }

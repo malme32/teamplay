@@ -75,9 +75,15 @@ public class SportController {
 	{
 		
 		  //  String path=session.getServletContext().getRealPath("/");  
+		    
+		    
 		  String homeDir = System.getProperty("user.home");
-
+		 // String homeDir = "/home/ec2-user";
+		    
+		    
+		   
 	      String path=homeDir+"/javaresources/soccer";
+		    System.out.println("REALPATH_: "+path);
 	      return path;
 	}
 	
@@ -237,7 +243,8 @@ public class SportController {
 	}
 	
 	@RequestMapping(value="/games", method=RequestMethod.GET, produces = "application/json")
-	public @ResponseBody List<Game> getAllGames(@RequestParam(required = false)  String upcoming, @RequestParam(required = false)  String lastresults, @RequestParam(required = false)  String calendargames)
+	public @ResponseBody List<Game> getAllGames(@RequestParam(required = false)  String upcoming,@RequestParam(required = false)  Integer upcomingteamgroupgames,
+			@RequestParam(required = false)  Integer upcomingchampiongames,	@RequestParam(required = false)  String lastresults, @RequestParam(required = false)  String calendargames)
 	{
 		if(upcoming!=null)
 			return sportService.getUpcomingGames();
@@ -245,6 +252,10 @@ public class SportController {
 			return sportService.getLastResults();
 		else if(calendargames!=null)
 			return sportService.getCalendarGames();
+		else if(upcomingteamgroupgames!=null)
+			return sportService.getUpcomingTeamgroupGames(upcomingteamgroupgames);
+		else if(upcomingchampiongames!=null)
+			return sportService.getUpcomingChampiongames(upcomingchampiongames);
 		else 
 			return sportService.getAllGames();
 		
@@ -387,6 +398,7 @@ public class SportController {
 		game.setTeam1(sportService.findTeamById(teamid1));
 		game.setTeam2(sportService.findTeamById(teamid2));
 		game.setMatchday(sportService.findMatchdayById(matchdayid));
+		game.setChampion(sportService.findMatchdayById(matchdayid).getTeamgroup().getChampion());
 		 generalDaoService.persist(game);
 		 
 		 return ;
@@ -459,7 +471,9 @@ public class SportController {
 	{
 		game.setMatchday(sportService.findMatchdayById(id1));
 		game.setTeam1(sportService.findTeamById(teamid1));
-		game.setTeam2(sportService.findTeamById(teamid2));
+		game.setTeam2(sportService.findTeamById(teamid2));		
+		game.setChampion(sportService.findMatchdayById(id1).getTeamgroup().getChampion());
+
 		generalDaoService.persist(game);
 		return;
 	}
@@ -471,6 +485,7 @@ public class SportController {
 		game.setPlayoff(sportService.findPlayoffById(id1));
 		game.setTeam1(sportService.findTeamById(teamid1));
 		game.setTeam2(sportService.findTeamById(teamid2));
+		game.setChampion(sportService.findPlayoffById(id1).getChampion());
 		generalDaoService.persist(game);
 		return;
 	}

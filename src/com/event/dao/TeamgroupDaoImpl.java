@@ -80,4 +80,6 @@ public class TeamgroupDaoImpl extends AbstractDao implements TeamgroupDao{
 		   session.close();
 		return list;
 	}
+
+
 }

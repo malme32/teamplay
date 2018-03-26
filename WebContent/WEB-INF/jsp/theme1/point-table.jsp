@@ -23,7 +23,7 @@ pageEncoding="UTF-8"%>
 <main class="main-content" style='font-size:90%; '>
 <div class='champ'>
 	<ul>
-		<li  ng-repeat='row in championlist' ng-show='row.enabled'><a ng-click='getChampion(row)' ng-class="cssLiChampionClass(row)">{{row.name}}</a></li>
+		<li  ng-repeat='row in championlist' ng-show='row.enabled'><a ng-click='getChampion(row.id)' ng-class="cssLiChampionClass(row)">{{row.name}}</a></li>
 	</ul> 
 </div>
 
@@ -279,6 +279,8 @@ pageEncoding="UTF-8"%>
 <a href="#"><img src="${resources}/images/adds-02.jpg" alt=""></a>
 </div>
  --%>
+
+
 <div ng-show='upcominggames.length' style="margin-bottom:40px">
 		<h3>ΕΠΟΜΕΝΑ ΠΑΙΧΝΙΔΙΑ</h3>
 
@@ -288,13 +290,13 @@ pageEncoding="UTF-8"%>
 
 			<div class="matches-dates-shedule" style='padding:0;margin:0;'>
 			<ul style='margin:0 0 10px 0;'>
-			<li ng-repeat='row1 in upcominggames  | orderBy: "date" | limitTo:10' style='padding:2px; ' ng-show='row1.champion.enabled'>
+			<li ng-repeat='row1 in upcominggames  | orderBy: "date" | limitTo:10' style='padding:2px; ' ng-show='champion.enabled'>
 			<span class="pull-left"><img style='height:40px; width:40px' ng-src="${resources_static}{{row1.team1.logothumbpath}}" alt=""></span>
 			<span class="pull-right"><img style='height:40px; width:40px' ng-src="${resources_static}{{row1.team2.logothumbpath}}" alt=""></span>
 			<div class="detail" style='padding:0; margin:0'>
 			<a style='padding:0; margin:0' href="#!match.html/{{row1.id}}">Λεπτομέρειες<i class="fa fa-angle-double-right"></i></a>
 			<strong style='padding:0; margin:0'><a style='display:inline; padding:0; margin:0' href='#!team-detail.html/{{row1.team1.id}}'>{{row1.team1.name}}</a><i class="red-color"  style=''> {{row1.score1}} - {{row1.score2}}</i> <a style='display:inline; padding:0; margin:0'  href='#!team-detail.html/{{row1.team2.id}}'>{{row1.team2.name}}</a></strong>
-			 <span class="location-marker" style='padding:0; margin:0'><i class="fa "></i><b class="own-red-shadow">{{row1.date |  date : "EEE dd MMM HH:mm"}} </b> ({{row1.champion.name}})</span> 
+			 <span class="location-marker" style='padding:0; margin:0'><i class="fa "></i><b class="own-red-shadow">{{row1.date |  date : "EEE dd MMM HH:mm"}} </b> </span> 
 			</div>
 			</li>
 			
