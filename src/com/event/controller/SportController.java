@@ -61,6 +61,8 @@ import com.sport.model.Teamgroup;
 @Controller
 public class SportController {
 	
+	public static HttpServletRequest request = null;
+	
 	@Autowired
 	private GeneralDaoService generalDaoService;
 	
@@ -70,11 +72,13 @@ public class SportController {
 	@Autowired
 	private ContactService contactService;
 	
+	public static final String AppName = "Rossoneri MFC";
+	public static final String AndroidAppLink = "https://play.google.com/store/apps/details?id=com.rossonerimfc";
 
 	private String getStaticPath(HttpSession session)
 	{
 		
-		  //  String path=session.getServletContext().getRealPath("/");  
+		    String path=session.getServletContext().getRealPath("/");  
 		    
 		    
 		  String homeDir = System.getProperty("user.home");
@@ -82,7 +86,7 @@ public class SportController {
 		    
 		    
 		   
-	      String path=homeDir+"/javaresources/soccer";
+	     // String path=homeDir+"/javaresources/soccer";
 		    System.out.println("REALPATH_: "+path);
 	      return path;
 	}
@@ -270,17 +274,14 @@ public class SportController {
 	}
 	
 	@RequestMapping(value="/followers", method=RequestMethod.GET, produces = "application/json")
-	public @ResponseBody List<Team> getFollowers(@CookieValue(value = "teamfollowing", defaultValue="noteam") String cookie)
+	public @ResponseBody List<Team> getFollowers(HttpServletRequest request,@CookieValue(value = "teamfollowing", defaultValue="noteam") String cookie)
 	{
 		
 		
-	 User user =null; 
-	 try{user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();}
-	 catch(Exception e){}
-	 if(user!=null)
+	SportController.request = request;
+	Contact contact =  contactService.getLoggedIn();
+	 if(contact!=null)
 	 {
-		 String username = user.getUsername();
-		 Contact contact = contactService.findByUserName(username);
 		 if(contact.getAdminteam()!=null)
 		 {
 			 return sportService.getFollowingTeams(String.valueOf(contact.getAdminteam().getId()));
@@ -294,7 +295,7 @@ public class SportController {
 		
 	}
 	
-	@Secured("ROLE_ADMIN")
+	//@secured("ROLE_ADMIN")
 	@RequestMapping(value="/teams/{id}/admins", method=RequestMethod.GET, produces = "application/json")
 	public @ResponseBody Contact getTeamAdmins (@PathVariable int id)
 	{
@@ -302,12 +303,13 @@ public class SportController {
 		
 	}
 	
-//	@Secured({"ROLE_ADMIN","ROLE_TEAM"})
+//	//@secured({"ROLE_ADMIN","ROLE_TEAM"})
 	@RequestMapping(value="/notifications", method=RequestMethod.GET, produces = "application/json")
-	public @ResponseBody Notification getNotifications (@RequestParam(required = false)  String getunseenmessages, 
+	public @ResponseBody Notification getNotifications (HttpServletRequest request,@RequestParam(required = false)  String getunseenmessages, 
 			@RequestParam(required = false) String getundeliveredmessages, @RequestParam(required = false)  Integer lastid,
 			@RequestParam(required = false) Integer delay, @RequestParam(required = false) Integer uid,@RequestParam(required = false) Integer getinformations, @RequestParam(required = false) Integer teamid)
-	{
+	{	
+		SportController.request = request;
 		Map<String,Integer> actions = new HashMap<String,Integer>();
 		if(getunseenmessages!=null)
 			actions.put("getunseenmessages", 0);
@@ -329,23 +331,15 @@ public class SportController {
 	
 
 	@RequestMapping(value="/logins", method=RequestMethod.GET, produces = "application/json")
-	public @ResponseBody Contact getLogins ()
+	public @ResponseBody Contact getLogins (HttpServletRequest request)
 	{
-		
-	 User user =null; 
-	 try{user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();}
-	 catch(Exception e){}
-	 if(user!=null)
-	 {
-		 String username = user.getUsername();
-		 Contact contact = contactService.findByUserName(username);
-		 return contact;
-	 }
-	 return null;
+	//	System.out.println("LOGGEDINUSER: "+  SportController.loggedIn);
+		SportController.request=request;
+		return contactService.getLoggedIn();
 	}
 	/////////////////////POST/////////////////////////////////////
 	
-	@Secured("ROLE_ADMIN")
+	//@secured("ROLE_ADMIN")
 	@RequestMapping(value="/teams/{id1}/adminusers", method=RequestMethod.POST, produces = "application/json")
 	public @ResponseBody void addNewAdminUserToTeam(@ModelAttribute Contact contact, @PathVariable int id1)
 	{	
@@ -353,7 +347,14 @@ public class SportController {
 		return;
 	}
 	
-	@Secured("ROLE_ADMIN")
+
+	@RequestMapping(value="/loginPage", method=RequestMethod.POST, produces = "application/json")
+	public @ResponseBody void loginPage()
+	{	
+		return;
+	}
+	
+	//@secured("ROLE_ADMIN")
 	@RequestMapping(value="/champions", method=RequestMethod.POST, produces = "application/json")
 	public @ResponseBody void addChampion(@ModelAttribute Champion champion)
 	{
@@ -362,7 +363,7 @@ public class SportController {
 	}
 	
 	
-	@Secured("ROLE_ADMIN")
+	//@secured("ROLE_ADMIN")
 	@RequestMapping(value="/champions/{id1}/teamgroups", method=RequestMethod.POST, produces = "application/json")
 	public @ResponseBody void addTeamGroup(@ModelAttribute Teamgroup teamgroup, @PathVariable int id1)
 	{
@@ -372,7 +373,7 @@ public class SportController {
 		return;
 	}
 	
-	@Secured("ROLE_ADMIN")
+	//@secured("ROLE_ADMIN")
 	@RequestMapping(value="/teamgroups/{id1}/matchdays", method=RequestMethod.POST, produces = "application/json")
 	public @ResponseBody void addMatchday(@ModelAttribute Matchday matchday, @PathVariable int id1)
 	{
@@ -391,7 +392,7 @@ public class SportController {
 	
 	
 	
-	@Secured("ROLE_ADMIN")
+	//@secured("ROLE_ADMIN")
 	@RequestMapping(value="/games", method=RequestMethod.POST, produces = "application/json")
 	public @ResponseBody void addGame(@ModelAttribute Game game, @RequestParam int teamid1,@RequestParam int teamid2,@RequestParam int matchdayid)
 	{
@@ -405,7 +406,7 @@ public class SportController {
 	}
 	
 	
-	@Secured({"ROLE_ADMIN", "ROLE_TEAM"})
+	//@secured({"ROLE_ADMIN", "ROLE_TEAM"})
 	@RequestMapping(value="/teams", method=RequestMethod.POST, produces = "application/json")
 	public @ResponseBody void addTeam(@RequestBody Team team)
 	{
@@ -521,6 +522,7 @@ public class SportController {
 	public @ResponseBody  void uploadTeamCover(@PathVariable int id, @RequestParam CommonsMultipartFile file,HttpSession session){  
     //  String path=session.getServletContext().getRealPath("/");  
       //String path="/home/and/Javaresources/soccer";
+
         sportService.uploadTeamCover(getStaticPath(session), id, file);
         return;
     }  
@@ -654,7 +656,7 @@ public class SportController {
 	
 	//////////////////PUT///////////////////////////
 
-	@Secured("ROLE_ADMIN")
+	//@secured("ROLE_ADMIN")
 	@RequestMapping(value="/champions", method=RequestMethod.PUT, produces = "application/json")
 	public @ResponseBody void editChampion(@ModelAttribute Champion champion)
 	{

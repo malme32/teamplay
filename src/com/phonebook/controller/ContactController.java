@@ -3,6 +3,8 @@ package com.phonebook.controller;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.hibernate.SessionFactory;
 import org.hibernate.type.Type;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.event.configuration.AppConfig;
+import com.event.controller.SportController;
 import com.event.model.Event;
 import com.event.service.GeneralDaoService;
 import com.event.service.MessageService;
@@ -116,16 +119,12 @@ public class ContactController {
 	
 	
 	@RequestMapping(value="/contacts/{friendid}/messages", method=RequestMethod.GET, produces = "application/json")
-	public @ResponseBody List<Message> getMessages(@PathVariable Integer friendid, @RequestParam(required=false) Integer lastid, @RequestParam(required=false) String laststatus)
+	public @ResponseBody List<Message> getMessages(HttpServletRequest request,@PathVariable Integer friendid, @RequestParam(required=false) Integer lastid, @RequestParam(required=false) String laststatus)
 	{
-		
-		 User user =null; 
-		 try{user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();}
-		 catch(Exception e){}
-		 if(user!=null)
+		SportController.request= request;
+		Contact contact =  contactService.getLoggedIn();
+		 if(contact!=null)
 		 {
-			 String username = user.getUsername();
-			 Contact contact = contactService.findByUserName(username);
 			return messageService.getMessages(contact.getId(), friendid, lastid ,laststatus);
 
 		 }
@@ -164,15 +163,12 @@ public class ContactController {
 	
 	
 	@RequestMapping(value="/messages", method=RequestMethod.POST)
-	public @ResponseBody Message addMessage(@ModelAttribute Message message, @RequestParam("receiverid") int receiverid)
+	public @ResponseBody Message addMessage(HttpServletRequest request,@ModelAttribute Message message, @RequestParam("receiverid") int receiverid)
 	{
-		 User user =null; 
-		 try{user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();}
-		 catch(Exception e){}
-		 if(user!=null)
+		SportController.request= request;
+		Contact contact =  contactService.getLoggedIn();
+		 if(contact!=null)
 		 {
-			 	String username = user.getUsername();
-			 	Contact contact = contactService.findByUserName(username);
 				message.setContact(contact);
 				message.setReceiver(contactService.getContact(receiverid));
 				message.setDate(new Date());
@@ -201,18 +197,14 @@ public class ContactController {
 	/*
 	@Secured({"ROLE_ADMIN", "ROLE_TEAM"})*/
 	@RequestMapping(value="/contacts/actions", method=RequestMethod.PUT, produces = "application/json")
-	public @ResponseBody void contactActions( @RequestParam String action,  @RequestParam(required=false) Integer senderid, @RequestParam(required=false) Integer uid )
+	public @ResponseBody void contactActions(HttpServletRequest request, @RequestParam String action,  @RequestParam(required=false) Integer senderid, @RequestParam(required=false) Integer uid )
 	{
 
 		System.out.println("SETDELIVEREDXXXXXXXXXX");
-		 User user =null; 
-		 Contact contact =null;
-		 try{user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();}
-		 catch(Exception e){}
-		 if(user!=null)
+		SportController.request= request;
+		Contact contact =  contactService.getLoggedIn();
+		 if(contact!=null)
 		 {
-			 	String username = user.getUsername();
-			 	contact = contactService.findByUserName(username);
 		 }
 		 else if(action.equals("set_messages_delivered"))
 			{

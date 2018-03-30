@@ -8,6 +8,7 @@ import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.servlet.http.Cookie;
 
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.queryparser.classic.MultiFieldQueryParser;
@@ -24,15 +25,25 @@ import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.query.dsl.QueryBuilder;
 import org.hibernate.type.Type;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.util.WebUtils;
 
+import com.event.controller.SportController;
+import com.event.dao.MySessionDao;
+import com.event.dao.UserroleDao;
 import com.event.model.Event;
+import com.event.service.GeneralDaoService;
 import com.phonebook.model.Contact;
 import com.phonebook.model.Position;
+import com.phonebook.model.Userrole;
+import com.sport.model.MySession;
 @Transactional
 @Service("contactService")
 public class ContactServiceImpl implements ContactService{
@@ -42,6 +53,18 @@ public class ContactServiceImpl implements ContactService{
 	
 	@Autowired
 	private GeneralService generalService;
+	
+	@Autowired
+	private MySessionDao mySessionDao;
+
+	@Autowired
+	private UserroleDao userroleDao;
+
+	@Autowired
+	private GeneralDaoService generalDaoService;
+	
+	private static Contact loggedInContact=null;
+	
     public void setGeneralService(GeneralService generalService) {
 		this.generalService = generalService;
 	}
@@ -357,6 +380,8 @@ public class ContactServiceImpl implements ContactService{
 	         List results = myQuery.list();
 	        //tx.commit();
 	         //session.close();  
+	         if (results.isEmpty())
+	        	 return null;
 	         Contact tmpcontact = (Contact) results.get(0);
 	         return (Contact) results.get(0);
 	      }
@@ -374,6 +399,69 @@ public class ContactServiceImpl implements ContactService{
 		Hibernate.initialize(contact.getEvents());
 		return contact.getEvents();
 		
+	}
+	@Override
+	public Contact getLoggedIn() {
+		// TODO Auto-generated method stub
+		// keep this.. it should use if spring security is followed;
+/*		User user =null; 
+	 try{user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();}
+	 catch(Exception e){}
+	 ModelAndView model = new ModelAndView("theme1/index");
+	 if(user!=null)
+	 {
+		 String username = user.getUsername();
+		 Contact contact = this.findByUserName(username);
+		 return contact;
+	 }
+	 else return null;*/
+		System.out.println("getting cookie");
+		Cookie cookie = WebUtils.getCookie(SportController.request,"token");
+		System.out.println(cookie);
+		Contact contact=null;
+		if(cookie!=null)
+			contact = mySessionDao.getContactByToken(cookie.getValue());
+		return contact;
+    	
+    	
+    			
+   	}
+	@Override
+	public void setLoggedIn(Contact contact) {
+		// TODO Auto-generated method stub
+		System.out.println("SETTING LOGGED IN CONTACT"+ contact);
+		loggedInContact = contact;
+		return;
+	}
+	@Override
+	public boolean hasRole(Contact contact, String role) {
+		return userroleDao.hasRole(contact,role);
+/*      	Hibernate.initialize(contact.getUserroles());
+    	List<Userrole> userroles = contact.getUserroles();
+    	for(Userrole userrole:userroles)
+    	{
+    		if(userrole.getRole().equals("ROLE_ADMIN"))
+    		{
+    			return true;
+    
+    		}
+    	}
+    	return false;*/
+	}
+	@Override
+	public void deleteSession() {
+		// TODO Auto-generated method stub
+		Cookie cookie = WebUtils.getCookie(SportController.request,"token");
+		System.out.println(cookie);
+		if(cookie!=null)
+		{
+			MySession mySession =mySessionDao.findSessionByToken(cookie.getValue());
+			if(mySession!=null)
+			{
+				generalDaoService.delete(mySession);
+			}
+				
+		}
 	}
 
 

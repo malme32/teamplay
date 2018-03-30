@@ -14,8 +14,11 @@ import com.phonebook.model.Position;
 
 
 public interface ContactService {
-  
+	   
        
+	   public Contact getLoggedIn();
+	   public void setLoggedIn(Contact contact);
+	   
 	   public List<Contact> getContacts();
 	   public String paint(Contact contact);
 	   public void addContact (Contact contact);
@@ -39,5 +42,7 @@ public interface ContactService {
 	   public List<String> getTableNames();
 	   
 	   public List<Event> getContactEvents(int contactid) ;
+	public boolean hasRole(Contact contact, String role);
+	public void deleteSession();
 	   
 }

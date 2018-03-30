@@ -3,6 +3,8 @@ package com.event.controller;
 import java.util.List;
 import java.util.Set;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.hibernate.Hibernate;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,14 +73,15 @@ public class EventController {
 	
 			
 	@RequestMapping(value="/events", method=RequestMethod.POST, produces = "application/json")
-	public @ResponseBody void addPlayer(@ModelAttribute Event event)
+	public @ResponseBody void addPlayer(HttpServletRequest request,@ModelAttribute Event event)
 	{
 		//AbstractApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
         //AbstractApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
 		
-		 User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		 String username = user.getUsername();
-		 Contact contact = contactService.findByUserName(username);
+
+		 SportController.request = request;
+		 Contact contact =  contactService.getLoggedIn();
+	
 		 event.setAdmin(contact);
 		 eventService.persist(event);
 		//service.findPlayerById(id);

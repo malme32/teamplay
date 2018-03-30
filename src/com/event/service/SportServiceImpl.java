@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
+import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 
 import org.apache.commons.io.FilenameUtils;
@@ -28,6 +29,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.event.controller.SportController;
 import com.event.dao.AlbumDao;
 import com.event.dao.ChampionDao;
 import com.event.dao.CustompageDao;
@@ -1299,7 +1301,7 @@ public class SportServiceImpl  implements SportService{
 
 		
 			if(contact.getEmail()!=null&&contact.getEmail().contains("@"))
-				mailService.sendEmail(contact.getEmail(), "soccer@mail.com", "Εγραφή χρήστη", "Username: "+ contact.getUsername()+" \n Password: "+temp_password);
+				mailService.sendEmail(contact.getEmail(), "soccer@mail.com", "Καλως ηλθατε στο "+SportController.AppName, "Τα στοιχεία της εγγραφής σας είναι:\nUsername: "+ contact.getUsername()+" \n Password: "+temp_password+"\n\nΚατεβαστε την εφαρμογη εδω:\n"+SportController.AndroidAppLink);
 			else
 				System.out.println("MAIL NULL");
 			  }
@@ -1611,19 +1613,17 @@ public class SportServiceImpl  implements SportService{
 	@Override
 	public Notification getNotifications(Map<String, Integer> actions) {
 		// TODO Auto-generated method stub
-		 User user =null; 
-		 Contact contact = null;
-		 try{user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();}
-		 catch(Exception e){}
-		 if(user!=null)
+		System.out.println("NOTIF_1");
+	
+		Contact contact =  contactService.getLoggedIn();
+		 if(contact!=null)
 		 {
-			 String username = user.getUsername();
-			  contact = contactService.findByUserName(username);
 		 }
 		 else if(actions.get("uid")!=null)
 		{
 			 contact = contactService.getContact(actions.get("uid"));
 		}
+			System.out.println("NOTIF_2");
 		 //else return null;
  		Notification notification = null;
  
@@ -1632,11 +1632,13 @@ public class SportServiceImpl  implements SportService{
 		{
 			stayed+=actions.get("delay");
 		}
+		System.out.println("NOTIF_3");
 		while(stayed<60000)
 		{
 			//int counter = 3;
 			if(actions.get("getunseenmessages")!=null&&contact!=null)
 			{
+				System.out.println("NOTIF_4");
 				System.out.println("***INSIDE");
 				List<Message> messages=messageDao.getUnseenMessages( contact, actions.get("lastid"));
 				if(!messages.isEmpty())
@@ -1651,6 +1653,7 @@ public class SportServiceImpl  implements SportService{
 			}
 			if(actions.get("getundeliveredmessages")!=null&&contact!=null)
 			{
+				System.out.println("NOTIF_5");
 					System.out.println("***INSIDE1");
 					List<Message> messages=messageDao.getUdeliveredMessages( contact, actions.get("lastid"));
 					if(!messages.isEmpty())
@@ -1665,6 +1668,7 @@ public class SportServiceImpl  implements SportService{
 			}
 			if(actions.get("getinformations")!=null)
 			{
+				System.out.println("NOTIF_6");
 				List<Information> informations = informationDao.getTeamInformations(this.findTeamById(actions.get("teamid")), actions.get("getinformations"));
 				if(!informations.isEmpty())
 				{
@@ -1679,6 +1683,7 @@ public class SportServiceImpl  implements SportService{
 			}
 			if(actions.get("delay")!=null)
 			{
+				System.out.println("NOTIF_7");
 
 				try {
 					Thread.sleep(actions.get("delay"));

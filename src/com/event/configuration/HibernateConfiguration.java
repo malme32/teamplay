@@ -46,7 +46,7 @@ public class HibernateConfiguration {
         //dataSource.setUrl("jdbc:mysql://aa90m04kh6jwab.cae7msh7iwae.eu-west-2.rds.amazonaws.com:3306/test?useUnicode=yes&characterEncoding=UTF-8");
         dataSource.setUsername("root");
         dataSource.setPassword("root");
-       // dataSource.setPassword("Poasbaki_13");
+        //dataSource.setPassword("Poasbaki_13");
         return dataSource;
     }
      
@@ -55,10 +55,12 @@ public class HibernateConfiguration {
         //properties.put("hibernate.dialect","innodb");
 
         properties.put("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
-        properties.put("hibernate.show_sql", true);
+        properties.put("hibernate.show_sql", false);
         properties.put("hibernate.format_sql", false);
         properties.put("hibernate.hbm2ddl.auto", "update");
-        
+        properties.put("log4j.logger.org.hibernate", "info");
+ 
+
         return properties;        
     }
      

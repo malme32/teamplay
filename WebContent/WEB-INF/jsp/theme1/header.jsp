@@ -37,8 +37,12 @@ ng-src='${resources_start}/generalimages/message-outline-256.png' ng-click='open
 
 </li>
 <%}else{%>
-<li style='color:white'><%= pageContext.getAttribute("name", PageContext.REQUEST_SCOPE) %></li>
-						<li>
+
+
+ <li style='color:white'><%= pageContext.getAttribute("name", PageContext.REQUEST_SCOPE) %></li>
+ <li> <a href='loggingout' style='color:white'>Logout</a></li>
+ 
+						<%--<li>
 					
 					<c:url value="/logout" var="logoutUrl" /> <form id="logout" action="${logoutUrl}" method="post" >
 					  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
@@ -46,7 +50,7 @@ ng-src='${resources_start}/generalimages/message-outline-256.png' ng-click='open
 					<c:if test="${pageContext.request.userPrincipal.name != null}">
 						<a style='color:white' href="javascript:document.getElementById('logout').submit()">Logout</a>
 					</c:if>
-					</li>
+					</li> --%>
 <%}%>
 <%--<li class="language-dropdown">
 <a id="choses-lang" href="#"><i class="fa fa-globe"></i>ΕΛ<i class="fa fa-caret-down"></i></a>
@@ -175,10 +179,9 @@ ng-src='${resources_start}/generalimages/message-outline-256.png' ng-click='open
 <a href="#!gallery">GALLERY</a>
 
 </li>
-<li><a href='#!custompage/start' href="">ΠΕΡΙΣΣΟΤΕΡΑ</a>
+<li><a href='#!custompage/start' href="">ΑΚΑΔΗΜΙΕΣ</a>
 <ul>
 <li ng-repeat='row in custompages'><a href="#!custompage/{{row.id}}">{{row.title}}</a></li>
-</li>
 
 </ul>
 </li>
@@ -265,7 +268,7 @@ ng-src='${resources_start}/generalimages/message-outline-256.png' ng-click='open
 
 
 <li>
-<li onclick='applyClosedStyles1()'><a href="#!point-table.html">ΠΡΩΤΑΘΛΗΜΑΤΑ</a></li>
+<li onclick='applyClosedStyles1()'><a href="#!point-table.html/start">ΠΡΩΤΑΘΛΗΜΑΤΑ</a></li>
 
 <li onclick='applyClosedStyles1()'>
 <a href="#!news-list.html">ΝΕΑ</a>
@@ -273,6 +276,8 @@ ng-src='${resources_start}/generalimages/message-outline-256.png' ng-click='open
 <!-- <li onclick='applyClosedStyles1()'>
 <a href="">ΑΚΑΔΗΜΙΕΣ</a>
 </li> -->
+<li onclick='applyClosedStyles1()'><a href='#!custompage/start' href="">ΑΚΑΔΗΜΙΕΣ</a>
+</li>
 <li onclick='applyClosedStyles1()'><a href="#!calendar">ΠΑΝΟΡΑΜΑ</a>
 </li>
 <li onclick='applyClosedStyles1()'><a ng-click='openMessages()' href="">CHAT</a>

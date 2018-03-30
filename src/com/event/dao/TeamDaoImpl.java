@@ -84,8 +84,9 @@ public class TeamDaoImpl extends AbstractDao implements TeamDao{
 	public List<Team> findByMessageDate() {
 		// TODO Auto-generated method stub
 		   @SuppressWarnings("unchecked")
-		   List<Object> list = getSession().createSQLQuery("select Q.*,P.last_used from ((SELECT max(M.date) D ,M.message, T.*,C.name adminname, C.username  from message M, contact C, team T  where M.contactid=C.id AND C.adminteamid = T.id group by M.contactid) UNION DISTINCT (SELECT max(date) D ,M.message, T.*,C.name adminname, C.username  from message M, contact C, team T  where M.receiverid=C.id AND C.adminteamid = T.id group by M.receiverid) UNION DISTINCT (select null, null, T.*,C.name adminname, C.username from team T LEFT JOIN contact C ON C.adminteamid = T.id) order by D DESC) Q left join persistent_logins P on Q.username = P.username").list();
-			
+		   //List<Object> list = getSession().createSQLQuery("select Q.*,P.last_used from ((SELECT max(M.date) D ,M.message, T.*,C.name adminname, C.username  from message M, contact C, team T  where M.contactid=C.id AND C.adminteamid = T.id group by M.contactid) UNION DISTINCT (SELECT max(date) D ,M.message, T.*,C.name adminname, C.username  from message M, contact C, team T  where M.receiverid=C.id AND C.adminteamid = T.id group by M.receiverid) UNION DISTINCT (select null, null, T.*,C.name adminname, C.username from team T LEFT JOIN contact C ON C.adminteamid = T.id) order by D DESC) Q left join persistent_logins P on Q.username = P.username").list();
+		   List<Object> list = getSession().createSQLQuery("select Q.*,P.date from ((SELECT max(M.date) D ,M.message, T.*,C.name adminname, C.id cid from message M, contact C, team T  where M.contactid=C.id AND C.adminteamid = T.id group by M.contactid) UNION DISTINCT (SELECT max(date) D ,M.message, T.*,C.name adminname, C.username  from message M, contact C, team T  where M.receiverid=C.id AND C.adminteamid = T.id group by M.receiverid) UNION DISTINCT (select null, null, T.*,C.name adminname, C.id cid from team T LEFT JOIN contact C ON C.adminteamid = T.id) order by D DESC) Q left join mysession P on Q.cid = P.contactid").list();
+
 		   List<Team> teamlist = new ArrayList<Team>();
 		   for(int i=0; i<list.size(); i++) {
 				Object[] row = (Object[]) list.get(i);
@@ -108,8 +109,8 @@ public class TeamDaoImpl extends AbstractDao implements TeamDao{
 					team.setCoverpath((String) row[5]);
 					team.setLogopath((String) row[6]);
 					team.setLogothumbpath((String) row[7]);
-					team.setAdminname((String) row[8]);
-					team.setLastseenonline((Date) row[10]);
+					team.setAdminname((String) row[10]);
+					team.setLastseenonline((Date) row[12]);
 					teamlist.add(team);
 				}
 				System.out.println(row[0]+", "+ row[1]);

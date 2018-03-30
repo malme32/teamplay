@@ -47,7 +47,7 @@ public class AppGuiController {
 
 
 	
-	@RequestMapping(value = "/loginPage", method = RequestMethod.GET)
+/*	@RequestMapping(value = "/loginPage", method = RequestMethod.GET)
 	public ModelAndView loginPage(@RequestParam(value = "error",required = false) String error,
 	@RequestParam(value = "logout",	required = false) String logout) {
 		
@@ -64,7 +64,7 @@ public class AppGuiController {
 		return model;
 	}
 	
-	
+	*/
 //	@RequestMapping(value="contacts/{id}", method=RequestMethod.GET)
 //	public ModelAndView getContact(@PathVariable String id)
 //	{

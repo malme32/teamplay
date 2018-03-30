@@ -2,6 +2,7 @@ package com.event.controller;
 
 import java.util.concurrent.TimeUnit;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,18 @@ public class SportGuiController {
 	private ContactService contactService;
 	@Autowired
 	private SportService sportService;
+	
+	
+	@RequestMapping(value="/loginPage", method=RequestMethod.GET)
+	public ModelAndView loginPage(){
+		return new ModelAndView("loginPage","","");
+	}	
+	
+	@RequestMapping(value="/loggingout", method=RequestMethod.GET)
+	public ModelAndView logout(){
+		System.out.println("LOGGING OUT IN CONTROLLER");
+		return new ModelAndView("theme1/index","","");
+	}
 	
 	@RequestMapping(value="/championlist", method=RequestMethod.GET)
 	public ModelAndView championList(){
@@ -93,7 +106,7 @@ public class SportGuiController {
 ////////////ROSSONERI- THEME1///////////////////////
 	
 	@RequestMapping(value="/soccer", method=RequestMethod.GET)
-	public ModelAndView index(HttpServletResponse response,@CookieValue(value = "teamfollowing", defaultValue="noteam") String cookie){ 
+	public ModelAndView index(HttpServletRequest request, HttpServletResponse response,@CookieValue(value = "teamfollowing", defaultValue="noteam") String cookie){ 
 		
 /*		
 	      String headerValue = CacheControl.maxAge(10, TimeUnit.SECONDS)
@@ -103,15 +116,14 @@ response.addHeader("Cache-Control", headerValue);*/
 		
 	/*	 User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		 String username = user.getUsername();*/
-			User user =null; 
-		 try{user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();}
-		 catch(Exception e){}
 		 ModelAndView model = new ModelAndView("theme1/index");
-		 if(user!=null)
+		 
+		 
+		 SportController.request = request;
+		 Contact contact =  contactService.getLoggedIn();
+		 if(contact!=null)
 		 {
-			 String username = user.getUsername();
-			 Contact contact = contactService.findByUserName(username);
-			 model.getModelMap().addAttribute("username", username);
+			 model.getModelMap().addAttribute("username", contact.getUsername());
 			 model.getModelMap().addAttribute("name", contact.getName());
 			 if(contact.getAdminteam()!=null)
 				 model.getModelMap().addAttribute("teamid", contact.getAdminteam().getId());
@@ -170,7 +182,7 @@ response.addHeader("Cache-Control", headerValue);*/
 	public ModelAndView teamlist(){
 		return new ModelAndView("theme1/team-list","","");
 	}	
-	@Secured({"ROLE_ADMIN"})
+	//@Secured({"ROLE_ADMIN"})
 	@RequestMapping(value="/message-list", method=RequestMethod.GET)
 	public ModelAndView messagelist(){
 		return new ModelAndView("theme1/message-list","","");
@@ -193,10 +205,11 @@ response.addHeader("Cache-Control", headerValue);*/
 		return new ModelAndView("theme1/match","","");
 	}
 	@RequestMapping(value="/editteam", method=RequestMethod.GET)
-	public ModelAndView editTeam(){
-		 User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		 String username = user.getUsername();
-		 Contact contact = contactService.findByUserName(username);
+	public ModelAndView editTeam(HttpServletRequest request){
+		
+		SportController.request = request;
+		Contact contact =  contactService.getLoggedIn();
+
 		return new ModelAndView("theme1/editteam","teamid",contact.getAdminteam().getId());
 	}
 /*	@RequestMapping(value="/point-table2", method=RequestMethod.GET)
@@ -219,7 +232,7 @@ response.addHeader("Cache-Control", headerValue);*/
 	public ModelAndView calendar(){
 		return new ModelAndView("theme1/calendar","","");
 	}
-	@Secured({"ROLE_ADMIN","ROLE_TEAM"})
+	/*@Secured({"ROLE_ADMIN","ROLE_TEAM"})*/
 	@RequestMapping(value="/chat", method=RequestMethod.GET)
 	public ModelAndView chat(){
 		return new ModelAndView("theme1/chat","","");

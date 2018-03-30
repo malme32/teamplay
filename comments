@@ -18,6 +18,9 @@ ROSSONERI:
 - add tab to add and edit sponsors
 - create folder java-resources.... automatically in disk
 - add a global string of the name of soccer club. add to Εγγραφη χρηστη mail..
+- decrease logs -> remove debug
+- fix issue in database with chat admin
+- clean and backup android code
 DONE:
 - add email to user and send notifications to mail also
 - improve gui in admin page

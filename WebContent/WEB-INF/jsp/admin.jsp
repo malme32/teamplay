@@ -58,8 +58,8 @@ pageEncoding="UTF-8"%>
 		<li><a  ng-href='#!adminimages'>ΕΙΚΟΝΕΣ</a></li>
 		
 		<li><a  ng-href='#!admincustompages'>ΣΕΛΙΔΕΣ</a></li>
-
-						<li>
+ <li> <a href='loggingout' style='color:white'>Logout</a></li>
+		<%-- 				<li>
 					
 					<c:url value="/logout" var="logoutUrl" /> <form id="logout" action="${logoutUrl}" method="post" >
 					  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
@@ -67,7 +67,7 @@ pageEncoding="UTF-8"%>
 					<c:if test="${pageContext.request.userPrincipal.name != null}">
 						<a style='' href="javascript:document.getElementById('logout').submit()"> Logout</a>
 					</c:if>
-					</li>
+					</li> --%>
 					</ul>
 </div>
 

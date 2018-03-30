@@ -99,7 +99,10 @@ span.psw {
 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 	</form>
 	 --%>
-	
+<!-- 	<script>
+var oldURL = document.referrer;
+alert(oldURL);
+</script -->
 	<form  name='login' action="<c:url value='/loginPage' />" method='POST'>
 
 
