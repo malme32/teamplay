@@ -17,6 +17,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.transaction.Transactional;
 
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,7 +59,9 @@ import com.sport.model.Standing;
 import com.sport.model.Team;
 import com.sport.model.Teamgroup;
 
+
 @Controller
+@Transactional
 public class SportController {
 	
 	public static HttpServletRequest request = null;

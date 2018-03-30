@@ -9,18 +9,16 @@ notifications in app in game changes and news.
 
 ROSSONERI:
 
-- fix issue with permenent login
+
+- create folder java-resources.... automatically in disk
 - fix deletion of images in pages and albums
-- fix issues in android
-- fix inactive champion in some cases
 - fix gui in edit team and add waiting when uploading
 - fix security
 - add tab to add and edit sponsors
-- create folder java-resources.... automatically in disk
-- add a global string of the name of soccer club. add to Εγγραφη χρηστη mail..
 - decrease logs -> remove debug
 - fix issue in database with chat admin
 - clean and backup android code
+
 DONE:
 - add email to user and send notifications to mail also
 - improve gui in admin page
@@ -35,8 +33,14 @@ DONE:
 - fix transient champion and getupcomingchampiongames(add champion to game as field)
 - See all matches in team page
 - in champions page show next games of each champion. also fix the header links
+- fix issue with permenent login
+- fix issues in android
+- fix inactive champion in some cases
+- add a global string of the name of soccer club. add to Εγγραφη χρηστη mail..
 
-
+FOR SQL
+mysql> set global sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
+mysql> set session sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
 
 MUST - inactive active championhip
 MUST - popup images in news

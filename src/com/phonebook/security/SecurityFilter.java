@@ -116,8 +116,7 @@ public class SecurityFilter extends GenericFilterBean {
         	return;
         }
         // admin page
-        else
-        if(path.indexOf("/admin")>=0)
+        else if(path.indexOf("/admin")>=0)
         {
         	Contact contact = contactService.getLoggedIn();
         	if(contact==null)
@@ -175,7 +174,7 @@ public class SecurityFilter extends GenericFilterBean {
         			tokenCookie.setPath("/");/*
         			   tokenCookie.setSecure(true);
         			tokenCookie.setHttpOnly(true);*/
-        			tokenCookie.setMaxAge(100000000);
+        			tokenCookie.setMaxAge(1000000000);
         	        response.addCookie(tokenCookie);
         			
         			 /*UsernamePasswordAuthenticationToken authReq

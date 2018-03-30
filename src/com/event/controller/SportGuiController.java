@@ -1,9 +1,12 @@
 package com.event.controller;
 
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.CacheControl;
@@ -15,18 +18,30 @@ import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.util.WebUtils;
 
+import com.event.dao.MySessionDao;
+import com.event.service.GeneralDaoService;
 import com.event.service.SportService;
 import com.phonebook.model.Contact;
 import com.phonebook.service.ContactService;
+import com.sport.model.MySession;
 
 @Controller
+@Transactional
 public class SportGuiController {
 
 	@Autowired
 	private ContactService contactService;
 	@Autowired
 	private SportService sportService;
+	
+	@Autowired
+	private MySessionDao mySessionDao;	
+	
+	@Autowired
+	private GeneralDaoService generalDaoService;
+	
 	
 	
 	@RequestMapping(value="/loginPage", method=RequestMethod.GET)
@@ -127,6 +142,20 @@ response.addHeader("Cache-Control", headerValue);*/
 			 model.getModelMap().addAttribute("name", contact.getName());
 			 if(contact.getAdminteam()!=null)
 				 model.getModelMap().addAttribute("teamid", contact.getAdminteam().getId());
+			 try {
+
+					Cookie cookie1 = WebUtils.getCookie(request,"token");
+					if(cookie1!=null)
+					{
+						MySession mySession = mySessionDao.findSessionByToken(cookie1.getValue());
+						mySession.setDate(new Date());
+						generalDaoService.update(mySession);
+					}
+			 }
+				catch(Exception e)
+			 {
+					System.out.println(e);
+			 }
 		 }
 		 else
 		 {
