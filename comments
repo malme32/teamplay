@@ -10,16 +10,24 @@ notifications in app in game changes and news.
 ROSSONERI:
 
 
-- create folder java-resources.... automatically in disk
-- fix deletion of images in pages and albums
-- fix gui in edit team and add waiting when uploading
+-
+- fix gui in edit team and admin and add waiting when uploading
 - fix security
+- fix length of chat admin in mobile
 - add tab to add and edit sponsors
 - decrease logs -> remove debug
 - fix issue in database with chat admin
 - clean and backup android code
+- CREATE A file that keeps all the configuration
+- compress team logo and cover
+- clean code from unused links
+- add option to change account data and encrypt
+- make adding of username/password of mail configurable
 
+MUST - popup images in news
 DONE:
+ fix deletion of images in pages and albums
+- create folder java-resources.... automatically in disk
 - add email to user and send notifications to mail also
 - improve gui in admin page
 - Add team cover
@@ -37,10 +45,21 @@ DONE:
 - fix issues in android
 - fix inactive champion in some cases
 - add a global string of the name of soccer club. add to Εγγραφη χρηστη mail..
+MUST - inactive active championhip
 
 FOR SQL
 mysql> set global sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
 mysql> set session sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
 
-MUST - inactive active championhip
-MUST - popup images in news
+
+
+In order to put to aws
+-----------------
+change database address
+add mail credencials
+
+
+CREATE A file tha keeps all the configuration:
+	private static String bucketName     = "*** Provide bucket name ***";
+	private static String keyName        = "*** Provide key ***";
+	

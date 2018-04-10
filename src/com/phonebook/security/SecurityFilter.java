@@ -100,7 +100,12 @@ public class SecurityFilter extends GenericFilterBean {
    
         SportController.request=request;
         // logging out
-        if(path.equals("/loggingout"))
+        if(method.equals("GET")&&(path.toLowerCase().endsWith(".jpg")||path.toLowerCase().endsWith(".jpeg")||path.toLowerCase().endsWith(".png")|| 
+        		path.toLowerCase().endsWith(".gif")||path.toLowerCase().endsWith(".css")||path.toLowerCase().endsWith(".js")))
+        {
+            chain.doFilter(req, res);
+        }
+        else if(path.equals("/loggingout"))
         {
             System.out.println("Logging out..");
             contactService.deleteSession();

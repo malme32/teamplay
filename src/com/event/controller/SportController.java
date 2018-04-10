@@ -45,6 +45,7 @@ import com.event.service.SportService;
 import com.phonebook.model.Contact;
 import com.phonebook.model.Userrole;
 import com.phonebook.service.ContactService;
+import com.phonebook.service.MyProperty;
 import com.sport.model.Album;
 import com.sport.model.Champion;
 import com.sport.model.Custompage;
@@ -74,22 +75,29 @@ public class SportController {
 
 	@Autowired
 	private ContactService contactService;
-	
-	public static final String AppName = "Rossoneri MFC";
-	public static final String AndroidAppLink = "https://play.google.com/store/apps/details?id=com.rossonerimfc";
 
+	@Autowired
+	private MyProperty myProperty;
+	
+	//public static final String AppName = "Rossoneri MFC";
+/*	public static final String AndroidAppLink = "https://play.google.com/store/apps/details?id=com.rossonerimfc";
+	public static final boolean S3_AWS_Enabled = true;*/
+
+	
 	private String getStaticPath(HttpSession session)
 	{
-		
+		// TOMPCAT REAL PATH
 		    String path=session.getServletContext().getRealPath("/");  
 		    
-		    
-		  String homeDir = System.getProperty("user.home");
-		 // String homeDir = "/home/ec2-user";
-		    
-		    
-		   
+		// DISK    
+		//  String homeDir = System.getProperty("user.home");
 	     // String path=homeDir+"/javaresources/soccer";
+	
+
+		  // AWS 
+		//String path="";
+		
+		
 		    System.out.println("REALPATH_: "+path);
 	      return path;
 	}
@@ -99,6 +107,8 @@ public class SportController {
 	@RequestMapping(value="/champions", method=RequestMethod.GET, produces = "application/json")
 	public @ResponseBody List<Champion> getChampionList()
 	{
+		System.out.println("APP NAME: "+myProperty.getAppName());
+		
 		return sportService.findAllChampions();
 	}
 	

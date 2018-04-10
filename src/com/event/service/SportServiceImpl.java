@@ -6,6 +6,7 @@ import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -16,6 +17,7 @@ import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.hibernate.Hibernate;
 import org.imgscalr.Scalr;
@@ -51,6 +53,8 @@ import com.phonebook.model.Contact;
 import com.phonebook.model.Userrole;
 import com.phonebook.service.ContactService;
 import com.phonebook.service.MailService;
+import com.phonebook.service.MyProperty;
+import com.sport.amazon.S3AWSService;
 import com.sport.model.Album;
 import com.sport.model.Champion;
 import com.sport.model.Custompage;
@@ -71,6 +75,9 @@ import com.sport.model.Teamgroup;
 public class SportServiceImpl  implements SportService{
 
 
+	@Autowired
+	private MyProperty myProperty;
+	
 	@Autowired
 	ChampionDao championDao;
 	@Autowired
@@ -867,6 +874,9 @@ public class SportServiceImpl  implements SportService{
         bout.write(barr);  
         bout.flush();  
         bout.close();  
+
+        //AWS S3 Related
+        uploadToS3(path+"/resources/theme1/customimages/logo_"+filename);
         
         ByteArrayInputStream bais = new ByteArrayInputStream(barr);
         BufferedImage resizeMe = ImageIO.read(bais);
@@ -881,6 +891,9 @@ public class SportServiceImpl  implements SportService{
         bout1.flush();  
         bout1.close();  
 
+        //AWS S3 Related
+        uploadToS3(path+"/resources/theme1/customimages/logo_thumb_"+filename);
+        
         if(!team.getLogopath().contains("default"))
         {
 			File file1 = new File(path+"/resources/theme1/"+team.getLogopath());
@@ -889,6 +902,11 @@ public class SportServiceImpl  implements SportService{
 			file1 = new File(path+"/resources/theme1/"+team.getLogothumbpath());
 			file1.delete();
 			System.out.println("DEFAULT_TEAM_THUMB_DELETED");
+			
+			//AWS S3 Related
+			deleteFromS3("theme1"+team.getLogopath());
+			deleteFromS3("theme1"+team.getLogothumbpath());
+		
         }
         
         
@@ -901,13 +919,62 @@ public class SportServiceImpl  implements SportService{
         return;
 	}
 
+	public static File multipartToFile(CommonsMultipartFile multipart) throws IllegalStateException, IOException 
+	{
+	    File convFile = new File( multipart.getOriginalFilename());
+	    multipart.transferTo(convFile);
+	    return convFile;
+	}
+	public static File convert(CommonsMultipartFile file) throws IOException
+	{    
+	   /* File convFile = new File(file.getOriginalFilename());
+	    convFile.createNewFile(); 
+	    FileOutputStream fos = new FileOutputStream(convFile); 
+	    fos.write(file.getBytes());
+	    fos.close(); 
+	    return convFile;*/
+	    
+	    File file1 = new File("/tmp", "myfile");
+
+	 // Create the file using the touch method of the FileUtils class.
+	 // FileUtils.touch(file);
+
+	 // Write bytes from the multipart file to disk.
+	 FileUtils.writeByteArrayToFile(file1, file.getBytes());
+	 return file1;
+
+	}
+	
+	//AWS
+	public void uploadToS3(String path) {
+		
+        if(myProperty.isS3AWSEnabled())
+        {
+    		System.out.println("uploading to s3");
+        	File file1 = new File(path);
+
+			S3AWSService.uploadFile(file1,"theme1/customimages/"+file1.getName());
+			System.out.println("uploaded to s3");
+        }
+        
+	}
+	
+	//AWS related
+	public  void deleteFromS3(String path) {
+        if(myProperty.isS3AWSEnabled())
+        {
+    		System.out.println("deleting from s3");
+    		S3AWSService.deletebject(path);
+			System.out.println("deleted from s3");
+        }
+        
+	}
 	
 	
 	@Override
 	public void uploadTeamCover(String path, int id, CommonsMultipartFile file) {
 		// TODO Auto-generated method stub
-		
-		
+
 		Team team = teamDao.findById(id);
 		// TODO Auto-generated method stub
         //String path=session.getServletContext().getRealPath("/");  
@@ -926,8 +993,12 @@ public class SportServiceImpl  implements SportService{
                  new FileOutputStream(path+"/resources/theme1/customimages/cover_"+filename));  
         bout.write(barr);  
         bout.flush();  
-        bout.close();  
+        bout.close();
         
+        //AWS S3 Related
+        uploadToS3(path+"/resources/theme1/customimages/cover_"+filename);
+        
+
         ByteArrayInputStream bais = new ByteArrayInputStream(barr);
         BufferedImage resizeMe = ImageIO.read(bais);
         Dimension newMaxSize = new Dimension(60, 60);
@@ -941,6 +1012,9 @@ public class SportServiceImpl  implements SportService{
         bout1.flush();  
         bout1.close();  
 
+        //AWS S3 Related
+        uploadToS3(path+"/resources/theme1/customimages/cover_thumb_"+filename);
+        
         if(!team.getCoverpath().contains("default"))
         {
 			File file1 = new File(path+"/resources/theme1/"+team.getCoverpath());
@@ -949,6 +1023,11 @@ public class SportServiceImpl  implements SportService{
 			file1 = new File(path+"/resources/theme1/"+team.getCoverthumbpath());
 			file1.delete();
 			System.out.println("TEAM_COVER_DELETED");
+			
+			//AWS S3 Related
+			deleteFromS3("theme1"+team.getCoverpath());
+			deleteFromS3("theme1"+team.getCoverthumbpath());
+			
         }
         
         
@@ -1002,6 +1081,9 @@ public class SportServiceImpl  implements SportService{
         bout.flush();  
         bout.close();  
         
+        //AWS S3 Related
+        uploadToS3(path+"/resources/theme1/customimages/noticeimage_"+filename);
+        
         ByteArrayInputStream bais = new ByteArrayInputStream(barr);
         BufferedImage resizeMe = ImageIO.read(bais);
         Dimension newMaxSize = new Dimension(350, 350);
@@ -1014,6 +1096,9 @@ public class SportServiceImpl  implements SportService{
     
         bout1.flush();  
         bout1.close();  
+
+        //AWS S3 Related
+        uploadToS3(path+"/resources/theme1/customimages/noticethumb_"+filename);
         
         
         
@@ -1024,6 +1109,10 @@ public class SportServiceImpl  implements SportService{
 			
 			file1 = new File(path+"/resources/theme1/"+notice.getThumburl());
 			file1.delete();
+			//AWS S3 Related
+			deleteFromS3("theme1"+notice.getImageurl());
+			deleteFromS3("theme1"+notice.getThumburl());
+			
         }
         
         notice.setThumburl("/customimages/noticethumb_"+filename);
@@ -1082,12 +1171,24 @@ public class SportServiceImpl  implements SportService{
     
         bout1.flush();  
         bout1.close();  
+        
+        //AWS S3 Related
+        uploadToS3(path+"/resources/theme1/customimages/playerimage_"+filename);
+        
+        
         if(!contact.getImagepath().contains("default"))
         {
 			File file1 = new File(path+"/resources/theme1/"+contact.getThumbpath());
 			file1.delete();
 			file1 = new File(path+"/resources/theme1/"+contact.getImagepath());
 			file1.delete();
+			
+
+				
+				//AWS S3 Related
+			deleteFromS3("theme1"+contact.getThumbpath());
+			deleteFromS3("theme1"+contact.getImagepath());
+			
         }
         
         
@@ -1104,6 +1205,9 @@ public class SportServiceImpl  implements SportService{
         bout1.flush();  
         bout1.close();  
 
+        //AWS S3 Related
+        uploadToS3(path+"/resources/theme1/customimages/playerthumb_"+filename);
+        
         contact.setThumbpath("/customimages/playerthumb_"+filename);
         
         
@@ -1301,7 +1405,7 @@ public class SportServiceImpl  implements SportService{
 
 		
 			if(contact.getEmail()!=null&&contact.getEmail().contains("@"))
-				mailService.sendEmail(contact.getEmail(), "soccer@mail.com", "Καλως ηλθατε στο "+SportController.AppName, "Τα στοιχεία της εγγραφής σας είναι:\nUsername: "+ contact.getUsername()+" \n Password: "+temp_password+"\n\nΚατεβαστε την εφαρμογη εδω:\n"+SportController.AndroidAppLink);
+				mailService.sendEmail(contact.getEmail(), "soccer@mail.com", "Καλως ηλθατε στο "+myProperty.getAppName(), "Τα στοιχεία της εγγραφής σας είναι:\nUsername: "+ contact.getUsername()+" \n Password: "+temp_password+"\n\nΚατεβαστε την εφαρμογη εδω:\n"+myProperty.getAndroidAppLink());
 			else
 				System.out.println("MAIL NULL");
 			  }
@@ -1385,6 +1489,9 @@ public class SportServiceImpl  implements SportService{
 	        bout.write(barr);  
 	        bout.flush();  
 	        bout.close();  
+
+	        //AWS S3 Related
+	        uploadToS3(path+"/resources/theme1/customimages/albumimage_"+filename);
 	        
 	        
 	        ByteArrayInputStream bais = new ByteArrayInputStream(barr);
@@ -1400,6 +1507,10 @@ public class SportServiceImpl  implements SportService{
 	        bout1.flush();  
 	        bout1.close();  
 
+	        //AWS S3 Related
+	        uploadToS3(path+"/resources/theme1/customimages/albumimage_thumb_"+filename);
+	        
+			
 	        image.setThumburl("/customimages/albumimage_thumb_"+filename);
 	        image.setUrl("/customimages/albumimage_"+filename);
 	        image.setAlbum(album);
@@ -1424,21 +1535,46 @@ public class SportServiceImpl  implements SportService{
 	public void deleteImage(String path, int id) {
 		// TODO Auto-generated method stub
 		Image image = this.findImageById(id);
-		File file = new File(path+"/resources/theme1/"+image.getUrl());
-
+		File file = new File(path+"resources/theme1"+image.getUrl());
+		System.out.println("Image to be deleted: "+ path+"resources/theme1"+image.getUrl());
 		if(file.delete()){
 			System.out.println(file.getName() + " is deleted!");
 		}else{
 			System.out.println("Delete operation is failed.");
 		}
-		file = new File(path+"/resources/theme1/"+image.getThumburl());
+		System.out.println("Image thumb to be deleted: "+ path+"resources/theme1"+image.getThumburl());
+		file = new File(path+"resources/theme1"+image.getThumburl());
 
 		if(file.delete()){
 			System.out.println(file.getName() + " is deleted!");
 		}else{
 			System.out.println("Delete operation is failed.");
+		}	
+		//AWS S3 Related
+		deleteFromS3("theme1"+image.getUrl());
+		deleteFromS3("theme1"+image.getThumburl());
+		if(image.getCustompage()!=null)
+		{
+			Custompage custompage = image.getCustompage();
+			/*for(Image image1: custompage.getImages())
+			{
+				if(image1.getId()==image.getId())
+				{
+					custompage.getImages().remove(image1);
+					break;
+				}
+				
+			}*/
+			custompage.getImages().remove(image);
+			custompage.setImages(custompage.getImages());
+			generalDaoService.update(custompage);
+			generalDaoService.delete(image);
 		}
-		generalDaoService.deleteNewSession(image);
+		else
+		//generalDaoService.deleteNewSession(image);
+			generalDaoService.delete(image);
+		
+	
 	}
 
 	@Override
@@ -1453,6 +1589,12 @@ public class SportServiceImpl  implements SportService{
 
 			file = new File(path+"/resources/theme1/"+image.getThumburl());
 			file.delete();
+
+			//AWS S3 Related
+			deleteFromS3("theme1"+image.getUrl());
+			deleteFromS3("theme1"+image.getThumburl());
+
+			
 		}
 		generalDaoService.delete(album);
 	}
@@ -1476,7 +1618,10 @@ public class SportServiceImpl  implements SportService{
 			file.delete();
 			file = new File(path+"/resources/theme1/"+team.getLogothumbpath());
 			file.delete();
-
+			
+			//AWS S3 Related
+			deleteFromS3("theme1"+team.getLogopath());
+			deleteFromS3("theme1"+team.getLogothumbpath());
 		}
 		if(!team.getCoverpath().contains("default"))
 		{
@@ -1486,6 +1631,10 @@ public class SportServiceImpl  implements SportService{
 
 			file = new File(path+"/resources/theme1/"+team.getCoverthumbpath());
 			file.delete();
+			
+			//AWS S3 Related
+			deleteFromS3("theme1"+team.getCoverpath());
+			deleteFromS3("theme1"+team.getCoverthumbpath());
 
 		}
 
@@ -1493,11 +1642,15 @@ public class SportServiceImpl  implements SportService{
 		for(Contact contact:team.getPlayers())
 		{	
 			if(!contact.getImagepath().contains("default"))
-				{
+			{
 				File file = new File(path+"/resources/theme1/"+contact.getImagepath());
 				file.delete();
 				file = new File(path+"/resources/theme1/"+contact.getThumbpath());
 				file.delete();
+				
+				//AWS S3 Related
+				deleteFromS3("theme1"+contact.getImagepath());
+				deleteFromS3("theme1"+contact.getThumbpath());
 			}
 		}
 		generalDaoService.delete(team);
@@ -1512,6 +1665,11 @@ public class SportServiceImpl  implements SportService{
 			file.delete();
 			file = new File(path+"/resources/theme1/"+contactService.getContact(id).getThumbpath());
 			file.delete();
+			
+
+			//AWS S3 Related
+			deleteFromS3("theme1"+contactService.getContact(id).getImagepath());
+			deleteFromS3("theme1"+contactService.getContact(id).getThumbpath());
 		}
 		System.out.println("DELETING CONTACT");
 		generalDaoService.delete(contactService.getContact(id));
@@ -1555,6 +1713,10 @@ public class SportServiceImpl  implements SportService{
 			
 			file1 = new File(path+"/resources/theme1/"+notice.getThumburl());
 			file1.delete();
+
+			//AWS S3 Related
+			deleteFromS3("theme1"+notice.getThumburl());
+			deleteFromS3("theme1"+notice.getImageurl());
         }
         
 		
@@ -1766,7 +1928,8 @@ public class SportServiceImpl  implements SportService{
 			        bout.write(barr);  
 			        bout.flush();  
 			        bout.close();  
-			        
+			        //AWS S3 Related
+			        uploadToS3(staticPath+"/resources/theme1/customimages/custompageimage_"+filename);
 			        
 			        ByteArrayInputStream bais = new ByteArrayInputStream(barr);
 			        BufferedImage resizeMe = ImageIO.read(bais);
@@ -1781,6 +1944,9 @@ public class SportServiceImpl  implements SportService{
 			        bout1.flush();  
 			        bout1.close();  
 
+			        //AWS S3 Related
+			        uploadToS3(staticPath+"/resources/theme1/customimages/custompageimage_thumb_"+filename);
+			        
 			        image.setThumburl("/customimages/custompageimage_thumb_"+filename);
 			        image.setUrl("/customimages/custompageimage_"+filename);
 			        image.setCustompage(custompage);

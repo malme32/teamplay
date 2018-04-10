@@ -29,6 +29,7 @@ public abstract class AbstractDao {
     }
     
     public void deleteNewSession(Object entity) {
+    	System.out.println("DELETING NEW SESSION");
     	Session session = sessionFactory.openSession();
     	session.delete(entity);
     	session.close();

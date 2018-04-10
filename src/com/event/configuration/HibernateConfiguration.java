@@ -18,6 +18,8 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+
+import com.phonebook.service.MyProperty;
 /*@PropertySource(value = { "classpath:application.properties" })*/
 
 @Configuration
@@ -28,7 +30,11 @@ public class HibernateConfiguration {
  
     @Autowired
     private Environment environment;
- 
+
+    @Autowired
+    private MyProperty myProperty;
+    
+    
     @Bean	
     public LocalSessionFactoryBean sessionFactory() {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
@@ -42,11 +48,15 @@ public class HibernateConfiguration {
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/test?useUnicode=yes&characterEncoding=UTF-8");
-        //dataSource.setUrl("jdbc:mysql://aa90m04kh6jwab.cae7msh7iwae.eu-west-2.rds.amazonaws.com:3306/test?useUnicode=yes&characterEncoding=UTF-8");
-        dataSource.setUsername("root");
-        dataSource.setPassword("root");
-        //dataSource.setPassword("Poasbaki_13");
+        dataSource.setUrl(myProperty.getDbUrl());
+
+     //   dataSource.setUrl("jdbc:mysql://localhost:3306/test?useUnicode=yes&characterEncoding=UTF-8");
+      //  dataSource.setUrl("jdbc:mysql://aa90m04kh6jwab.cae7msh7iwae.eu-west-2.rds.amazonaws.com:3306/test?useUnicode=yes&characterEncoding=UTF-8");
+        
+        dataSource.setUsername(myProperty.getDbUsername());
+        
+        dataSource.setPassword(myProperty.getDbPassword());
+       
         return dataSource;
     }
      

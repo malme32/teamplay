@@ -286,8 +286,9 @@ ng-src='${resources_start}/generalimages/message-outline-256.png' ng-click='open
 <li onclick='applyClosedStyles1()'><a href="#!contactus">ΕΠΙΚΟΙΝΩΝΙΑ</a></li>
 <%if(!pageContext.getAttribute("username", PageContext.REQUEST_SCOPE).equals("")){ %>
 
+ <li> <a style='color:#cf695a'  href='loggingout' ><%= pageContext.getAttribute("name", PageContext.REQUEST_SCOPE) %> Logout</a></li>
 <%-- <li style=''><a href='' ><%= pageContext.getAttribute("name", PageContext.REQUEST_SCOPE) %></a></li> --%>
-						<li>
+				<%-- 		<li>
 					
 					<c:url value="/logout" var="logoutUrl" /> <form id="logout" action="${logoutUrl}" method="post" >
 					  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
@@ -295,12 +296,12 @@ ng-src='${resources_start}/generalimages/message-outline-256.png' ng-click='open
 					<c:if test="${pageContext.request.userPrincipal.name != null}">
 						<a style='' href="javascript:document.getElementById('logout').submit()"><%= pageContext.getAttribute("name", PageContext.REQUEST_SCOPE) %> Logout</a>
 					</c:if>
-					</li>
+					</li> --%>
 <%}%>
 <%if(pageContext.getAttribute("username", PageContext.REQUEST_SCOPE).equals("")){ %>
 
 <li class="">
-<a href="loginPage" class= >ΣΥΝΔΕΣΗ</a>
+<a style='color:white' href="loginPage" class= >ΣΥΝΔΕΣΗ</a>
 
 </li>
 <%}%>

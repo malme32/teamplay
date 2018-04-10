@@ -30,12 +30,21 @@
 	<mvc:resources mapping="/resources/**" location="/resources/" />
 <!-- 		<mvc:resources mapping="/resources_static/**" location="file:/home/and/javaresources/soccer/resources/" />
  -->	
-<!-- 	<mvc:resources mapping="/resources_static/**" location="file:/home/ec2-user/javaresources/soccer/resources/" />
- -->	
- 	<mvc:resources mapping="/resources_static/**" location="/resources/" />
+	
  	
 <!-- 	<mvc:resources mapping="/resources1/**" location="/resources/theme1/" />
  -->	
+ 
+ <!-- DISK -->
+ <!-- 	<mvc:resources mapping="/resources_static/**" location="file:/home/ec2-user/javaresources/soccer/resources/" />
+ -->
+ <!--  ToMPCAT REAL PATH -->
+<!--    	<mvc:resources mapping="/resources_static/**" location="/resources/" /> -->
+ 
+<!--  AWS -->
+   	<mvc:resources mapping="/resources_static/**" location="https://s3.eu-west-2.amazonaws.com/bucket3454455/" />
+ 
+
  <mvc:interceptors>
     <bean id="loggerInterceptor" class="com.event.interceptor.LoggerInterceptor"/>
         

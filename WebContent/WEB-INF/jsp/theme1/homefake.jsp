@@ -21,7 +21,7 @@ pageEncoding="UTF-8"%>
  <div class="banner-caption style-1 p-white h-white pull-right">
 <h2 class="animated fadeInUp delay-1s " style="color:#cc0000; text-shadow: 1px 1px #FFFFFF;">ΤΟ ΔΗΜΟΦΙΛΕΣΤΕΡΟ ΑΘΛΗΜΑ ΣΤΗΝ ΕΥΡΩΠΗ, ΤΟ ΠΟΔΟΣΦΑΙΡΟ, ΒΡΙΣΚΕΙ ΤΟ ΔΙΚΟ ΤΟΥ ΓΗΠΕΔΟ!</h2>
 <p class="animated fadeInUp delay-2s red-btn" style="; "> Εγκαταστάσεις τελευταίας τεχνολογίας, μέσα από το Rossoneri Mini Football CLub! </p>
-<a class="btn lg red-btn animated fadeInRight delay-3s" href="#"><i>+</i>Περισσοτερα</a>
+<a class="btn lg red-btn animated fadeInRight delay-3s" href=""><i>+</i>Περισσοτερα</a>
 </div>
 </div>
 </div>
