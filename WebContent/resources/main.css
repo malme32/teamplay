@@ -437,3 +437,11 @@ input[type=submit]:hover {
  display:inline-block;
   	background:black;
   } */
+  
+  .action_loading{
+	position:fixed;
+	 left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+  

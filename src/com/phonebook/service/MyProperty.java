@@ -12,6 +12,8 @@ private String appName;
 private String androidAppLink;
 private boolean s3AWSEnabled;
 
+private String resourcesPath;
+
 public String getAppName() {
 	return appName;
 }
@@ -58,6 +60,14 @@ public boolean isS3AWSEnabled() {
 
 public void setS3AWSEnabled(boolean s3awsEnabled) {
 	s3AWSEnabled = s3awsEnabled;
+}
+
+public String getResourcesPath() {
+	return resourcesPath;
+}
+
+public void setResourcesPath(String resourcesPath) {
+	this.resourcesPath = resourcesPath;
 }
 
 }

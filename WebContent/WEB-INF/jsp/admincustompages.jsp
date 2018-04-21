@@ -5,6 +5,7 @@ pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <spring:url value="/resources/theme1" var="resources" />
 <spring:url value="/resources_static/theme1" var="resources_static" />
+<img class='admin_loading' ng-show='loading' width=80 height=80 src="${resources}/images/loading.gif" alt="">
 
 <div class='font_size_small'>
 
@@ -51,7 +52,8 @@ pageEncoding="UTF-8"%>
 			</ul>
 			<br/><br/>
 			   <h2>ΕΠΕΞΕΡΓΑΣΙΑ ΕΙΚΟΝΩΝ</h2>
-			{{waiting}}
+       <b class = 'color_red'>{{waiting}}</b>
+		<img ng-show='waiting' width=30 height=30 src="${resources}/images/loading.gif" alt="">
 <div class='admin_album table_stylish1'>
 
 		<table>

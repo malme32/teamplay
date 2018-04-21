@@ -11,6 +11,7 @@ pageEncoding="UTF-8"%>
 	<%-- <link rel="stylesheet" type="text/css" href="${resources0}admin.css">    --%>
 
 
+<img class=action_loading ng-show='loading' width=80 height=80 src="${resources}/images/loading.gif" alt="">
 <div class="page-heading-breadcrumbs">
 <div class="container">
 <h2>ΟΜΑΔΕΣ</h2>

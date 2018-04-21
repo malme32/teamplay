@@ -65,7 +65,7 @@ public class HibernateConfiguration {
         //properties.put("hibernate.dialect","innodb");
 
         properties.put("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
-        properties.put("hibernate.show_sql", false);
+        properties.put("hibernate.show_sql", true);
         properties.put("hibernate.format_sql", false);
         properties.put("hibernate.hbm2ddl.auto", "update");
         properties.put("log4j.logger.org.hibernate", "info");

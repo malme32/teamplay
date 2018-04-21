@@ -190,16 +190,18 @@ $scope.$on("$locationChangeStart", function(event, next, current) {
 });
 
 appAdmin.controller("imagesController",function($scope, $http, $location, $window){
-	
+	$scope.loading=true;
 	 $http({
 	       method : "GET",
 	       url : "albums"
 	   }).then(function mySuccess(response) {
 
+			$scope.loading=false;
 	       $scope.albums = response.data;
 	     
 	   }, function myError(response) {
-	 
+
+			$scope.loading=false;
 	       $scope.result = response.statusText;
 	     
 	   });
@@ -221,17 +223,20 @@ appAdmin.controller("imagesController",function($scope, $http, $location, $windo
 
 			 if(!confirm("Είστε σίγουρος οτι θέλετε να διαγράψετε αυτή την εικόνα;"))
 				 return;
-		   
+
+				$scope.loading=true;
 			 $http({
 		    method : "DELETE",
       	url : "images/"+image.id  
   }).then(function mySuccess(response) {
- 
+
+		$scope.loading=false;
   	$window.location.reload();
   	//$scope.getTeam();
   }, function myError(response) {
 
-  	
+
+		$scope.loading=false;
       alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");
   });
 		   
@@ -242,41 +247,48 @@ appAdmin.controller("imagesController",function($scope, $http, $location, $windo
 		
 				 if(!confirm("Είστε σίγουρος οτι θέλετε να διαγράψετε αυτό το album;"))
 					 return;
-			   
+
+					$scope.loading=true;
 				 $http({
 			    method : "DELETE",
 		  	url : "albums/"+album.id  
 		}).then(function mySuccess(response) {
-		
+
+			$scope.loading=false;
 			$window.location.reload();
 			//$scope.getTeam();
 		}, function myError(response) {
-		
+
+			$scope.loading=false;
 			
-  alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");
+			alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");
 });
 	   
    }
      
      $scope.addAlbum = function (newalbum) {
-		
+
+				$scope.loading=true;
 					 $http({
 				    method : "POST",
 			  	url : "albums",
 			  	params:{name:newalbum.name}
 			}).then(function mySuccess(response) {
-			
+
+				$scope.loading=false;
 				$window.location.reload();
 				//$scope.getTeam();
 			}, function myError(response) {
-			
+
+				$scope.loading=false;
 				
-			alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");
+				alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");
 			});
 			
 			}
 
      $scope.editAlbum = function (album) {
+			$scope.loading=true;
 			 $http({
 			        method : "PUT",
 			        url : "albums",
@@ -284,10 +296,12 @@ appAdmin.controller("imagesController",function($scope, $http, $location, $windo
 			        headers: {'Content-Type': 'application/json; charset=utf-8'} 
 		
 			    }).then(function mySuccess(response) {
-		
+
+					$scope.loading=false;
 			    	alert("Εγινε!");
 			    }, function myError(response) {
-			  
+
+					$scope.loading=false;
 			    	alert("An Error occured. Try again.");
 			      
 			    });
@@ -376,7 +390,7 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 
 	 $scope.championlist ="";
 	 $scope.champion;
-	 
+	 $scope.loading=true;
 	//$scope.getContacts = function (){
 /*	 $scope.getChampion = function (row){  
 */		 $scope.result = "";
@@ -389,8 +403,10 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 
 	        $scope.championlist = response.data;
 	        $scope.getTotalTeamList();
+	        $scope.loading=true;
 	    }, function myError(response) {
-	  
+
+	    	$scope.loading=false;
 	        $scope.result = response.statusText;
 	      
 	    });
@@ -1458,13 +1474,13 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 
 appAdmin.controller("teamController",function($scope, $http, $location, $window){
 
-		 
+	$scope.loading=true;
 	/* $scope.getTeams = function (){ */ 
 		 $http({
 	        method : "GET",
 	        url : "teams"
 	    }).then(function mySuccess(response) {
-
+	    	$scope.loading=false;
 	        $scope.teams = response.data;
 	      
 	    }, function myError(response) {
@@ -1478,6 +1494,7 @@ appAdmin.controller("teamController",function($scope, $http, $location, $window)
 		 
 		 $scope.getTeam = function (){ 
 		        $scope.team = "";
+		        $scope.loading=true;
 			 $http({
 		        method : "GET",
 		        url : "teams/"+$scope.selectedTeam.id
@@ -1490,30 +1507,31 @@ appAdmin.controller("teamController",function($scope, $http, $location, $window)
 				        url : "teams/"+$scope.selectedTeam.id+"/players"
 				    }).then(function mySuccess(response) {
 				        $scope.players = response.data;
+				        $scope.loading=false;
 				    }, function myError(response) {
-				  
+				    	$scope.loading=false;
 				        alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");
 				    });
 
 		    }, function myError(response) {
-		  
+		    	$scope.loading=false;
 		        alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");
 		    });
 		 }
 		 
 		 $scope.addTeam = function (){ 
-
+			 $scope.loading=true;
 			 $http({
 		        method : "POST",
 		        	url : "teams",
 			        data: $scope.newteam,
 			        headers: {'Content-Type': 'application/json; charset=utf-8'}
 		    }).then(function mySuccess(response) {
-
+		    	$scope.loading=false;
 		    	$window.location.reload();
 		        
 		    }, function myError(response) {
-		  
+		    	$scope.loading=false;
 		        alert("Κατι δεν πηγε καλα. Μήπως η ομάδα υπάρχει ήδη?");
 		    });
 		 }
@@ -1522,16 +1540,16 @@ appAdmin.controller("teamController",function($scope, $http, $location, $window)
 
 			 if(!confirm("Είστε σίγουρος;"))
 				 return;
-				 
+			 $scope.loading=true;
 			 $http({
 		        method : "DELETE",
 		        url : "teams/"+$scope.team.id
 		    }).then(function mySuccess(response) {
-
+		    	$scope.loading=false;
 		    	$window.location.reload();
 		      
 		    }, function myError(response) {
-		  
+		    	$scope.loading=false;
 		        alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");
 		    });
 		 }
@@ -1539,16 +1557,19 @@ appAdmin.controller("teamController",function($scope, $http, $location, $window)
 		 $scope.editTeam = function (){ 
 			 //$scope.team.players=$scope.players;
 			 //$scope.result=$scope.team;
+		    	$scope.loading=true;
 			 $http({
 		        method : "PUT",
 		        	url : "teams",
 			        data: $scope.team,
 			        headers: {'Content-Type': 'application/json; charset=utf-8'}
 		    }).then(function mySuccess(response) {
-		    	
+
+		    	$scope.loading=false;
 		    	$scope.getTeam();
 		    }, function myError(response) {
 
+		    	$scope.loading=false;
 		        alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");
 		    });
 		 }
@@ -1568,7 +1589,8 @@ appAdmin.controller("teamController",function($scope, $http, $location, $window)
                           })        
                  }*/
            
-             
+
+             $scope.waiting = "Η εικόνα ανεβαίνει. Παρακαλώ περιμένετε"; 
 			 $http({
 			        method : "POST",
 			        	url : "teams/"+$scope.team.id+"/logos",
@@ -1578,9 +1600,11 @@ appAdmin.controller("teamController",function($scope, $http, $location, $window)
                         headers: {'Content-Type': undefined}     
 			    }).then(function mySuccess(response) {
 
+			    	$scope.waiting ="";
 			    	$scope.getTeam();
 			    }, function myError(response) {
 
+			    	$scope.waiting ="";
 			        alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");
 			    });
              
@@ -1589,7 +1613,8 @@ appAdmin.controller("teamController",function($scope, $http, $location, $window)
 		 $scope.uploadCover = function(){
 		     var fd = new FormData();
              fd.append('file', $scope.mycover);
-                     
+
+             $scope.waiting = "Η εικόνα ανεβαίνει. Παρακαλώ περιμένετε"; 
 			 $http({
 			        method : "POST",
 			        	url : "teams/"+$scope.team.id+"/covers",
@@ -1598,10 +1623,11 @@ appAdmin.controller("teamController",function($scope, $http, $location, $window)
                         transformRequest: angular.identity,
                         headers: {'Content-Type': undefined}     
 			    }).then(function mySuccess(response) {
-
+			    	$scope.waiting ="";
 			    	$scope.getTeam();
 			    }, function myError(response) {
 
+			    	$scope.waiting ="";
 			        alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");
 			    });
              
@@ -1609,6 +1635,7 @@ appAdmin.controller("teamController",function($scope, $http, $location, $window)
 		 
 		 $scope.editPlayer = function (row){ 
 
+		    	$scope.loading=true;
 			 $http({
 		        method : "PUT",
 		        	url : "players",
@@ -1617,16 +1644,19 @@ appAdmin.controller("teamController",function($scope, $http, $location, $window)
 		    }).then(function mySuccess(response) {
 
 
+		    	$scope.loading=false;
 		        alert("Οι αλλαγές αποθηκεύτηκαν με επιτυχία!");
 		        
 		    }, function myError(response) {
 
+		    	$scope.loading=false;
 		        alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");
 		    });
 		 }
 		 
 		 $scope.addPlayer= function (){ 
 			// $scope.result = $scope.newplayer;
+		    $scope.loading=true;
 			 $http({
 		        method : "POST",
 		        	url : "teams/"+$scope.team.id+"/players",
@@ -1635,6 +1665,7 @@ appAdmin.controller("teamController",function($scope, $http, $location, $window)
 		    }).then(function mySuccess(response) {
 		    			$scope.newplayer={};
 		    			$scope.getTeam();
+				    	$scope.loading=false;
 				    		//$scope.newplayer = response.data;
 				    		//$scope.result=$scope.newplayer;
 		/*					 $http({
@@ -1651,6 +1682,7 @@ appAdmin.controller("teamController",function($scope, $http, $location, $window)
 			
 		    	
 		    }, function myError(response) {
+		    	$scope.loading=false;
 		  
 		        alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");
 		    });
@@ -1659,7 +1691,8 @@ appAdmin.controller("teamController",function($scope, $http, $location, $window)
 		 $scope.uploadPlayerImage = function(row){
 		     var fd = new FormData();
              fd.append('file', row.playerimage);
-                     
+
+             $scope.waiting = "Η εικόνα ανεβαίνει. Παρακαλώ περιμένετε"; 
 			 $http({
 			        method : "POST",
 			        	url : "players/"+row.id+"/images",
@@ -1668,11 +1701,13 @@ appAdmin.controller("teamController",function($scope, $http, $location, $window)
                         transformRequest: angular.identity,
                         headers: {'Content-Type': undefined}     
 			    }).then(function mySuccess(response) {
+			    	$scope.waiting ="";
 			    	//w= response.data;
 			    	//$scope.result= row;
 			    	$scope.getTeam();
 			    	//$window.location.reload();
 			    }, function myError(response) {
+			    	$scope.waiting ="";
 
 			        alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");
 			    });
@@ -1683,14 +1718,17 @@ appAdmin.controller("teamController",function($scope, $http, $location, $window)
 		 $scope.deletePlayer = function (row){ 
 			 if(!confirm("Είστε σίγουρος;"))
 				 return;
+		    	$scope.loading=true;
 			 $http({
 		        method : "DELETE",
 		        	url : "players/"+row.id
 		    }).then(function mySuccess(response) {
 		    	$scope.getTeam();
-		        
+
+		    	$scope.loading=false;
 		    }, function myError(response) {
 
+		    	$scope.loading=false;
 		        alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");
 		    });
 		 }
@@ -1699,7 +1737,8 @@ appAdmin.controller("teamController",function($scope, $http, $location, $window)
 
 appAdmin.controller("newsController",function($scope, $http, $location, $window){
 
-	 
+
+  	 $scope.loading=true;
 	/* $scope.getTeams = function (){ */ 
 		 $http({
 	        method : "GET",
@@ -1707,10 +1746,12 @@ appAdmin.controller("newsController",function($scope, $http, $location, $window)
 	        params:{headersonly:1}
 	    }).then(function mySuccess(response) {
 
+		   	 $scope.loading=false;
 	        $scope.news = response.data;
 	      
 	    }, function myError(response) {
 
+		   	 $scope.loading=false;
 		      alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");
 	      
 	    });
@@ -1721,11 +1762,13 @@ appAdmin.controller("newsController",function($scope, $http, $location, $window)
 		 $scope.getNotice = function (){ 
 		
 		        $scope.notice = "";
+			   	 $scope.loading=true;
 			 $http({
 		        method : "GET",
 		        url : "news/"+$scope.selectedNotice.id
 		    }).then(function mySuccess(response) {
 
+			   	 $scope.loading=false;
 			
 		        $scope.notice = response.data;
 		        
@@ -1740,13 +1783,15 @@ appAdmin.controller("newsController",function($scope, $http, $location, $window)
 				    });*/
 
 		    }, function myError(response) {
-		  
+
+			   	 $scope.loading=false;
 		        alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");
 		    });
 		 }
 		 
 		 $scope.addNotice = function (){ 
 			 $scope.newnotice.date = new Date();
+		   	 $scope.loading=true;
 			 $http({
 		        method : "POST",
 		        	url : "news",
@@ -1754,10 +1799,12 @@ appAdmin.controller("newsController",function($scope, $http, $location, $window)
 			        headers: {'Content-Type': 'application/json; charset=utf-8'}
 		    }).then(function mySuccess(response) {
 
+			   	 $scope.loading=false;
 		    	$window.location.reload();
 		        
 		    }, function myError(response) {
-		  
+
+			   	 $scope.loading=false;
 		        alert("Κατι δεν πηγε καλα. Μήπως η ομάδα υπάρχει ήδη?");
 		    });
 		 }
@@ -1766,21 +1813,25 @@ appAdmin.controller("newsController",function($scope, $http, $location, $window)
 
 			 if(!confirm("Είστε σίγουρος;"))
 				 return;
-				 
+
+		   	 $scope.loading=true;
 			 $http({
 		        method : "DELETE",
 		        url : "news/"+$scope.notice.id
 		    }).then(function mySuccess(response) {
 
+			   	 $scope.loading=false;
 		    	$window.location.reload();
 		      
 		    }, function myError(response) {
-		  
+
+			   	 $scope.loading=false;
 		        alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");
 		    });
 		 }
 		 
 		 $scope.editNotice = function (){ 
+		   	 $scope.loading=true;
 			 $scope.notice.date = new Date();
 			 //$scope.team.players=$scope.players;
 			 //$scope.result=$scope.team;
@@ -1790,10 +1841,12 @@ appAdmin.controller("newsController",function($scope, $http, $location, $window)
 			        data: $scope.notice,
 			        headers: {'Content-Type': 'application/json; charset=utf-8'}
 		    }).then(function mySuccess(response) {
-		    	
+
+			   	 $scope.loading=false;
 		    	$scope.getNotice();
 		    }, function myError(response) {
 
+			   	 $scope.loading=false;
 		        alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");
 		    });
 		 }
@@ -1801,7 +1854,8 @@ appAdmin.controller("newsController",function($scope, $http, $location, $window)
 		 $scope.uploadImage = function(){
 		     var fd = new FormData();
              fd.append('file', $scope.mylogo);
-         
+
+		   	 $scope.loading=true;
              
 			 $http({
 			        method : "POST",
@@ -1812,9 +1866,11 @@ appAdmin.controller("newsController",function($scope, $http, $location, $window)
                         headers: {'Content-Type': undefined}     
 			    }).then(function mySuccess(response) {
 
+				   	 $scope.loading=false;
 			    	$scope.getNotice();
 			    }, function myError(response) {
 
+				   	 $scope.loading=false;
 			        alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");
 			    });
              
@@ -1830,6 +1886,7 @@ appAdmin.controller("newsController",function($scope, $http, $location, $window)
 
 appAdmin.controller("custompagesController",function($scope, $http, $location, $window){
 
+  	 $scope.loading=true;
 	 
 	/* $scope.getTeams = function (){ */ 
 		 $http({
@@ -1838,10 +1895,12 @@ appAdmin.controller("custompagesController",function($scope, $http, $location, $
 	        params:{headersonly:1}
 	    }).then(function mySuccess(response) {
 
+		   	 $scope.loading=false;
 	        $scope.news = response.data;
 	      
 	    }, function myError(response) {
 
+		   	 $scope.loading=false;
 		      alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");
 	      
 	    });
@@ -1850,13 +1909,15 @@ appAdmin.controller("custompagesController",function($scope, $http, $location, $
 
 		 
 		 $scope.getCustompage = function (custompage){ 
-		
+
+		   	 $scope.loading=true;
 		        $scope.custompage = "";
 			 $http({
 		        method : "GET",
 		        url : "custompages/"+custompage.id
 		    }).then(function mySuccess(response) {
 
+			   	 $scope.loading=false;
 			
 		        $scope.custompage = response.data;
 		        
@@ -1871,13 +1932,15 @@ appAdmin.controller("custompagesController",function($scope, $http, $location, $
 				    });*/
 
 		    }, function myError(response) {
-		  
+
+			   	 $scope.loading=false;
 		        alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");
 		    });
 		 }
 		 
 		 $scope.addCustompage = function (){ 
 			 $scope.newcustompage.date = new Date();
+		   	 $scope.loading=true;
 			 $http({
 		        method : "POST",
 		        	url : "custompages",
@@ -1885,10 +1948,12 @@ appAdmin.controller("custompagesController",function($scope, $http, $location, $
 			        headers: {'Content-Type': 'application/json; charset=utf-8'}
 		    }).then(function mySuccess(response) {
 
+			   	 $scope.loading=false;
 		    	$window.location.reload();
 		        
 		    }, function myError(response) {
-		  
+
+			   	 $scope.loading=false;
 		        alert("Κατι δεν πηγε καλα. Μήπως η ομάδα υπάρχει ήδη?");
 		    });
 		 }
@@ -1897,21 +1962,26 @@ appAdmin.controller("custompagesController",function($scope, $http, $location, $
 
 			 if(!confirm("Είστε σίγουρος;"))
 				 return;
-				 
+
+		   	 $scope.loading=true;
 			 $http({
 		        method : "DELETE",
 		        url : "custompages/"+$scope.custompage.id
 		    }).then(function mySuccess(response) {
 
+			   	 $scope.loading=false;
 		    	$window.location.reload();
 		      
 		    }, function myError(response) {
-		  
+
+			   	 $scope.loading=false;
 		        alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");
 		    });
 		 }
 		 
 		 $scope.editCustompage = function (){ 
+
+		   	 $scope.loading=true;
 			 $scope.custompage.date = new Date();
 			 //$scope.team.players=$scope.players;
 			 //$scope.result=$scope.team;
@@ -1921,16 +1991,19 @@ appAdmin.controller("custompagesController",function($scope, $http, $location, $
 			        data: $scope.custompage,
 			        headers: {'Content-Type': 'application/json; charset=utf-8'}
 		    }).then(function mySuccess(response) {
-		    	
+
+			   	 $scope.loading=false;
 		    	$scope.getCustompage($scope.selectedCustompage);
 		    }, function myError(response) {
 
+			   	 $scope.loading=false;
 		        alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");
 		    });
 		 }
 		 
 		 $scope.uploadImage = function(){
 		     var fd = new FormData();
+		   	 $scope.loading=true;
              fd.append('file', $scope.mylogo);
          
              
@@ -1943,9 +2016,11 @@ appAdmin.controller("custompagesController",function($scope, $http, $location, $
                         headers: {'Content-Type': undefined}     
 			    }).then(function mySuccess(response) {
 
+				   	 $scope.loading=false;
 			    	$scope.getCustompage($scope.selectedCustompage);
 			    }, function myError(response) {
 
+				   	 $scope.loading=false;
 			        alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");
 			    });
              
@@ -1970,16 +2045,19 @@ appAdmin.controller("custompagesController",function($scope, $http, $location, $
 
 			 if(!confirm("Είστε σίγουρος οτι θέλετε να διαγράψετε αυτή την εικόνα;"))
 				 return;
-		   
+
+		   	 $scope.loading=true;
 			 $http({
 		    method : "DELETE",
      	url : "images/"+image.id  
  }).then(function mySuccess(response) {
 
+   	 $scope.loading=false;
  	$window.location.reload();
  	//$scope.getTeam();
  }, function myError(response) {
 
+   	 $scope.loading=false;
  	
      alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");
  });
@@ -2013,7 +2091,8 @@ appAdmin.controller("custompagesController",function($scope, $http, $location, $
 });
 
 appAdmin.controller("usersController",function($scope, $http, $location, $window){
-	
+
+	 $scope.loading=true;
 	 $http({
 	        method : "GET",
 	        url : "teams",
@@ -2022,7 +2101,8 @@ appAdmin.controller("usersController",function($scope, $http, $location, $window
 	        $scope.teams = response.data;
 	      
 	    }, function myError(response) {
-	    		      
+
+	   
 	    });
 	  $http({
 	        method : "GET",
@@ -2030,13 +2110,16 @@ appAdmin.controller("usersController",function($scope, $http, $location, $window
 	    }).then(function mySuccess(response) {
 
 	    	$scope.users=response.data
+		   	 $scope.loading=false;
 	    }, function myError(response) {
 
+		   	 $scope.loading=false;
 	        //alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");
 	    });
 	  
 	  $scope.addUser = function(row,teamrow){
-		  
+
+		   	 $scope.loading=true;
 		//  $scope.result= "teams/"+teamrow.id+"/adminusers";
 		  $http({
 		        method : "POST",
@@ -2048,9 +2131,11 @@ appAdmin.controller("usersController",function($scope, $http, $location, $window
 
 		    }).then(function mySuccess(response) {
 
+			   	 $scope.loading=false;
 		      	$window.location.reload();
 		    }, function myError(response) {
-		  
+
+			   	 $scope.loading=false;
 		    	alert("An Error occured. Try again.");
 		      
 		    });
@@ -2059,19 +2144,23 @@ appAdmin.controller("usersController",function($scope, $http, $location, $window
 		 $scope.deleteUser = function (row){ 
 			 if(!confirm("Είστε σίγουρος;"))
 				 return;
+		   	 $scope.loading=true;
 			 $http({
 		        method : "DELETE",
 		        	url : "players/"+row.id
 		    }).then(function mySuccess(response) {
+			   	 $scope.loading=false;
 		    	$window.location.reload();
 		        
 		    }, function myError(response) {
 
+			   	 $scope.loading=false;
 		        alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");
 		    });
 		 }
 		 $scope.editUser = function (row){ 
 			// $scope.result = row;
+		   	 $scope.loading=true;
 			 $http({
 		        method : "PUT",
 		        	url : "teamadmins",
@@ -2079,10 +2168,12 @@ appAdmin.controller("usersController",function($scope, $http, $location, $window
 /*				        data: row,
 				        headers: {'Content-Type': 'application/json; charset=utf-8'}*/
 		    }).then(function mySuccess(response) {
+			   	 $scope.loading=false;
 		    	$window.location.reload();
 		        
 		    }, function myError(response) {
 
+			   	 $scope.loading=false;
 		        alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");
 		    });
 		 }

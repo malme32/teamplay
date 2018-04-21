@@ -49,7 +49,7 @@ pageEncoding="UTF-8"%>
 </style>
 
 {{result}} 
-		<img ng-show='showclock' width=40 height=40 src="${resources}/customimages/loading.gif" alt="">
+		<img ng-show='showclock' width=40 height=40 src="${resources}/images/loading.gif" alt="">
 <main class="main-content">
 
    <div id='calendar'></div> 

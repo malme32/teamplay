@@ -87,7 +87,12 @@ public class SportController {
 	private String getStaticPath(HttpSession session)
 	{
 		// TOMPCAT REAL PATH
-		    String path=session.getServletContext().getRealPath("/");  
+		String path = "";
+		if(myProperty.getResourcesPath().equals(""))
+		    path=session.getServletContext().getRealPath("/");  
+		else
+		    path=myProperty.getResourcesPath();  
+			
 		    
 		// DISK    
 		//  String homeDir = System.getProperty("user.home");

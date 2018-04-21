@@ -70,7 +70,24 @@ public class SecurityFilter extends GenericFilterBean {
 	}
 	
 	
-
+	private boolean isAdmin(HttpServletRequest request, HttpServletResponse response) {
+		
+		
+		Contact contact = contactService.getLoggedIn();
+    	if(contact==null)
+    		return false;
+    	return contactService.hasRole(contact, "ROLE_ADMIN");
+	}
+	
+	
+	private boolean isTeam(HttpServletRequest request, HttpServletResponse response) {
+		
+		
+		Contact contact = contactService.getLoggedIn();
+    	if(contact==null)
+    		return false;
+    	return contactService.hasRole(contact, "ROLE_TEAM");
+	}
     @Override
     public void doFilter(
       ServletRequest req, 
@@ -99,13 +116,14 @@ public class SecurityFilter extends GenericFilterBean {
         generalDaoService = webApplicationContext.getBean(GeneralDaoService.class);
    
         SportController.request=request;
-        // logging out
+        // allow static resources
         if(method.equals("GET")&&(path.toLowerCase().endsWith(".jpg")||path.toLowerCase().endsWith(".jpeg")||path.toLowerCase().endsWith(".png")|| 
         		path.toLowerCase().endsWith(".gif")||path.toLowerCase().endsWith(".css")||path.toLowerCase().endsWith(".js")))
         {
             chain.doFilter(req, res);
         }
-        else if(path.equals("/loggingout"))
+        // logging out
+        else if(path.equals("/loggingout")&&method.equals("GET"))
         {
             System.out.println("Logging out..");
             contactService.deleteSession();
@@ -120,18 +138,22 @@ public class SecurityFilter extends GenericFilterBean {
         
         	return;
         }
+        
+        //RESTRICTIONS//
+        
+
         // admin page
-        else if(path.indexOf("/admin")>=0)
+        else if(path.indexOf("/admin")==0&&method.equals("GET"))
         {
-        	Contact contact = contactService.getLoggedIn();
+     /*   	Contact contact = contactService.getLoggedIn();
         	if(contact==null)
         	{
                 response.sendRedirect(request.getContextPath() +"/loginPage?admin");
                 return;
         	}
-        	boolean hasRole = contactService.hasRole(contact, "ROLE_ADMIN");
+        	boolean hasRole = contactService.hasRole(contact, "ROLE_ADMIN");*/
   
-        	if(hasRole)
+        	if(isAdmin(request,response))
         	{
         		System.out.println("Authorized!!");
                 chain.doFilter(req, res);
@@ -139,12 +161,13 @@ public class SecurityFilter extends GenericFilterBean {
         	}
         	else
         	{
+        		System.out.println("NOT AUTHORIZED!!");
                 response.sendRedirect(request.getContextPath() +"/loginPage?admin");
                 return;
         	}
         }
-        
-        else if(path.indexOf("/loginPage")>=0&&method.equals("POST"))
+        //login
+        else if(path.indexOf("/loginPage")==0&&method.equals("POST"))
         {
         	String username = request.getParameter("username");
         	String password = request.getParameter("password");
@@ -212,7 +235,7 @@ public class SecurityFilter extends GenericFilterBean {
                     return;
             	}
             	//System.out.println("OUT7");
-        	}
+        	} 
         	else 
         	{
         		System.out.println("Contact null");
@@ -225,6 +248,66 @@ public class SecurityFilter extends GenericFilterBean {
             	
 
         }
+	     else if(method.equals("GET"))
+	     {
+	    	//getting contacts has only admin authorization
+	    	 if(path.indexOf("/contacts")==0)
+	    	 {
+	    		 if(isAdmin(request,response))
+	    		 {
+	    			System.out.println("admin Authorized!!");
+	 	            chain.doFilter(req, res);
+	 	            return;
+	    		 }
+	    	 }
+	    	 else
+	    		 chain.doFilter(req, res);
+	     }
+         else if(method.equals("POST")||method.equals("PUT")||method.equals("DELETE"))
+        {
+        	 //permit anyone
+        	 if(path.indexOf("/teams")==0&&path.indexOf("/followers")>0)
+     		{
+         		System.out.println("Everyone Authorized!!");
+                 chain.doFilter(req, res);
+                 return;
+     		}
+        	 
+        	 
+        	// admin has autority to everything
+        	if(isAdmin(request,response))
+        	{
+        		System.out.println("Admin Authorized!!");
+                chain.doFilter(req, res);
+                return;
+        	}
+        	
+			//team leader has limited autorities
+        	if(isTeam(request,response))
+        	{
+
+    			if(path.indexOf("/players")==0)
+    			{
+    				
+    	        		System.out.println("Team Leader Authorized!!");
+    	                chain.doFilter(req, res);
+    	                return;
+    	        }
+    			else if(path.indexOf("/teams")==0&&!method.equals("DELETE"))
+    			{
+    				
+    	        		System.out.println("Team Leader Authorized!!");
+    	                chain.doFilter(req, res);
+    	                return;
+    	        }
+    		}
+
+        	
+        	//not autorised
+            //response.sendRedirect(request.getContextPath() +"/loginPage?admin");
+            return;
+        } 
+        
         else
             chain.doFilter(req, res);
    /*     if(request.getRequestURL().indexOf("admin")>=0)

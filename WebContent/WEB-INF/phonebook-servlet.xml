@@ -35,14 +35,14 @@
 <!-- 	<mvc:resources mapping="/resources1/**" location="/resources/theme1/" />
  -->	
  
- <!-- DISK -->
- <!-- 	<mvc:resources mapping="/resources_static/**" location="file:/home/ec2-user/javaresources/soccer/resources/" />
- -->
+ <!-- DISK  -->
+ 	<mvc:resources mapping="/resources_static/**" location="file:/home/and/javaresources/soccer/resources/" />
+
  <!--  ToMPCAT REAL PATH -->
-<!--    	<mvc:resources mapping="/resources_static/**" location="/resources/" /> -->
+<!--    	<mvc:reso	urces mapping="/resources_static/**" location="/resources/" /> -->
  
-<!--  AWS -->
-   	<mvc:resources mapping="/resources_static/**" location="https://s3.eu-west-2.amazonaws.com/bucket3454455/" />
+<!--  AWS 
+   	<mvc:resources mapping="/resources_static/**" location="https://s3.eu-west-2.amazonaws.com/bucket3454455/" />-->
  
 
  <mvc:interceptors>

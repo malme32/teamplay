@@ -5,7 +5,7 @@
 
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <spring:url value="/resources/theme1" var="resources" />
-	<img class='admin_loading' ng-show='loading' width=80 height=80 src="${resources}/customimages/loading.gif" alt="">
+	<img class='admin_loading' ng-show='loading' width=80 height=80 src="${resources}/images/loading.gif" alt="">
 <div class='font_size_small'>
 
 <h1>ΠΡΩΤΑΘΛΗΜΑΤΑ</h1>
@@ -32,7 +32,7 @@
 			<th>ΟΡΑΤΟ</th>
 			<th>ΕΝΕΡΓΕΙΑ</th>
 		</tr>
-		<tr ng-repeat='row in championlist'>
+		<tr ng-repeat='row in championlist | orderBy:"-id"'>
 			<td><input type='text' ng-model='row.name'
 				ng-click='getTeamgroup(row); getPlayoffs(row)' /></td>
 			<td><input type=checkbox ng-model='row.enabled' ng-click='getTeamgroup(row); getPlayoffs(row)' /></td>

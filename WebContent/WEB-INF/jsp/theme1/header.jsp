@@ -102,7 +102,7 @@ ng-src='${resources_start}/generalimages/message-outline-256.png' ng-click='open
  --%>
 <li><a href="#!point-table.html/start">ΠΡΩΤΑΘΛΗΜΑΤΑ</a>
 <ul>
-<li ng-repeat='row in headerChampions' ng-show='row.enabled'><a href="#!point-table.html/{{row.id}}">{{row.name}}</a></li>
+<li ng-repeat='row in headerChampions  | orderBy:"-id"' ng-show='row.enabled'><a href="#!point-table.html/{{row.id}}">{{row.name}}</a></li>
 
 <li><a ng-href="#!calendar">ΠΑΝΟΡΑΜΑ</a>
 </li>

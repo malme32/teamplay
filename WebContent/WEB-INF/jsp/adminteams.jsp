@@ -6,6 +6,9 @@ pageEncoding="UTF-8"%>
 <spring:url value="/resources/theme1" var="resources" />
 
 <spring:url value="/resources_static/theme1" var="resources_static" />
+
+<img class='admin_loading' ng-show='loading' width=80 height=80 src="${resources}/images/loading.gif" alt="">
+
 <div class='font_size_small'>
 
 <div class='div_edit_team'>
@@ -36,8 +39,9 @@ pageEncoding="UTF-8"%>
 		<li>Περιγραφή:  <textarea rows="4" cols="50" ng-model='team.description' maxlength="1000" class="width_100" placeholder='Η περιγραφή της ομάδας εδω..'></textarea> </li> 
 		<li title='Εαν είναι επιλεγμένο τότε ο αρχηγός της ομάδας δεν θα μπορεί τους παίχτες της ομάδας εκτος απο εικόνα και θέση'>  <input  type="checkbox" ng-model='team.locked'/> Παίχτες κλειδωμένοι	</li>
 		
-		<li> <button class='button_flat background_dark_yellow float_right' ng-click="editTeam()">Αποθήκευση</button> 
-		<button class='button_flat background_red float_right'  ng-click="deleteTeam()">Διαγραφή</button></li>
+		<li> <button class='button_flat background_red float_right'  ng-click="deleteTeam()">Διαγραφή Ομάδας</button>
+		<button class='button_flat background_dark_yellow float_right' ng-click="editTeam()">Αποθήκευση</button> 
+		</li>
 		
 
 		
@@ -52,6 +56,8 @@ pageEncoding="UTF-8"%>
 		<button ng-click="deleteTeam()">Διαγραφή Ομάδας</button>
 		 -->
 			</ul>
+       <b class = 'color_red'>{{waiting}}</b>
+		<img ng-show='waiting' width=30 height=30 src="${resources}/images/loading.gif" alt="">
        <h3>ΕΙΚΟΝΕΣ (Logo/Cover)</h3>
 	<div class='table_stylish1'>
 		<table>
@@ -177,3 +183,4 @@ pageEncoding="UTF-8"%>
 </form> -->
 
 <!-- {{result}} -->
+</div>

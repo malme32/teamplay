@@ -1157,7 +1157,7 @@ public class SportServiceImpl  implements SportService{
         bout.write(barr);  
         bout.flush();  
         bout.close();  */
-
+        System.out.println("CREATING PLAYER IMAGE: " +path+"/resources/theme1/customimages/playerimage_"+filename);
         
         ByteArrayInputStream bais = new ByteArrayInputStream(barr);
         BufferedImage resizeMe = ImageIO.read(bais);

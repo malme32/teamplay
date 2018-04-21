@@ -6,6 +6,8 @@ pageEncoding="UTF-8"%>
 <spring:url value="/resources/theme1" var="resources" />
 
 <spring:url value="/resources_static/theme1" var="resources_static" />
+<img class='admin_loading' ng-show='loading' width=80 height=80 src="${resources}/images/loading.gif" alt="">
+
 <div class='font_size_small'>
 
 <div class=''>
@@ -20,7 +22,9 @@ pageEncoding="UTF-8"%>
 			</tr>
 
 		</table>
-<h2 ng-show='albums.length'>ΥΠΑΡΧΟΝΤΑ ALBUMS</h2>{{waiting}}
+<h2 ng-show='albums.length'>ΥΠΑΡΧΟΝΤΑ ALBUMS</h2>
+<b class = 'color_red'>{{waiting}}</b>
+<img ng-show='waiting' width=30 height=30 src="${resources}/images/loading.gif" alt="">
 <div class='admin_album table_stylish1' ng-repeat='album in albums| orderBy:"-date"' >
 
 		<table >
@@ -60,4 +64,5 @@ pageEncoding="UTF-8"%>
 </div>
 
 
+</div>
 </div>

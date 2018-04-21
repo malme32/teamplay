@@ -1792,7 +1792,7 @@ appMain.controller("teamController",function($scope, $http, $location, $window){
 		        //alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");
 		    });
 		}
-		 
+/*		 
 		 $scope.addTeam = function (){ 
 
 			 $http({
@@ -1809,8 +1809,8 @@ appMain.controller("teamController",function($scope, $http, $location, $window){
 		        alert("Κατι δεν πηγε καλα. Μήπως η ομάδα υπάρχει ήδη?");
 		    });
 		 }
-		 
-		 $scope.deleteTeam = function (){ 
+		 */
+/*		 $scope.deleteTeam = function (){ 
 
 			 if(!confirm("Είστε σίγουρος;"))
 				 return;
@@ -1826,21 +1826,24 @@ appMain.controller("teamController",function($scope, $http, $location, $window){
 		  
 		        alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");
 		    });
-		 }
+		 }*/
 		 
 		 $scope.editTeam = function (){ 
 			 //$scope.team.players=$scope.players;
 			 //$scope.result=$scope.team;
+				$scope.loading=true;
 			 $http({
 		        method : "PUT",
 		        	url : "teams",
 			        data: $scope.team,
 			        headers: {'Content-Type': 'application/json; charset=utf-8'}
 		    }).then(function mySuccess(response) {
-		    	
+
+				$scope.loading=false;
 		    	$scope.getTeam();
 		    }, function myError(response) {
 
+				$scope.loading=false;
 		        alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");
 		    });
 		 }
@@ -1848,8 +1851,8 @@ appMain.controller("teamController",function($scope, $http, $location, $window){
 		 $scope.uploadLogo = function(){
 		     var fd = new FormData();
              fd.append('file', $scope.mylogo);
-        
-             
+
+				$scope.loading=true;
 			 $http({
 			        method : "POST",
 			        	url : "teams/"+$scope.team.id+"/logos",
@@ -1858,10 +1861,13 @@ appMain.controller("teamController",function($scope, $http, $location, $window){
                         transformRequest: angular.identity,
                         headers: {'Content-Type': undefined}     
 			    }).then(function mySuccess(response) {
-
+					$scope.loading=false;
+			    
 			    	$scope.getTeam();
 			    }, function myError(response) {
 
+					$scope.loading=false;
+			 
 			        alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");
 			    });
              
@@ -1870,8 +1876,8 @@ appMain.controller("teamController",function($scope, $http, $location, $window){
 		 $scope.uploadCover= function(){
 		     var fd = new FormData();
              fd.append('file', $scope.mylogo);
-        
-             
+
+				$scope.loading=true;
 			 $http({
 			        method : "POST",
 			        	url : "teams/"+$scope.team.id+"/covers",
@@ -1881,9 +1887,11 @@ appMain.controller("teamController",function($scope, $http, $location, $window){
                         headers: {'Content-Type': undefined}     
 			    }).then(function mySuccess(response) {
 
+					$scope.loading=false;
 			    	$scope.getTeam();
 			    }, function myError(response) {
 
+					$scope.loading=false;
 			        alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");
 			    });
              
@@ -1892,6 +1900,7 @@ appMain.controller("teamController",function($scope, $http, $location, $window){
 		 
 		 $scope.editPlayer = function (row){ 
 
+				$scope.loading=true;
 			 $http({
 		        method : "PUT",
 		        	url : "players",
@@ -1900,22 +1909,26 @@ appMain.controller("teamController",function($scope, $http, $location, $window){
 		    }).then(function mySuccess(response) {
 
 
+				$scope.loading=false;
 		        alert("Οι αλλαγές αποθηκεύτηκαν με επιτυχία!");
 		        
 		    }, function myError(response) {
 
+				$scope.loading=false;
 		        alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");
 		    });
 		 }
 		 
 		 $scope.addPlayer= function (){ 
 			// $scope.result = $scope.newplayer;
+				$scope.loading=true;
 			 $http({
 		        method : "POST",
 		        	url : "teams/"+$scope.team.id+"/players",
 			        data: $scope.newplayer,
 			        headers: {'Content-Type': 'application/json; charset=utf-8'}
 		    }).then(function mySuccess(response) {
+					$scope.loading=false;
 		    			$scope.newplayer={};
 		    			$scope.getTeam();
 		    			alert("Ο παίχτης έχει εισαχθεί με επιτυχία! Επέλεξε τον παίχτη απο το απο την λίστα για εισαγωγή εικόνας και επεξεργασία στοιχείων!")
@@ -1936,7 +1949,8 @@ appMain.controller("teamController",function($scope, $http, $location, $window){
 			
 		    	
 		    }, function myError(response) {
-		  
+
+				$scope.loading=false;
 		        alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");
 		    });
 		 }
@@ -1944,7 +1958,8 @@ appMain.controller("teamController",function($scope, $http, $location, $window){
 		 $scope.uploadPlayerImage = function(row){
 		     var fd = new FormData();
              fd.append('file', row.playerimage);
-                     
+
+				$scope.loading=true;
 			 $http({
 			        method : "POST",
 			        	url : "players/"+row.id+"/images",
@@ -1955,10 +1970,12 @@ appMain.controller("teamController",function($scope, $http, $location, $window){
 			    }).then(function mySuccess(response) {
 			    	//w= response.data;
 			    	//$scope.result= row;
+					$scope.loading=false;
 			    	$scope.getTeam();
 			    	//$window.location.reload();
 			    }, function myError(response) {
 
+					$scope.loading=false;
 			        alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");
 			    });
              
@@ -1968,13 +1985,16 @@ appMain.controller("teamController",function($scope, $http, $location, $window){
 		 $scope.deletePlayer = function (row){ 
 			 if(!confirm("Είστε σίγουρος;"))
 				 return;
+				$scope.loading=true;
 			 $http({
 		        method : "DELETE",
 		        	url : "players/"+row.id
 		    }).then(function mySuccess(response) {
+				$scope.loading=false;
 		    	$scope.getTeam();
 		        
 		    }, function myError(response) {
+				$scope.loading=false;
 
 		        alert("Κατι δεν πηγε καλα. Δοκιμαστε ξανα.");
 		    });

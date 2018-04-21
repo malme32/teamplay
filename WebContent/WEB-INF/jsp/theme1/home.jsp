@@ -39,7 +39,7 @@ pageEncoding="UTF-8"%>
 <br/>
 </div>
 
-		<img ng-hide='upcominggames' width=40 height=40 src="${resources}/customimages/loading.gif" alt="">
+		<img ng-hide='upcominggames' width=40 height=40 src="${resources}/images/loading.gif" alt="">
  		<div ng-show='upcominggames.length' style="margin-bottom:40px">
 		<h2>ΕΠΟΜΕΝΑ ΠΑΙΧΝΙΔΙΑ</h2>
 
@@ -68,7 +68,7 @@ pageEncoding="UTF-8"%>
 			</div>
 
 
-		<img ng-hide='lastresults' width=40 height=40 src="${resources}/customimages/loading.gif" alt="">
+		<img ng-hide='lastresults' width=40 height=40 src="${resources}/images/loading.gif" alt="">
  		<div ng-show='lastresults.length' style="margin-bottom:40px">
 		<h2>ΤΕΛΕΥΤΑΙΑ ΑΠΟΤΕΛΕΣΜΑΤΑ</h2>
 

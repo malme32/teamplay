@@ -23,7 +23,7 @@ pageEncoding="UTF-8"%>
 <main class="main-content" style='font-size:90%; '>
 <div class='champ'>
 	<ul>
-		<li  ng-repeat='row in championlist' ng-show='row.enabled'><a ng-click='getChampion(row.id)' ng-class="cssLiChampionClass(row)">{{row.name}}</a></li>
+		<li  ng-repeat='row in championlist  | orderBy:"-id"' ng-show='row.enabled'><a ng-click='getChampion(row.id)' ng-class="cssLiChampionClass(row)">{{row.name}}</a></li>
 	</ul> 
 </div>
 
@@ -38,7 +38,7 @@ pageEncoding="UTF-8"%>
 <!-- 		 <div class="" ng-repeat='row2 in row.standings.matchdays' style="margin:0;padding:0">
 		<h3 style="margin:0 0 5px 0; padding:0"><span><i class="red-color">{{row2.name}} </i></span></h3> -->
 		
-		<img ng-hide='champion.playoffgames' width=40 height=40 src="${resources}/customimages/loading.gif" alt="">
+		<img ng-hide='champion.playoffgames' width=40 height=40 src="${resources}/images/loading.gif" alt="">
 		<div ng-show='champion.playoffgames.length'>
 		<!-- <h2>Play Offs</h2> -->
 
@@ -70,7 +70,7 @@ pageEncoding="UTF-8"%>
 			</div>
 
 
-<img ng-hide='teamgrouplist' width=40 height=40 src="${resources}/customimages/loading.gif" alt="">
+<img ng-hide='teamgrouplist' width=40 height=40 src="${resources}/images/loading.gif" alt="">
 
 <div ng-repeat='row in teamgrouplist' style="margin-bottom:60px;">
 <div  class="macth-fixture" >
