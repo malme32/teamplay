@@ -988,7 +988,7 @@ appMain.controller("championsController",function($scope, $http, $location, $win
 	        $scope.championlist = response.data;
 		    if($routeParams.championid == "start"&&$scope.championlist.length>0)
 		    {
-		    	$scope.getChampion($scope.championlist[0].id);
+		    	$scope.getChampion($scope.championlist[$scope.championlist.length-1].id);
 		    }
 		    else if($scope.championlist.length>0){
 		    	$scope.getChampion($routeParams.championid);

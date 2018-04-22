@@ -61,7 +61,7 @@ pageEncoding="UTF-8"%>
 				<th>ΕΝΕΡΓΕΙΑ</th>
 			</tr>
 			<tr>
-				<td><img width=60 height=60 ng-show='notice.imageurl' ng-src='${resources_static}{{notice.imageurl}}'/> </td>
+				<td><img width=60 height=60 ng-show='notice.imageurl' ng-src='${resources_static}{{notice.thumburl}}'/> </td>
 				<td><input type = "file" file-model = "mylogo" class='button_flat background_dark_yellow' accept="image/*"/>
 	         <button class='button_flat background_dark_yellow' ng-click = "uploadImage()">Αλλαγή ΕΙΚΟΝΑΣ</button></td>
 			</tr>

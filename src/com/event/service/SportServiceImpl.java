@@ -52,6 +52,7 @@ import com.general.model.Message;
 import com.phonebook.model.Contact;
 import com.phonebook.model.Userrole;
 import com.phonebook.service.ContactService;
+import com.phonebook.service.GeneralService;
 import com.phonebook.service.MailService;
 import com.phonebook.service.MyProperty;
 import com.sport.amazon.S3AWSService;
@@ -132,6 +133,9 @@ public class SportServiceImpl  implements SportService{
 
 	@Autowired
 	MailService mailService;
+	
+	@Autowired
+	GeneralService generalService;
 	
 	@Override
 	public Champion findChampionsById(int id) {
@@ -863,22 +867,24 @@ public class SportServiceImpl  implements SportService{
         
         Random rand=new Random();
 
-        int randomNum = rand.nextInt((10000) + 1) + 0;
+        int randomNum = rand.nextInt((1000000) + 1) + 0;
         
 		String filename=String.valueOf(randomNum+"_"+team.getId())+"."+extension;
         try{  
         byte barr[]=file.getBytes();  
-          
-        BufferedOutputStream bout=new BufferedOutputStream(  
+        
+        generalService.compressImgSave(file, path+"/resources/theme1/customimages/logo_"+filename, extension, 500, 500);
+  
+/*        BufferedOutputStream bout=new BufferedOutputStream(  
                  new FileOutputStream(path+"/resources/theme1/customimages/logo_"+filename));  
         bout.write(barr);  
         bout.flush();  
         bout.close();  
-
+*/
         //AWS S3 Related
         uploadToS3(path+"/resources/theme1/customimages/logo_"+filename);
         
-        ByteArrayInputStream bais = new ByteArrayInputStream(barr);
+/*        ByteArrayInputStream bais = new ByteArrayInputStream(barr);
         BufferedImage resizeMe = ImageIO.read(bais);
         Dimension newMaxSize = new Dimension(60, 60);
         BufferedImage resizedImg = Scalr.resize(resizeMe, Method.QUALITY, newMaxSize.width, newMaxSize.height);
@@ -889,7 +895,8 @@ public class SportServiceImpl  implements SportService{
         ImageIO.write(resizedImg, extension, bout1);
     
         bout1.flush();  
-        bout1.close();  
+        bout1.close();*/  
+        generalService.compressImgSave(file, path+"/resources/theme1/customimages/logo_thumb_"+filename, extension, 60, 60);
 
         //AWS S3 Related
         uploadToS3(path+"/resources/theme1/customimages/logo_thumb_"+filename);
@@ -983,34 +990,54 @@ public class SportServiceImpl  implements SportService{
         
         Random rand=new Random();
 
-        int randomNum = rand.nextInt((10000) + 1) + 0;
+        int randomNum = rand.nextInt((1000000) + 1) + 0;
         
 		String filename=String.valueOf(randomNum+"_"+team.getId())+"."+extension;
         try{  
         byte barr[]=file.getBytes();  
           
-        BufferedOutputStream bout=new BufferedOutputStream(  
+/*      tihs stores the image uncompressed  
+  BufferedOutputStream bout=new BufferedOutputStream(  
                  new FileOutputStream(path+"/resources/theme1/customimages/cover_"+filename));  
         bout.write(barr);  
         bout.flush();  
         bout.close();
+        */
         
-        //AWS S3 Related
-        uploadToS3(path+"/resources/theme1/customimages/cover_"+filename);
+        //Compress the image
+        generalService.compressImgSave(file, path+"/resources/theme1/customimages/cover_"+filename, extension, 1000, 1000);
         
-
-        ByteArrayInputStream bais = new ByteArrayInputStream(barr);
+/*        ByteArrayInputStream bais = new ByteArrayInputStream(barr);
         BufferedImage resizeMe = ImageIO.read(bais);
-        Dimension newMaxSize = new Dimension(60, 60);
+        Dimension newMaxSize = new Dimension(1000, 1000);
         BufferedImage resizedImg = Scalr.resize(resizeMe, Method.QUALITY, newMaxSize.width, newMaxSize.height);
         
         BufferedOutputStream bout1=new BufferedOutputStream(  
+                 new FileOutputStream(path+"/resources/theme1/customimages/cover_"+filename));  
+        
+        ImageIO.write(resizedImg, extension, bout1);
+    
+        bout1.flush();  
+        bout1.close();  */
+
+        //AWS S3 Related
+        uploadToS3(path+"/resources/theme1/customimages/cover_"+filename);
+        
+        //Compress the thumb
+        generalService.compressImgSave(file, path+"/resources/theme1/customimages/cover_thumb_"+filename, extension, 60, 60);
+
+/*        bais = new ByteArrayInputStream(barr);
+        resizeMe = ImageIO.read(bais);
+        newMaxSize = new Dimension(60, 60);
+        resizedImg = Scalr.resize(resizeMe, Method.QUALITY, newMaxSize.width, newMaxSize.height);
+        
+        bout1=new BufferedOutputStream(  
                  new FileOutputStream(path+"/resources/theme1/customimages/cover_thumb_"+filename));  
         
         ImageIO.write(resizedImg, extension, bout1);
     
         bout1.flush();  
-        bout1.close();  
+        bout1.close(); */ 
 
         //AWS S3 Related
         uploadToS3(path+"/resources/theme1/customimages/cover_thumb_"+filename);
@@ -1068,23 +1095,27 @@ public class SportServiceImpl  implements SportService{
         
         Random rand=new Random();
 
-        int randomNum = rand.nextInt((10000) + 1) + 0;
+        int randomNum = rand.nextInt((1000000) + 1) + 0;
         
 		String filename=String.valueOf(randomNum+"_"+notice.getId())+"."+extension;
 		
         try{  
         byte barr[]=file.getBytes();  
-          
+          /*
         BufferedOutputStream bout=new BufferedOutputStream(  
                  new FileOutputStream(path+"/resources/theme1/customimages/noticeimage_"+filename));  
         bout.write(barr);  
         bout.flush();  
         bout.close();  
-        
+        */
+        generalService.compressImgSave(file, path+"/resources/theme1/customimages/noticeimage_"+filename, extension, 1000, 1000);
+
         //AWS S3 Related
         uploadToS3(path+"/resources/theme1/customimages/noticeimage_"+filename);
         
-        ByteArrayInputStream bais = new ByteArrayInputStream(barr);
+        generalService.compressImgSave(file, path+"/resources/theme1/customimages/noticethumb_"+filename, extension, 350, 350);
+
+        /*ByteArrayInputStream bais = new ByteArrayInputStream(barr);
         BufferedImage resizeMe = ImageIO.read(bais);
         Dimension newMaxSize = new Dimension(350, 350);
         BufferedImage resizedImg = Scalr.resize(resizeMe, Method.QUALITY, newMaxSize.width, newMaxSize.height);
@@ -1096,7 +1127,7 @@ public class SportServiceImpl  implements SportService{
     
         bout1.flush();  
         bout1.close();  
-
+*/
         //AWS S3 Related
         uploadToS3(path+"/resources/theme1/customimages/noticethumb_"+filename);
         
@@ -1147,7 +1178,7 @@ public class SportServiceImpl  implements SportService{
         
         Random rand=new Random();
 
-        int randomNum = rand.nextInt((10000) + 1) + 0;
+        int randomNum = rand.nextInt((1000000) + 1) + 0;
 		String filename=randomNum+"_"+String.valueOf(contact.getId())+"."+extension;
         try{  
         byte barr[]=file.getBytes();  
@@ -1159,7 +1190,9 @@ public class SportServiceImpl  implements SportService{
         bout.close();  */
         System.out.println("CREATING PLAYER IMAGE: " +path+"/resources/theme1/customimages/playerimage_"+filename);
         
-        ByteArrayInputStream bais = new ByteArrayInputStream(barr);
+        generalService.compressImgSave(file, path+"/resources/theme1/customimages/playerimage_"+filename, extension, 400, 400);
+
+/*        ByteArrayInputStream bais = new ByteArrayInputStream(barr);
         BufferedImage resizeMe = ImageIO.read(bais);
         Dimension newMaxSize = new Dimension(400, 400);
         BufferedImage resizedImg = Scalr.resize(resizeMe, Method.QUALITY, newMaxSize.width, newMaxSize.height);
@@ -1170,7 +1203,7 @@ public class SportServiceImpl  implements SportService{
         ImageIO.write(resizedImg, extension, bout1);
     
         bout1.flush();  
-        bout1.close();  
+        bout1.close();  */
         
         //AWS S3 Related
         uploadToS3(path+"/resources/theme1/customimages/playerimage_"+filename);
@@ -1192,7 +1225,7 @@ public class SportServiceImpl  implements SportService{
         }
         
         
-        bais = new ByteArrayInputStream(barr);
+ /*       bais = new ByteArrayInputStream(barr);
         resizeMe = ImageIO.read(bais);
         newMaxSize = new Dimension(60, 60);
         resizedImg = Scalr.resize(resizeMe, Method.QUALITY, newMaxSize.width, newMaxSize.height);
@@ -1203,7 +1236,8 @@ public class SportServiceImpl  implements SportService{
         ImageIO.write(resizedImg, extension, bout1);
     
         bout1.flush();  
-        bout1.close();  
+        bout1.close();  */
+        generalService.compressImgSave(file, path+"/resources/theme1/customimages/playerthumb_"+filename, extension, 60, 60);
 
         //AWS S3 Related
         uploadToS3(path+"/resources/theme1/customimages/playerthumb_"+filename);
@@ -1481,20 +1515,22 @@ public class SportServiceImpl  implements SportService{
 			generalDaoService.persist(image);
 	        String extension = FilenameUtils.getExtension(file.getOriginalFilename()); 
 			String filename=String.valueOf("album"+album.getId()+"_image"+ image.getId())+"."+extension;
-	        byte barr[]=file.getBytes();  
+	       // byte barr[]=file.getBytes();  
 	        
-        
-	        BufferedOutputStream bout=new BufferedOutputStream(  
+	        generalService.compressImgSave(file, path+"/resources/theme1/customimages/albumimage_"+filename, extension, 1200, 1200);
+
+	/*        BufferedOutputStream bout=new BufferedOutputStream(  
 	                 new FileOutputStream(path+"/resources/theme1/customimages/albumimage_"+filename));  
 	        bout.write(barr);  
 	        bout.flush();  
 	        bout.close();  
-
+*/
 	        //AWS S3 Related
 	        uploadToS3(path+"/resources/theme1/customimages/albumimage_"+filename);
 	        
-	        
-	        ByteArrayInputStream bais = new ByteArrayInputStream(barr);
+	        generalService.compressImgSave(file, path+"/resources/theme1/customimages/albumimage_thumb_"+filename, extension, 255, 255);
+
+/*	        ByteArrayInputStream bais = new ByteArrayInputStream(barr);
 	        BufferedImage resizeMe = ImageIO.read(bais);
 	        Dimension newMaxSize = new Dimension(255, 255);
 	        BufferedImage resizedImg = Scalr.resize(resizeMe, Method.QUALITY, newMaxSize.width, newMaxSize.height);
@@ -1505,7 +1541,7 @@ public class SportServiceImpl  implements SportService{
 	        ImageIO.write(resizedImg, extension, bout1);
 	    
 	        bout1.flush();  
-	        bout1.close();  
+	        bout1.close();  */
 
 	        //AWS S3 Related
 	        uploadToS3(path+"/resources/theme1/customimages/albumimage_thumb_"+filename);
@@ -1922,15 +1958,18 @@ public class SportServiceImpl  implements SportService{
 					String filename=String.valueOf("custompage"+custompage.getId()+"_image"+ image.getId())+"."+extension;
 			        byte barr[]=file.getBytes();  
 			        
-		        
-			        BufferedOutputStream bout=new BufferedOutputStream(  
+			        generalService.compressImgSave(file, staticPath+"/resources/theme1/customimages/custompageimage_"+filename, extension, 1000, 1000);
+
+/*			        BufferedOutputStream bout=new BufferedOutputStream(  
 			                 new FileOutputStream(staticPath+"/resources/theme1/customimages/custompageimage_"+filename));  
 			        bout.write(barr);  
 			        bout.flush();  
-			        bout.close();  
+			        bout.close();  */
 			        //AWS S3 Related
 			        uploadToS3(staticPath+"/resources/theme1/customimages/custompageimage_"+filename);
 			        
+			        generalService.compressImgSave(file,staticPath+"/resources/theme1/customimages/custompageimage_thumb_"+filename, extension, 255, 255);
+/*
 			        ByteArrayInputStream bais = new ByteArrayInputStream(barr);
 			        BufferedImage resizeMe = ImageIO.read(bais);
 			        Dimension newMaxSize = new Dimension(255, 255);
@@ -1942,7 +1981,7 @@ public class SportServiceImpl  implements SportService{
 			        ImageIO.write(resizedImg, extension, bout1);
 			    
 			        bout1.flush();  
-			        bout1.close();  
+			        bout1.close();  */
 
 			        //AWS S3 Related
 			        uploadToS3(staticPath+"/resources/theme1/customimages/custompageimage_thumb_"+filename);
