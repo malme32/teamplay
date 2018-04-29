@@ -32,24 +32,26 @@
 			<th>ΟΡΑΤΟ</th>
 			<th>ΕΝΕΡΓΕΙΑ</th>
 		</tr>
-		<tr ng-repeat='row in championlist | orderBy:"-id"'>
-			<td><input type='text' ng-model='row.name'
-				ng-click='getTeamgroup(row); getPlayoffs(row)' /></td>
-			<td><input type=checkbox ng-model='row.enabled' ng-click='getTeamgroup(row); getPlayoffs(row)' /></td>
+		<tr  ng-repeat='row in championlist | orderBy:"-id"'>
+			<td ng-click='getTeamgroup(row); getPlayoffs(row)' >
+			<input style='cursor:pointer;' ng-class='champion==row?"selected_input":"unselected_input"'  type='text' ng-model='row.name'
+				/></td>
+			<td><input class='cursor_pointer' type=checkbox ng-model='row.enabled' ng-click='getTeamgroup(row); getPlayoffs(row)' /></td>
 			<td>
-				<button class='button_flat  background_dark_yellow'
-					ng-show='champion==row' ng-click='adminEditChampion(row)'>Αποθήκευση</button>
-				<button class='button_flat background_red' ng-show='champion==row'
-					ng-click='adminDeleteChampion(champion.id)'>Διαγραφή</button>
+			<!-- ng-show='champion==row' -->
+				<button ng-show='champion==row' title = "Αποθήκευση αλλαγών" class='button_flat  background_dark_yellow'
+					 ng-click='adminEditChampion(row)'>&#10004;</button>
+				<button ng-show='champion==row' title = "Διαγραφή πρωταθλήματος" class='button_flat background_red' 
+					ng-click='adminDeleteChampion(champion.id)'>&#10006;</button>
 			</td>
 		</tr>
 		<tr>
 			<td><input type='text' ng-model="adminChampionName"
-				placeholder="Το νέο όνομα πρωταθλήματος εδω.." /></td>
+				placeholder="Το όνομα του νέου πρωταθλήματος εδω.." /></td>
 			
 			<td><input type=checkbox ng-model='adminChampionEnabled'/></td>
-				<td><button class='button_flat background_green'
-					ng-click='adminAddChampion()'>Εισαγωγή</button>
+				<td><button title = "Προσθήκη πρωταθλήματος" class='button_flat background_green'
+					ng-click='adminAddChampion()'>Προσθήκη</button>
 
 			</td>
 		</tr>
@@ -90,7 +92,7 @@
 	<input type='text' ng-model="adminNewPlayoffName"
 		placeholder="Το νέο όνομα playoff εδω" /></td>
 	<td>
-	<button class='button_flat  background_green' ng-click='adminAddPlayoff(adminNewPlayoffName,champion)'>Εισαγωγή</button>
+	<button class='button_flat  background_green' ng-click='adminAddPlayoff(adminNewPlayoffName,champion)'>Προσθήκη</button>
 <!-- 	<button class='button_flat  background_red' ng-click='adminDeleteAllPlayoffs(champion)'>Διαγραφή όλων</button>
  -->	
 			
@@ -101,7 +103,7 @@
 	</table>
 
 
-	<div ng-repeat='row5 in playoffs  | orderBy: "phase"''>
+	<div ng-repeat='row5 in playoffs  | orderBy: "phase"'>
 		<div class='table_stylish1'>
 			<table>
 	<!-- 			<tr>
@@ -118,9 +120,11 @@
 							md-placeholder="Η ημερομηνία τέλους εδω.."></md-datepicker></td> -->
 							<td><input type="number" ng-model='row5.phase'></td>
 					<td>
-						<button class='button_flat  background_dark_yellow'
-							ng-click='adminUpdatePlayoff(row5,champion)'>Αποθήκευση</button>
-							<button class='button_flat  background_red' ng-click='adminDeletePlayoff(row5)'>Διαγραφή</button>
+					
+											<button class='button_flat  background_dark_yellow'
+							title = "Μετονομασία αγωνιστικής"  ng-click='adminUpdatePlayoff(row5,champion)'>&#10004;</button>
+							<button title = "Διαγραφή αγωνιστικής" class='button_flat  background_red' ng-click='adminDeletePlayoff(row5)'>&#10006;</button>
+					
 					</td>
 				</tr>
 
@@ -198,14 +202,18 @@
 						type="time" /></td>
 					<td class="">
 					
-					<button
+					
+					
+										<button title = "Αποθήκευση αλλαγών αγώνα"
 							class='button_flat  background_dark_yellow'
-							ng-click='adminEditPlayoffGame(row1,row5);  edhidden=false; edhidden2=false'>Αποθήκευση</button>
-						<button class='button_flat  background_red'
-							ng-click='adminDeletePlayoffGame(row1)'>Διαγραφή</button>
+							ng-click='adminEditPlayoffGame(row1,row5); edhidden=false; edhidden2=false'>Αποθήκευση</button>
+			
 							
-						<button class='button_flat  background_black'
+						<button title='Ορίστε τους σκορερς του αγώνα' class='button_flat  background_black'
 							ng-click='openScorerModal(row1)'>Σκορερς</button>
+										<button title = "Διαγραφή αγώνα" class='button_flat  background_red'
+							ng-click='adminDeletePlayoffGame(row1)'>&#10006;</button>
+
 							</td>
 <!-- 					<td><span><select ng-model="selectedmatchday"
 							ng-options="row.name for row in matchday | orderBy:'name'">
@@ -232,13 +240,12 @@
 							ng-options="row2.name for row2 in totalTeamList | orderBy:'name'" class='width_40'>
 							<option value="">---Επιλέξτε---</option>
 							</select>
-					</span></td>
+					</td>
 					<td></td>
 					<td></td>
-					<td><button class='button_flat background_green'
-							ng-click='adminAddPlayoffGame(selectedteam1_,selectedteam2_,row5)'>Εισαγωγή</button></td>
-					<td></td>
-					<td></td>
+					<td><button title = 'Προσθήκη αγώνα χειροκινητα σε αυτή την αγωνιστική' class='button_flat background_green'
+							ng-click='adminAddPlayoffGame(selectedteam1_,selectedteam2_,row5)'>&#10010;</button></td>
+				
 				</tr>
 
 			</table>
@@ -269,22 +276,23 @@
 				<th>ΕΝΕΡΓΕΙΑ</th>
 			</tr>
 			<tr ng-repeat='row in teamgrouplist'>
-				<td><input type='text' ng-model='row.name'
+				<td><input style='cursor:pointer' ng-class='teamgroup==row?"selected_input":"unselected_input"'  type='text' ng-model='row.name'
 					ng-click='getMatchdays(row); getTeams(row);' /></td>
 				<td>
-					<button class='button_flat  background_red'
-						ng-show='teamgroup==row' ng-click='adminDeleteTeamgroup(row)'>Διαγραφή</button>
 					<button class='button_flat  background_dark_yellow'
-						ng-show='teamgroup==row' ng-click='adminEditTeamgroup(row)'>Αποθήκευση</button>
+						title = "Αποθήκευση αλλαγών" ng-show='teamgroup==row' ng-click='adminEditTeamgroup(row)'>&#10004;</button>
+				
+					<button title = "Διαγραφή Ομίλου" class='button_flat  background_red'
+						ng-show='teamgroup==row' ng-click='adminDeleteTeamgroup(row)'>&#10006;</button>
 				
 				</td>
 			</tr>
 			<tr>
 				<td><input type='text' ng-model="adminTeamgroupName"
-					placeholder="Το νέο όνομα ομίλου εδω.." /></td>
+					placeholder="Το όνομα του νέου ομίλου εδω.." /></td>
 				<td>
-					<button class='button_flat background_green'
-						ng-click='adminAddTeamgroup(champion)'>Εισαγωγή</button>
+					<button title = "Προσθήκη νέου ομίλου"  class='button_flat background_green'
+						ng-click='adminAddTeamgroup(champion)'>Προσθήκη</button>
 
 				</td>
 			</tr>
@@ -319,7 +327,7 @@
 <div ng-show='teamgroup' class="margin_left_medium">
 	<h3>
 		ΟΜΑΔΕΣ 
-			<span class="color_red font_size_small">(σε {{champion.name}} /{{teamgroup.name}})</span>
+			<span class="color_red font_size_small">(σε {{champion.name}} / {{teamgroup.name}})</span>
 	</h3>
 	<div class='table_stylish1'>
 		<table>
@@ -328,11 +336,10 @@
 				<th>ΕΝΕΡΓΕΙΑ</th>
 			</tr>
 			<tr ng-repeat='row in standings'>
-				<td><input type='text' ng-model='row.team.name'
-					ng-click='standing_sel=row' /></td>
+				<td>{{row.team.name}}</td>
 				<td>
-					<button class='button_flat background_red'
-						ng-click='adminDeleteStanding(row)'>Διαγραφή</button>
+					<button title = "Διαγραφή ομάδας από τον όμιλο" class='button_flat background_red'
+						ng-click='adminDeleteStanding(row)'>&#10006;</button>
 				</td>
 			</tr>
 			<tr>
@@ -341,8 +348,8 @@
 					<option value="">---Επιλέξτε από υπάρχουσες---</option>
 				</select>
 				<td>
-					<button class='button_flat background_green'
-						ng-click='adminAddTeamToTeamgroup(teamgroup,selectedTeam)'>Εισαγωγή</button>
+					<button  title = "Προσθήκη υπάρχουσας ομάδας στον όμιλο"  class='button_flat background_green'
+						ng-click='adminAddTeamToTeamgroup(teamgroup,selectedTeam)'>Προσθήκη</button>
 
 				</td>
 			</tr>
@@ -351,7 +358,7 @@
 					placeholder="Εισάγετε όνομα νέας ομάδας εδώ.." /></td>
 				<td>
 					<button class='button_flat background_green'
-						ng-click='adminAddNewTeamToTeamgroup(teamgroup,adminNewTeamName)'>Εισαγωγή νέας</button>
+						 title = "Δημιουργία νέας ομάδας και προσθήκη στον όμιλο" ng-click='adminAddNewTeamToTeamgroup(teamgroup,adminNewTeamName)'>Προσθήκη νέας</button>
 
 				</td>
 			</tr>
@@ -381,22 +388,22 @@
 		</ul>
 	</div> -->
 	<h3>
-		ΑΓΩΝΙΣΤΗΚΕΣ <span class="color_red font_size_small">(σε
+		ΑΓΩΝΙΣΤΙΚΕΣ <span class="color_red font_size_small">(σε
 			{{champion.name}}/{{teamgroup.name}})</span>
 	</h3>
 	
 	
 	<table class='table_stylish1 margin_bottom_medium' >
-	<tr title='Αυτόματη δημιουργία αγωνιστηκών ενός ή δύο γύρων'><td>
-							<button class='button_flat  background_black'
+	<tr ><td>
+							<button title='Αυτόματη δημιουργία αγωνιστικών ενός γύρου' class='button_flat  background_black'
 						ng-click='generateMatchdays(teamgroup,1)'>Δημιουργία</button>
-					<button class='button_flat  background_black'
+					<button title='Αυτόματη δημιουργία αγωνιστικών δύο γύρων' class='button_flat  background_black'
 						 ng-click='generateMatchdays(teamgroup,2)'>Δημιουργία
 						(δύο γύροι)</button>
 	
 	</td></tr>
 	
-	<tr title='Επιλέξτε αναπροσαρμογή στην περίπτωση που προσθέσατε νέα ομάδα στον όμιλο'><td>
+	<tr title='Επιλέξτε αναπροσαρμογή αγωνιστικων στην περίπτωση που προσθέσατε νέα ομάδα στον όμιλο. Όλα τα αποτελέσματα θα διατηρηθούν.'><td>
 			<button class='button_flat  background_black'
 						 ng-click='reGenerateMatchdays(teamgroup,1)'>Αναπροσαρμογή</button>
 					<button class='button_flat  background_black'
@@ -410,9 +417,9 @@
 		placeholder="Το νέο όνομα αγωνιστικής εδω" /></td>
 	<td>
 	
-	<button class='button_flat  background_green' ng-click='adminAddMatchday(adminNewMatchdayName,teamgroup)'>Εισαγωγή</button>
+	<button title='Προσθήκη νέας αγωνιστικής. Οι αγώνες σε αυτή την αγωνιστική θα πρέπει να προστεθούν χειροκίνητα.' class='button_flat  background_green' ng-click='adminAddMatchday(adminNewMatchdayName,teamgroup)'>Προσθήκη</button>
 
-	<button class='button_flat  background_red' ng-click='adminDeleteAllMatchdays(teamgroup)'>Διαγραφή όλων</button></td>
+	<button title='Διαγραφή όλων των αγωνιστικών' class='button_flat  background_red' ng-click='adminDeleteAllMatchdays(teamgroup)'>Διαγραφή όλων</button></td>
 
 	
 	</tr>
@@ -430,14 +437,14 @@
 				</tr> -->
 				<tr class='background_gray '>
 					<td><input type='text' ng-model="row.name" /></td>
-					<td><md-datepicker ng-model="row.startdate"
+				<!-- 	<td><md-datepicker ng-model="row.startdate"
 							md-placeholder="Η ημερομηνία αρχής εδω.."></md-datepicker></td>
 					<td><md-datepicker ng-model="row.enddate"
-							md-placeholder="Η ημερομηνία τέλους εδω.."></md-datepicker></td>
+							md-placeholder="Η ημερομηνία τέλους εδω.."></md-datepicker></td> -->
 					<td>
 						<button class='button_flat  background_dark_yellow'
-							ng-click='adminUpdateMatchday(row,teamgroup)'>Αποθήκευση</button>
-							<button class='button_flat  background_red' ng-click='adminDeleteMatchday(row)'>Διαγραφή</button>
+							title = "Μετονομασία αγωνιστικής"  ng-click='adminUpdateMatchday(row,teamgroup)'>&#10004;</button>
+							<button title = "Διαγραφή αγωνιστικής" class='button_flat  background_red' ng-click='adminDeleteMatchday(row)'>&#10006;</button>
 					</td>
 				</tr>
 
@@ -505,21 +512,22 @@
 						type="time" /></td>
 					<td class="">
 					
-					<button
+					<button title = "Αποθήκευση αλλαγών αγώνα"
 							class='button_flat  background_dark_yellow'
 							ng-click='adminEditGame(row1,row); edhidden=false; edhidden2=false'>Αποθήκευση</button>
-						<button class='button_flat  background_red'
-							ng-click='adminDeleteGame(row1)'>Διαγραφή</button>
+			
 							
-						<button class='button_flat  background_black'
+						<button title='Ορίστε τους σκορερς του αγώνα' class='button_flat  background_black'
 							ng-click='openScorerModal(row1)'>Σκορερς</button>
+										<button title = "Διαγραφή αγώνα" class='button_flat  background_red'
+							ng-click='adminDeleteGame(row1)'>&#10006;</button>
 							</td>
 					<td><span><select ng-model="selectedmatchday"
 							ng-options="row.name for row in matchday | orderBy:'name'">
 							<option value="">---Επιλέξτε---</option>
 						</select></span> 
 					</td>
-					<td><span><button class='button_flat  background_black'
+					<td><span><button title='Μεταφέρετε αυτό τον αγώνα σε άλλη αγωνιστική' class='button_flat  background_black'
 								ng-click='addGameToMatchday(row1,selectedmatchday)'>Αλλαγή</button></span></td>
 
 				</tr>
@@ -540,8 +548,8 @@
 					</span></td>
 					<td></td>
 					<td></td>
-					<td><button class='button_flat background_green'
-							ng-click='adminAddGame(selectedteam1.team,selectedteam2.team,row)'>Εισαγωγή</button></td>
+					<td><button title = 'Προσθήκη αγώνα χειροκινητα σε αυτή την αγωνιστική' class='button_flat background_green'
+							ng-click='adminAddGame(selectedteam1.team,selectedteam2.team,row)'>&#10010;</button></td>
 					<td></td>
 					<td></td>
 				</tr>
@@ -675,8 +683,92 @@
     <span  ng-click='closeScorerModal()' class="close">&times;</span>
     
  <div class='table_stylish1'>
-<h3>Σκορερς</h3>
+
+<h3 style="width:100%;text-align:center">{{selectedgame.team1.name}}</h3>
 <table>
+
+<tbody>
+
+			<tr>
+				
+				<td>
+					<select ng-model="newscorer1.contact"
+							ng-options="row.name for row in team1players | orderBy:'name'">
+							<option value="">---Επιλέξτε παίχτη---</option>
+						</select>
+				
+				</td>
+				<td ng-show='newscorer1.contact' >Γκολ: <input title='Εισάγετε τον αριθμό των γκολ που έβαλε ο παίχτης στον αγώνα' type='number' ng-model="newscorer1.number"/>
+				</td>
+				<td ng-show='newscorer1.contact'><button title='Προσθήκη σκόρερ'
+							class='button_flat  background_green'
+							ng-click='addScorer(newscorer1)'>&#10010;</button>
+				</td>
+			</tr>
+						
+			<tr>
+				
+				<td>
+					<input type='text' ng-model="newplayer1.name" placeholder='ή αν δεν υπάρχει προσθέστε το όνομα παίχτη εδω..'/>
+				</td>
+			
+				<td ng-show='newplayer1.name' >Γκολ: <input title='Εισάγετε τον αριθμό των γκολ που έβαλε ο παίχτης στον αγώνα' type='number' ng-model="newscorer1_.number"/>
+				</td>
+				<td ng-show='newplayer1.name' ><button title='Προσθήκη σκόρερ'
+							class='button_flat  background_green'
+							ng-click='addScorerAndPlayer(newscorer1_,newplayer1,selectedgame.team1)'>&#10010;</button>
+				</td>
+			</tr>
+</tbody>
+</table>
+<BR/>
+<h3 style="width:100%;text-align:center">{{selectedgame.team2.name}}</h3>
+<table>
+
+<tbody>
+			<tr>
+				
+				<td>
+					<select ng-model="newscorer2.contact"
+							ng-options="row.name for row in team2players | orderBy:'name'">
+							<option value="">---Επιλέξτε παίχτη---</option>
+						</select>
+				
+				</td>
+	
+				<td ng-show='newscorer2.contact'>Γκολ: <input title='Εισάγετε τον αριθμό των γκολ που έβαλε ο παίχτης στον αγώνα' type='number' ng-model="newscorer2.number"/>
+				</td>
+				<td ng-show='newscorer2.contact'><button title='Προσθήκη σκόρερ'
+							class='button_flat  background_green'
+							ng-click='addScorer(newscorer2)'>&#10010;</button>
+				</td>
+			</tr>
+			
+			<tr>
+				
+				<td >
+					<input type='text' ng-model="newplayer2.name" placeholder='ή αν δεν υπάρχει προσθέστε το όνομα παίχτη εδω..'/>
+				</td>
+			
+				<td ng-show='newplayer2.name'>Γκολ: <input title='Εισάγετε τον αριθμό των γκολ που έβαλε ο παίχτης στον αγώνα' type='number' ng-model="newscorer2_.number"/>
+				</td>
+				<td ng-show='newplayer2.name'><button title='Προσθήκη σκόρερ'
+							class='button_flat  background_green'
+							ng-click='addScorerAndPlayer(newscorer2_,newplayer2,selectedgame.team2)'>&#10010;</button>
+				</td>
+			</tr>
+</tbody>
+</table>
+
+<BR/>
+<BR/>
+<h3>Καταχωρημένοι Σκορερς</h3>
+<table>
+
+
+
+
+
 <thead>
 			<tr>
 				<th>ΟΝΟΜΑ
@@ -698,15 +790,15 @@
 				</td>
 				<td><input type='number' ng-model="row2.number"/>
 				</td>
-				<td><button
+				<td><button title = "Αποθήκευση αλλαγών του σκόρερ"
 							class='button_flat  background_dark_yellow'
-							ng-click='editScorer(row2)'>Αποθήκευση</button>
-				<button class='button_flat background_red' 
-					ng-click='deleteScorer(row2)'>Διαγραφή</button>
+							ng-click='editScorer(row2)'>&#10004;</button>
+				<button title = "Διαγραφή σκόρερ" class='button_flat background_red' 
+					ng-click='deleteScorer(row2)'>&#10006;</button>
 				</td>
 			</tr>
 			
-			
+<!-- 			
 			<tr>
 				
 				<td>
@@ -774,7 +866,7 @@
 							ng-click='addScorerAndPlayer(newscorer2_,newplayer2,selectedgame.team2)'>Εισαγωγή νέου</button>
 				</td>
 			</tr>
-			
+			 -->
 
 </tbody>
 </table>
@@ -782,5 +874,10 @@
  
 
   </div>
-
+<BR/>
+<BR/>
+<BR/>
+<BR/>
+<BR/>
+<BR/>
 </div>

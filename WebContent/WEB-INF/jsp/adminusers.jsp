@@ -6,11 +6,13 @@ pageEncoding="UTF-8"%>
 <spring:url value="/resources/theme1" var="resources" />
 <img class='admin_loading' ng-show='loading' width=80 height=80 src="${resources}/images/loading.gif" alt="">
 
-<div class='font_size_small'>
+<div class='font_size_small width_95'>
+<br/><br/>
  <div class='search-field'>
  <input ng-model='mysearch' type="text" class="form-control" placeholder="Αναζητηστε χρήστη εδώ...">
 <i class="fa fa-search"></i></div>
-<div class='div_edit_team'>
+<br/><br/>
+<div class=''>
 
 	<div class='table_stylish1'>
 		<table>
@@ -19,7 +21,7 @@ pageEncoding="UTF-8"%>
 				<th>ΟΝΟΜΑ ΧΡΗΣΤΗ</th>
 				<th>ΚΩΔΙΚΟΣ</th>
 				<th>EMAIL</th>
-				<th>ΤΗΛΕΦΩΝΟ>
+				<th>ΤΗΛΕΦΩΝΟ</th>
 				<th>ΔΙΕΥΘΥΝΣΗ</th>
 				<th>ΟΜΑΔΑ</th>
 				<th>ΕΝΕΡΓΕΙΑ</th>
@@ -36,20 +38,21 @@ pageEncoding="UTF-8"%>
 				<td><select ng-model="selectedTeam" ng-change="getTeam()" ng-options="row.name for row in teams | orderBy:'name'">
 				<option value="">---Επιλέξτε---</option>
 				</select></td>
-				<td><button class='button_flat background_green float_right' ng-click="addUser(newrow,selectedTeam)">Προσθήκη</button> 
+				<td><button title="Προσθήκη νέου χρήστη" class='button_flat background_green float_right' ng-click="addUser(newrow,selectedTeam)">Προσθήκη</button> 
 			</td>
 			</tr>
 			<tr ng-repeat="row in users | filter:mysearch" ng-show=row.adminteam>
 				<td><input type="text" ng-model="row.name"></td>
 				<td><input type="text" ng-model="row.username"></td>
-				<td><input type="text" ng-model="row.password"></td>
+				<td><input type="text" ng-model="row.password" placeholder="αποκρύπτεται για λόγους ασφαλείας"></td>
 				<td><input type="text" ng-model="row.email"  placeholder="Το email εδω.."></td>
 				<td><input type="text" ng-model="row.phonenumber"  placeholder="Το τηλέφωνο εδω.."></td>
 				<td><input type="text" ng-model="row.address"  placeholder="Η Διευθυνση εδω.."></td>
 				
 				<td>{{row.adminteam.name}}</td>
-				<td><button class='button_flat background_dark_yellow float_right' ng-click="editUser(row)">Αποθήκευση</button> 
-			<button class='button_flat background_red float_right'  ng-click="deleteUser(row)">Διαγραφή</button></td>
+				<td><button title="Διαγραφή χρήστη" class='button_flat background_red float_right'  ng-click="deleteUser(row)">&#10006;</button>
+				<button title="Αποθήκευση αλλαγών χρήστη" class='button_flat background_dark_yellow float_right' ng-click="editUser(row)">&#10004;</button> 
+			</td>
 			</tr>
 			
 			

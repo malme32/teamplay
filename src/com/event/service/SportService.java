@@ -49,7 +49,7 @@ public interface SportService {
 
 	public void addNewTeamToTeamgroup(Teamgroup teamgroup, Team team);
 
-	public void removeTeamFromTeamgroup(int teamgroupid,int teamid);
+	public void removeTeamFromTeamgroup(int standingid);
 
 	public void generateMatchgames(int teamgroupid, int roundNumber);
 

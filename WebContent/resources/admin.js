@@ -168,18 +168,39 @@ myApp.service('fileUpload', ['$http', function ($http) {
    }
 }]);
 */
-appAdmin.controller("adminStartController",function($scope, $http, $location, $window,$route){
+appAdmin.controller("adminStartController",function($scope, $http, $location, $window,$route,$rootScope){
 //alert($location.path());//$location.path('home'); 
+	$rootScope.setCurrentMenu = function (row) {
+		$rootScope.currentmenu = row;
 
+	};
+	$rootScope.cssLiMenuClass = function (row) {
+		if(row==$rootScope.currentmenu){
+			return "css_li_menu_active";
+		}
+		else
+		{
+			return "css_li_menu";
+		}
+	};
 
 
 $scope.$on("$locationChangeStart", function(event, next, current) { 
 	
 
+
+
+
+/*	$location.path('adminprograms'); 
+*/
 	    	//if(next.indexOf("#!/home") !== -1&&!$rootScope.isAndroid)
 //if(next!=current)
 	if(next.indexOf("#!/admin")==-1)
+		{
+
 		$location.path('adminchampions')
+		$rootScope.currentmenu = "champions";
+		}
 /*	 alert(current);
 	 alert(next);*/
 
@@ -189,7 +210,8 @@ $scope.$on("$locationChangeStart", function(event, next, current) {
 
 });
 
-appAdmin.controller("imagesController",function($scope, $http, $location, $window){
+appAdmin.controller("imagesController",function($scope, $http, $location, $window,$rootScope){
+	$rootScope.setCurrentMenu('pictures');
 	$scope.loading=true;
 	 $http({
 	       method : "GET",
@@ -386,8 +408,8 @@ appAdmin.controller("imagesController",function($scope, $http, $location, $windo
 	
 });
 
-appAdmin.controller("adminController",function($scope, $http, $location, $window){
-
+appAdmin.controller("adminController",function($scope, $http, $location, $window,$rootScope){
+	$rootScope.setCurrentMenu('champions');
 	 $scope.championlist ="";
 	 $scope.champion;
 	 $scope.loading=true;
@@ -582,7 +604,7 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 	/*	 $scope.editChampion = function (){
 			 
 			 
-		 }*/		
+		 }*/	
 		 $scope.adminEditChampion = function (row){
 			 $scope.result = "";
 			 	if( row.name=="") 
@@ -1364,6 +1386,7 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 						        
 						    }).then(function mySuccess(response) {
 
+				    			alert("Προστέθηκε!");
 								 $scope.loading=false;
 						    	$scope.openScorerModal($scope.selectedgame);
 							    //alert("Εγινε!");
@@ -1443,7 +1466,7 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 						    			scorer.contact = response.data;
 						    			$scope.addScorer(scorer);
 						    			
-						    			
+						    			alert("Προστέθηκε!");
 						    			//$scope.newplayer={};
 						    			//$scope.getTeam();
 								    		//$scope.newplayer = response.data;
@@ -1472,8 +1495,9 @@ appAdmin.controller("adminController",function($scope, $http, $location, $window
 });
 
 
-appAdmin.controller("teamController",function($scope, $http, $location, $window){
+appAdmin.controller("teamController",function($scope, $http, $location, $window,$rootScope){
 
+	$rootScope.setCurrentMenu('teams');
 	$scope.loading=true;
 	/* $scope.getTeams = function (){ */ 
 		 $http({
@@ -1735,9 +1759,9 @@ appAdmin.controller("teamController",function($scope, $http, $location, $window)
 		 
 });
 
-appAdmin.controller("newsController",function($scope, $http, $location, $window){
+appAdmin.controller("newsController",function($scope, $http, $location, $window,$rootScope){
 
-
+	$rootScope.setCurrentMenu('news');
   	 $scope.loading=true;
 	/* $scope.getTeams = function (){ */ 
 		 $http({
@@ -1884,8 +1908,8 @@ appAdmin.controller("newsController",function($scope, $http, $location, $window)
 });
 
 
-appAdmin.controller("custompagesController",function($scope, $http, $location, $window){
-
+appAdmin.controller("custompagesController",function($scope, $http, $location, $window,$rootScope){
+	$rootScope.setCurrentMenu('pages');
   	 $scope.loading=true;
 	 
 	/* $scope.getTeams = function (){ */ 
@@ -2090,8 +2114,8 @@ appAdmin.controller("custompagesController",function($scope, $http, $location, $
     }
 });
 
-appAdmin.controller("usersController",function($scope, $http, $location, $window){
-
+appAdmin.controller("usersController",function($scope, $http, $location, $window,$rootScope){
+	$rootScope.setCurrentMenu('users');
 	 $scope.loading=true;
 	 $http({
 	        method : "GET",

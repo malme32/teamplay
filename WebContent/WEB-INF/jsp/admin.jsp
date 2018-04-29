@@ -34,11 +34,11 @@ pageEncoding="UTF-8"%>
 		<!-- <<<<< ANGULAR MATERIAL -->	
 	
 	<spring:url value="/resources/" var="resources" />
-	<spring:url value="/resources/admin.js?v=11" var="crunchifyJS" />
- 	<spring:url value="/resources/main.css?v=11" var="maincss" />
+	<spring:url value="/resources/admin.js?v=16" var="crunchifyJS" />
+ 	<spring:url value="/resources/main.css?v=15" var="maincss" />
  	<script src="${crunchifyJS}"></script>
   	<link rel="stylesheet" type="text/css" href="${maincss}">
- 	<link rel="stylesheet" type="text/css" href="${resources}admin.css?v=10">      
+ 	<link rel="stylesheet" type="text/css" href="${resources}admin.css?v=14">      
 <!-- <<<<<<<<<<<<< COMMON  -->
 
 
@@ -46,18 +46,13 @@ pageEncoding="UTF-8"%>
 <body ng-app="appAdmin" ng-controller='adminStartController'>
 <div class='champ'>
 	<ul>
-		<li><a ng-href='#!adminchampions'>ΠΡΩΤΑΘΛΗΜΑΤΑ</a></li>
-	
-
-		<li><a  ng-href='#!adminteams'>ΟΜΑΔΕΣ</a></li>
-	
-		<li><a  ng-href='#!adminusers'>ΧΡΗΣΤΕΣ</a></li>
-
-		<li><a  ng-href='#!adminnews'>ΝΕΑ</a></li>
+		<li ><a ng-click="setCurrentMenu('champions')" ng-class="cssLiMenuClass('champions')" ng-href='#!adminchampions'>ΠΡΩΤΑΘΛΗΜΑΤΑ</a></li>
+		<li><a  ng-click="setCurrentMenu('teams')" ng-class="cssLiMenuClass('teams')" ng-href='#!adminteams'>ΟΜΑΔΕΣ</a></li>
+		<li><a  ng-click="setCurrentMenu('news')" ng-class="cssLiMenuClass('news')" ng-href='#!adminnews'>ΝΕΑ</a></li>
+		<li><a  ng-click="setCurrentMenu('pages')" ng-class="cssLiMenuClass('pages')" ng-href='#!admincustompages'>ΣΕΛΙΔΕΣ</a></li>
+		<li><a   ng-class="cssLiMenuClass('pictures')" ng-href='#!adminimages'>ΕΙΚΟΝΕΣ</a></li>
 		
-		<li><a  ng-href='#!adminimages'>ΕΙΚΟΝΕΣ</a></li>
-		
-		<li><a  ng-href='#!admincustompages'>ΣΕΛΙΔΕΣ</a></li>
+		<li><a  ng-click="setCurrentMenu('users')" ng-class="cssLiMenuClass('users')" ng-href='#!adminusers'>ΧΡΗΣΤΕΣ</a></li>
  <li> <a href='loggingout' style='color:white'>Logout</a></li>
 		<%-- 				<li>
 					

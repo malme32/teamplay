@@ -40,8 +40,11 @@ public class TeamDaoImpl extends AbstractDao implements TeamDao{
 	public List<Game> findGames(int teamid) {
 		// TODO Auto-generated method stub
 		
-		
-		Team team =this.findById(teamid);
+			Team  team = findById(teamid);
+		   @SuppressWarnings("unchecked")
+		   List<Game> list = getSession().createQuery("FROM Game G where G.team1 = :team or G.team2 = :team").setParameter("team",team).list(); 
+		   return list;
+		/*Team team =this.findById(teamid);
 		Hibernate.initialize(team.getTeam1games());
 		Hibernate.initialize(team.getTeam2games());
 		List<Game> list = new ArrayList<Game>();
@@ -60,6 +63,16 @@ public class TeamDaoImpl extends AbstractDao implements TeamDao{
 					game.setChampion(game.getMatchday().getTeamgroup().getChampion());
 		
 		return list;
+	}
+
+	@Override
+	public List<Standing> findStandings(int teamid) {
+		// TODO Auto-generated method stub
+		Team team =this.findById(teamid);
+		Hibernate.initialize(team.getStandings());
+		for(Standing standing:team.getStandings())
+			standing.setChampion(standing.getTeamgroup().getChampion());
+		return team.getStandings();*/
 	}
 
 	@Override

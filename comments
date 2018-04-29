@@ -12,8 +12,6 @@ ROSSONERI:
 
 -
 - fix length of chat admin in mobile
-- compress team logo and cover
-
 - add option to change account data and encrypt
 - make adding of username/password of mail configurable (better get configuration data from database)
 - clean code from unused links
@@ -24,6 +22,7 @@ ROSSONERI:
 
 MUST - popup images in news
 DONE:
+- compress team logo and cover
 - CREATE A file that keeps all the configuration
 - when you edit a new put it first
 - fix gui in edit team and admin and add waiting when uploading
@@ -64,4 +63,22 @@ add mail credencials
 CREATE A file tha keeps all the configuration:
 	private static String bucketName     = "*** Provide bucket name ***";
 	private static String keyName        = "*** Provide key ***";
+	
+AWS:
+
+ssh to beanstalk:
+ssh -i /home/and/Downloads/mykeypairnew.pem ec2-user@ec2-35-177-6-38.eu-west-2.compute.amazonaws.com
+
+
+SCP:
+scp -i /tmp/mykeypair.pem /tmp/mykeypair.pem ec2-user@ec2-35-178-143-206.eu-west-2.compute.amazonaws.com:/tmp/ 
+
+
+create tar:
+tar -czf workspace.tar.gz workspace
+
+REMOVE DIR and its contents:
+rm -rf dirname
+
+974813999
 	

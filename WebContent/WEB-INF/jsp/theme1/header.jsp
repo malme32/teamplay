@@ -66,13 +66,18 @@ ng-src='${resources_start}/generalimages/message-outline-256.png' ng-click='open
 </div>
 
 
-<div class="nav-holder">
+<div class="nav-holder" >
 <div class="container">
 <div class="maga-drop-wrap">
-
-<div class="logo">
+<!-- top:-7px; left:-20px -->
+<div ng-show = "desktop" class="logo" style="">
 <a href=""><img src="${resources}/images/davourlislogo1.png" alt=""></a>
-</div>
+</div> 
+
+
+<%-- <div class="logo">
+<a href=""><img src="${resources}/images/logowhite.jpg" alt=""></a>
+</div> --%>
 
 <!-- 
 <div class="search-bar-holder pull-right">
@@ -97,7 +102,12 @@ ng-src='${resources_start}/generalimages/message-outline-256.png' ng-click='open
 
 </ul> --%>
 </li>
+<li><a href='#!custompage/start' href="">ΑΚΑΔΗΜΙΕΣ</a>
+<ul>
+<li ng-repeat='row in custompages'><a href="#!custompage/{{row.id}}">{{row.title}}</a></li>
 
+</ul>
+</li>
 <%-- <li><a href="${resources}/about.html">ΕΓΚΑΤΑΣΤΑΣΕΙΣ</a></li>
  --%>
 <li><a href="#!point-table.html/start">ΠΡΩΤΑΘΛΗΜΑΤΑ</a>
@@ -179,12 +189,7 @@ ng-src='${resources_start}/generalimages/message-outline-256.png' ng-click='open
 <a href="#!gallery">GALLERY</a>
 
 </li>
-<li><a href='#!custompage/start' href="">ΑΚΑΔΗΜΙΕΣ</a>
-<ul>
-<li ng-repeat='row in custompages'><a href="#!custompage/{{row.id}}">{{row.title}}</a></li>
 
-</ul>
-</li>
 <li>
 <a href="#!contactus">ΕΠΙΚΟΙΝΩΝΙΑ</a>
 <ul>
@@ -227,7 +232,7 @@ ng-src='${resources_start}/generalimages/message-outline-256.png' ng-click='open
 </script>
 
 <nav id="menu" class="responive-nav">
-<a class="r-nav-logo" href=""><img src="${resources}/images/logo-1.png" alt=""></a>
+<a 	class="r-nav-logo" href=""><img height="60"  src="${resources}/images/logowhite.jpg" alt=""></a>
 <ul class="respoinve-nav-list">
 
 

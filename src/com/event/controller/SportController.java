@@ -873,7 +873,7 @@ public class SportController {
 	{
 /*		Team team = sportService.findTeamById(teamid);
 		Teamgroup teamgroup = sportService.findTeamgroupById(teamgroupid);*/
-		sportService.removeTeamFromTeamgroup(teamgroupid,teamid);
+		//sportService.removeTeamFromTeamgroup(teamgroupid,teamid);
 		return ;
 	}
 	
@@ -881,8 +881,9 @@ public class SportController {
 	@RequestMapping(value="/standings/{id}", method=RequestMethod.DELETE, produces = "application/json")
 	public @ResponseBody void removeTeamFromTeamgroup(@PathVariable int id)
 	{
-		Standing standing = sportService.findStandingById(id);
-		generalDaoService.delete(standing);
+		 sportService.removeTeamFromTeamgroup(id);
+		/*Standing standing = sportService.findStandingById(id);
+		generalDaoService.delete(standing);*/
 		return ;
 	}
 	

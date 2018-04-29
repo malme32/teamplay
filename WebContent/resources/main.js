@@ -986,9 +986,26 @@ appMain.controller("championsController",function($scope, $http, $location, $win
 	    }).then(function mySuccess(response) {
 
 	        $scope.championlist = response.data;
+	        var found = false;
 		    if($routeParams.championid == "start"&&$scope.championlist.length>0)
 		    {
-		    	$scope.getChampion($scope.championlist[$scope.championlist.length-1].id);
+		    	for(i=$scope.championlist.length-1;i>=0;i--)
+		    		{
+		    			if($scope.championlist[i].enabled)
+		    			{
+		    				found = true;
+				    		$scope.getChampion($scope.championlist[i].id);
+				    		break;
+		    			
+		    			}
+		    		}
+		    	if(!found)
+		    		{
+		    			$scope.teamgrouplist = [];
+		    			$scope.champion = {};
+		    			$scope.champion.playoffgames = [];
+
+		    		}
 		    }
 		    else if($scope.championlist.length>0){
 		    	$scope.getChampion($routeParams.championid);

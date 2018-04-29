@@ -26,16 +26,18 @@
 .button_flat {
 	/* background-color: #4CAF50;  */ /* Green */
 	border: none;
+	position:relative;
 	color: white;
-	padding: 6px 9px;
+	padding: 2px 6px;
 	text-align: center;
 	text-decoration: none;
 	display: inline-block;
 /* 	font-size: 16px;
- */	margin: 2px 1px;
+ */	margin: 2px 2px;
 	cursor: pointer;
-}
-
+	 box-shadow: 2px 2px 2px #888888;
+	 height:30px;
+	}
 
 	
 
@@ -45,7 +47,16 @@
 }
 
 /* INPUTS */
+.selected_input{
+	
+	background-color: #cf695a;
+	color:white;
+}
 
+.unselected_input{
+	
+	
+}
 input[type=text], select , textarea{
     width: 100%;
     padding: 5px 7px;
@@ -137,6 +148,10 @@ input[type=number] {
 	width:50px
 }
 
+.width_95{
+	width:95%;
+	margin:auto;
+}
 /* MARGINS */
 
 .margin_bottom_medium{
@@ -184,7 +199,9 @@ padding:0;
 	
 }
 
-
+.cursor_pointer{
+	cursor:pointer;
+}
 /* The Modal (background) */
 .modal {
     display: none; /* Hidden by default */
@@ -239,4 +256,22 @@ padding:0;
 	 left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
+}
+
+.css_li_menu{
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.css_li_menu_active{
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+     background-color: #cf695a;
+     color:#ED645C;
 }

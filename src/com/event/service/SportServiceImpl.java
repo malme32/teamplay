@@ -227,7 +227,13 @@ public class SportServiceImpl  implements SportService{
 	}
 
 	@Override
-	public void removeTeamFromTeamgroup(int teamgroupid,int teamid) {
+	public void removeTeamFromTeamgroup(int standingid) {
+		Standing standing = findStandingById(standingid);
+
+		Teamgroup teamgroup = standing.getTeamgroup();
+		teamgroup.getStandings().remove(standing);
+		generalDaoService.update(teamgroup);
+		generalDaoService.delete(standing);
 		// TODO Auto-generated method stub
 /*		Team team = findTeamById(teamid);
 		Teamgroup teamgroup = findTeamgroupById(teamgroupid);

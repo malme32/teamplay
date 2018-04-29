@@ -44,8 +44,8 @@ pageEncoding="UTF-8"%>
 <!--<link rel='stylesheet' href='https://material.angularjs.org/1.1.5/docs.css'> -->
 		<!-- <<<<< ANGULAR MATERIAL -->	
 	
-	<spring:url value="/resources/main.js?132" var="crunchifyJS" />
- 	<spring:url value="/resources/main.css?132" var="maincss" />
+	<spring:url value="/resources/main.js?136" var="crunchifyJS" />
+ 	<spring:url value="/resources/main.css?136" var="maincss" />
  	<script src="${crunchifyJS}"></script>
  	<link rel="stylesheet" type="text/css" href="${maincss}">   
 <!-- <<<<<<<<<<<<< COMMON  -->
